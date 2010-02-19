@@ -1,20 +1,13 @@
 package artnetremote.gui.models;
 
-import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.Map.Entry;
 
-import sun.tools.tree.UnsignedShiftRightExpression;
-
 import artnet4j.ArtNet;
-import artnet4j.ArtNetException;
 import artnet4j.packets.ArtDmxPacket;
-import artnet4j.packets.ArtNetPacket;
 import artnetremote.gui.events.ArtNetStartedEvent;
 import artnetremote.gui.events.ArtNetStoppedEvent;
 import artnetremote.gui.events.CommandLineValueChangedEvent;
@@ -32,8 +25,8 @@ public class RemoteModel {
 	private int universe = 0;
 	private int sequenceId = 0;
 	
-	public void addToCommandLine(String buttonText) {
-		this.commandLine.append(buttonText);
+	public void addToCommandLine(Character c) {
+		this.commandLine.append(c);
 		this.fireCommandLineValueChanged();
 	}
 

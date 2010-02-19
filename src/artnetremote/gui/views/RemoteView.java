@@ -3,10 +3,14 @@ package artnetremote.gui.views;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.ActionMap;
+import javax.swing.InputMap;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -26,6 +30,7 @@ public class RemoteView {
 	private final JTextField commandLine = new JTextField();
 	
 	private final List<JButton> valueButtonsList = new ArrayList<JButton>();
+	private final List<Character> valuesList = new ArrayList<Character>();
 	private final JButton enterButton;
 	private final JButton resetButton;
 	private final JButton delButton;
@@ -59,23 +64,24 @@ public class RemoteView {
 		this.remotePanel.setLayout(layout);
 		
 		this.commandLine.setEditable(false);
+		this.commandLine.setFocusable(false);
 		this.constraints.fill = GridBagConstraints.HORIZONTAL;
 		this.constraints.gridy = 0;
 		this.constraints.gridwidth = 6;
 		this.remotePanel.add(this.commandLine,this.constraints);
 		
-		this.addValueButton("1", 1, 2, true);
-		this.addValueButton("2", 1, 2, true);
-		this.addValueButton("3", 1, 2, true);
-		this.addValueButton("4", 2, 2, true);
-		this.addValueButton("5", 2, 2, true);
-		this.addValueButton("6", 2, 2, true);
-		this.addValueButton("7", 3, 2, true);
-		this.addValueButton("8", 3, 2, true);
-		this.addValueButton("9", 3, 2, true);
-		this.addValueButton(";", 4, 2, true);
-		this.addValueButton("0", 4, 2, true);
-		this.addValueButton("@", 4, 2, true);
+		this.addValueButton('1', 1, 2, true);
+		this.addValueButton('2', 1, 2, true);
+		this.addValueButton('3', 1, 2, true);
+		this.addValueButton('4', 2, 2, true);
+		this.addValueButton('5', 2, 2, true);
+		this.addValueButton('6', 2, 2, true);
+		this.addValueButton('7', 3, 2, true);
+		this.addValueButton('8', 3, 2, true);
+		this.addValueButton('9', 3, 2, true);
+		this.addValueButton(';', 4, 2, true);
+		this.addValueButton('0', 4, 2, true);
+		this.addValueButton('@', 4, 2, true);
 		this.delButton = this.addButton("Del", 5, 2, false);
 		this.enterButton = this.addButton("Enter", 5, 2, false);
 		this.resetButton = this.addButton("Reset", 5, 2, false);
@@ -87,6 +93,14 @@ public class RemoteView {
 	
 	public void setCommandLineFieldValue(String value){
 		this.commandLine.setText(value);
+	}
+	
+	public void addRemotePanelKeyListener(KeyListener listener){
+		this.remotePanel.addKeyListener(listener);
+	}
+
+	public void removeRemotePanelKeyListener(KeyListener listener){
+		this.remotePanel.removeKeyListener(listener);
 	}
 	
 	public void addValueButtonsListener(ActionListener listener) {
@@ -125,14 +139,28 @@ public class RemoteView {
 		this.resetButton.removeActionListener(actionListener);
 	}
 	
-	private void addValueButton(String text, int gridY, int gridWidth, boolean enabled){
-		JButton button = addButton(text, gridY, gridWidth, enabled);
+	public InputMap getRemotePanelInputMap(){
+		return this.remotePanel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+	}
+	
+	public ActionMap getRemotePanelActionMap(){
+		return this.remotePanel.getActionMap();
+	}
+	
+	public List<Character> getValuesList(){
+		return this.valuesList;
+	}
+	
+	private void addValueButton(final Character c, int gridY, int gridWidth, boolean enabled){
+		JButton button = addButton(c.toString(), gridY, gridWidth, enabled);
+		valuesList.add(c);
 		valueButtonsList.add(button);
 	}
 
 	private JButton addButton(String text, int gridY, int gridWidth, boolean enabled) {
 		JButton button = new JButton(text);
 		button.setEnabled(enabled);
+		button.setFocusable(false);
 		
 		this.constraints.fill = GridBagConstraints.HORIZONTAL;
 		this.constraints.gridy = gridY;
