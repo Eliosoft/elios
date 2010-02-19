@@ -147,6 +147,18 @@ public class RemoteView {
 		return this.remotePanel.getActionMap();
 	}
 	
+	public boolean isEnterButtonEnabled() {
+		return this.enterButton.isEnabled();
+	}
+	
+	public boolean isResetButtonEnabled() {
+		return this.resetButton.isEnabled();
+	}
+	
+	public boolean isdelButtonEnabled() {
+		return this.delButton.isEnabled();
+	}
+	
 	public List<Character> getValuesList(){
 		return this.valuesList;
 	}

@@ -3,12 +3,12 @@ package artnetremote.gui.controllers;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.AbstractAction;
 import javax.swing.ActionMap;
 import javax.swing.InputMap;
 import javax.swing.JButton;
 import javax.swing.KeyStroke;
 
-import artnetremote.gui.actions.ValueKeyTypedAction;
 import artnetremote.gui.models.RemoteModel;
 import artnetremote.gui.views.RemoteView;
 
@@ -29,13 +29,45 @@ public class RemoteController {
 		InputMap inputMap = this.remoteView.getRemotePanelInputMap();
 		ActionMap actionMap = this.remoteView.getRemotePanelActionMap();
 		for(Character c : this.remoteView.getValuesList()){
-			this.initKeyStroke(inputMap, actionMap, c);
+			this.initValueKeyStroke(inputMap, actionMap, c);
 		}
+		
+		inputMap.put(KeyStroke.getKeyStroke("BACK_SPACE"), "backspace");
+		actionMap.put("backspace", new AbstractAction() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(remoteView.isdelButtonEnabled())
+					remoteModel.delLastCommandLineChar();
+			}
+		});
+		
+		inputMap.put(KeyStroke.getKeyStroke("ENTER"), "enter");
+		actionMap.put("enter", new AbstractAction() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(remoteView.isEnterButtonEnabled())
+					remoteModel.processCommandLine();
+			}
+		});
+		
+		inputMap.put(KeyStroke.getKeyStroke("ESCAPE"), "escape");
+		actionMap.put("escape", new AbstractAction() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(remoteView.isResetButtonEnabled())
+					remoteModel.resetCommandLine();
+			}
+		});
 	}
 
-	private void initKeyStroke(InputMap inputMap,ActionMap actionMap, Character c){
+	private void initValueKeyStroke(InputMap inputMap,ActionMap actionMap, final Character c){
 		inputMap.put(KeyStroke.getKeyStroke(c), c);
-		actionMap.put(c, new ValueKeyTypedAction(this.remoteModel, c));
+		actionMap.put(c, new AbstractAction() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				remoteModel.addToCommandLine(c);
+			}
+		});
 	}
 	
 	private void initButtonsListeners() {
