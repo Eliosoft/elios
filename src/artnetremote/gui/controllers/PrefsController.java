@@ -4,7 +4,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import artnetremote.gui.models.RemoteModel;
-import artnetremote.gui.views.LogsView;
 import artnetremote.gui.views.PrefsView;
 
 public class PrefsController {

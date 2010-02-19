@@ -1,11 +1,11 @@
 package artnetremote.gui.views;
 
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
 import java.awt.event.ActionListener;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.border.TitledBorder;
 
 import artnetremote.gui.events.ArtNetStartedEvent;
 import artnetremote.gui.events.ArtNetStoppedEvent;
@@ -16,9 +16,6 @@ import artnetremote.gui.models.RemoteModel;
 public class PrefsView {
 
 	private RemoteModel remoteModel;
-	
-	private final GridBagLayout layout = new GridBagLayout();
-	private final GridBagConstraints constraints = new GridBagConstraints();
 
 	private final JPanel prefsPanel = new JPanel();
 
@@ -27,14 +24,20 @@ public class PrefsView {
 
 	public PrefsView(RemoteModel remoteModel) {
 		this.remoteModel = remoteModel;
-		this.prefsPanel.setLayout(this.layout);
 		
+		JPanel artnetServer = new JPanel();
+		artnetServer.setName("ArtNet Server");
+		TitledBorder border = BorderFactory.createTitledBorder(artnetServer.getName());
+		border.setTitleJustification(TitledBorder.CENTER);
+		artnetServer.setBorder(border);
+		
+		this.prefsPanel.add(artnetServer);
 		this.startButton = new JButton("Start");
-		this.prefsPanel.add(this.startButton, this.constraints);
+		artnetServer.add(this.startButton);
 		
 		this.stopButton = new JButton("Stop");
 		this.stopButton.setEnabled(false);
-		this.prefsPanel.add(this.stopButton, this.constraints);
+		artnetServer.add(this.stopButton);
 		
 		this.remoteModel.addRemoteModelChangedListener(new RemoteModelListener() {
 			@Override
