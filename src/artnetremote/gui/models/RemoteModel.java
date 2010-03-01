@@ -14,6 +14,10 @@ import artnetremote.gui.events.CommandLineValueChangedEvent;
 import artnetremote.gui.listeners.RemoteModelListener;
 
 
+/**
+ * @author jeremie
+ * This model describes almost all data of the artnet-remote.
+ */
 public class RemoteModel {
 	private LogsListModel logsListModel = new LogsListModel();
 	private StringBuilder commandLine = new StringBuilder();
@@ -25,25 +29,42 @@ public class RemoteModel {
 	private int universe = 0;
 	private int sequenceId = 0;
 	
+	/**
+	 * add a character to the command line
+	 * @param c the character added
+	 */
 	public void addToCommandLine(Character c) {
 		this.commandLine.append(c);
 		this.fireCommandLineValueChanged();
 	}
 
+	/**
+	 * reset value of the command line
+	 */
 	public void resetCommandLine() {
 		this.commandLine.delete(0, this.commandLine.length());
 		this.fireCommandLineValueChanged();
 	}
 	
+	/**
+	 * delete the last character of the command line 
+	 */
 	public void delLastCommandLineChar() {
 		this.commandLine.delete(this.commandLine.length()-1, this.commandLine.length());
 		this.fireCommandLineValueChanged();
 	}
 	
+	/**
+	 * get the value of the command line
+	 * @return the value of the command line
+	 */
 	public String getCommandLineValue(){
 		return this.commandLine.toString();
 	}
 	
+	/**
+	 * process the value of the command line
+	 */
 	public void processCommandLine(){
 		List<String> commands = Arrays.asList(commandLine.toString().split(";"));
 		HashMap<String, String> channelsValues = new HashMap<String, String>();
@@ -86,6 +107,9 @@ public class RemoteModel {
 		this.logsListModel.addLogLine("Info : broadcast DMX packet sent");
 	}
 
+	/**
+	 * start the ArtNet Server
+	 */
 	public void startArtNet(){
 		try {
 			this.artnet.start();
@@ -97,6 +121,9 @@ public class RemoteModel {
 		this.fireArtNetStarted();
 	}
 	
+	/**
+	 * stop the ArtNet Server 
+	 */
 	public void stopArtNet(){
 		this.artnet.stop();
 		this.logsListModel.addLogLine("ArtNet Stopped");
@@ -124,20 +151,33 @@ public class RemoteModel {
 		}
 	}
 
+	/**
+	 * get the model of the logs list
+	 * @return the Logs list model
+	 */
 	public LogsListModel getLogsListModel() {
 		return logsListModel;
 	}
 	
+	/**
+	 * add an element to the list of listener of the remote model
+	 * @param listener the listener to add
+	 */
 	public void addRemoteModelChangedListener(RemoteModelListener listener) {
 		this.remoteModelChangedListeners.add(listener);
 	}
 	
+	/**
+	 * remove an element to the list of listener of the remote model
+	 * @param listener the listener to remove
+	 */
 	public void removeRemoteModelChangedChangedListener(RemoteModelListener listener) {
 		this.remoteModelChangedListeners.remove(listener);
 	}
 }
 
-
+//example of command line parsing...
+//
 //for($i = 0;$i<count($chanArray);$i++){
 //$chanArray[$i][0]=split(',',$chanArray[$i][0]);
 //}
