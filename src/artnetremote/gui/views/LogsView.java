@@ -15,6 +15,11 @@ import javax.swing.event.ListDataListener;
 
 import artnetremote.gui.models.RemoteModel;
 
+/**
+ * @author jeremie
+ * The view of the logs
+ * This class print logs in a list
+ */
 public class LogsView {
 
 	private RemoteModel remoteModel;
@@ -26,12 +31,16 @@ public class LogsView {
 	private final JPanel logsPanel = new JPanel();
 	private final JButton clearLogsButton;
 
+	/**
+	 * The constructor of the Logs View
+	 * @param remoteModel the RemoteModel used by the view
+	 */
 	public LogsView(RemoteModel remoteModel) {
 		this.remoteModel = remoteModel;
 		
 		this.logsPanel.setLayout(this.layout);
 		
-		this.logsList = new JList(remoteModel.getLogsListModel());
+		this.logsList = new JList(this.remoteModel.getLogsListModel());
 		this.logsList.getModel().addListDataListener(new ListDataListener() {
 			@Override
 			public void intervalAdded(final ListDataEvent e) {
@@ -62,14 +71,26 @@ public class LogsView {
 		logsPanel.add(this.clearLogsButton, this.constraints);
 	}
 
+	/**
+	 * get the logs panel of the view
+	 * @return the logs panel
+	 */
 	public JPanel getLogsPanel() {
 		return this.logsPanel;
 	}
 	
+	/**
+	 * add an action listener to the clear logs button
+	 * @param listener the listener to add
+	 */
 	public void addClearLogsButtonListener(ActionListener listener){
 		this.clearLogsButton.addActionListener(listener);
 	}
 	
+	/**
+	 * remove an action listener to the clear logs button
+	 * @param listener the listener to remove
+	 */
 	public void removeClearLogsButtonListener(ActionListener listener){
 		this.clearLogsButton.removeActionListener(listener);
 	}

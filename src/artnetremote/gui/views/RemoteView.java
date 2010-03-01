@@ -20,6 +20,10 @@ import artnetremote.gui.events.CommandLineValueChangedEvent;
 import artnetremote.gui.listeners.RemoteModelListener;
 import artnetremote.gui.models.RemoteModel;
 
+/**
+ * @author jeremie
+ * The view of the remote
+ */
 public class RemoteView {
 	private final RemoteModel remoteModel;
 
@@ -36,6 +40,10 @@ public class RemoteView {
 	private final JButton delButton;
 
 	
+	/**
+	 * The default contructor of the remote view
+	 * @param remoteModel the model associated to the view
+	 */
 	public RemoteView(final RemoteModel remoteModel) {
 		this.remoteModel = remoteModel;
 		this.remoteModel.addRemoteModelChangedListener(new RemoteModelListener() {
@@ -87,78 +95,150 @@ public class RemoteView {
 		this.resetButton = this.addButton("Reset", 5, 2, false);
 	}
 	
+	/**
+	 * get the remote panel
+	 * @return the panel
+	 */
 	public JPanel getRemotePanel(){
 		return this.remotePanel;
 	}
 	
+	/**
+	 * set text of the command line field
+	 * @param value the text to set
+	 */
 	public void setCommandLineFieldValue(String value){
 		this.commandLine.setText(value);
 	}
 	
+	/**
+	 * add an element to the list of listeners of the remote panel
+	 * @param listener the listener to add
+	 */
 	public void addRemotePanelKeyListener(KeyListener listener){
 		this.remotePanel.addKeyListener(listener);
 	}
 
+	/**
+	 * remove an element from the list of listeners of the remote panel
+	 * @param listener the listener to remove
+	 */
 	public void removeRemotePanelKeyListener(KeyListener listener){
 		this.remotePanel.removeKeyListener(listener);
 	}
 	
+	/**
+	 * add an element to the list of listeners of the value buttons
+	 * @param listener the listener to add
+	 */
 	public void addValueButtonsListener(ActionListener listener) {
 		for(JButton button : valueButtonsList){
 			button.addActionListener(listener);
 		}
 	}
 
+	/**
+	 * remove an element from the list of listeners of the value buttons
+	 * @param listener the listener to remove
+	 */
 	public void removeValueButtonsListener(ActionListener listener) {
 		for(JButton button : valueButtonsList){
 			button.removeActionListener(listener);
 		}
 	}
 	
+	/**
+	 * add an element to the list of listeners of the del button
+	 * @param actionListener the listener to add
+	 */
 	public void addDelButtonListener(ActionListener actionListener) {
 		this.delButton.addActionListener(actionListener);
 	}
 
+	/**
+	 * remove an element from the list of listeners of the del button
+	 * @param actionListener the listener to remove
+	 */
 	public void removeDelButtonListener(ActionListener actionListener) {
 		this.delButton.removeActionListener(actionListener);
 	}
-	
+
+	/**
+	 * add an element to the list of listeners of the enter button
+	 * @param actionListener the listener to add
+	 */
 	public void addEnterButtonListener(ActionListener actionListener) {
 		this.enterButton.addActionListener(actionListener);
 	}
 
+	/**
+	 * remove an element from the list of listeners of the enter button
+	 * @param actionListener the listener to remove
+	 */
 	public void removeEnterButtonListener(ActionListener actionListener) {
 		this.enterButton.removeActionListener(actionListener);
 	}
 	
+	/**
+	 * add an element to the list of listeners of the reset button
+	 * @param actionListener the listener to add
+	 */
 	public void addResetButtonListener(ActionListener actionListener) {
 		this.resetButton.addActionListener(actionListener);
 	}
 	
+	/**
+	 * remove an element from the list of listeners of the reset button
+	 * @param actionListener the listener to remove
+	 */
 	public void removeResetButtonListener(ActionListener actionListener) {
 		this.resetButton.removeActionListener(actionListener);
 	}
 	
+	/**
+	 * get the input map of the remote panel
+	 * @return the input map
+	 */
 	public InputMap getRemotePanelInputMap(){
 		return this.remotePanel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
 	}
 	
+	/**
+	 * get the action map of the remote panel
+	 * @return the action map
+	 */
 	public ActionMap getRemotePanelActionMap(){
 		return this.remotePanel.getActionMap();
 	}
 	
+	/**
+	 * determines whether the enter button is enabled
+	 * @return true if it enabled or false it is disabled
+	 */
 	public boolean isEnterButtonEnabled() {
 		return this.enterButton.isEnabled();
 	}
-	
+
+	/**
+	 * determines whether the reset button is enabled
+	 * @return true if it enabled or false it is disabled
+	 */
 	public boolean isResetButtonEnabled() {
 		return this.resetButton.isEnabled();
 	}
 	
-	public boolean isdelButtonEnabled() {
+	/**
+	 * determines whether the del button is enabled
+	 * @return true if it enabled or false it is disabled
+	 */
+	public boolean isDelButtonEnabled() {
 		return this.delButton.isEnabled();
 	}
 	
+	/**
+	 * get the list of values on the buttons
+	 * @return the values list
+	 */
 	public List<Character> getValuesList(){
 		return this.valuesList;
 	}

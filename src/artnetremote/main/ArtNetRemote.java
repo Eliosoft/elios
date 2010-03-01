@@ -17,6 +17,11 @@ import artnetremote.gui.views.LogsView;
 import artnetremote.gui.views.PrefsView;
 import artnetremote.gui.views.RemoteView;
 
+/**
+ * @author jeremie
+ * Main Class of ArtNet Remote Software
+ * Contains the main method, used to launch the application
+ */
 public class ArtNetRemote {
 
 	/**
@@ -25,13 +30,16 @@ public class ArtNetRemote {
 	public static void main(String[] args) {
 		RemoteModel remoteModel = new RemoteModel();
 		final RemoteView remoteView = new RemoteView(remoteModel);
-		RemoteController remoteController = new RemoteController(remoteModel,remoteView);
+		//used to make relation between view and model
+		new RemoteController(remoteModel,remoteView);
 		
 		PrefsView prefsView = new PrefsView(remoteModel);
-		PrefsController prefsController = new PrefsController(remoteModel, prefsView);
+		//used to make relation between view and model
+		new PrefsController(remoteModel, prefsView);
 		
 		LogsView logsView = new LogsView(remoteModel);
-		LogsController logsController = new LogsController(remoteModel, logsView);
+		//used to make relation between view and model
+		new LogsController(remoteModel, logsView);
 		
 		LogsLineView logsLineView = new LogsLineView(remoteModel);
 		

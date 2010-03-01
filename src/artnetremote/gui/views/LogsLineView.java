@@ -6,12 +6,21 @@ import javax.swing.event.ListDataListener;
 
 import artnetremote.gui.models.RemoteModel;
 
+/**
+ * @author jeremie
+ * The view of the Logs Line
+ * This view prints the last line of logs in a textfield
+ */
 public class LogsLineView {
 
 	private final RemoteModel remoteModel;
 	
 	private final JTextField logField = new JTextField();
 
+	/**
+	 * The constructor of the class
+	 * @param remoteModel the model associated with this view
+	 */
 	public LogsLineView(RemoteModel remoteModel) {
 		this.remoteModel = remoteModel;
 		this.logField.setEditable(false);
@@ -40,6 +49,10 @@ public class LogsLineView {
 
 	}
 	
+	/**
+	 * gets the log field
+	 * @return the log field of the view
+	 */
 	public JTextField getLogField() {
 		return this.logField;
 	}
