@@ -6,7 +6,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map.Entry;
 
-import artnet4j.ArtNet;
+import javax.swing.SpinnerModel;
+import javax.swing.SpinnerNumberModel;
+
+import artnet4j.ArtNetServer;
 import artnet4j.packets.ArtDmxPacket;
 import artnetremote.gui.events.ArtNetStartedEvent;
 import artnetremote.gui.events.ArtNetStoppedEvent;
@@ -20,11 +23,13 @@ import artnetremote.gui.listeners.RemoteModelListener;
  */
 public class RemoteModel {
 	private LogsListModel logsListModel = new LogsListModel();
+	private SpinnerNumberModel inPortSpinnerModel = new SpinnerNumberModel(ArtNetServer.DEFAULT_PORT,0,65535,1);
+	private SpinnerNumberModel outPortSpinnerModel = new SpinnerNumberModel(ArtNetServer.DEFAULT_PORT,0,65535,1);
 	private StringBuilder commandLine = new StringBuilder();
 	private List<RemoteModelListener> remoteModelChangedListeners = new ArrayList<RemoteModelListener>();
 	private byte[] dmxArray = new byte[512];
 	
-	private ArtNet artnet = new ArtNet();
+	private ArtNetServer artnetServer = new ArtNetServer();
 	private int subnet = 0;
 	private int universe = 0;
 	private int sequenceId = 0;
@@ -100,7 +105,7 @@ public class RemoteModel {
 		artDmxPacket.setUniverse(this.subnet, this.universe);
 		artDmxPacket.setSequenceID(this.sequenceId  % 255);
 		artDmxPacket.setDMX(this.dmxArray, this.dmxArray.length);
-		this.artnet.broadcastPacket(artDmxPacket);
+		this.artnetServer.broadcastPacket(artDmxPacket);
 		
 		this.sequenceId++;
 		
@@ -112,7 +117,8 @@ public class RemoteModel {
 	 */
 	public void startArtNet(){
 		try {
-			this.artnet.start();
+			this.artnetServer = new ArtNetServer((Integer)this.inPortSpinnerModel.getValue(),(Integer)this.outPortSpinnerModel.getValue());
+			this.artnetServer.start();
 		} catch (Exception e) {
 			this.logsListModel.addLogLine("Exception : " + e.getMessage());
 			e.printStackTrace();
@@ -125,7 +131,7 @@ public class RemoteModel {
 	 * stop the ArtNet Server 
 	 */
 	public void stopArtNet(){
-		this.artnet.stop();
+		this.artnetServer.stop();
 		this.logsListModel.addLogLine("ArtNet Stopped");
 		this.fireArtNetStopped();
 	}
@@ -156,7 +162,23 @@ public class RemoteModel {
 	 * @return the Logs list model
 	 */
 	public LogsListModel getLogsListModel() {
-		return logsListModel;
+		return this.logsListModel;
+	}
+
+	/**
+	 * get the model of the in port
+	 * @return the in port spinner model
+	 */
+	public SpinnerModel getInPortSpinnerModel() {
+		return this.inPortSpinnerModel;
+	}
+	
+	/**
+	 * get the model of the out port
+	 * @return the out port spinner model
+	 */
+	public SpinnerModel getOutPortSpinnerModel() {
+		return this.outPortSpinnerModel;
 	}
 	
 	/**
