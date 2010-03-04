@@ -90,9 +90,9 @@ public class RemoteView {
 		this.addValueButton(';', 4, 2, true);
 		this.addValueButton('0', 4, 2, true);
 		this.addValueButton('@', 4, 2, true);
-		this.delButton = this.addButton("Del", 5, 2, false);
-		this.enterButton = this.addButton("Enter", 5, 2, false);
-		this.resetButton = this.addButton("Reset", 5, 2, false);
+		this.delButton = this.addButton(Messages.getString("remoteview.delete"), 5, 2, false); //$NON-NLS-1$
+		this.enterButton = this.addButton(Messages.getString("remoteview.enter"), 5, 2, false); //$NON-NLS-1$
+		this.resetButton = this.addButton(Messages.getString("remoteview.reset"), 5, 2, false); //$NON-NLS-1$
 	}
 	
 	/**

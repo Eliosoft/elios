@@ -65,7 +65,7 @@ public class LogsView {
 		this.constraints.gridy = 0;
 		this.logsPanel.add(scrollPane, this.constraints);
 		
-		this.clearLogsButton = new JButton("Clear Logs");
+		this.clearLogsButton = new JButton(Messages.getString("logsview.clear")); //$NON-NLS-1$
 		this.constraints.fill = GridBagConstraints.NONE;
 		this.constraints.gridy = 1;
 		logsPanel.add(this.clearLogsButton, this.constraints);

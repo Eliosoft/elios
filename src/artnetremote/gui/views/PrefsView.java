@@ -44,7 +44,7 @@ public class PrefsView {
 		this.remoteModel = remoteModel;
 		
 		JPanel artnetServer = new JPanel();
-		artnetServer.setName("ArtNet Server");
+		artnetServer.setName(Messages.getString("prefsview.artnetserver")); //$NON-NLS-1$
 		TitledBorder border = BorderFactory.createTitledBorder(artnetServer.getName());
 		border.setTitleJustification(TitledBorder.CENTER);
 		artnetServer.setBorder(border);
@@ -54,23 +54,23 @@ public class PrefsView {
 		
 		constraints.gridy = 0;
 		this.inPortSpinner = new JSpinner(this.remoteModel.getInPortSpinnerModel());
-		JLabel inPortLabel = new JLabel("In Port");
+		JLabel inPortLabel = new JLabel(Messages.getString("prefsview.port.in")); //$NON-NLS-1$
 		artnetServer.add(inPortLabel,constraints);
 		inPortLabel.setLabelFor(this.inPortSpinner);
 		artnetServer.add(this.inPortSpinner,constraints);
 
 		constraints.gridy = 1;
 		this.outPortSpinner = new JSpinner(this.remoteModel.getOutPortSpinnerModel());
-		JLabel outPortLabel = new JLabel("Out Port");
+		JLabel outPortLabel = new JLabel(Messages.getString("prefsview.port.out")); //$NON-NLS-1$
 		artnetServer.add(outPortLabel,constraints);
 		outPortLabel.setLabelFor(this.outPortSpinner);
 		artnetServer.add(this.outPortSpinner,constraints);
 		
 		constraints.gridy = 2;
-		this.startButton = new JButton("Start");
+		this.startButton = new JButton(Messages.getString("prefsview.start")); //$NON-NLS-1$
 		artnetServer.add(this.startButton,constraints);
 		
-		this.stopButton = new JButton("Stop");
+		this.stopButton = new JButton(Messages.getString("prefsview.stop")); //$NON-NLS-1$
 		this.stopButton.setEnabled(false);
 		artnetServer.add(this.stopButton,constraints);
 		
