@@ -22,7 +22,7 @@ public class LogsListModel extends AbstractListModel {
 	private List<String> logs;
 	
 	/**
-	 * Contructs a {@code LogsListModel} that wraps the 
+	 * Constructs a {@code LogsListModel} that wraps the 
 	 * {@code java.util.Logger} given in argument.
 	 * 
 	 * @param logger {@code java.util.Logger} to wrap.
@@ -57,7 +57,7 @@ public class LogsListModel extends AbstractListModel {
 	}
 	
 	/**
-	 * Adds a Log Line in the list.
+	 * Adds a log Line in the list.
 	 * 
 	 * @param logLine the log line to add
 	 */
