@@ -5,10 +5,12 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map.Entry;
+import java.util.logging.Logger;
 
 import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
 
+import artnet4j.ArtNet;
 import artnet4j.ArtNetServer;
 import artnet4j.packets.ArtDmxPacket;
 import artnetremote.gui.events.ArtNetStartedEvent;
@@ -18,21 +20,36 @@ import artnetremote.gui.listeners.RemoteModelListener;
 
 
 /**
- * @author jeremie
  * This model describes almost all data of the artnet-remote.
+ * 
+ * @author jeremie
+ * @author Alexandre COLLIGNON
  */
 public class RemoteModel {
-	private LogsListModel logsListModel = new LogsListModel();
-	private SpinnerNumberModel inPortSpinnerModel = new SpinnerNumberModel(ArtNetServer.DEFAULT_PORT,0,65535,1);
-	private SpinnerNumberModel outPortSpinnerModel = new SpinnerNumberModel(ArtNetServer.DEFAULT_PORT,0,65535,1);
-	private StringBuilder commandLine = new StringBuilder();
-	private List<RemoteModelListener> remoteModelChangedListeners = new ArrayList<RemoteModelListener>();
-	private byte[] dmxArray = new byte[512];
+	private LogsListModel logsListModel;
+	private SpinnerNumberModel inPortSpinnerModel;
+	private SpinnerNumberModel outPortSpinnerModel;
+	private StringBuilder commandLine;
+	private List<RemoteModelListener> remoteModelChangedListeners;
+	private byte[] dmxArray;
 	
-	private ArtNetServer artnetServer = new ArtNetServer();
-	private int subnet = 0;
-	private int universe = 0;
-	private int sequenceId = 0;
+	private ArtNetServer artnetServer;
+	private int subnet;
+	private int universe;
+	private int sequenceId;
+
+	private final transient Logger logger = Logger.getLogger(RemoteModel.class.getName());
+	
+	public RemoteModel() {
+		logsListModel = new LogsListModel(ArtNet.logger);
+		logsListModel.addLogger(logger);
+		inPortSpinnerModel = new SpinnerNumberModel(ArtNetServer.DEFAULT_PORT,0,65535,1);
+		outPortSpinnerModel = new SpinnerNumberModel(ArtNetServer.DEFAULT_PORT,0,65535,1);
+		commandLine = new StringBuilder();
+		remoteModelChangedListeners = new ArrayList<RemoteModelListener>();
+		dmxArray = new byte[512];
+		artnetServer = new ArtNetServer();
+	}
 	
 	/**
 	 * add a character to the command line
@@ -80,7 +97,7 @@ public class RemoteModel {
 				channelsValues.put(commandSplit[0], commandSplit[1]);
 			}
 			else{
-				logsListModel.addLogLine("Exception : bad syntax in command line");
+				logger.warning("bad syntax in command line");
 				return;
 			}
 		}
@@ -96,7 +113,7 @@ public class RemoteModel {
 		
 		this.sendDmxCommand();
 
-		logsListModel.addLogLine("Command : "+commandLine.toString());
+		logger.info("Comand sent : " + commandLine.toString());
 		this.resetCommandLine();
 	}
 	
@@ -109,7 +126,7 @@ public class RemoteModel {
 		
 		this.sequenceId++;
 		
-		this.logsListModel.addLogLine("Info : broadcast DMX packet sent");
+		logger.info("broadcast DMX packet sent");
 	}
 
 	/**
@@ -120,10 +137,10 @@ public class RemoteModel {
 			this.artnetServer = new ArtNetServer((Integer)this.inPortSpinnerModel.getValue(),(Integer)this.outPortSpinnerModel.getValue());
 			this.artnetServer.start();
 		} catch (Exception e) {
-			this.logsListModel.addLogLine("Exception : " + e.getMessage());
+			logger.severe(e.getMessage());
 			e.printStackTrace();
 		}
-		this.logsListModel.addLogLine("ArtNet Started");
+		logger.info("ArtNet Started");
 		this.fireArtNetStarted();
 	}
 	
@@ -132,7 +149,7 @@ public class RemoteModel {
 	 */
 	public void stopArtNet(){
 		this.artnetServer.stop();
-		this.logsListModel.addLogLine("ArtNet Stopped");
+		logger.info("ArtNet Stopped");
 		this.fireArtNetStopped();
 	}
 
