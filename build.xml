@@ -19,17 +19,20 @@
 
 <project name="artnet-remote" default="dist" basedir=".">
 	<description>
-        The artnet-remote build file.
+        The ArtNet-Remote build file. 
+		See README.txt for more details about the project
     </description>
 	<!-- set global properties for this build -->
 	<property name="src" location="src" />
 	<property name="build" location="classes" />
 	<property name="dist" location="dist" />
+	<property name="dist.tmp" location="dist/tmp" />
 	<property name="lib" location="lib" />
-	<property name="res" location="resources"/>
+	<property name="res" location="resources" />
 	<property name="main-class" value="artnetremote.main.ArtNetRemote" />
 
 	<path>
+		<!-- Define classpath -->
 		<fileset dir="${lib}" includes="*.jar" />
 	</path>
 
@@ -49,15 +52,18 @@
 				</fileset>
 			</classpath>
 		</javac>
+		<!-- Copy the resources -->
 		<copy todir="${build}">
 			<fileset dir="${res}" />
 		</copy>
 	</target>
 
-	<target name="dist" depends="compile" description="generate the distribution">
+	<target name="create_dist-dir">
 		<!-- Create the distribution directory -->
 		<mkdir dir="${dist}" />
-
+	</target>
+	
+	<target name="dist" depends="compile, create_dist-dir" description="generate the distribution">
 		<!-- Put everything in ${build} into the artnet-${DSTAMP}.jar file -->
 		<jar jarfile="${dist}/artnet-remote-${DSTAMP}.jar" basedir="${build}">
 			<manifest>
@@ -65,7 +71,31 @@
 			</manifest>
 		</jar>
 	</target>
-
+	
+	<target name="dist_all-in-one" depends="compile, create_dist-dir" description="generate the all-in-one distribution">
+		<mkdir dir="${dist.tmp}" />
+		<!-- Extract jar lib to a temporary dir -->
+		<unzip dest="${dist.tmp}">
+			<fileset dir="${lib}">
+				<include name="*.jar" />
+			</fileset>
+			<patternset>
+				<exclude name="META-INF" />
+				<exclude name="*.mf" />
+				<exclude name="*.MF" />
+			</patternset>
+		</unzip>
+		<!-- Create the jar -->
+		<jar jarfile="${dist}/artnet-remote-all-${DSTAMP}.jar">
+			<fileset dir="${build}" />
+			<fileset dir="${dist.tmp}" />
+			<manifest>
+				<attribute name="Main-Class" value="${main-class}" />
+			</manifest>
+		</jar>
+		<delete dir="${dist.tmp}"/>
+	</target>
+	
 	<target name="clean" description="clean up">
 		<!-- Delete the ${build} and ${dist} directory trees -->
 		<delete dir="${build}" />
