@@ -27,6 +27,7 @@ import artnetremote.gui.views.LogsView;
 
 /**
  * The controller of the log view.
+ *
  * @author Jeremie GASTON-RAOUL
  */
 public class LogsController {

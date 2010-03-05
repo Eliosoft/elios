@@ -41,6 +41,7 @@ import artnetremote.gui.models.RemoteModel;
 
 /**
  * The view of the remote.
+ *
  * @author Jeremie GASTON-RAOUL
  */
 public class RemoteView {
@@ -117,7 +118,7 @@ public class RemoteView {
 	 * Gets the remote panel.
 	 * @return the panel
 	 */
-	public JPanel getRemotePanel(){
+	public JPanel getRemotePanel() {
 		return this.remotePanel;
 	}
 
@@ -125,7 +126,7 @@ public class RemoteView {
 	 * Sets text of the command line field.
 	 * @param value the text to set
 	 */
-	public void setCommandLineFieldValue(String value){
+	public void setCommandLineFieldValue(String value) {
 		this.commandLine.setText(value);
 	}
 
@@ -133,7 +134,7 @@ public class RemoteView {
 	 * Adds an element to the list of listeners of the remote panel.
 	 * @param listener the listener to add
 	 */
-	public void addRemotePanelKeyListener(KeyListener listener){
+	public void addRemotePanelKeyListener(KeyListener listener) {
 		this.remotePanel.addKeyListener(listener);
 	}
 
@@ -141,7 +142,7 @@ public class RemoteView {
 	 * Removes an element from the list of listeners of the remote panel.
 	 * @param listener the listener to remove
 	 */
-	public void removeRemotePanelKeyListener(KeyListener listener){
+	public void removeRemotePanelKeyListener(KeyListener listener) {
 		this.remotePanel.removeKeyListener(listener);
 	}
 
@@ -217,7 +218,7 @@ public class RemoteView {
 	 * Gets the input map of the remote panel.
 	 * @return the input map
 	 */
-	public InputMap getRemotePanelInputMap(){
+	public InputMap getRemotePanelInputMap() {
 		return this.remotePanel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
 	}
 
@@ -225,7 +226,7 @@ public class RemoteView {
 	 * Gets the action map of the remote panel.
 	 * @return the action map
 	 */
-	public ActionMap getRemotePanelActionMap(){
+	public ActionMap getRemotePanelActionMap() {
 		return this.remotePanel.getActionMap();
 	}
 
@@ -257,11 +258,11 @@ public class RemoteView {
 	 * Gets the list of values on the buttons.
 	 * @return the values list
 	 */
-	public List<Character> getValuesList(){
+	public List<Character> getValuesList() {
 		return this.valuesList;
 	}
 
-	private void addValueButton(final Character c, int gridY, int gridWidth, boolean enabled){
+	private void addValueButton(final Character c, int gridY, int gridWidth, boolean enabled) {
 		JButton button = addButton(c.toString(), gridY, gridWidth, enabled);
 		valuesList.add(c);
 		valueButtonsList.add(button);

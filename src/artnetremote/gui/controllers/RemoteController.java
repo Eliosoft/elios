@@ -101,7 +101,7 @@ public class RemoteController {
 		});
 	}
 
-	private void initValueKeyStroke(InputMap inputMap, ActionMap actionMap, final Character c){
+	private void initValueKeyStroke(InputMap inputMap, ActionMap actionMap, final Character c) {
 		inputMap.put(KeyStroke.getKeyStroke(c), c);
 		actionMap.put(c, new AbstractAction() {
 

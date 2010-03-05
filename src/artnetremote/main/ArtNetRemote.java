@@ -39,6 +39,7 @@ import artnetremote.gui.views.RemoteView;
 /**
  * Main Class of ArtNet Remote Software contains the main method
  * used to launch the application.
+ *
  * @author Jeremie GASTON-RAOUL
  */
 public final class ArtNetRemote {

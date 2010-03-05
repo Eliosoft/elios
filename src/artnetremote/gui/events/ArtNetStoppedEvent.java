@@ -21,6 +21,7 @@ package artnetremote.gui.events;
 
 /**
  * Event fired when ArtNet Server is Stopped.
+ *
  * @author Jeremie GASTON-RAOUL
  */
 public class ArtNetStoppedEvent {

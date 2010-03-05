@@ -21,6 +21,7 @@ package artnetremote.gui.events;
 
 /**
  * Event fired when ArtNet Server is started.
+ *
  * @author Jeremie GASTON-RAOUL
  */
 public class ArtNetStartedEvent {

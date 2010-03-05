@@ -27,7 +27,8 @@ import artnetremote.gui.models.RemoteModel;
 
 /**
  * The view of the Logs Line.
- * This view prints the last line of logs in a text field.
+ * This view displays the last line of logs in a text field.
+ *
  * @author Jeremie GASTON-RAOUL
  */
 public class LogsLineView {

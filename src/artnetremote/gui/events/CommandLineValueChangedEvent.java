@@ -21,6 +21,7 @@ package artnetremote.gui.events;
 
 /**
  * Event fired when CommandLine value has changed.
+ *
  * @author Jeremie GASTON-RAOUL
  */
 public class CommandLineValueChangedEvent {

@@ -37,7 +37,6 @@ import artnetremote.gui.events.ArtNetStoppedEvent;
 import artnetremote.gui.events.CommandLineValueChangedEvent;
 import artnetremote.gui.listeners.RemoteModelListener;
 
-
 /**
  * This model describes almost all data of the artnet-remote.
  *
@@ -70,7 +69,7 @@ public class RemoteModel {
 		artnetServer = new ArtNetServer();
 	}
 
-	/**
+/**
 	 * Add a character to the command line.
 	 * @param c the character added
 	 */
@@ -99,14 +98,14 @@ public class RemoteModel {
 	 * Returns the value of the command line.
 	 * @return the value of the command line
 	 */
-	public String getCommandLineValue(){
+	public String getCommandLineValue() {
 		return this.commandLine.toString();
 	}
 
 	/**
 	 * Process the value of the command line.
 	 */
-	public void processCommandLine(){
+	public void processCommandLine() {
 		List<String> commands = Arrays.asList(commandLine.toString().split(";"));
 		HashMap<String, String> channelsValues = new HashMap<String, String>();
 
@@ -143,14 +142,13 @@ public class RemoteModel {
 		this.artnetServer.broadcastPacket(artDmxPacket);
 
 		this.sequenceId++;
-
 		logger.info("broadcast DMX packet sent");
 	}
 
 	/**
 	 * Starts the ArtNet Server.
 	 */
-	public void startArtNet(){
+	public void startArtNet() {
 		try {
 			this.artnetServer = new ArtNetServer((Integer) this.inPortSpinnerModel.getValue(), (Integer) this.outPortSpinnerModel.getValue());
 			this.artnetServer.start();
@@ -165,7 +163,7 @@ public class RemoteModel {
 	/**
 	 * Stops the ArtNet Server.
 	 */
-	public void stopArtNet(){
+	public void stopArtNet() {
 		this.artnetServer.stop();
 		logger.info("ArtNet Stopped");
 		this.fireArtNetStopped();

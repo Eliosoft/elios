@@ -26,6 +26,7 @@ import artnetremote.gui.events.CommandLineValueChangedEvent;
 /**
  * This interface describes the methods that must be implemented
  * by classes which want to be a listener of the remote model.
+ *
  * @author Jeremie GASTON-RAOUL
  */
 public interface RemoteModelListener {

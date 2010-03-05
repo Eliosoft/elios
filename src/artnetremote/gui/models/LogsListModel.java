@@ -80,7 +80,7 @@ public class LogsListModel extends AbstractListModel {
 	 *
 	 * @param logLine the log line to add
 	 */
-	private void addLogLine(String logLine){
+	private void addLogLine(String logLine) {
 		logs.add(logLine);
 		this.fireIntervalAdded(this, logs.size() - 1, logs.size() - 1);
 	}

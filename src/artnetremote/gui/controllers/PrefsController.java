@@ -27,6 +27,7 @@ import artnetremote.gui.views.PrefsView;
 
 /**
  * The Controller of the prefs view.
+ *
  * @author Jeremie GASTON-RAOUL
  */
 public class PrefsController {
@@ -41,7 +42,7 @@ public class PrefsController {
 	 */
 	public PrefsController(RemoteModel remoteModel, PrefsView prefsView) {
 		this.remoteModel = remoteModel;
-		this.prefsView= prefsView;
+		this.prefsView = prefsView;
 
 		this.initButtonsListeners();
 	}

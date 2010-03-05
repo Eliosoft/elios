@@ -36,6 +36,7 @@ import artnetremote.gui.models.RemoteModel;
 
 /**
  * The view of the logs. This class print logs in a list.
+ *
  * @author Jeremie GASTON-RAOUL
  */
 public class LogsView {
@@ -101,7 +102,7 @@ public class LogsView {
 	 * Adds an action listener to the clear logs button.
 	 * @param listener the listener to add
 	 */
-	public void addClearLogsButtonListener(ActionListener listener){
+	public void addClearLogsButtonListener(ActionListener listener) {
 		this.clearLogsButton.addActionListener(listener);
 	}
 
@@ -109,7 +110,7 @@ public class LogsView {
 	 * Removes an action listener to the clear logs button.
 	 * @param listener the listener to remove
 	 */
-	public void removeClearLogsButtonListener(ActionListener listener){
+	public void removeClearLogsButtonListener(ActionListener listener) {
 		this.clearLogsButton.removeActionListener(listener);
 	}
 }

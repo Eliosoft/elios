@@ -76,6 +76,7 @@ public class PrefsView {
 		this.inPortSpinner = new JSpinner(this.remoteModel.getInPortSpinnerModel());
 		JLabel inPortLabel = new JLabel(Messages.getString("prefsview.port.in")); //$NON-NLS-1$
 		artnetServer.add(inPortLabel, constraints);
+		artnetServer.add(inPortLabel, constraints);
 		inPortLabel.setLabelFor(this.inPortSpinner);
 		artnetServer.add(this.inPortSpinner, constraints);
 
@@ -89,7 +90,6 @@ public class PrefsView {
 		constraints.gridy = 2;
 		this.startButton = new JButton(Messages.getString("prefsview.start")); //$NON-NLS-1$
 		artnetServer.add(this.startButton, constraints);
-
 		this.stopButton = new JButton(Messages.getString("prefsview.stop")); //$NON-NLS-1$
 		this.stopButton.setEnabled(false);
 		artnetServer.add(this.stopButton, constraints);
