@@ -1,18 +1,18 @@
 /*
  * This file is part of ArtNet-Remote.
- * 
+ *
  * Copyright 2010 Jeremie GASTON-RAOUL & Alexandre COLLIGNON
- * 
+ *
  * ArtNet-Remote is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * ArtNet-Remote is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with ArtNet-Remote. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -40,8 +40,8 @@ import artnetremote.gui.listeners.RemoteModelListener;
 
 /**
  * This model describes almost all data of the artnet-remote.
- * 
- * @author jeremie
+ *
+ * @author Jeremie GASTON-RAOUL
  * @author Alexandre COLLIGNON
  */
 public class RemoteModel {
@@ -51,27 +51,27 @@ public class RemoteModel {
 	private StringBuilder commandLine;
 	private List<RemoteModelListener> remoteModelChangedListeners;
 	private byte[] dmxArray;
-	
+
 	private ArtNetServer artnetServer;
 	private int subnet;
 	private int universe;
 	private int sequenceId;
 
 	private final transient Logger logger = Logger.getLogger(RemoteModel.class.getName());
-	
+
 	public RemoteModel() {
 		logsListModel = new LogsListModel(ArtNet.logger);
 		logsListModel.addLogger(logger);
-		inPortSpinnerModel = new SpinnerNumberModel(ArtNetServer.DEFAULT_PORT,0,65535,1);
-		outPortSpinnerModel = new SpinnerNumberModel(ArtNetServer.DEFAULT_PORT,0,65535,1);
+		inPortSpinnerModel = new SpinnerNumberModel(ArtNetServer.DEFAULT_PORT, 0, 65535, 1);
+		outPortSpinnerModel = new SpinnerNumberModel(ArtNetServer.DEFAULT_PORT, 0, 65535, 1);
 		commandLine = new StringBuilder();
 		remoteModelChangedListeners = new ArrayList<RemoteModelListener>();
 		dmxArray = new byte[512];
 		artnetServer = new ArtNetServer();
 	}
-	
+
 	/**
-	 * add a character to the command line
+	 * Add a character to the command line.
 	 * @param c the character added
 	 */
 	public void addToCommandLine(Character c) {
@@ -80,80 +80,79 @@ public class RemoteModel {
 	}
 
 	/**
-	 * reset value of the command line
+	 * Resets value of the command line.
 	 */
 	public void resetCommandLine() {
 		this.commandLine.delete(0, this.commandLine.length());
 		this.fireCommandLineValueChanged();
 	}
-	
+
 	/**
-	 * delete the last character of the command line 
+	 * Deletes the last character of the command line.
 	 */
 	public void delLastCommandLineChar() {
-		this.commandLine.delete(this.commandLine.length()-1, this.commandLine.length());
+		this.commandLine.delete(this.commandLine.length() - 1, this.commandLine.length());
 		this.fireCommandLineValueChanged();
 	}
-	
+
 	/**
-	 * get the value of the command line
+	 * Returns the value of the command line.
 	 * @return the value of the command line
 	 */
 	public String getCommandLineValue(){
 		return this.commandLine.toString();
 	}
-	
+
 	/**
-	 * process the value of the command line
+	 * Process the value of the command line.
 	 */
 	public void processCommandLine(){
 		List<String> commands = Arrays.asList(commandLine.toString().split(";"));
 		HashMap<String, String> channelsValues = new HashMap<String, String>();
-		
-		for(String command : commands){
+
+		for (String command : commands) {
 			String[] commandSplit = command.split("@");
-			if(commandSplit.length == 2){
+			if (commandSplit.length == 2) {
 				channelsValues.put(commandSplit[0], commandSplit[1]);
-			}
-			else{
+			} else {
 				logger.warning("bad syntax in command line");
 				return;
 			}
 		}
-		
+
 		//TODO : ajouter la gestion des "," et des "-"
-		
-		for(Entry<String, String> channelValue : channelsValues.entrySet()){
-			int channel = Integer.parseInt(channelValue.getKey()) -1;
+
+		for (Entry<String, String> channelValue : channelsValues.entrySet()) {
+			int channel = Integer.parseInt(channelValue.getKey()) - 1;
 			byte value = (byte) (Integer.parseInt(channelValue.getValue()));
-			
-			this.dmxArray[channel]=value;
+
+			this.dmxArray[channel] = value;
 		}
-		
+
 		this.sendDmxCommand();
 
 		logger.info("Comand sent : " + commandLine.toString());
 		this.resetCommandLine();
 	}
-	
+
 	private void sendDmxCommand() {
 		ArtDmxPacket artDmxPacket = new ArtDmxPacket();
 		artDmxPacket.setUniverse(this.subnet, this.universe);
 		artDmxPacket.setSequenceID(this.sequenceId  % 255);
 		artDmxPacket.setDMX(this.dmxArray, this.dmxArray.length);
 		this.artnetServer.broadcastPacket(artDmxPacket);
-		
+
 		this.sequenceId++;
-		
+
 		logger.info("broadcast DMX packet sent");
 	}
 
 	/**
-	 * start the ArtNet Server
+	 * Starts the ArtNet Server.
 	 */
 	public void startArtNet(){
 		try {
-			this.artnetServer = new ArtNetServer((Integer)this.inPortSpinnerModel.getValue(),(Integer)this.outPortSpinnerModel.getValue());
+			this.artnetServer = new ArtNetServer((Integer) this.inPortSpinnerModel.getValue(), (Integer) this.outPortSpinnerModel.getValue());
 			this.artnetServer.start();
 		} catch (Exception e) {
 			logger.severe(e.getMessage());
@@ -162,9 +161,9 @@ public class RemoteModel {
 		logger.info("ArtNet Started");
 		this.fireArtNetStarted();
 	}
-	
+
 	/**
-	 * stop the ArtNet Server 
+	 * Stops the ArtNet Server.
 	 */
 	public void stopArtNet(){
 		this.artnetServer.stop();
@@ -173,28 +172,28 @@ public class RemoteModel {
 	}
 
 	private void fireArtNetStarted() {
-		for(RemoteModelListener listener : this.remoteModelChangedListeners){
+		for (RemoteModelListener listener : this.remoteModelChangedListeners) {
 			ArtNetStartedEvent e = new ArtNetStartedEvent();
 			listener.artNetStarted(e);
 		}
 	}
 
 	private void fireArtNetStopped() {
-		for(RemoteModelListener listener : this.remoteModelChangedListeners){
+		for (RemoteModelListener listener : this.remoteModelChangedListeners) {
 			ArtNetStoppedEvent e = new ArtNetStoppedEvent();
 			listener.artNetStopped(e);
 		}
 	}
 
 	private void fireCommandLineValueChanged() {
-		for(RemoteModelListener listener : this.remoteModelChangedListeners){
+		for (RemoteModelListener listener : this.remoteModelChangedListeners) {
 			CommandLineValueChangedEvent e = new CommandLineValueChangedEvent(this.getCommandLineValue());
 			listener.commandLineValueChanged(e);
 		}
 	}
 
 	/**
-	 * get the model of the logs list
+	 * Returns the model of the logs list.
 	 * @return the Logs list model
 	 */
 	public LogsListModel getLogsListModel() {
@@ -202,31 +201,31 @@ public class RemoteModel {
 	}
 
 	/**
-	 * get the model of the in port
+	 * Gets the model of the in port.
 	 * @return the in port spinner model
 	 */
 	public SpinnerModel getInPortSpinnerModel() {
 		return this.inPortSpinnerModel;
 	}
-	
+
 	/**
-	 * get the model of the out port
+	 * Gets the model of the out port.
 	 * @return the out port spinner model
 	 */
 	public SpinnerModel getOutPortSpinnerModel() {
 		return this.outPortSpinnerModel;
 	}
-	
+
 	/**
-	 * add an element to the list of listener of the remote model
+	 * Adds an element to the list of listener of the remote model.
 	 * @param listener the listener to add
 	 */
 	public void addRemoteModelChangedListener(RemoteModelListener listener) {
 		this.remoteModelChangedListeners.add(listener);
 	}
-	
+
 	/**
-	 * remove an element to the list of listener of the remote model
+	 * Removes an element to the list of listener of the remote model.
 	 * @param listener the listener to remove
 	 */
 	public void removeRemoteModelChangedChangedListener(RemoteModelListener listener) {
