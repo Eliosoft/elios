@@ -25,6 +25,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
@@ -56,6 +57,8 @@ public class PrefsView {
 	private final JSpinner inPortSpinner;
 	private final JSpinner outPortSpinner;
 
+	private JComboBox broadcastAddressCombo;
+
 	/**
 	 * The Constructor of the view.
 	 * @param remoteModel the model associated to the view
@@ -72,22 +75,31 @@ public class PrefsView {
 
 		this.prefsPanel.add(artnetServer);
 
+		constraints.gridwidth = 2;
 		constraints.gridy = 0;
+		this.broadcastAddressCombo = new JComboBox(this.remoteModel.getBroadcastAddressComboModel());
+		JLabel broadcastAddressLabel = new JLabel(Messages.getString("prefsview.broadcastaddress")); //$NON-NLS-1$
+		artnetServer.add(broadcastAddressLabel, constraints);
+		broadcastAddressLabel.setLabelFor(this.broadcastAddressCombo);
+		constraints.gridy = 1;
+		artnetServer.add(this.broadcastAddressCombo,constraints);
+		
+		constraints.gridwidth = 1;		
+		constraints.gridy = 2;
 		this.inPortSpinner = new JSpinner(this.remoteModel.getInPortSpinnerModel());
 		JLabel inPortLabel = new JLabel(Messages.getString("prefsview.port.in")); //$NON-NLS-1$
-		artnetServer.add(inPortLabel, constraints);
 		artnetServer.add(inPortLabel, constraints);
 		inPortLabel.setLabelFor(this.inPortSpinner);
 		artnetServer.add(this.inPortSpinner, constraints);
 
-		constraints.gridy = 1;
+		constraints.gridy = 3;
 		this.outPortSpinner = new JSpinner(this.remoteModel.getOutPortSpinnerModel());
 		JLabel outPortLabel = new JLabel(Messages.getString("prefsview.port.out")); //$NON-NLS-1$
 		artnetServer.add(outPortLabel, constraints);
 		outPortLabel.setLabelFor(this.outPortSpinner);
 		artnetServer.add(this.outPortSpinner, constraints);
 
-		constraints.gridy = 2;
+		constraints.gridy = 4;
 		this.startButton = new JButton(Messages.getString("prefsview.start")); //$NON-NLS-1$
 		artnetServer.add(this.startButton, constraints);
 		this.stopButton = new JButton(Messages.getString("prefsview.stop")); //$NON-NLS-1$

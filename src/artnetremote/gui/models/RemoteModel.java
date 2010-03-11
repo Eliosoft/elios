@@ -26,8 +26,12 @@ import java.util.List;
 import java.util.Map.Entry;
 import java.util.logging.Logger;
 
+import javax.swing.ComboBoxModel;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.event.ListDataEvent;
+import javax.swing.event.ListDataListener;
 
 import artnet4j.ArtNet;
 import artnet4j.ArtNetServer;
@@ -47,6 +51,8 @@ public class RemoteModel {
 	private LogsListModel logsListModel;
 	private SpinnerNumberModel inPortSpinnerModel;
 	private SpinnerNumberModel outPortSpinnerModel;
+	private ComboBoxModel broadcastAddressComboModel;
+
 	private StringBuilder commandLine;
 	private List<RemoteModelListener> remoteModelChangedListeners;
 	private byte[] dmxArray;
@@ -56,20 +62,43 @@ public class RemoteModel {
 	private int universe;
 	private int sequenceId;
 
+	private static final int MIN_PORT = 0;
+	private static final int MAX_PORT = 65535;
+	private static final String[] BROADCAST_ADDRESSES = {"2.255.255.255","10.255.255.255","127.255.255.255"};
+	
 	private final transient Logger logger = Logger.getLogger(RemoteModel.class.getName());
 
+	/**
+	 * Default constructor of the remote model
+	 */
 	public RemoteModel() {
-		logsListModel = new LogsListModel(ArtNet.logger);
-		logsListModel.addLogger(logger);
-		inPortSpinnerModel = new SpinnerNumberModel(ArtNetServer.DEFAULT_PORT, 0, 65535, 1);
-		outPortSpinnerModel = new SpinnerNumberModel(ArtNetServer.DEFAULT_PORT, 0, 65535, 1);
-		commandLine = new StringBuilder();
-		remoteModelChangedListeners = new ArrayList<RemoteModelListener>();
-		dmxArray = new byte[512];
-		artnetServer = new ArtNetServer();
+		this.logsListModel = new LogsListModel(ArtNet.logger);
+		this.logsListModel.addLogger(logger);
+		this.inPortSpinnerModel = new SpinnerNumberModel(ArtNetServer.DEFAULT_PORT, RemoteModel.MIN_PORT, RemoteModel.MAX_PORT, 1);
+		this.outPortSpinnerModel = new SpinnerNumberModel(ArtNetServer.DEFAULT_PORT, RemoteModel.MIN_PORT, RemoteModel.MAX_PORT, 1);
+		this.broadcastAddressComboModel = new DefaultComboBoxModel(RemoteModel.BROADCAST_ADDRESSES);
+				
+		this.commandLine = new StringBuilder();
+		this.remoteModelChangedListeners = new ArrayList<RemoteModelListener>();
+		this.dmxArray = new byte[512];
+		this.artnetServer = new ArtNetServer();
+		
+		this.broadcastAddressComboModel.addListDataListener(new ListDataListener() {
+			@Override
+			public void intervalRemoved(ListDataEvent e) {}
+			
+			@Override
+			public void intervalAdded(ListDataEvent e) {}
+			
+			@Override
+			public void contentsChanged(ListDataEvent e) {
+				artnetServer.setBroadcastAddress((String)broadcastAddressComboModel.getSelectedItem());
+			}
+		});
+
 	}
 
-/**
+	/**
 	 * Add a character to the command line.
 	 * @param c the character added
 	 */
@@ -151,6 +180,7 @@ public class RemoteModel {
 	public void startArtNet() {
 		try {
 			this.artnetServer = new ArtNetServer((Integer) this.inPortSpinnerModel.getValue(), (Integer) this.outPortSpinnerModel.getValue());
+			this.artnetServer.setBroadcastAddress("127.255.255.255");
 			this.artnetServer.start();
 		} catch (Exception e) {
 			logger.severe(e.getMessage());
@@ -214,6 +244,14 @@ public class RemoteModel {
 		return this.outPortSpinnerModel;
 	}
 
+	/**
+	 * Gets the model of the broadcast address
+	 * @return the broadcast address combo model
+	 */
+	public ComboBoxModel getBroadcastAddressComboModel() {
+		return this.broadcastAddressComboModel;
+	}
+	
 	/**
 	 * Adds an element to the list of listener of the remote model.
 	 * @param listener the listener to add
