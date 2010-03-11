@@ -180,7 +180,7 @@ public class RemoteModel {
 	public void startArtNet() {
 		try {
 			this.artnetServer = new ArtNetServer((Integer) this.inPortSpinnerModel.getValue(), (Integer) this.outPortSpinnerModel.getValue());
-			this.artnetServer.setBroadcastAddress("127.255.255.255");
+			this.artnetServer.setBroadcastAddress((String)this.broadcastAddressComboModel.getSelectedItem());
 			this.artnetServer.start();
 		} catch (Exception e) {
 			logger.severe(e.getMessage());
