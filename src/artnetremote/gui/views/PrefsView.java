@@ -56,8 +56,12 @@ public class PrefsView {
 
 	private final JSpinner inPortSpinner;
 	private final JSpinner outPortSpinner;
-
+	private JSpinner universeSpinner;
+	private JSpinner subnetSpinner;
+	
 	private JComboBox broadcastAddressCombo;
+
+
 
 	/**
 	 * The Constructor of the view.
@@ -75,31 +79,43 @@ public class PrefsView {
 
 		this.prefsPanel.add(artnetServer);
 
-		constraints.gridwidth = 2;
+		constraints.gridwidth = 2;		
 		constraints.gridy = 0;
+		this.universeSpinner = new JSpinner(this.remoteModel.getUniverseSpinnerModel());
+		this.subnetSpinner = new JSpinner(this.remoteModel.getSubnetSpinnerModel());
+		JLabel subnetUniverseLabel = new JLabel(Messages.getString("prefsview.subnetuniverse")); //$NON-NLS-1$
+		artnetServer.add(subnetUniverseLabel, constraints);
+		constraints.gridwidth = 1;
+		constraints.gridy = 1;
+		artnetServer.add(this.subnetSpinner, constraints);
+		artnetServer.add(this.universeSpinner, constraints);
+
+		
+		constraints.gridwidth = 2;
+		constraints.gridy = 2;
 		this.broadcastAddressCombo = new JComboBox(this.remoteModel.getBroadcastAddressComboModel());
 		JLabel broadcastAddressLabel = new JLabel(Messages.getString("prefsview.broadcastaddress")); //$NON-NLS-1$
 		artnetServer.add(broadcastAddressLabel, constraints);
 		broadcastAddressLabel.setLabelFor(this.broadcastAddressCombo);
-		constraints.gridy = 1;
+		constraints.gridy = 3;
 		artnetServer.add(this.broadcastAddressCombo,constraints);
 		
 		constraints.gridwidth = 1;		
-		constraints.gridy = 2;
+		constraints.gridy = 4;
 		this.inPortSpinner = new JSpinner(this.remoteModel.getInPortSpinnerModel());
 		JLabel inPortLabel = new JLabel(Messages.getString("prefsview.port.in")); //$NON-NLS-1$
 		artnetServer.add(inPortLabel, constraints);
 		inPortLabel.setLabelFor(this.inPortSpinner);
 		artnetServer.add(this.inPortSpinner, constraints);
 
-		constraints.gridy = 3;
+		constraints.gridy = 5;
 		this.outPortSpinner = new JSpinner(this.remoteModel.getOutPortSpinnerModel());
 		JLabel outPortLabel = new JLabel(Messages.getString("prefsview.port.out")); //$NON-NLS-1$
 		artnetServer.add(outPortLabel, constraints);
 		outPortLabel.setLabelFor(this.outPortSpinner);
 		artnetServer.add(this.outPortSpinner, constraints);
 
-		constraints.gridy = 4;
+		constraints.gridy = 6;
 		this.startButton = new JButton(Messages.getString("prefsview.start")); //$NON-NLS-1$
 		artnetServer.add(this.startButton, constraints);
 		this.stopButton = new JButton(Messages.getString("prefsview.stop")); //$NON-NLS-1$

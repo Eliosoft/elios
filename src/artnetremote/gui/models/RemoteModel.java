@@ -51,6 +51,8 @@ public class RemoteModel {
 	private LogsListModel logsListModel;
 	private SpinnerNumberModel inPortSpinnerModel;
 	private SpinnerNumberModel outPortSpinnerModel;
+	private SpinnerNumberModel universeSpinnerModel;
+	private SpinnerNumberModel subnetSpinnerModel;
 	private ComboBoxModel broadcastAddressComboModel;
 
 	private StringBuilder commandLine;
@@ -60,6 +62,10 @@ public class RemoteModel {
 
 	private static final int MIN_PORT = 0;
 	private static final int MAX_PORT = 65535;
+	private static final int MIN_SUBNET = 0;
+	private static final int MAX_SUBNET = 15;
+	private static final int MIN_UNIVERSE = 0;
+	private static final int MAX_UNIVERSE = 15;
 	private static final String[] BROADCAST_ADDRESSES = {"2.255.255.255","10.255.255.255","127.255.255.255"};
 	
 	private final transient Logger logger = Logger.getLogger(RemoteModel.class.getName());
@@ -72,11 +78,17 @@ public class RemoteModel {
 		this.logsListModel.addLogger(logger);
 		this.inPortSpinnerModel = new SpinnerNumberModel(ArtNetServer.DEFAULT_PORT, RemoteModel.MIN_PORT, RemoteModel.MAX_PORT, 1);
 		this.outPortSpinnerModel = new SpinnerNumberModel(ArtNetServer.DEFAULT_PORT, RemoteModel.MIN_PORT, RemoteModel.MAX_PORT, 1);
+		this.subnetSpinnerModel = new SpinnerNumberModel(0, RemoteModel.MIN_SUBNET, RemoteModel.MAX_SUBNET, 1);
+		this.universeSpinnerModel = new SpinnerNumberModel(0, RemoteModel.MIN_UNIVERSE, RemoteModel.MAX_UNIVERSE, 1);
 		this.broadcastAddressComboModel = new DefaultComboBoxModel(RemoteModel.BROADCAST_ADDRESSES);
 				
 		this.commandLine = new StringBuilder();
 		this.remoteModelChangedListeners = new ArrayList<RemoteModelListener>();
 		
+		this.initModelsListeners();
+	}
+
+	private void initModelsListeners(){
 		this.broadcastAddressComboModel.addListDataListener(new ListDataListener() {
 			@Override
 			public void intervalRemoved(ListDataEvent e) {}
@@ -103,8 +115,22 @@ public class RemoteModel {
 				RemoteModel.artnetServerManager.setOutPort((Integer)outPortSpinnerModel.getValue());
 			}
 		});
+		
+		this.subnetSpinnerModel.addChangeListener(new ChangeListener() {
+			@Override
+			public void stateChanged(ChangeEvent e) {
+				RemoteModel.artnetServerManager.setSubnet((Integer)subnetSpinnerModel.getValue());
+			}
+		});
+		
+		this.universeSpinnerModel.addChangeListener(new ChangeListener() {
+			@Override
+			public void stateChanged(ChangeEvent e) {
+				RemoteModel.artnetServerManager.setUniverse((Integer)universeSpinnerModel.getValue());
+			}
+		});
 	}
-
+	
 	/**
 	 * Add a character to the command line.
 	 * @param c the character added
@@ -221,6 +247,22 @@ public class RemoteModel {
 		return this.outPortSpinnerModel;
 	}
 
+	/**
+	 * Gets the model of the subnet.
+	 * @return the subnet spinner model
+	 */
+	public SpinnerModel getSubnetSpinnerModel() {
+		return this.subnetSpinnerModel;
+	}
+	
+	/**
+	 * Gets the model of the universe.
+	 * @return the universe spinner model
+	 */
+	public SpinnerModel getUniverseSpinnerModel() {
+		return this.universeSpinnerModel;
+	}
+	
 	/**
 	 * Gets the model of the broadcast address
 	 * @return the broadcast address combo model
