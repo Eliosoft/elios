@@ -20,26 +20,25 @@
 package artnetremote.gui.models;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map.Entry;
 import java.util.logging.Logger;
 
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.event.ListDataEvent;
 import javax.swing.event.ListDataListener;
 
 import artnet4j.ArtNet;
 import artnet4j.ArtNetServer;
-import artnet4j.packets.ArtDmxPacket;
 import artnetremote.gui.events.ArtNetStartedEvent;
 import artnetremote.gui.events.ArtNetStoppedEvent;
 import artnetremote.gui.events.CommandLineValueChangedEvent;
 import artnetremote.gui.listeners.RemoteModelListener;
+import artnetremote.server.ArtnetServerManager;
 
 /**
  * This model describes almost all data of the artnet-remote.
@@ -55,12 +54,8 @@ public class RemoteModel {
 
 	private StringBuilder commandLine;
 	private List<RemoteModelListener> remoteModelChangedListeners;
-	private byte[] dmxArray;
 
-	private ArtNetServer artnetServer;
-	private int subnet;
-	private int universe;
-	private int sequenceId;
+	private final static ArtnetServerManager artnetServerManager = ArtnetServerManager.getInstance();
 
 	private static final int MIN_PORT = 0;
 	private static final int MAX_PORT = 65535;
@@ -80,8 +75,6 @@ public class RemoteModel {
 				
 		this.commandLine = new StringBuilder();
 		this.remoteModelChangedListeners = new ArrayList<RemoteModelListener>();
-		this.dmxArray = new byte[512];
-		this.artnetServer = new ArtNetServer();
 		
 		this.broadcastAddressComboModel.addListDataListener(new ListDataListener() {
 			@Override
@@ -92,10 +85,23 @@ public class RemoteModel {
 			
 			@Override
 			public void contentsChanged(ListDataEvent e) {
-				artnetServer.setBroadcastAddress((String)broadcastAddressComboModel.getSelectedItem());
+				RemoteModel.artnetServerManager.setBroadcastAddress((String)broadcastAddressComboModel.getSelectedItem());
 			}
 		});
-
+		
+		this.inPortSpinnerModel.addChangeListener(new ChangeListener() {
+			@Override
+			public void stateChanged(ChangeEvent e) {
+				RemoteModel.artnetServerManager.setInPort((Integer)inPortSpinnerModel.getValue());
+			}
+		});
+		
+		this.outPortSpinnerModel.addChangeListener(new ChangeListener() {
+			@Override
+			public void stateChanged(ChangeEvent e) {
+				RemoteModel.artnetServerManager.setOutPort((Integer)outPortSpinnerModel.getValue());
+			}
+		});
 	}
 
 	/**
@@ -132,45 +138,12 @@ public class RemoteModel {
 	}
 
 	/**
-	 * Process the value of the command line.
+	 * process the command line and send a Dmx command over the network
 	 */
-	public void processCommandLine() {
-		List<String> commands = Arrays.asList(commandLine.toString().split(";"));
-		HashMap<String, String> channelsValues = new HashMap<String, String>();
-
-		for (String command : commands) {
-			String[] commandSplit = command.split("@");
-			if (commandSplit.length == 2) {
-				channelsValues.put(commandSplit[0], commandSplit[1]);
-			} else {
-				logger.warning("bad syntax in command line");
-				return;
-			}
-		}
-
-		//TODO : ajouter la gestion des "," et des "-"
-
-		for (Entry<String, String> channelValue : channelsValues.entrySet()) {
-			int channel = Integer.parseInt(channelValue.getKey()) - 1;
-			byte value = (byte) (Integer.parseInt(channelValue.getValue()));
-
-			this.dmxArray[channel] = value;
-		}
-
-		this.sendDmxCommand();
-
-		logger.info("Comand sent : " + commandLine.toString());
+	public void sendCommand() {
+		RemoteModel.artnetServerManager.processCommandLine(this.commandLine.toString());
+		RemoteModel.artnetServerManager.sendDmxCommand();
 		this.resetCommandLine();
-	}
-
-	private void sendDmxCommand() {
-		ArtDmxPacket artDmxPacket = new ArtDmxPacket();
-		artDmxPacket.setUniverse(this.subnet, this.universe);
-		artDmxPacket.setSequenceID(this.sequenceId  % 255);
-		artDmxPacket.setDMX(this.dmxArray, this.dmxArray.length);
-		this.artnetServer.broadcastPacket(artDmxPacket);
-
-		this.sequenceId++;
 		logger.info("broadcast DMX packet sent");
 	}
 
@@ -179,22 +152,20 @@ public class RemoteModel {
 	 */
 	public void startArtNet() {
 		try {
-			this.artnetServer = new ArtNetServer((Integer) this.inPortSpinnerModel.getValue(), (Integer) this.outPortSpinnerModel.getValue());
-			this.artnetServer.setBroadcastAddress((String)this.broadcastAddressComboModel.getSelectedItem());
-			this.artnetServer.start();
+			RemoteModel.artnetServerManager.startArtNet();
+			logger.info("ArtNet Started");
+			this.fireArtNetStarted();
 		} catch (Exception e) {
 			logger.severe(e.getMessage());
 			e.printStackTrace();
 		}
-		logger.info("ArtNet Started");
-		this.fireArtNetStarted();
 	}
 
 	/**
 	 * Stops the ArtNet Server.
 	 */
 	public void stopArtNet() {
-		this.artnetServer.stop();
+		RemoteModel.artnetServerManager.stopArtNet();
 		logger.info("ArtNet Stopped");
 		this.fireArtNetStopped();
 	}

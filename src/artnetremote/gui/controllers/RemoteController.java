@@ -82,7 +82,7 @@ public class RemoteController {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (remoteView.isEnterButtonEnabled()) {
-					remoteModel.processCommandLine();
+					remoteModel.sendCommand();
 				}
 			}
 		});
@@ -131,7 +131,7 @@ public class RemoteController {
 		this.remoteView.addEnterButtonListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				remoteModel.processCommandLine();
+				remoteModel.sendCommand();
 			}
 		});
 		this.remoteView.addResetButtonListener(new ActionListener() {
