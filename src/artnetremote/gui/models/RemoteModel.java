@@ -39,6 +39,7 @@ import artnetremote.gui.events.ArtNetStoppedEvent;
 import artnetremote.gui.events.CommandLineValueChangedEvent;
 import artnetremote.gui.listeners.RemoteModelListener;
 import artnetremote.server.ArtnetServerManager;
+import artnetremote.server.BadSyntaxException;
 
 /**
  * This model describes almost all data of the artnet-remote.
@@ -141,10 +142,15 @@ public class RemoteModel {
 	 * process the command line and send a Dmx command over the network
 	 */
 	public void sendCommand() {
-		RemoteModel.artnetServerManager.processCommandLine(this.commandLine.toString());
-		RemoteModel.artnetServerManager.sendDmxCommand();
+		try {
+			RemoteModel.artnetServerManager.processCommandLine(this.commandLine.toString());
+			logger.info("Command line : "+commandLine);
+			RemoteModel.artnetServerManager.sendDmxCommand();
+			logger.info("broadcast DMX packet sent");
+		} catch (BadSyntaxException e) {
+			logger.severe("Bad syntax in Command Line");
+		}
 		this.resetCommandLine();
-		logger.info("broadcast DMX packet sent");
 	}
 
 	/**

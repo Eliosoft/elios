@@ -96,8 +96,9 @@ public class ArtnetServerManager {
 	/**
 	 * Process the value of the command line.
 	 * @param commandLine the command line to process
+	 * @throws BadSyntaxException thrown when the command line has a bad syntax
 	 */
-	public void processCommandLine(String commandLine) {
+	public void processCommandLine(String commandLine) throws BadSyntaxException {
 		List<String> commands = Arrays.asList(commandLine.toString().split(";"));
 		HashMap<String, String> channelsValues = new HashMap<String, String>();
 
@@ -106,9 +107,7 @@ public class ArtnetServerManager {
 			if (commandSplit.length == 2) {
 				channelsValues.put(commandSplit[0], commandSplit[1]);
 			} else {
-				//TODO : throws exception
-				//logger.warning("bad syntax in command line");
-				return;
+				throw new BadSyntaxException();
 			}
 		}
 
@@ -119,15 +118,16 @@ public class ArtnetServerManager {
 			byte value = (byte) (Integer.parseInt(channelValue.getValue()));
 
 			this.dmxArray[channel] = value;
-			System.out.println(channel +" "+value);
 		}
 	}
 
 	/**
+	 * set the broadcast address
 	 * @param broadcastAddress
 	 */
 	public void setBroadcastAddress(String broadcastAddress) {
 		this.broadcastAddress = broadcastAddress;
+		this.artnetServer.setBroadcastAddress(broadcastAddress);
 	}
 
 	/**
