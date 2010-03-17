@@ -48,17 +48,32 @@ public class PrefsController {
 	}
 
 	private void initButtonsListeners() {
-		this.prefsView.addStartButtonListener(new ActionListener() {
+		this.prefsView.addStartArtNetButtonListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				remoteModel.startArtNet();
 			}
 		});
 
-		this.prefsView.addStopButtonListener(new ActionListener() {
+		this.prefsView.addStopArtNetButtonListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				remoteModel.stopHttp();
 				remoteModel.stopArtNet();
+			}
+		});
+		
+		this.prefsView.addStartHttpButtonListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				remoteModel.startHttp();
+			}
+		});
+
+		this.prefsView.addStopHttpButtonListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				remoteModel.stopHttp();
 			}
 		});
 	}

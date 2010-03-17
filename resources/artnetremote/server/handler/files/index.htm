@@ -1,0 +1,104 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>ArtNet-Remote</title>
+<style type="text/css">
+<!--
+.red
+{
+	color: red;
+}
+
+.green
+{
+	color: green;
+}
+-->
+</style>
+
+<script type="text/javascript">
+<!--
+var xhr_object = null;
+var isRequestActive = false;
+var url="/data";
+
+var init = function()
+{
+	//alert("load");
+	xhr_object = createXHRObject();
+	if(!xhr_object){
+		alert("pas d'objet");
+		return;
+	}
+	//else alert("objet cree");
+}
+
+var createXHRObject = function()
+{
+	var tempXHR = null;
+	if(window.XMLHttpRequest){ //firefox...
+		tempXHR = new XMLHttpRequest();
+	}
+	else if(window.ActiveXObject){
+		tempXHR = new ActiveXObject("Microsoft.XMLHTTP");
+	}
+	else return null;
+	
+	return tempXHR;
+}
+
+var makeRequest = function(query)
+{
+	xhr_object.open('post',url,true);
+	
+	xhr_object.onreadystatechange = function()
+	{
+		if(xhr_object.readyState == 4){
+			isRequestActive = false;
+			showResult();
+		}
+	}
+	
+	xhr_object.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+	xhr_object.send(query);
+	isRequestActive = true;
+}
+
+var showResult= function()
+{
+	var responseMessageElement = document.getElementById("responseMessage").firstChild;
+	responseMessageElement.nodeValue = xhr_object.responseText;
+	
+	if(xhr_object.status==200){
+		responseMessageElement.className = "green";
+		document.sendData.line.value = "";
+	}
+	else{
+		responseMessageElement.className = "red";
+	}
+}
+
+function test(value){
+		alert(value);
+}
+
+-->
+</script>
+</head>
+
+<body onload="init();">
+
+<form onsubmit="makeRequest(document.sendData.line.value); return false" name="sendData" id="sendData">
+  <p align="center">commande : </p>
+  <p align="center">
+    <input name="line" type="text" id="line" value="" size="40"/>
+</p>
+  <p align="center">
+    <input type="submit" name="Submit" value="Envoyer"/>
+    <input name="Reset" type="reset" id="Reset" value="annuler"/>
+  </p>
+</form>
+<p>&nbsp;</p>
+<p id="responseMessage" align="center" class="green">&nbsp;</p>
+</body>
+</html>

@@ -36,6 +36,8 @@ import javax.swing.JTextField;
 import artnetremote.gui.events.ArtNetStartedEvent;
 import artnetremote.gui.events.ArtNetStoppedEvent;
 import artnetremote.gui.events.CommandLineValueChangedEvent;
+import artnetremote.gui.events.HttpStartedEvent;
+import artnetremote.gui.events.HttpStoppedEvent;
 import artnetremote.gui.listeners.RemoteModelListener;
 import artnetremote.gui.models.RemoteModel;
 
@@ -86,6 +88,10 @@ public class RemoteView {
 			public void artNetStopped(ArtNetStoppedEvent event) {
 				enterButton.setEnabled(false);
 			}
+			@Override
+			public void httpStarted(HttpStartedEvent event) {}
+			@Override
+			public void httpStopped(HttpStoppedEvent event) {}
 		});
 
 		this.remotePanel.setLayout(layout);

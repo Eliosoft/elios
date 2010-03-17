@@ -35,19 +35,24 @@ import artnet4j.packets.ArtDmxPacket;
  *
  * @author Jeremie GASTON-RAOUL
  */
-public class ArtnetServerManager {
-	private static ArtnetServerManager instance;
+public class ArtNetServerManager {
+	private static ArtNetServerManager instance;
+	
+	/**
+	 * default value for ArtNet port
+	 */
+	public static final int DEFAULT_ARTNET_PORT = ArtNetServer.DEFAULT_PORT;
 	
 	private ArtNetServer artnetServer;
-	private int inPort = ArtNetServer.DEFAULT_PORT;
-	private int outPort = ArtNetServer.DEFAULT_PORT;
+	private int inPort = ArtNetServerManager.DEFAULT_ARTNET_PORT;
+	private int outPort = ArtNetServerManager.DEFAULT_ARTNET_PORT;
 	private String broadcastAddress = ArtNetServer.DEFAULT_BROADCAST_IP;
 	private int subnet = 0;
 	private int universe = 0;
 	private int sequenceId = 0;
 	private byte[] dmxArray = new byte[512];
 	
-	private ArtnetServerManager(){
+	private ArtNetServerManager(){
 		this.artnetServer = new ArtNetServer();
 	}
 	
@@ -55,11 +60,11 @@ public class ArtnetServerManager {
 	 * get the singleton instance of the ArtnetServerManager
 	 * @return the instance
 	 */
-	public static ArtnetServerManager getInstance(){
-		if(ArtnetServerManager.instance == null){
-			ArtnetServerManager.instance = new ArtnetServerManager();
+	public static ArtNetServerManager getInstance(){
+		if(ArtNetServerManager.instance == null){
+			ArtNetServerManager.instance = new ArtNetServerManager();
 		}
-		return ArtnetServerManager.instance;
+		return ArtNetServerManager.instance;
 	}
 	
 	/**

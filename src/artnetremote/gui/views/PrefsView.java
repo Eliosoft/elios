@@ -34,6 +34,8 @@ import javax.swing.border.TitledBorder;
 import artnetremote.gui.events.ArtNetStartedEvent;
 import artnetremote.gui.events.ArtNetStoppedEvent;
 import artnetremote.gui.events.CommandLineValueChangedEvent;
+import artnetremote.gui.events.HttpStartedEvent;
+import artnetremote.gui.events.HttpStoppedEvent;
 import artnetremote.gui.listeners.RemoteModelListener;
 import artnetremote.gui.models.RemoteModel;
 
@@ -51,16 +53,19 @@ public class PrefsView {
 
 	private final JPanel prefsPanel = new JPanel();
 
-	private final JButton startButton;
-	private final JButton stopButton;
-
+	private final JButton startArtNetButton;
+	private final JButton stopArtNetButton;
+	private final JButton startHttpButton;
+	private final JButton stopHttpButton;
+	
 	private final JSpinner inPortSpinner;
 	private final JSpinner outPortSpinner;
-	private JSpinner universeSpinner;
-	private JSpinner subnetSpinner;
+	private final JSpinner universeSpinner;
+	private final JSpinner subnetSpinner;
 	
 	private JComboBox broadcastAddressCombo;
 
+	private final JSpinner httpPortSpinner;
 
 
 	/**
@@ -70,76 +75,123 @@ public class PrefsView {
 	public PrefsView(RemoteModel remoteModel) {
 		this.remoteModel = remoteModel;
 
-		JPanel artnetServer = new JPanel();
-		artnetServer.setName(Messages.getString("prefsview.artnetserver")); //$NON-NLS-1$
-		TitledBorder border = BorderFactory.createTitledBorder(artnetServer.getName());
-		border.setTitleJustification(TitledBorder.CENTER);
-		artnetServer.setBorder(border);
-		artnetServer.setLayout(layout);
+		JPanel artNetServer = new JPanel();
+		artNetServer.setName(Messages.getString("prefsview.artnetserver")); //$NON-NLS-1$
+		TitledBorder artNetServerBorder = BorderFactory.createTitledBorder(artNetServer.getName());
+		artNetServerBorder.setTitleJustification(TitledBorder.CENTER);
+		artNetServer.setBorder(artNetServerBorder);
+		artNetServer.setLayout(layout);
 
-		this.prefsPanel.add(artnetServer);
+		this.prefsPanel.add(artNetServer);
 
 		constraints.gridwidth = 2;		
 		constraints.gridy = 0;
 		this.universeSpinner = new JSpinner(this.remoteModel.getUniverseSpinnerModel());
 		this.subnetSpinner = new JSpinner(this.remoteModel.getSubnetSpinnerModel());
 		JLabel subnetUniverseLabel = new JLabel(Messages.getString("prefsview.subnetuniverse")); //$NON-NLS-1$
-		artnetServer.add(subnetUniverseLabel, constraints);
+		artNetServer.add(subnetUniverseLabel, constraints);
 		constraints.gridwidth = 1;
 		constraints.gridy = 1;
-		artnetServer.add(this.subnetSpinner, constraints);
-		artnetServer.add(this.universeSpinner, constraints);
+		artNetServer.add(this.subnetSpinner, constraints);
+		artNetServer.add(this.universeSpinner, constraints);
 
 		
 		constraints.gridwidth = 2;
 		constraints.gridy = 2;
 		this.broadcastAddressCombo = new JComboBox(this.remoteModel.getBroadcastAddressComboModel());
 		JLabel broadcastAddressLabel = new JLabel(Messages.getString("prefsview.broadcastaddress")); //$NON-NLS-1$
-		artnetServer.add(broadcastAddressLabel, constraints);
+		artNetServer.add(broadcastAddressLabel, constraints);
 		broadcastAddressLabel.setLabelFor(this.broadcastAddressCombo);
 		constraints.gridy = 3;
-		artnetServer.add(this.broadcastAddressCombo,constraints);
+		artNetServer.add(this.broadcastAddressCombo,constraints);
 		
 		constraints.gridwidth = 1;		
 		constraints.gridy = 4;
 		this.inPortSpinner = new JSpinner(this.remoteModel.getInPortSpinnerModel());
 		JLabel inPortLabel = new JLabel(Messages.getString("prefsview.port.in")); //$NON-NLS-1$
-		artnetServer.add(inPortLabel, constraints);
+		artNetServer.add(inPortLabel, constraints);
 		inPortLabel.setLabelFor(this.inPortSpinner);
-		artnetServer.add(this.inPortSpinner, constraints);
+		artNetServer.add(this.inPortSpinner, constraints);
 
 		constraints.gridy = 5;
 		this.outPortSpinner = new JSpinner(this.remoteModel.getOutPortSpinnerModel());
 		JLabel outPortLabel = new JLabel(Messages.getString("prefsview.port.out")); //$NON-NLS-1$
-		artnetServer.add(outPortLabel, constraints);
+		artNetServer.add(outPortLabel, constraints);
 		outPortLabel.setLabelFor(this.outPortSpinner);
-		artnetServer.add(this.outPortSpinner, constraints);
+		artNetServer.add(this.outPortSpinner, constraints);
 
 		constraints.gridy = 6;
-		this.startButton = new JButton(Messages.getString("prefsview.start")); //$NON-NLS-1$
-		artnetServer.add(this.startButton, constraints);
-		this.stopButton = new JButton(Messages.getString("prefsview.stop")); //$NON-NLS-1$
-		this.stopButton.setEnabled(false);
-		artnetServer.add(this.stopButton, constraints);
+		this.startArtNetButton = new JButton(Messages.getString("prefsview.start")); //$NON-NLS-1$
+		artNetServer.add(this.startArtNetButton, constraints);
+		this.stopArtNetButton = new JButton(Messages.getString("prefsview.stop")); //$NON-NLS-1$
+		this.stopArtNetButton.setEnabled(false);
+		artNetServer.add(this.stopArtNetButton, constraints);
 
+		JPanel httpServer = new JPanel();
+		httpServer.setName(Messages.getString("prefsview.httpserver")); //$NON-NLS-1$
+		TitledBorder httpServerBorder = BorderFactory.createTitledBorder(httpServer.getName());
+		httpServerBorder.setTitleJustification(TitledBorder.CENTER);
+		httpServer.setBorder(httpServerBorder);
+		httpServer.setLayout(layout);
+
+		this.prefsPanel.add(httpServer);
+		
+		constraints.gridwidth = 1;		
+		constraints.gridy = 0;
+		this.httpPortSpinner = new JSpinner(this.remoteModel.getHttpPortSpinnerModel());
+		JLabel httpPortLabel = new JLabel(Messages.getString("prefsview.port.in")); //$NON-NLS-1$
+		httpServer.add(httpPortLabel, constraints);
+		httpPortLabel.setLabelFor(this.httpPortSpinner);
+		httpServer.add(this.httpPortSpinner, constraints);
+
+		constraints.gridy = 1;
+		this.startHttpButton = new JButton(Messages.getString("prefsview.start")); //$NON-NLS-1$
+		this.startHttpButton.setEnabled(false);
+		httpServer.add(this.startHttpButton, constraints);
+		this.stopHttpButton = new JButton(Messages.getString("prefsview.stop")); //$NON-NLS-1$
+		this.stopHttpButton.setEnabled(false);
+		httpServer.add(this.stopHttpButton, constraints);
+		
 		this.remoteModel.addRemoteModelChangedListener(new RemoteModelListener() {
 			@Override
 			public void commandLineValueChanged(CommandLineValueChangedEvent event) { }
 
 			@Override
 			public void artNetStopped(ArtNetStoppedEvent event) {
-				startButton.setEnabled(true);
-				stopButton.setEnabled(false);
+				startArtNetButton.setEnabled(true);
+				stopArtNetButton.setEnabled(false);
 				inPortSpinner.setEnabled(true);
 				outPortSpinner.setEnabled(true);
+				
+				startHttpButton.setEnabled(false);
+				stopHttpButton.setEnabled(false);
+				httpPortSpinner.setEnabled(false);				
 			}
 
 			@Override
 			public void artNetStarted(ArtNetStartedEvent event) {
-				startButton.setEnabled(false);
-				stopButton.setEnabled(true);
+				startArtNetButton.setEnabled(false);
+				stopArtNetButton.setEnabled(true);
 				inPortSpinner.setEnabled(false);
 				outPortSpinner.setEnabled(false);
+
+				startHttpButton.setEnabled(true);
+				stopHttpButton.setEnabled(false);
+				httpPortSpinner.setEnabled(true);
+			}
+
+			@Override
+			public void httpStopped(HttpStoppedEvent event) {
+				startHttpButton.setEnabled(true);
+				stopHttpButton.setEnabled(false);
+				httpPortSpinner.setEnabled(true);
+			}
+
+			@Override
+			public void httpStarted(HttpStartedEvent event) {
+				startHttpButton.setEnabled(false);
+				stopHttpButton.setEnabled(true);
+				httpPortSpinner.setEnabled(false);
 			}
 		});
 	}
@@ -153,34 +205,66 @@ public class PrefsView {
 	}
 
 	/**
-	 * Adds an Action Listener to the Start Button.
+	 * Adds an Action Listener to the Start ArtNet Button.
 	 * @param actionListener the listener to add to the button
 	 */
-	public void addStartButtonListener(ActionListener actionListener) {
-		this.startButton.addActionListener(actionListener);
+	public void addStartArtNetButtonListener(ActionListener actionListener) {
+		this.startArtNetButton.addActionListener(actionListener);
 	}
 
 	/**
-	 * Removes an Action Listener to the Start Button.
+	 * Removes an Action Listener to the Start ArtNet Button.
 	 * @param actionListener the listener to remove to the button
 	 */
-	public void removeStartButtonListener(ActionListener actionListener) {
-		this.startButton.removeActionListener(actionListener);
+	public void removeStartArtNetButtonListener(ActionListener actionListener) {
+		this.startArtNetButton.removeActionListener(actionListener);
 	}
 
 	/**
-	 * Adds an Action Listener to the Stop Button.
+	 * Adds an Action Listener to the Stop ArtNet Button.
 	 * @param actionListener the listener to add to the button
 	 */
-	public void addStopButtonListener(ActionListener actionListener) {
-		this.stopButton.addActionListener(actionListener);
+	public void addStopArtNetButtonListener(ActionListener actionListener) {
+		this.stopArtNetButton.addActionListener(actionListener);
 	}
 
 	/**
-	 * Removes an Action Listener to the Stop Button.
+	 * Removes an Action Listener to the Stop ArtNet Button.
 	 * @param actionListener the listener to remove to the button
 	 */
-	public void removeStopButtonListener(ActionListener actionListener) {
-		this.stopButton.removeActionListener(actionListener);
+	public void removeStopArtNetButtonListener(ActionListener actionListener) {
+		this.stopArtNetButton.removeActionListener(actionListener);
+	}
+	
+	/**
+	 * Adds an Action Listener to the Start Http Button.
+	 * @param actionListener the listener to add to the button
+	 */
+	public void addStartHttpButtonListener(ActionListener actionListener) {
+		this.startHttpButton.addActionListener(actionListener);
+	}
+
+	/**
+	 * Removes an Action Listener to the Start Http Button.
+	 * @param actionListener the listener to remove to the button
+	 */
+	public void removeStartHttpButtonListener(ActionListener actionListener) {
+		this.startHttpButton.removeActionListener(actionListener);
+	}
+
+	/**
+	 * Adds an Action Listener to the Stop Http Button.
+	 * @param actionListener the listener to add to the button
+	 */
+	public void addStopHttpButtonListener(ActionListener actionListener) {
+		this.stopHttpButton.addActionListener(actionListener);
+	}
+
+	/**
+	 * Removes an Action Listener to the Stop Http Button.
+	 * @param actionListener the listener to remove to the button
+	 */
+	public void removeStopHttpButtonListener(ActionListener actionListener) {
+		this.stopHttpButton.removeActionListener(actionListener);
 	}
 }

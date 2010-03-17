@@ -22,6 +22,8 @@ package artnetremote.gui.listeners;
 import artnetremote.gui.events.ArtNetStartedEvent;
 import artnetremote.gui.events.ArtNetStoppedEvent;
 import artnetremote.gui.events.CommandLineValueChangedEvent;
+import artnetremote.gui.events.HttpStartedEvent;
+import artnetremote.gui.events.HttpStoppedEvent;
 
 /**
  * This interface describes the methods that must be implemented
@@ -48,4 +50,16 @@ public interface RemoteModelListener {
 	 * @param event the event corresponding to the stop of the server
 	 */
 	void artNetStopped(ArtNetStoppedEvent event);
+	
+	/**
+	 * This method is called when the Http Server is started.
+	 * @param event the event corresponding to the start of the server
+	 */
+	void httpStarted(HttpStartedEvent event);
+
+	/**
+	 * This method is called when the Http Server is stopped.
+	 * @param event the event corresponding to the stop of the server
+	 */
+	void httpStopped(HttpStoppedEvent event);
 }
