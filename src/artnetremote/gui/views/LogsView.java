@@ -82,11 +82,15 @@ public class LogsView {
 		scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		this.constraints.fill = GridBagConstraints.BOTH;
 		this.constraints.gridy = 0;
+		this.constraints.weightx = 1;
+		this.constraints.weighty = 1;
 		this.logsPanel.add(scrollPane, this.constraints);
 
 		this.clearLogsButton = new JButton(Messages.getString("logsview.clear")); //$NON-NLS-1$
 		this.constraints.fill = GridBagConstraints.NONE;
 		this.constraints.gridy = 1;
+		this.constraints.weightx = 0;
+		this.constraints.weighty = 0;
 		logsPanel.add(this.clearLogsButton, this.constraints);
 	}
 
