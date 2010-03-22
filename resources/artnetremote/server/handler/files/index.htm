@@ -1,8 +1,27 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<title>ArtNet-Remote</title>
-<style type="text/css">
+
+<!--
+  This file is part of ArtNet-Remote.
+
+  Copyright 2010 Jeremie GASTON-RAOUL & Alexandre COLLIGNON
+
+  ArtNet-Remote is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+
+  ArtNet-Remote is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with ArtNet-Remote. If not, see <http://www.gnu.org/licenses/>.
+-->
+
+<HTML xmlns="http://www.w3.org/1999/xhtml"><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<TITLE>ArtNet-Remote</TITLE>
+<STYLE type="text/css">
 <!--
 .red
 {
@@ -13,10 +32,19 @@
 {
 	color: green;
 }
--->
-</style>
 
-<script type="text/javascript">
+table {
+	border: solid 1px black;
+	text-align:center;
+}
+
+.button {
+	width: 80px;
+}
+-->
+</STYLE>
+
+<SCRIPT type="text/javascript">
 <!--
 var xhr_object = null;
 var isRequestActive = false;
@@ -78,27 +106,57 @@ var showResult= function()
 	}
 }
 
-function test(value){
-		alert(value);
+var addToCommandLine = function(value)
+{
+	document.sendData.line.value += value;
+}
+
+var delLastChar = function(){
+	var length = document.sendData.line.value.length;
+	if( length > 0){
+		document.sendData.line.value = document.sendData.line.value.substring(0,length-1);
+	}
 }
 
 -->
-</script>
-</head>
+</SCRIPT>
+</HEAD><BODY onload="init();">
 
-<body onload="init();">
+<FORM onsubmit="return false" name="sendData" id="sendData">
+  <P align="center">ArtNet-Remote</P>
 
-<form onsubmit="makeRequest(document.sendData.line.value); return false" name="sendData" id="sendData">
-  <p align="center">commande : </p>
-  <p align="center">
-    <input name="line" type="text" id="line" value="" size="40"/>
-</p>
-  <p align="center">
-    <input type="submit" name="Submit" value="Envoyer"/>
-    <input name="Reset" type="reset" id="Reset" value="annuler"/>
-  </p>
-</form>
-<p>&nbsp;</p>
-<p id="responseMessage" align="center" class="green">&nbsp;</p>
-</body>
-</html>
+<TABLE align="center">
+	<TR>
+		<TD COLSPAN="3"><INPUT name="line" type="text" id="line" value="" size="40"></TD>
+	</TR>
+	<TR>
+		<TD><INPUT class="button" type="submit" name="key1" value="1" onclick="addToCommandLine('1')"></TD>
+		<TD><INPUT class="button" type="submit" name="key2" value="2" onclick="addToCommandLine('2')"></TD>
+		<TD><INPUT class="button" type="submit" name="key3" value="3" onclick="addToCommandLine('3')"></TD>
+	</TR>
+	<TR>
+		<TD><INPUT class="button" type="submit" name="key4" value="4" onclick="addToCommandLine('4')"></TD>
+		<TD><INPUT class="button" type="submit" name="key5" value="5" onclick="addToCommandLine('5')"></TD>
+		<TD><INPUT class="button" type="submit" name="key6" value="6" onclick="addToCommandLine('6')"></TD>
+	</TR>
+		<TR>
+		<TD><INPUT class="button" type="submit" name="key7" value="7" onclick="addToCommandLine('7')"></TD>
+		<TD><INPUT class="button" type="submit" name="key8" value="8" onclick="addToCommandLine('8')"></TD>
+		<TD><INPUT class="button" type="submit" name="key9" value="9" onclick="addToCommandLine('9')"></TD>
+	</TR>
+	<TR>
+		<TD><INPUT class="button" type="submit" name="key_sep" value=";" onclick="addToCommandLine(';')"></TD>
+		<TD><INPUT class="button" type="submit" name="key0" value="0" onclick="addToCommandLine('0')"></TD>
+		<TD><INPUT class="button" type="submit" name="key_at" value="@" onclick="addToCommandLine('@')"></TD>
+	</TR>
+	<TR>
+		<TD><INPUT class="button" type="submit" name="Delete" value="Del" onclick="delLastChar(); return false"></TD>
+		<TD><INPUT class="button" type="submit" name="Enter" value="Enter" onclick="makeRequest(document.sendData.line.value); return false"></TD>
+		<TD><INPUT class="button" type="reset" name="Reset" id="Reset" value="Reset"></TD>
+	</TR>
+</TABLE>
+</FORM>
+<P>&nbsp;</P>
+<P id="responseMessage" align="center" class="green">&nbsp;</P>
+
+</BODY></HTML>
