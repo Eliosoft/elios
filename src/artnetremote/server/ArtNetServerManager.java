@@ -124,7 +124,7 @@ public class ArtNetServerManager {
 	 * @throws BadSyntaxException thrown when the command line has a bad syntax
 	 */
 	public void processCommandLine(String commandLine) throws BadSyntaxException {
-		String[] commands = commandLine.split(",");
+		String[] commands = commandLine.split(";");
 		for(String command : commands){
 			Matcher commandLineMatcher = commandLinePattern.matcher(command);
 			if (commandLineMatcher.find()) {
