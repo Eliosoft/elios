@@ -127,32 +127,37 @@ var delLastChar = function(){
 
 <TABLE align="center">
 	<TR>
-		<TD COLSPAN="3"><INPUT name="line" type="text" id="line" value="" size="40"></TD>
+		<TD COLSPAN="4"><INPUT name="line" type="text" id="line" value="" size="40"></TD>
 	</TR>
 	<TR>
 		<TD><INPUT class="button" type="submit" name="key1" value="1" onclick="addToCommandLine('1')"></TD>
 		<TD><INPUT class="button" type="submit" name="key2" value="2" onclick="addToCommandLine('2')"></TD>
 		<TD><INPUT class="button" type="submit" name="key3" value="3" onclick="addToCommandLine('3')"></TD>
+		<TD><INPUT class="button" type="submit" name="key_plus" value="+" onclick="addToCommandLine('+')"></TD>
 	</TR>
 	<TR>
 		<TD><INPUT class="button" type="submit" name="key4" value="4" onclick="addToCommandLine('4')"></TD>
 		<TD><INPUT class="button" type="submit" name="key5" value="5" onclick="addToCommandLine('5')"></TD>
 		<TD><INPUT class="button" type="submit" name="key6" value="6" onclick="addToCommandLine('6')"></TD>
+		<TD><INPUT class="button" type="submit" name="key_minus" value="-" onclick="addToCommandLine('-')"></TD>
 	</TR>
 		<TR>
 		<TD><INPUT class="button" type="submit" name="key7" value="7" onclick="addToCommandLine('7')"></TD>
 		<TD><INPUT class="button" type="submit" name="key8" value="8" onclick="addToCommandLine('8')"></TD>
 		<TD><INPUT class="button" type="submit" name="key9" value="9" onclick="addToCommandLine('9')"></TD>
+		<TD><INPUT class="button" type="submit" name="key_thru" value="/" onclick="addToCommandLine('/')"></TD>
 	</TR>
 	<TR>
 		<TD><INPUT class="button" type="submit" name="key_sep" value=";" onclick="addToCommandLine(';')"></TD>
 		<TD><INPUT class="button" type="submit" name="key0" value="0" onclick="addToCommandLine('0')"></TD>
 		<TD><INPUT class="button" type="submit" name="key_at" value="@" onclick="addToCommandLine('@')"></TD>
+		<TD><INPUT class="button" type="submit" name="key_full" value="F" onclick="addToCommandLine('F')"></TD>
 	</TR>
 	<TR>
 		<TD><INPUT class="button" type="submit" name="Delete" value="Del" onclick="delLastChar(); return false"></TD>
 		<TD><INPUT class="button" type="submit" name="Enter" value="Enter" onclick="makeRequest(document.sendData.line.value); return false"></TD>
 		<TD><INPUT class="button" type="reset" name="Reset" id="Reset" value="Reset"></TD>
+		<TD><INPUT class="button" type="submit" name="key_dmx" value="D" onclick="addToCommandLine('D')"></TD>
 	</TR>
 </TABLE>
 </FORM>

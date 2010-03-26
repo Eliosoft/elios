@@ -21,10 +21,11 @@
 package artnetremote.server;
 
 import java.net.SocketException;
-import java.util.Arrays;
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
-import java.util.Map.Entry;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import artnet4j.ArtNetException;
 import artnet4j.ArtNetServer;
@@ -50,6 +51,25 @@ public class ArtNetServerManager {
 	private int subnet = 0;
 	private int universe = 0;
 	private int sequenceId = 0;
+	
+	private static final Pattern commandLinePattern = Pattern.compile("^(((\\d{1,3})(/(\\d{1,3}))?)([\\+\\-]((\\d{1,3})(/(\\d{1,3}))?))*)@(F|(D?)(\\d{1,3}))$",Pattern.CASE_INSENSITIVE);
+	private static final Pattern channelPattern = Pattern.compile("([\\+\\-]?)(\\d{1,3})(/(\\d{1,3}))?",Pattern.CASE_INSENSITIVE);
+	
+	private static final int COMMAND_LINE_PATTERN_CHANNEL_GROUP = 1;
+	private static final int COMMAND_LINE_PATTERN_LEVEL_GROUP = 11;
+	private static final int COMMAND_LINE_PATTERN_PERCENT_GROUP = 12;
+	private static final int COMMAND_LINE_PATTERN_LEVEL_VALUE_GROUP = 13;
+	
+	private static final int CHANNEL_PATTERN_EXCEPT_GROUP = 1;
+	private static final int CHANNEL_PATTERN_CHAN1_GROUP = 2;
+	private static final int CHANNEL_PATTERN_CHAN2_GROUP = 4;
+	
+	private static final int MIN_CHANNEL_NUMBER = 1;
+	private static final int MAX_CHANNEL_NUMBER = 512;
+	
+	private static final int MAX_DMX_VALUE = 255;
+	private static final int MAX_PERCENT_VALUE = 100;
+	
 	private byte[] dmxArray = new byte[512];
 	
 	private ArtNetServerManager(){
@@ -104,25 +124,56 @@ public class ArtNetServerManager {
 	 * @throws BadSyntaxException thrown when the command line has a bad syntax
 	 */
 	public void processCommandLine(String commandLine) throws BadSyntaxException {
-		List<String> commands = Arrays.asList(commandLine.toString().split(";"));
-		HashMap<String, String> channelsValues = new HashMap<String, String>();
-
-		for (String command : commands) {
-			String[] commandSplit = command.split("@");
-			if (commandSplit.length == 2) {
-				channelsValues.put(commandSplit[0], commandSplit[1]);
-			} else {
+		String[] commands = commandLine.split(",");
+		for(String command : commands){
+			Matcher commandLineMatcher = commandLinePattern.matcher(command);
+			if (commandLineMatcher.find()) {
+				Matcher channelMatcher = channelPattern.matcher(commandLineMatcher.group(COMMAND_LINE_PATTERN_CHANNEL_GROUP));
+				HashSet<Integer> channels = new HashSet<Integer>();
+				while (channelMatcher.find()) {
+					boolean except = (channelMatcher.group(CHANNEL_PATTERN_EXCEPT_GROUP).compareTo("-") == 0);
+					int chan1 = Integer.parseInt(channelMatcher.group(CHANNEL_PATTERN_CHAN1_GROUP));
+					checkChannelNumber(chan1);
+					int chan2 = chan1;
+					if(channelMatcher.group(CHANNEL_PATTERN_CHAN2_GROUP) != null){
+						chan2 = Integer.parseInt(channelMatcher.group(CHANNEL_PATTERN_CHAN2_GROUP));
+						checkChannelNumber(chan2);
+					}
+					for(int j = Math.min(chan1, chan2) ; j <= Math.max(chan1, chan2) ; j++){
+						if(except)
+							channels.remove(j);
+						else
+							channels.add(j);
+					}
+				}
+				System.out.println("channels : "+channels.toString() + " level : "+commandLineMatcher.group(COMMAND_LINE_PATTERN_LEVEL_GROUP));
+				boolean percent = (commandLineMatcher.group(COMMAND_LINE_PATTERN_PERCENT_GROUP) == null || commandLineMatcher.group(COMMAND_LINE_PATTERN_PERCENT_GROUP).isEmpty());
+				int value = (commandLineMatcher.group(COMMAND_LINE_PATTERN_LEVEL_GROUP).toUpperCase().compareTo("F") == 0) ? MAX_PERCENT_VALUE : Integer.parseInt(commandLineMatcher.group(COMMAND_LINE_PATTERN_LEVEL_VALUE_GROUP));
+				
+				if((percent && value > MAX_PERCENT_VALUE) || value > MAX_DMX_VALUE)
+					throw new BadSyntaxException();
+				
+				insertInDmxArray(new ArrayList<Integer>(channels), value, percent);
+			}
+			else{
 				throw new BadSyntaxException();
 			}
 		}
+	}
 
-		//TODO : ajouter la gestion des "," et des "-"
+	private static void checkChannelNumber(int channel) throws BadSyntaxException {
+		if( channel < MIN_CHANNEL_NUMBER || channel > MAX_CHANNEL_NUMBER){
+			throw new BadSyntaxException();
+		}
+	}
 
-		for (Entry<String, String> channelValue : channelsValues.entrySet()) {
-			int channel = Integer.parseInt(channelValue.getKey()) - 1;
-			byte value = (byte) (Integer.parseInt(channelValue.getValue()));
-
-			this.dmxArray[channel] = value;
+	private void insertInDmxArray(List<Integer> channels, int value, boolean percent){
+		byte dmxValue = (byte)value;
+		if(percent){
+			dmxValue = (byte)(value/100.0*255);
+		}
+		for(int channel : channels){
+			dmxArray[channel-1]=dmxValue;
 		}
 	}
 

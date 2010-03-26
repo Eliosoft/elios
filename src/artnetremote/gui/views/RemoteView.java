@@ -100,24 +100,29 @@ public class RemoteView {
 		this.commandLine.setFocusable(false);
 		this.constraints.fill = GridBagConstraints.HORIZONTAL;
 		this.constraints.gridy = 0;
-		this.constraints.gridwidth = 6;
+		this.constraints.gridwidth = 4;
 		this.remotePanel.add(this.commandLine, this.constraints);
 
-		this.addValueButton('1', 1, 2, true);
-		this.addValueButton('2', 1, 2, true);
-		this.addValueButton('3', 1, 2, true);
-		this.addValueButton('4', 2, 2, true);
-		this.addValueButton('5', 2, 2, true);
-		this.addValueButton('6', 2, 2, true);
-		this.addValueButton('7', 3, 2, true);
-		this.addValueButton('8', 3, 2, true);
-		this.addValueButton('9', 3, 2, true);
-		this.addValueButton(';', 4, 2, true);
-		this.addValueButton('0', 4, 2, true);
-		this.addValueButton('@', 4, 2, true);
-		this.delButton = this.addButton(Messages.getString("remoteview.delete"), 5, 2, false); //$NON-NLS-1$
-		this.enterButton = this.addButton(Messages.getString("remoteview.enter"), 5, 2, false); //$NON-NLS-1$
-		this.resetButton = this.addButton(Messages.getString("remoteview.reset"), 5, 2, false); //$NON-NLS-1$
+		this.addValueButton('1', 1, 1, true);
+		this.addValueButton('2', 1, 1, true);
+		this.addValueButton('3', 1, 1, true);
+		this.addValueButton('+', 1, 1, true);
+		this.addValueButton('4', 2, 1, true);
+		this.addValueButton('5', 2, 1, true);
+		this.addValueButton('6', 2, 1, true);
+		this.addValueButton('-', 2, 1, true);
+		this.addValueButton('7', 3, 1, true);
+		this.addValueButton('8', 3, 1, true);
+		this.addValueButton('9', 3, 1, true);
+		this.addValueButton('/', 3, 1, true);
+		this.addValueButton(';', 4, 1, true);
+		this.addValueButton('0', 4, 1, true);
+		this.addValueButton('@', 4, 1, true);
+		this.addValueButton('F', 4, 1, true);
+		this.delButton = this.addButton(Messages.getString("remoteview.delete"), 5, 1, false); //$NON-NLS-1$
+		this.enterButton = this.addButton(Messages.getString("remoteview.enter"), 5, 1, false); //$NON-NLS-1$
+		this.resetButton = this.addButton(Messages.getString("remoteview.reset"), 5, 1, false); //$NON-NLS-1$
+		this.addValueButton('D', 5, 1, true);
 	}
 
 	/**
