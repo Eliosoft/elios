@@ -146,7 +146,7 @@ public class ArtNetServerManager {
 							channels.add(j);
 					}
 				}
-				System.out.println("channels : "+channels.toString() + " level : "+commandLineMatcher.group(COMMAND_LINE_PATTERN_LEVEL_GROUP));
+				
 				boolean percent = (commandLineMatcher.group(COMMAND_LINE_PATTERN_PERCENT_GROUP) == null || commandLineMatcher.group(COMMAND_LINE_PATTERN_PERCENT_GROUP).isEmpty());
 				int value = (commandLineMatcher.group(COMMAND_LINE_PATTERN_LEVEL_GROUP).toUpperCase().compareTo("F") == 0) ? MAX_PERCENT_VALUE : Integer.parseInt(commandLineMatcher.group(COMMAND_LINE_PATTERN_LEVEL_VALUE_GROUP));
 				
