@@ -19,6 +19,7 @@
 
 package artnetremote.gui.views;
 
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionListener;
@@ -47,13 +48,17 @@ import artnetremote.gui.models.RemoteModel;
  * @author Jeremie GASTON-RAOUL
  */
 public class RemoteView {
+	
+	private static final int BUTTON_WIDTH = 60;
+	private static final int BUTTON_HEIGHT = 40;
+	
 	private final RemoteModel remoteModel;
 
 	private final GridBagLayout layout = new GridBagLayout();
 	private final GridBagConstraints constraints = new GridBagConstraints();
 
 	private final JPanel remotePanel = new JPanel();
-	private final JTextField commandLine = new JTextField();
+	private final JTextField commandLineTextField = new JTextField();
 
 	private final List<JButton> valueButtonsList = new ArrayList<JButton>();
 	private final List<Character> valuesList = new ArrayList<Character>();
@@ -71,7 +76,7 @@ public class RemoteView {
 		this.remoteModel.addRemoteModelChangedListener(new RemoteModelListener() {
 			@Override
 			public void commandLineValueChanged(CommandLineValueChangedEvent event) {
-				commandLine.setText(event.getCommand());
+				commandLineTextField.setText(event.getCommand());
 				if (event.getCommand().isEmpty()) {
 					delButton.setEnabled(false);
 					resetButton.setEnabled(false);
@@ -96,12 +101,14 @@ public class RemoteView {
 
 		this.remotePanel.setLayout(layout);
 
-		this.commandLine.setEditable(false);
-		this.commandLine.setFocusable(false);
+		this.commandLineTextField.setEditable(false);
+		this.commandLineTextField.setFocusable(false);
+		this.commandLineTextField.setMinimumSize(new Dimension(RemoteView.BUTTON_WIDTH*4,RemoteView.BUTTON_HEIGHT));
+		this.commandLineTextField.setPreferredSize(new Dimension(RemoteView.BUTTON_WIDTH*4,RemoteView.BUTTON_HEIGHT));
 		this.constraints.fill = GridBagConstraints.HORIZONTAL;
 		this.constraints.gridy = 0;
 		this.constraints.gridwidth = 4;
-		this.remotePanel.add(this.commandLine, this.constraints);
+		this.remotePanel.add(this.commandLineTextField, this.constraints);
 
 		this.addValueButton('1', 1, 1, true);
 		this.addValueButton('2', 1, 1, true);
@@ -138,7 +145,7 @@ public class RemoteView {
 	 * @param value the text to set
 	 */
 	public void setCommandLineFieldValue(String value) {
-		this.commandLine.setText(value);
+		this.commandLineTextField.setText(value);
 	}
 
 	/**
@@ -283,6 +290,9 @@ public class RemoteView {
 		JButton button = new JButton(text);
 		button.setEnabled(enabled);
 		button.setFocusable(false);
+		
+		button.setMinimumSize(new Dimension(RemoteView.BUTTON_WIDTH,RemoteView.BUTTON_HEIGHT));
+		button.setPreferredSize(new Dimension(RemoteView.BUTTON_WIDTH,RemoteView.BUTTON_HEIGHT));
 
 		this.constraints.fill = GridBagConstraints.HORIZONTAL;
 		this.constraints.gridy = gridY;
