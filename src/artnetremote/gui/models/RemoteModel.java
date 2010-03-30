@@ -59,6 +59,7 @@ public class RemoteModel {
 	private ComboBoxModel broadcastAddressComboModel;
 
 	private StringBuilder commandLine;
+	private boolean httpServerEnabled;
 	private List<RemoteModelListener> remoteModelChangedListeners;
 
 	private final static ArtNetServerManager artNetServerManager = ArtNetServerManager.getInstance();
@@ -329,6 +330,24 @@ public class RemoteModel {
 		return this.broadcastAddressComboModel;
 	}
 	
+	
+	
+	/**
+	 * Give the status of the http server enabling
+	 * @return true if http server is enabled, false if disabled
+	 */
+	public boolean isHttpServerEnabled() {
+		return this.httpServerEnabled;
+	}
+
+	/**
+	 * Enable or disable the http server
+	 * @param httpServerEnabled true to enable the http server, false to disable 
+	 */
+	public void setHttpServerEnabled(boolean httpServerEnabled) {
+		this.httpServerEnabled = httpServerEnabled;
+	}
+
 	/**
 	 * Adds an element to the list of listener of the remote model.
 	 * @param listener the listener to add
@@ -347,21 +366,3 @@ public class RemoteModel {
 
 }
 
-//example of command line parsing...
-//
-//for($i = 0;$i<count($chanArray);$i++){
-//$chanArray[$i][0]=split(',',$chanArray[$i][0]);
-//}
-//for($i = 0;$i<count($chanArray);$i++){
-//for($j = 0;$j<count($chanArray[$i][0]);$j++){
-//	$chanArray[$i][0][$j]=split('-',$chanArray[$i][0][$j]);
-//	if(count($chanArray[$i][0][$j])==1){
-//		$command .= $chanArray[$i][0][$j][0].' '.$chanArray[$i][1].' ';
-//	}
-//	else{
-//		for($k = $chanArray[$i][0][$j][0];$k<=$chanArray[$i][0][$j][1];$k++){
-//			$command .= $k.' '.$chanArray[$i][1].' ';
-//		}
-//	}
-//}
-//}

@@ -25,6 +25,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -55,8 +56,6 @@ public class PrefsView {
 
 	private final JButton startArtNetButton;
 	private final JButton stopArtNetButton;
-	private final JButton startHttpButton;
-	private final JButton stopHttpButton;
 	
 	private final JSpinner inPortSpinner;
 	private final JSpinner outPortSpinner;
@@ -66,6 +65,8 @@ public class PrefsView {
 	private JComboBox broadcastAddressCombo;
 
 	private final JSpinner httpPortSpinner;
+
+	private final JCheckBox enableHttpServerCheckBox;
 
 
 	/**
@@ -119,38 +120,28 @@ public class PrefsView {
 		artNetServer.add(outPortLabel, constraints);
 		outPortLabel.setLabelFor(this.outPortSpinner);
 		artNetServer.add(this.outPortSpinner, constraints);
-
+		
 		constraints.gridy = 6;
+		constraints.gridwidth = 2;
+		this.enableHttpServerCheckBox = new JCheckBox(Messages.getString("prefsview.httpserver"), this.remoteModel.isHttpServerEnabled());
+		artNetServer.add(this.enableHttpServerCheckBox, constraints);
+		
+		constraints.gridy = 7;
+		constraints.gridwidth = 1;
+		this.httpPortSpinner = new JSpinner(this.remoteModel.getHttpPortSpinnerModel());
+		JLabel httpPortLabel = new JLabel(Messages.getString("prefsview.port.http")); //$NON-NLS-1$
+		artNetServer.add(httpPortLabel, constraints);
+		outPortLabel.setLabelFor(this.httpPortSpinner);
+		artNetServer.add(this.httpPortSpinner, constraints);
+
+
+		constraints.gridy = 8;
+		constraints.gridwidth = 1;		
 		this.startArtNetButton = new JButton(Messages.getString("prefsview.start")); //$NON-NLS-1$
 		artNetServer.add(this.startArtNetButton, constraints);
 		this.stopArtNetButton = new JButton(Messages.getString("prefsview.stop")); //$NON-NLS-1$
 		this.stopArtNetButton.setEnabled(false);
 		artNetServer.add(this.stopArtNetButton, constraints);
-
-		JPanel httpServer = new JPanel();
-		httpServer.setName(Messages.getString("prefsview.httpserver")); //$NON-NLS-1$
-		TitledBorder httpServerBorder = BorderFactory.createTitledBorder(httpServer.getName());
-		httpServerBorder.setTitleJustification(TitledBorder.CENTER);
-		httpServer.setBorder(httpServerBorder);
-		httpServer.setLayout(layout);
-
-		this.prefsPanel.add(httpServer);
-		
-		constraints.gridwidth = 1;		
-		constraints.gridy = 0;
-		this.httpPortSpinner = new JSpinner(this.remoteModel.getHttpPortSpinnerModel());
-		JLabel httpPortLabel = new JLabel(Messages.getString("prefsview.port.in")); //$NON-NLS-1$
-		httpServer.add(httpPortLabel, constraints);
-		httpPortLabel.setLabelFor(this.httpPortSpinner);
-		httpServer.add(this.httpPortSpinner, constraints);
-
-		constraints.gridy = 1;
-		this.startHttpButton = new JButton(Messages.getString("prefsview.start")); //$NON-NLS-1$
-		this.startHttpButton.setEnabled(false);
-		httpServer.add(this.startHttpButton, constraints);
-		this.stopHttpButton = new JButton(Messages.getString("prefsview.stop")); //$NON-NLS-1$
-		this.stopHttpButton.setEnabled(false);
-		httpServer.add(this.stopHttpButton, constraints);
 		
 		this.remoteModel.addRemoteModelChangedListener(new RemoteModelListener() {
 			@Override
@@ -162,10 +153,9 @@ public class PrefsView {
 				stopArtNetButton.setEnabled(false);
 				inPortSpinner.setEnabled(true);
 				outPortSpinner.setEnabled(true);
-				
-				startHttpButton.setEnabled(false);
-				stopHttpButton.setEnabled(false);
-				httpPortSpinner.setEnabled(false);				
+
+				enableHttpServerCheckBox.setEnabled(true);
+				httpPortSpinner.setEnabled(true);				
 			}
 
 			@Override
@@ -175,23 +165,16 @@ public class PrefsView {
 				inPortSpinner.setEnabled(false);
 				outPortSpinner.setEnabled(false);
 
-				startHttpButton.setEnabled(true);
-				stopHttpButton.setEnabled(false);
-				httpPortSpinner.setEnabled(true);
+				enableHttpServerCheckBox.setEnabled(false);
+				httpPortSpinner.setEnabled(false);
 			}
 
 			@Override
 			public void httpStopped(HttpStoppedEvent event) {
-				startHttpButton.setEnabled(true);
-				stopHttpButton.setEnabled(false);
-				httpPortSpinner.setEnabled(true);
 			}
 
 			@Override
 			public void httpStarted(HttpStartedEvent event) {
-				startHttpButton.setEnabled(false);
-				stopHttpButton.setEnabled(true);
-				httpPortSpinner.setEnabled(false);
 			}
 		});
 	}
@@ -237,34 +220,18 @@ public class PrefsView {
 	}
 	
 	/**
-	 * Adds an Action Listener to the Start Http Button.
-	 * @param actionListener the listener to add to the button
+	 * Add an Action Listener to the Enable Http server checkbox.
+	 * @param actionListener the listener to add to the checkbox
 	 */
-	public void addStartHttpButtonListener(ActionListener actionListener) {
-		this.startHttpButton.addActionListener(actionListener);
+	public void addEnableHttpServerCheckBoxListener(ActionListener actionListener){
+		this.enableHttpServerCheckBox.addActionListener(actionListener);
 	}
 
 	/**
-	 * Removes an Action Listener to the Start Http Button.
-	 * @param actionListener the listener to remove to the button
+	 * Removes an Action Listener to the Enable Http server checkbox.
+	 * @param actionListener the listener to remove to the checkbox
 	 */
-	public void removeStartHttpButtonListener(ActionListener actionListener) {
-		this.startHttpButton.removeActionListener(actionListener);
-	}
-
-	/**
-	 * Adds an Action Listener to the Stop Http Button.
-	 * @param actionListener the listener to add to the button
-	 */
-	public void addStopHttpButtonListener(ActionListener actionListener) {
-		this.stopHttpButton.addActionListener(actionListener);
-	}
-
-	/**
-	 * Removes an Action Listener to the Stop Http Button.
-	 * @param actionListener the listener to remove to the button
-	 */
-	public void removeStopHttpButtonListener(ActionListener actionListener) {
-		this.stopHttpButton.removeActionListener(actionListener);
+	public void removeEnableHttpServerCheckBoxListener(ActionListener actionListener){
+		this.enableHttpServerCheckBox.removeActionListener(actionListener);
 	}
 }

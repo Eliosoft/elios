@@ -22,6 +22,8 @@ package artnetremote.gui.controllers;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.JCheckBox;
+
 import artnetremote.gui.models.RemoteModel;
 import artnetremote.gui.views.PrefsView;
 
@@ -44,36 +46,34 @@ public class PrefsController {
 		this.remoteModel = remoteModel;
 		this.prefsView = prefsView;
 
-		this.initButtonsListeners();
+		this.initListeners();
 	}
 
-	private void initButtonsListeners() {
+	private void initListeners() {
 		this.prefsView.addStartArtNetButtonListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				remoteModel.startArtNet();
+				if(remoteModel.isHttpServerEnabled()){
+					remoteModel.startHttp();
+				}
 			}
 		});
 
 		this.prefsView.addStopArtNetButtonListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				remoteModel.stopHttp();
+				if(remoteModel.isHttpServerEnabled()){
+					remoteModel.stopHttp();
+				}
 				remoteModel.stopArtNet();
 			}
 		});
 		
-		this.prefsView.addStartHttpButtonListener(new ActionListener() {
+		this.prefsView.addEnableHttpServerCheckBoxListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				remoteModel.startHttp();
-			}
-		});
-
-		this.prefsView.addStopHttpButtonListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				remoteModel.stopHttp();
+				remoteModel.setHttpServerEnabled(((JCheckBox)e.getSource()).isSelected());
 			}
 		});
 	}
