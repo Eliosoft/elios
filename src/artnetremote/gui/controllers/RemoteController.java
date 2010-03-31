@@ -21,6 +21,7 @@ package artnetremote.gui.controllers;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.logging.Logger;
 
 import javax.swing.AbstractAction;
 import javax.swing.ActionMap;
@@ -30,6 +31,8 @@ import javax.swing.KeyStroke;
 
 import artnetremote.gui.models.RemoteModel;
 import artnetremote.gui.views.RemoteView;
+import artnetremote.main.LoggersManager;
+import artnetremote.server.BadSyntaxException;
 
 /**
  * The controller of the remote view.
@@ -40,6 +43,9 @@ public class RemoteController {
 
 	private final RemoteModel remoteModel;
 	private final RemoteView remoteView;
+	
+	private final transient Logger logger = LoggersManager.getInstance().getLogger(RemoteController.class
+			.getName());
 
 	/**
 	 * The default constructor for the remote controller.
@@ -82,7 +88,11 @@ public class RemoteController {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (remoteView.isEnterButtonEnabled()) {
-					remoteModel.sendCommand();
+					try {
+						remoteModel.sendCommand();
+					} catch (BadSyntaxException exception) {
+						logger.severe("Bad syntax in Command Line");
+					}
 				}
 			}
 		});
@@ -131,7 +141,11 @@ public class RemoteController {
 		this.remoteView.addEnterButtonListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				remoteModel.sendCommand();
+				try {
+					remoteModel.sendCommand();
+				} catch (BadSyntaxException exception) {
+					logger.severe("Bad syntax in Command Line");
+				}
 			}
 		});
 		this.remoteView.addResetButtonListener(new ActionListener() {

@@ -24,12 +24,14 @@ import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import artnet4j.ArtNetException;
 import artnet4j.ArtNetServer;
 import artnet4j.packets.ArtDmxPacket;
+import artnetremote.main.LoggersManager;
 
 /**
  * The Manager of the Artnet Server
@@ -44,7 +46,7 @@ public class ArtNetServerManager {
 	 */
 	public static final int DEFAULT_ARTNET_PORT = ArtNetServer.DEFAULT_PORT;
 	
-	private ArtNetServer artnetServer;
+	private ArtNetServer artnetServer = null;
 	private int inPort = ArtNetServerManager.DEFAULT_ARTNET_PORT;
 	private int outPort = ArtNetServerManager.DEFAULT_ARTNET_PORT;
 	private String broadcastAddress = ArtNetServer.DEFAULT_BROADCAST_IP;
@@ -72,9 +74,10 @@ public class ArtNetServerManager {
 	
 	private byte[] dmxArray = new byte[512];
 	
-	private ArtNetServerManager(){
-		this.artnetServer = new ArtNetServer();
-	}
+	private final transient Logger logger = LoggersManager.getInstance().getLogger(ArtNetServerManager.class
+			.getName());
+	
+	private ArtNetServerManager(){}
 	
 	/**
 	 * get the singleton instance of the ArtnetServerManager
@@ -97,6 +100,8 @@ public class ArtNetServerManager {
 		artDmxPacket.setDMX(this.dmxArray, this.dmxArray.length);
 		this.artnetServer.broadcastPacket(artDmxPacket);
 
+		logger.info("broadcast DMX packet sent");
+
 		this.sequenceId++;
 	}
 	
@@ -109,13 +114,18 @@ public class ArtNetServerManager {
 		this.artnetServer = new ArtNetServer(this.inPort, this.outPort);
 		this.artnetServer.setBroadcastAddress(this.broadcastAddress);
 		this.artnetServer.start();
+		logger.info("ArtNet Started");
 	}
 
 	/**
 	 * Stops the ArtNet Server.
 	 */
 	public void stopArtNet() {
-		this.artnetServer.stop();
+		if(this.artnetServer != null){
+			this.artnetServer.stop();
+			this.artnetServer = null;
+			logger.info("ArtNet Stopped");
+		}
 	}
 	
 	/**
@@ -159,6 +169,8 @@ public class ArtNetServerManager {
 				throw new BadSyntaxException();
 			}
 		}
+		logger.info("Command line parsed : " + commandLine);
+
 	}
 
 	private static void checkChannelNumber(int channel) throws BadSyntaxException {

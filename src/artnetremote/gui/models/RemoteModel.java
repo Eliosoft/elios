@@ -19,9 +19,10 @@
 
 package artnetremote.gui.models;
 
+import java.io.IOException;
+import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
 
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
@@ -33,6 +34,7 @@ import javax.swing.event.ListDataEvent;
 import javax.swing.event.ListDataListener;
 
 import artnet4j.ArtNet;
+import artnet4j.ArtNetException;
 import artnetremote.gui.events.ArtNetStartedEvent;
 import artnetremote.gui.events.ArtNetStoppedEvent;
 import artnetremote.gui.events.CommandLineValueChangedEvent;
@@ -45,7 +47,7 @@ import artnetremote.server.HttpServerManager;
 
 /**
  * This model describes almost all data of the artnet-remote.
- *
+ * 
  * @author Jeremie GASTON-RAOUL
  * @author Alexandre COLLIGNON
  */
@@ -62,8 +64,10 @@ public class RemoteModel {
 	private boolean httpServerEnabled;
 	private List<RemoteModelListener> remoteModelChangedListeners;
 
-	private final static ArtNetServerManager artNetServerManager = ArtNetServerManager.getInstance();
-	private final static HttpServerManager httpServerManager = HttpServerManager.getInstance();
+	private final static ArtNetServerManager artNetServerManager = ArtNetServerManager
+			.getInstance();
+	private final static HttpServerManager httpServerManager = HttpServerManager
+			.getInstance();
 
 	private static final int MIN_PORT = 0;
 	private static final int MAX_PORT = 65535;
@@ -71,82 +75,103 @@ public class RemoteModel {
 	private static final int MAX_SUBNET = 15;
 	private static final int MIN_UNIVERSE = 0;
 	private static final int MAX_UNIVERSE = 15;
-	private static final String[] BROADCAST_ADDRESSES = {"2.255.255.255","10.255.255.255","127.255.255.255"};
-	
-	private final transient Logger logger = Logger.getLogger(RemoteModel.class.getName());
+	private static final String[] BROADCAST_ADDRESSES = { "2.255.255.255",
+			"10.255.255.255", "127.255.255.255" };
 
 	/**
 	 * Default constructor of the remote model
 	 */
 	public RemoteModel() {
-		this.logsListModel = new LogsListModel(ArtNet.logger);
-		this.logsListModel.addLogger(logger);
-		this.inPortSpinnerModel = new SpinnerNumberModel(ArtNetServerManager.DEFAULT_ARTNET_PORT, RemoteModel.MIN_PORT, RemoteModel.MAX_PORT, 1);
-		this.outPortSpinnerModel = new SpinnerNumberModel(ArtNetServerManager.DEFAULT_ARTNET_PORT, RemoteModel.MIN_PORT, RemoteModel.MAX_PORT, 1);
-		this.subnetSpinnerModel = new SpinnerNumberModel(0, RemoteModel.MIN_SUBNET, RemoteModel.MAX_SUBNET, 1);
-		this.universeSpinnerModel = new SpinnerNumberModel(0, RemoteModel.MIN_UNIVERSE, RemoteModel.MAX_UNIVERSE, 1);
-		this.httpPortSpinnerModel = new SpinnerNumberModel(HttpServerManager.DEFAULT_HTTP_PORT, RemoteModel.MIN_PORT, RemoteModel.MAX_PORT, 1);
-		this.broadcastAddressComboModel = new DefaultComboBoxModel(RemoteModel.BROADCAST_ADDRESSES);
-				
+		this.logsListModel = new LogsListModel();
+		this.logsListModel.addLogger(ArtNet.logger);
+		
+		this.inPortSpinnerModel = new SpinnerNumberModel(
+				ArtNetServerManager.DEFAULT_ARTNET_PORT, RemoteModel.MIN_PORT,
+				RemoteModel.MAX_PORT, 1);
+		this.outPortSpinnerModel = new SpinnerNumberModel(
+				ArtNetServerManager.DEFAULT_ARTNET_PORT, RemoteModel.MIN_PORT,
+				RemoteModel.MAX_PORT, 1);
+		this.subnetSpinnerModel = new SpinnerNumberModel(0,
+				RemoteModel.MIN_SUBNET, RemoteModel.MAX_SUBNET, 1);
+		this.universeSpinnerModel = new SpinnerNumberModel(0,
+				RemoteModel.MIN_UNIVERSE, RemoteModel.MAX_UNIVERSE, 1);
+		this.httpPortSpinnerModel = new SpinnerNumberModel(
+				HttpServerManager.DEFAULT_HTTP_PORT, RemoteModel.MIN_PORT,
+				RemoteModel.MAX_PORT, 1);
+		this.broadcastAddressComboModel = new DefaultComboBoxModel(
+				RemoteModel.BROADCAST_ADDRESSES);
+
 		this.commandLine = new StringBuilder();
 		this.remoteModelChangedListeners = new ArrayList<RemoteModelListener>();
-		
+
 		this.initModelsListeners();
 	}
 
-	private void initModelsListeners(){
-		this.broadcastAddressComboModel.addListDataListener(new ListDataListener() {
-			@Override
-			public void intervalRemoved(ListDataEvent e) {}
-			
-			@Override
-			public void intervalAdded(ListDataEvent e) {}
-			
-			@Override
-			public void contentsChanged(ListDataEvent e) {
-				RemoteModel.artNetServerManager.setBroadcastAddress((String)broadcastAddressComboModel.getSelectedItem());
-			}
-		});
-		
+	private void initModelsListeners() {
+		this.broadcastAddressComboModel
+				.addListDataListener(new ListDataListener() {
+					@Override
+					public void intervalRemoved(ListDataEvent e) {
+					}
+
+					@Override
+					public void intervalAdded(ListDataEvent e) {
+					}
+
+					@Override
+					public void contentsChanged(ListDataEvent e) {
+						RemoteModel.artNetServerManager
+								.setBroadcastAddress((String) broadcastAddressComboModel
+										.getSelectedItem());
+					}
+				});
+
 		this.inPortSpinnerModel.addChangeListener(new ChangeListener() {
 			@Override
 			public void stateChanged(ChangeEvent e) {
-				RemoteModel.artNetServerManager.setInPort((Integer)inPortSpinnerModel.getValue());
+				RemoteModel.artNetServerManager
+						.setInPort((Integer) inPortSpinnerModel.getValue());
 			}
 		});
-		
+
 		this.outPortSpinnerModel.addChangeListener(new ChangeListener() {
 			@Override
 			public void stateChanged(ChangeEvent e) {
-				RemoteModel.artNetServerManager.setOutPort((Integer)outPortSpinnerModel.getValue());
+				RemoteModel.artNetServerManager
+						.setOutPort((Integer) outPortSpinnerModel.getValue());
 			}
 		});
-		
+
 		this.subnetSpinnerModel.addChangeListener(new ChangeListener() {
 			@Override
 			public void stateChanged(ChangeEvent e) {
-				RemoteModel.artNetServerManager.setSubnet((Integer)subnetSpinnerModel.getValue());
+				RemoteModel.artNetServerManager
+						.setSubnet((Integer) subnetSpinnerModel.getValue());
 			}
 		});
-		
+
 		this.universeSpinnerModel.addChangeListener(new ChangeListener() {
 			@Override
 			public void stateChanged(ChangeEvent e) {
-				RemoteModel.artNetServerManager.setUniverse((Integer)universeSpinnerModel.getValue());
+				RemoteModel.artNetServerManager
+						.setUniverse((Integer) universeSpinnerModel.getValue());
 			}
 		});
-		
+
 		this.httpPortSpinnerModel.addChangeListener(new ChangeListener() {
 			@Override
 			public void stateChanged(ChangeEvent e) {
-				RemoteModel.httpServerManager.setInPort((Integer)httpPortSpinnerModel.getValue());
+				RemoteModel.httpServerManager
+						.setInPort((Integer) httpPortSpinnerModel.getValue());
 			}
 		});
 	}
-	
+
 	/**
 	 * Add a character to the command line.
-	 * @param c the character added
+	 * 
+	 * @param c
+	 *            the character added
 	 */
 	public void addToCommandLine(Character c) {
 		this.commandLine.append(c);
@@ -165,12 +190,14 @@ public class RemoteModel {
 	 * Deletes the last character of the command line.
 	 */
 	public void delLastCommandLineChar() {
-		this.commandLine.delete(this.commandLine.length() - 1, this.commandLine.length());
+		this.commandLine.delete(this.commandLine.length() - 1, this.commandLine
+				.length());
 		this.fireCommandLineValueChanged();
 	}
 
 	/**
 	 * Returns the value of the command line.
+	 * 
 	 * @return the value of the command line
 	 */
 	public String getCommandLineValue() {
@@ -179,31 +206,26 @@ public class RemoteModel {
 
 	/**
 	 * process the command line and send a Dmx command over the network
+	 * @throws BadSyntaxException if the command line to process and send has a bad syntax
 	 */
-	public void sendCommand() {
-		try {
-			RemoteModel.artNetServerManager.processCommandLine(this.commandLine.toString());
-			logger.info("Command line : "+commandLine);
-			RemoteModel.artNetServerManager.sendDmxCommand();
-			logger.info("broadcast DMX packet sent");
-		} catch (BadSyntaxException e) {
-			logger.severe("Bad syntax in Command Line");
-		}
+	public void sendCommand() throws BadSyntaxException {
+		RemoteModel.artNetServerManager.processCommandLine(this.commandLine
+				.toString());
+		RemoteModel.artNetServerManager.sendDmxCommand();
 		this.resetCommandLine();
 	}
 
 	/**
 	 * Starts the ArtNet Server.
+	 * 
+	 * @throws ArtNetException
+	 *             if a server is already running
+	 * @throws SocketException
+	 *             if there is a problem with the server socket
 	 */
-	public void startArtNet() {
-		try {
-			RemoteModel.artNetServerManager.startArtNet();
-			logger.info("ArtNet Started");
-			this.fireArtNetStarted();
-		} catch (Exception e) {
-			logger.severe(e.getMessage());
-			e.printStackTrace();
-		}
+	public void startArtNet() throws SocketException, ArtNetException {
+		RemoteModel.artNetServerManager.startArtNet();
+		this.fireArtNetStarted();
 	}
 
 	/**
@@ -211,22 +233,18 @@ public class RemoteModel {
 	 */
 	public void stopArtNet() {
 		RemoteModel.artNetServerManager.stopArtNet();
-		logger.info("ArtNet Stopped");
 		this.fireArtNetStopped();
 	}
 
 	/**
 	 * Starts the Http Server.
+	 * 
+	 * @throws IOException
+	 *             if the server is unable to start
 	 */
-	public void startHttp() {
-		try {
-			RemoteModel.httpServerManager.startHttp();
-			logger.info("Http Started");
-			this.fireHttpStarted();
-		} catch (Exception e) {
-			logger.severe(e.getMessage());
-			e.printStackTrace();
-		}
+	public void startHttp() throws IOException {
+		RemoteModel.httpServerManager.startHttp();
+		this.fireHttpStarted();
 	}
 
 	/**
@@ -234,7 +252,6 @@ public class RemoteModel {
 	 */
 	public void stopHttp() {
 		RemoteModel.httpServerManager.stopHttp();
-		logger.info("Http Stopped");
 		this.fireHttpStopped();
 	}
 
@@ -268,13 +285,15 @@ public class RemoteModel {
 
 	private void fireCommandLineValueChanged() {
 		for (RemoteModelListener listener : this.remoteModelChangedListeners) {
-			CommandLineValueChangedEvent e = new CommandLineValueChangedEvent(this.getCommandLineValue());
+			CommandLineValueChangedEvent e = new CommandLineValueChangedEvent(
+					this.getCommandLineValue());
 			listener.commandLineValueChanged(e);
 		}
 	}
 
 	/**
 	 * Returns the model of the logs list.
+	 * 
 	 * @return the Logs list model
 	 */
 	public LogsListModel getLogsListModel() {
@@ -283,6 +302,7 @@ public class RemoteModel {
 
 	/**
 	 * Gets the model of the in port.
+	 * 
 	 * @return the in port spinner model
 	 */
 	public SpinnerModel getInPortSpinnerModel() {
@@ -291,6 +311,7 @@ public class RemoteModel {
 
 	/**
 	 * Gets the model of the out port.
+	 * 
 	 * @return the out port spinner model
 	 */
 	public SpinnerModel getOutPortSpinnerModel() {
@@ -299,14 +320,16 @@ public class RemoteModel {
 
 	/**
 	 * Gets the model of the subnet.
+	 * 
 	 * @return the subnet spinner model
 	 */
 	public SpinnerModel getSubnetSpinnerModel() {
 		return this.subnetSpinnerModel;
 	}
-	
+
 	/**
 	 * Gets the model of the universe.
+	 * 
 	 * @return the universe spinner model
 	 */
 	public SpinnerModel getUniverseSpinnerModel() {
@@ -315,25 +338,25 @@ public class RemoteModel {
 
 	/**
 	 * Gets the model of the http port.
+	 * 
 	 * @return the http port spinner model
 	 */
 	public SpinnerModel getHttpPortSpinnerModel() {
 		return this.httpPortSpinnerModel;
 	}
 
-	
 	/**
 	 * Gets the model of the broadcast address
+	 * 
 	 * @return the broadcast address combo model
 	 */
 	public ComboBoxModel getBroadcastAddressComboModel() {
 		return this.broadcastAddressComboModel;
 	}
-	
-	
-	
+
 	/**
 	 * Give the status of the http server enabling
+	 * 
 	 * @return true if http server is enabled, false if disabled
 	 */
 	public boolean isHttpServerEnabled() {
@@ -342,7 +365,9 @@ public class RemoteModel {
 
 	/**
 	 * Enable or disable the http server
-	 * @param httpServerEnabled true to enable the http server, false to disable 
+	 * 
+	 * @param httpServerEnabled
+	 *            true to enable the http server, false to disable
 	 */
 	public void setHttpServerEnabled(boolean httpServerEnabled) {
 		this.httpServerEnabled = httpServerEnabled;
@@ -350,7 +375,9 @@ public class RemoteModel {
 
 	/**
 	 * Adds an element to the list of listener of the remote model.
-	 * @param listener the listener to add
+	 * 
+	 * @param listener
+	 *            the listener to add
 	 */
 	public void addRemoteModelChangedListener(RemoteModelListener listener) {
 		this.remoteModelChangedListeners.add(listener);
@@ -358,11 +385,13 @@ public class RemoteModel {
 
 	/**
 	 * Removes an element to the list of listener of the remote model.
-	 * @param listener the listener to remove
+	 * 
+	 * @param listener
+	 *            the listener to remove
 	 */
-	public void removeRemoteModelChangedChangedListener(RemoteModelListener listener) {
+	public void removeRemoteModelChangedChangedListener(
+			RemoteModelListener listener) {
 		this.remoteModelChangedListeners.remove(listener);
 	}
 
 }
-

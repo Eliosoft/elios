@@ -22,7 +22,9 @@ package artnetremote.server;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
+import java.util.logging.Logger;
 
+import artnetremote.main.LoggersManager;
 import artnetremote.server.handler.DataHttpHandler;
 import artnetremote.server.handler.ResourceHttpHandler;
 
@@ -36,6 +38,9 @@ import com.sun.net.httpserver.HttpServer;
 public class HttpServerManager {
 	private static HttpServerManager instance;
 	
+	private final ResourceHttpHandler resourceHttpHandler = new ResourceHttpHandler();
+	private final DataHttpHandler dataHttpHandler = new DataHttpHandler();
+	
 	/**
 	 * default value for http port
 	 */
@@ -43,6 +48,9 @@ public class HttpServerManager {
 	
 	private HttpServer httpServer = null;
 	private int inPort = HttpServerManager.DEFAULT_HTTP_PORT;
+	
+	private final transient Logger logger = LoggersManager.getInstance().getLogger(HttpServerManager.class
+			.getName());
 	
 	private HttpServerManager(){}
 	
@@ -65,13 +73,18 @@ public class HttpServerManager {
 	public void startHttp() throws IOException{
 		this.initHttpServer();
 		this.httpServer.start();
+		logger.info("Http Started");
 	}
 
 	/**
 	 * Stops the Http Server.
 	 */
 	public void stopHttp() {
-		this.httpServer.stop(0);
+		if(this.httpServer != null){
+			this.httpServer.stop(0);
+			this.httpServer = null;
+			logger.info("Http Stopped");
+		}
 	}
 	
 	/**
@@ -84,8 +97,8 @@ public class HttpServerManager {
 	
 	private void initHttpServer() throws IOException{
 		this.httpServer = HttpServer.create(new InetSocketAddress(this.inPort), 0);
-		this.httpServer.createContext("/", new ResourceHttpHandler());
-		this.httpServer.createContext("/data", new DataHttpHandler());
+		this.httpServer.createContext("/", this.resourceHttpHandler);
+		this.httpServer.createContext("/data", this.dataHttpHandler);
 	}
 	
 }

@@ -21,11 +21,13 @@ package artnetremote.gui.controllers;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.logging.Logger;
 
 import javax.swing.JCheckBox;
 
 import artnetremote.gui.models.RemoteModel;
 import artnetremote.gui.views.PrefsView;
+import artnetremote.main.LoggersManager;
 
 /**
  * The Controller of the prefs view.
@@ -36,6 +38,9 @@ public class PrefsController {
 
 	private final RemoteModel remoteModel;
 	private final PrefsView prefsView;
+	
+	private final transient Logger logger = LoggersManager.getInstance().getLogger(PrefsController.class
+			.getName());
 
 	/**
 	 * The default constructor for the prefs controller.
@@ -53,9 +58,17 @@ public class PrefsController {
 		this.prefsView.addStartArtNetButtonListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				remoteModel.startArtNet();
-				if(remoteModel.isHttpServerEnabled()){
-					remoteModel.startHttp();
+				try {
+					remoteModel.startArtNet();
+					if(remoteModel.isHttpServerEnabled()){
+						remoteModel.startHttp();
+					}
+				} catch (Exception exception) {
+					logger.severe(exception.getMessage());
+					exception.printStackTrace();
+					
+					remoteModel.stopHttp();
+					remoteModel.stopArtNet();
 				}
 			}
 		});

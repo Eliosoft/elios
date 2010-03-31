@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.logging.Logger;
 
-import artnetremote.gui.models.RemoteModel;
+import artnetremote.main.LoggersManager;
 import artnetremote.server.ArtNetServerManager;
 import artnetremote.server.BadSyntaxException;
 
@@ -22,7 +22,7 @@ public class DataHttpHandler implements HttpHandler {
 	private static final int MAX_BUFFER_SIZE = 1024*512;
 	private static ArtNetServerManager artNetServerManager = ArtNetServerManager.getInstance();
 
-	private final transient Logger logger = Logger.getLogger(RemoteModel.class.getName());
+	private final transient Logger logger = LoggersManager.getInstance().getLogger(DataHttpHandler.class.getName());
 	
 	@Override
 	public void handle(HttpExchange httpExchange) throws IOException {
@@ -41,9 +41,7 @@ public class DataHttpHandler implements HttpHandler {
 
 			try {
 				DataHttpHandler.artNetServerManager.processCommandLine(commandLine.toString());
-				logger.info("Command line : "+commandLine);
 				DataHttpHandler.artNetServerManager.sendDmxCommand();
-				logger.info("broadcast DMX packet sent");
 			} catch (BadSyntaxException e) {
 				logger.severe("Bad syntax in Command Line");
 				String badRequest = "400 : Bad request !!!";

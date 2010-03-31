@@ -21,6 +21,7 @@ package artnetremote.main;
 
 import java.awt.BorderLayout;
 import java.awt.Container;
+import java.util.logging.Logger;
 
 import javax.swing.JFrame;
 import javax.swing.JTabbedPane;
@@ -71,7 +72,11 @@ public final class ArtNetRemote {
 		new LogsController(remoteModel, logsView);
 
 		LogsLineView logsLineView = new LogsLineView(remoteModel);
-
+		
+		for(Logger l : LoggersManager.getInstance().getLoggersList()){
+			remoteModel.getLogsListModel().addLogger(l);
+		}
+		
 		JFrame frame = new JFrame("ArtNet Remote");
 		final JTabbedPane tabbedPane = new JTabbedPane();
 		Container contentPane = frame.getContentPane();

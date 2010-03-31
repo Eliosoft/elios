@@ -44,9 +44,8 @@ public class LogsListModel extends AbstractListModel {
 	 * Constructs a {@code LogsListModel} that wraps the
 	 * {@code java.util.Logger} given in argument.
 	 *
-	 * @param logger {@code java.util.Logger} to wrap.
 	 */
-	public LogsListModel(Logger logger) {
+	public LogsListModel() {
 		logs = new ArrayList<String>();
 	}
 
