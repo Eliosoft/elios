@@ -38,17 +38,28 @@ table {
 	text-align:center;
 }
 
+.title {
+	font-size: 34px;
+	font-family: courier, sans-serif;
+	font-weight: bold;
+}
+
 .commandLine {
 	font-size: 20px;
-	width: 250px;
+	width: 280px;
 	height: 40px;
 }
 
 .button {
 	font-size: 18px;
-	width: 60px;
+	width: 70px;
 	height: 40px;
 	border-width: 1px;
+}
+
+#responseMessage {
+	font-size: 30px;
+	background-color: #BBBBBB;
 }
 -->
 </STYLE>
@@ -103,8 +114,8 @@ var makeRequest = function(query)
 
 var showResult= function()
 {
-	var responseMessageElement = document.getElementById("responseMessage").firstChild;
-	responseMessageElement.nodeValue = xhr_object.responseText;
+	var responseMessageElement = document.getElementById("responseMessage");
+	responseMessageElement.firstChild.nodeValue = xhr_object.responseText;
 	
 	if(xhr_object.status==200){
 		responseMessageElement.className = "green";
@@ -132,9 +143,10 @@ var delLastChar = function(){
 </HEAD><BODY onload="init();">
 
 <FORM onsubmit="return false" name="sendData" id="sendData">
-  <H1 align="center">ArtNet-Remote</H1>
-
 <TABLE align="center">
+	<TR>
+		<TD COLSPAN="4" class="title">ArtNet-Remote</TD>
+	</TR>
 	<TR>
 		<TD COLSPAN="4"><INPUT class="commandLine" name="line" type="text" id="line" value="" size="40"></TD>
 	</TR>
@@ -168,9 +180,12 @@ var delLastChar = function(){
 		<TD><INPUT class="button" type="reset" name="Reset" id="Reset" value="Reset"></TD>
 		<TD><INPUT class="button" type="submit" name="key_dmx" value="D" onclick="addToCommandLine('D')"></TD>
 	</TR>
+	<TR>
+		<TD COLSPAN="4" id="responseMessage" align="center" class="green">&nbsp;</TD>
+	</TR>
 </TABLE>
 </FORM>
 <P>&nbsp;</P>
-<P id="responseMessage" align="center" class="green">&nbsp;</P>
+<P >&nbsp;</P>
 
 </BODY></HTML>

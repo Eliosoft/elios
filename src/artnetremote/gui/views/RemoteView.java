@@ -49,7 +49,7 @@ import artnetremote.gui.models.RemoteModel;
  */
 public class RemoteView {
 	
-	private static final int BUTTON_WIDTH = 60;
+	private static final int BUTTON_WIDTH = 70;
 	private static final int BUTTON_HEIGHT = 40;
 	
 	private final RemoteModel remoteModel;
