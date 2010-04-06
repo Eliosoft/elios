@@ -19,7 +19,12 @@
 
 package artnetremote.gui.views;
 
-import javax.swing.JTextField;
+import java.util.logging.LogRecord;
+
+import javax.swing.BorderFactory;
+import javax.swing.JComponent;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.event.ListDataEvent;
 import javax.swing.event.ListDataListener;
 
@@ -31,11 +36,13 @@ import artnetremote.gui.models.RemoteModel;
  *
  * @author Jeremie GASTON-RAOUL
  */
-public class LogsLineView {
+public class LogsLineView implements ViewInterface {
 
 	private final RemoteModel remoteModel;
+	
+	private final static JLabel EMPTY_LABEL = new JLabel(" ");
 
-	private final JTextField logField = new JTextField();
+	private final JPanel logsLinePanel = new JPanel();
 
 	/**
 	 * The constructor of the class.
@@ -43,7 +50,8 @@ public class LogsLineView {
 	 */
 	public LogsLineView(RemoteModel remoteModel) {
 		this.remoteModel = remoteModel;
-		this.logField.setEditable(false);
+		this.logsLinePanel.setBorder(BorderFactory.createEtchedBorder());
+		this.logsLinePanel.add(LogsLineView.EMPTY_LABEL);
 
 		this.initRemoteModelListener();
 	}
@@ -53,17 +61,17 @@ public class LogsLineView {
 
 			@Override
 			public void intervalRemoved(ListDataEvent e) {
-				logField.setText("");
+				replaceLabel();
 			}
 
 			@Override
 			public void intervalAdded(ListDataEvent e) {
-				logField.setText((String) remoteModel.getLogsListModel().getElementAt(e.getIndex1()));
+				replaceLabel();
 			}
 
 			@Override
 			public void contentsChanged(ListDataEvent e) {
-				logField.setText((String) remoteModel.getLogsListModel().getElementAt(e.getIndex1()));
+				replaceLabel();
 			}
 		});
 
@@ -73,7 +81,18 @@ public class LogsLineView {
 	 * Returns the log field.
 	 * @return the log field of the view
 	 */
-	public JTextField getLogField() {
-		return this.logField;
+	public JComponent getViewComponent() {
+		return this.logsLinePanel;
+	}
+	
+	private void replaceLabel(){
+		logsLinePanel.removeAll();
+		if(remoteModel.getLogsListModel().getSize() > 0){
+			logsLinePanel.add(new JLogRecordLabel((LogRecord) remoteModel.getLogsListModel().getElementAt(remoteModel.getLogsListModel().getSize()-1)));
+		}
+		else{
+			logsLinePanel.add(LogsLineView.EMPTY_LABEL);
+		}
+		logsLinePanel.revalidate();
 	}
 }

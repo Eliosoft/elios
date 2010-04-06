@@ -27,6 +27,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
@@ -45,7 +46,7 @@ import artnetremote.gui.models.RemoteModel;
  *
  * @author Jeremie GASTON-RAOUL
  */
-public class PrefsView {
+public class PrefsView implements ViewInterface {
 
 	private RemoteModel remoteModel;
 
@@ -183,7 +184,7 @@ public class PrefsView {
 	 * Returns the preferences panel component.
 	 * @return the panel Component
 	 */
-	public JPanel getPrefsPanel() {
+	public JComponent getViewComponent() {
 		return this.prefsPanel;
 	}
 

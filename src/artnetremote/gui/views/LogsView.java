@@ -19,15 +19,19 @@
 
 package artnetremote.gui.views;
 
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionListener;
+import java.util.logging.LogRecord;
 
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.ListCellRenderer;
 import javax.swing.SwingUtilities;
 import javax.swing.event.ListDataEvent;
 import javax.swing.event.ListDataListener;
@@ -39,7 +43,7 @@ import artnetremote.gui.models.RemoteModel;
  *
  * @author Jeremie GASTON-RAOUL
  */
-public class LogsView {
+public class LogsView implements ViewInterface {
 
 	private RemoteModel remoteModel;
 	private JList logsList;
@@ -76,6 +80,13 @@ public class LogsView {
 			@Override
 			public void contentsChanged(ListDataEvent e) { }
 		});
+		this.logsList.setCellRenderer(new ListCellRenderer() {
+			
+			@Override
+			public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+				return new JLogRecordLabel((LogRecord) value);
+			}
+		});
 
 		JScrollPane scrollPane = new JScrollPane(logsList);
 		scrollPane.setMinimumSize(new Dimension(200, 100));
@@ -98,7 +109,7 @@ public class LogsView {
 	 * Returns the logs panel of the view.
 	 * @return the logs panel
 	 */
-	public JPanel getLogsPanel() {
+	public JComponent getViewComponent() {
 		return this.logsPanel;
 	}
 

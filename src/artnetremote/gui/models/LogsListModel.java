@@ -38,7 +38,7 @@ public class LogsListModel extends AbstractListModel {
 	private static final long serialVersionUID = -3782927318483496410L;
 
 	/** list of logs. **/
-	private List<String> logs;
+	private List<LogRecord> logs;
 
 	/**
 	 * Constructs a {@code LogsListModel} that wraps the
@@ -46,7 +46,7 @@ public class LogsListModel extends AbstractListModel {
 	 *
 	 */
 	public LogsListModel() {
-		logs = new ArrayList<String>();
+		logs = new ArrayList<LogRecord>();
 	}
 
 	/**
@@ -59,7 +59,7 @@ public class LogsListModel extends AbstractListModel {
 
 			@Override
 			public void publish(LogRecord record) {
-				addLogLine("[" + logger.getName() + "] " + record.getMessage());
+				addLogRecord(record);
 			}
 
 			@Override
@@ -69,23 +69,23 @@ public class LogsListModel extends AbstractListModel {
 
 			@Override
 			public void close() {
-				logs.add(logger.getName() + " is closing");
+				logger.info(logger.getName() + " is closing");
 			}
 		});
 	}
 
 	/**
-	 * Adds a log Line in the list.
+	 * Adds a log record in the list.
 	 *
-	 * @param logLine the log line to add
+	 * @param logRecord the log record to add
 	 */
-	private void addLogLine(String logLine) {
-		logs.add(logLine);
+	private void addLogRecord(LogRecord logRecord) {
+		logs.add(logRecord);
 		this.fireIntervalAdded(this, logs.size() - 1, logs.size() - 1);
 	}
 
 	/**
-	 * Removes all log lines of the list.
+	 * Removes all log records of the list.
 	 */
 	public void clearLogsList() {
 		int lastSize = logs.size();

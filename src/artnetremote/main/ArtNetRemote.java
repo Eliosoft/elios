@@ -86,10 +86,10 @@ public final class ArtNetRemote {
 		frame.setIconImage(new ImageIcon(ArtNetRemote.class.getResource("/artnetremote/server/handler/files/favicon.ico")).getImage());
 
 		contentPane.add(tabbedPane, BorderLayout.CENTER);
-		contentPane.add(logsLineView.getLogField(), BorderLayout.SOUTH);
-		tabbedPane.addTab("remote", remoteView.getRemotePanel());
-		tabbedPane.addTab("prefs", prefsView.getPrefsPanel());
-		tabbedPane.addTab("logs", logsView.getLogsPanel());
+		contentPane.add(logsLineView.getViewComponent(), BorderLayout.SOUTH);
+		tabbedPane.addTab("remote", remoteView.getViewComponent());
+		tabbedPane.addTab("prefs", prefsView.getViewComponent());
+		tabbedPane.addTab("logs", logsView.getViewComponent());
 
 		tabbedPane.addChangeListener(new ChangeListener() {
 			@Override

@@ -47,7 +47,7 @@ import artnetremote.gui.models.RemoteModel;
  *
  * @author Jeremie GASTON-RAOUL
  */
-public class RemoteView {
+public class RemoteView implements ViewInterface {
 	
 	private static final int BUTTON_WIDTH = 70;
 	private static final int BUTTON_HEIGHT = 40;
@@ -136,7 +136,8 @@ public class RemoteView {
 	 * Gets the remote panel.
 	 * @return the panel
 	 */
-	public JPanel getRemotePanel() {
+
+	public JComponent getViewComponent() {
 		return this.remotePanel;
 	}
 
