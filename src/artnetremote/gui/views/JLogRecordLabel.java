@@ -21,7 +21,7 @@ public class JLogRecordLabel extends JLabel {
 	 * @param record the log record of the label
 	 */
 	public JLogRecordLabel(LogRecord record) {
-		super(record.getMessage());
+		super("["+record.getLevel().getName()+"] "+record.getMessage());
 		this.record = record;
 		if (this.record.getLevel().equals(Level.SEVERE)) {
 			this.setForeground(Color.RED);
