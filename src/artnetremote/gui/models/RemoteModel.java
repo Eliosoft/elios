@@ -75,8 +75,48 @@ public class RemoteModel {
 	private static final int MAX_SUBNET = 15;
 	private static final int MIN_UNIVERSE = 0;
 	private static final int MAX_UNIVERSE = 15;
-	private static final String[] BROADCAST_ADDRESSES = { "2.255.255.255",
-			"10.255.255.255", "127.255.255.255" };
+	
+	/**
+	 * Broadcast Address.
+	 *
+	 * @author Alexandre COLLIGNON
+	 */
+	public enum BroadCastAddress {
+
+	    /** Primary broadcast address. **/
+	    PRIMARY("2.255.255.255"), 
+
+	    /** Secondary broadcast address. **/
+	    SECONDAY("10.255.255.255"), 
+
+	    /** Local broadcast address. **/
+	    LOCAL("127.255.255.255");
+
+	    /** Address representation. **/
+	    private String address;
+
+	    /** Private constructor. **/
+	    private BroadCastAddress(String address) {
+	        this.address = address;
+	    }
+
+	    /**
+	     * Returns the String representation of the address.
+	     * 
+	     * @return String representation of the address
+	     */
+	    public String getAddress() {
+	        return address;
+	    }
+
+	    /**
+	     * {@inheritDoc}
+	     */
+	    @Override
+	    public String toString() {
+	        return address;
+	    }
+	}
 
 	/**
 	 * Default constructor of the remote model
@@ -99,7 +139,7 @@ public class RemoteModel {
 				HttpServerManager.DEFAULT_HTTP_PORT, RemoteModel.MIN_PORT,
 				RemoteModel.MAX_PORT, 1);
 		this.broadcastAddressComboModel = new DefaultComboBoxModel(
-				RemoteModel.BROADCAST_ADDRESSES);
+				BroadCastAddress.values());
 
 		this.commandLine = new StringBuilder();
 		this.remoteModelChangedListeners = new ArrayList<RemoteModelListener>();
@@ -121,8 +161,8 @@ public class RemoteModel {
 					@Override
 					public void contentsChanged(ListDataEvent e) {
 						RemoteModel.artNetServerManager
-								.setBroadcastAddress((String) broadcastAddressComboModel
-										.getSelectedItem());
+								.setBroadcastAddress(((BroadCastAddress) broadcastAddressComboModel
+										.getSelectedItem()).getAddress());
 					}
 				});
 
