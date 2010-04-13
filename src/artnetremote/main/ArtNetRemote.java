@@ -21,7 +21,10 @@ package artnetremote.main;
 
 import java.awt.BorderLayout;
 import java.awt.Container;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.logging.Logger;
+import java.util.prefs.Preferences;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -33,10 +36,13 @@ import artnetremote.gui.controllers.LogsController;
 import artnetremote.gui.controllers.PrefsController;
 import artnetremote.gui.controllers.RemoteController;
 import artnetremote.gui.models.RemoteModel;
+import artnetremote.gui.models.RemoteModel.BroadCastAddress;
 import artnetremote.gui.views.LogsLineView;
 import artnetremote.gui.views.LogsView;
 import artnetremote.gui.views.PrefsView;
 import artnetremote.gui.views.RemoteView;
+import artnetremote.server.ArtNetServerManager;
+import artnetremote.server.HttpServerManager;
 
 /**
  * Main Class of ArtNet Remote Software contains the main method
@@ -59,7 +65,9 @@ public final class ArtNetRemote {
 	 * @param args command-line argument. Currently unused !
 	 */
 	public static void main(String[] args) {
-		RemoteModel remoteModel = new RemoteModel();
+
+		final Preferences prefs = Preferences.userRoot();
+        final RemoteModel remoteModel = createRemoteModel(prefs);
 		final RemoteView remoteView = new RemoteView(remoteModel);
 		//used to make relation between view and model
 		new RemoteController(remoteModel, remoteView);
@@ -77,7 +85,7 @@ public final class ArtNetRemote {
 		for(Logger l : LoggersManager.getInstance().getLoggersList()){
 			remoteModel.getLogsListModel().addLogger(l);
 		}
-		
+
 		JFrame frame = new JFrame("ArtNet Remote");
 		final JTabbedPane tabbedPane = new JTabbedPane();
 		Container contentPane = frame.getContentPane();
@@ -99,9 +107,72 @@ public final class ArtNetRemote {
 		});
 		tabbedPane.setSelectedIndex(0);
 
+		frame.addWindowListener(new WindowAdapter() {
+            /**
+             *
+		     */
+            @Override
+            public void windowClosing(WindowEvent e) {
+                persistRemoteModel(remoteModel, prefs);
+            }
+		});
+
 		frame.pack();
 		frame.setVisible(true);
 
 		tabbedPane.getSelectedComponent().requestFocusInWindow();
+	}
+
+	/**
+	 * Create a <code>RemoteModel</code> and retrieve the configuration
+	 * from the given <code>Preferences</code>.
+	 * If any configuration is found for a specific parameter, the default
+	 * value is used according to <code>RemoteModel</code>.
+	 *
+	 * @param prefs <code>Preferences</code> used to retrieve the configuration
+	 * @return a configured <code>RemoteModel</code>
+	 */
+	public static RemoteModel createRemoteModel(Preferences prefs) {
+	    RemoteModel model = new RemoteModel();
+	    model.setSubnet(prefs.getInt("artnet-remote.server.subnet", 0));
+        model.setUniverse(prefs.getInt("artnet-remote.server.universe", 0));
+        model.setBroadCastAddress(BroadCastAddress.valueOf(
+                BroadCastAddress.class,
+                prefs.get("artnet-remote.server.broadcast.address",
+                BroadCastAddress.PRIMARY.name())));
+
+	    model.setInPort(prefs.getInt("artnet-remote.server.inport",
+	            ArtNetServerManager.DEFAULT_ARTNET_PORT));
+        model.setOutputPort(prefs.getInt("artnet-remote.server.outport",
+                ArtNetServerManager.DEFAULT_ARTNET_PORT));
+
+        model.setHttpServerEnabled(
+                prefs.getBoolean("artnet-remote.server.httpserver.enable", false));
+        model.setHttpPort(
+                prefs.getInt("artnet-remote.server.httpserver.port",
+                HttpServerManager.DEFAULT_HTTP_PORT));
+
+        return model;
+	}
+
+	/**
+	 * Persits a remote model to the given <code>Preferences</code>.
+	 *
+	 * @param model the <code>RemoteModel</code> to store
+	 * @param prefs the <code>Preferences</code> used to persist
+	 */
+	public static void persistRemoteModel(RemoteModel model, Preferences prefs) {
+	    prefs.putInt("artnet-remote.server.subnet", model.getSubnet());
+	    prefs.putInt("artnet-remote.server.universe", model.getUniverse());
+	    prefs.put("artnet-remote.server.broadcast.address",
+	            model.getBroadCastAddress().name());
+
+	    prefs.putInt("artnet-remote.server.inport", model.getInPort());
+        prefs.putInt("artnet-remote.server.outport", model.getOutPort());
+
+        prefs.putBoolean("artnet-remote.server.httpserver.enable",
+                model.isHttpServerEnabled());
+        prefs.putInt("artnet-remote.server.httpserver.port",
+                model.getHttpPort());
 	}
 }
