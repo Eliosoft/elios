@@ -195,7 +195,9 @@ public class ArtNetServerManager {
 	 */
 	public void setBroadcastAddress(String broadcastAddress) {
 		this.broadcastAddress = broadcastAddress;
-		this.artnetServer.setBroadcastAddress(broadcastAddress);
+		if(this.artnetServer != null){
+			this.artnetServer.setBroadcastAddress(broadcastAddress);
+		}
 	}
 
 	/**
