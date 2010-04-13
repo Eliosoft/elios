@@ -434,4 +434,121 @@ public class RemoteModel {
 		this.remoteModelChangedListeners.remove(listener);
 	}
 
+	/**
+	 * Returns the input port.
+	 * 
+	 * @return the input port
+	 */
+	public int getInPort() {
+	    return getSelectedIntValue(inPortSpinnerModel);
+	}
+
+	/**
+     * Returns the output port.
+     * 
+     * @return the output port
+     */
+	public int getOutPort() {
+        return getSelectedIntValue(outPortSpinnerModel);
+    }
+
+	/**
+     * Returns the universe.
+     * 
+     * @return the universe
+     */
+	public int getUniverse() {
+        return getSelectedIntValue(universeSpinnerModel);
+    }
+
+    /**
+     * Returns the subnet.
+     * 
+     * @return the subnet
+     */
+	public int getSubnet() {
+        return getSelectedIntValue(subnetSpinnerModel);
+    }
+
+    /**
+     * Returns the Http port.
+     * 
+     * @return the Http port
+     */
+	public int getHttpPort() {
+        return getSelectedIntValue(httpPortSpinnerModel);
+    }
+
+    /**
+     * Returns the broadcast address.
+     * 
+     * @return the broadcast address
+     */	
+	public BroadCastAddress getBroadCastAddress() {
+        return (BroadCastAddress) broadcastAddressComboModel.getSelectedItem();
+    }
+
+	/**
+	 * Returns the selected value of the model casted to int (no check).
+	 * 
+	 * @param model the model
+	 * @return the selected value of the model
+	 */
+	private int getSelectedIntValue(SpinnerModel model) {
+	    return (Integer) model.getValue();
+	}
+
+	/**
+     * Sets the input port.
+     * 
+     * @param inPort the input port
+     */
+    public void setInPort(int inPort) {
+        inPortSpinnerModel.setValue(inPort);
+    }
+
+    /**
+     * Sets the output port.
+     * 
+     * @param inPort the output port
+     */
+    public void setOutputPort(int outPort) {
+        outPortSpinnerModel.setValue(outPort);
+    }
+
+    /**
+     * Sets the universe.
+     * 
+     * @param universe the universe
+     */
+    public void setUniverse(int universe) {
+        universeSpinnerModel.setValue(universe);
+    }
+
+    /**
+     * Sets the subnet.
+     * 
+     * @param subnet the subnet
+     */
+    public void setSubnet(int subnet) {
+        subnetSpinnerModel.setValue(subnet);
+    }
+
+    /**
+     * Sets the Http port.
+     * 
+     * @param httpPort the Http port
+     */
+    public void setHttpPort(int httpPort) {
+        httpPortSpinnerModel.setValue(httpPort);
+    }
+
+    /**
+     * Returns the broadcast address.
+     * 
+     * @return the broadcast address
+     */ 
+    public void setBroadCastAddress(BroadCastAddress bAddress) {
+        broadcastAddressComboModel.setSelectedItem(bAddress);
+    }
 }
