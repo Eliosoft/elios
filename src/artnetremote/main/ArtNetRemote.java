@@ -37,6 +37,7 @@ import artnetremote.gui.controllers.PrefsController;
 import artnetremote.gui.controllers.RemoteController;
 import artnetremote.gui.models.RemoteModel;
 import artnetremote.gui.models.RemoteModel.BroadCastAddress;
+import artnetremote.gui.views.AboutView;
 import artnetremote.gui.views.LogsLineView;
 import artnetremote.gui.views.LogsView;
 import artnetremote.gui.views.PrefsView;
@@ -81,6 +82,7 @@ public final class ArtNetRemote {
 		new LogsController(remoteModel, logsView);
 
 		LogsLineView logsLineView = new LogsLineView(remoteModel);
+		AboutView aboutView = new AboutView();
 		
 		for(Logger l : LoggersManager.getInstance().getLoggersList()){
 			remoteModel.getLogsListModel().addLogger(l);
@@ -98,6 +100,7 @@ public final class ArtNetRemote {
 		tabbedPane.addTab("remote", remoteView.getViewComponent());
 		tabbedPane.addTab("prefs", prefsView.getViewComponent());
 		tabbedPane.addTab("logs", logsView.getViewComponent());
+		tabbedPane.addTab("about", aboutView.getViewComponent());
 
 		tabbedPane.addChangeListener(new ChangeListener() {
 			@Override

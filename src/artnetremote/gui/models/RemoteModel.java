@@ -510,7 +510,7 @@ public class RemoteModel {
     /**
      * Sets the output port.
      * 
-     * @param inPort the output port
+     * @param outPort the output port
      */
     public void setOutputPort(int outPort) {
         outPortSpinnerModel.setValue(outPort);
@@ -544,11 +544,11 @@ public class RemoteModel {
     }
 
     /**
-     * Returns the broadcast address.
+     * set the value of the broadcast address.
      * 
-     * @return the broadcast address
+     * @param broadcastAddress the broadcast address
      */ 
-    public void setBroadCastAddress(BroadCastAddress bAddress) {
-        broadcastAddressComboModel.setSelectedItem(bAddress);
+    public void setBroadCastAddress(BroadCastAddress broadcastAddress){
+        broadcastAddressComboModel.setSelectedItem(broadcastAddress);
     }
 }
