@@ -44,7 +44,7 @@ public class AboutView implements ViewInterface {
 				"developed to help technicians<br/>" +
 				"during lighting setup and focus !!!</p>" +
 				"<p></p>" +
-				"<p align='center'>Copyright © 2010<br/>Jérémie GASTON-RAOUL<br/>Alexandre COLLIGNON</p>" +
+				"<p align='center'>Copyright &copy; 2010<br/>J&eacute;r&eacute;mie GASTON-RAOUL<br/>Alexandre COLLIGNON</p>" +
 				"</body></html>");
 		aboutPanel.add(titleLabel);
 	}
