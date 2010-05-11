@@ -67,7 +67,7 @@ public final class ArtNetRemote {
 	 */
 	public static void main(String[] args) {
 
-		final Preferences prefs = Preferences.userRoot();
+		final Preferences prefs = Preferences.userNodeForPackage(ArtNetRemote.class);
         final RemoteModel remoteModel = createRemoteModel(prefs);
 		final RemoteView remoteView = new RemoteView(remoteModel);
 		//used to make relation between view and model
@@ -137,22 +137,22 @@ public final class ArtNetRemote {
 	 */
 	public static RemoteModel createRemoteModel(Preferences prefs) {
 	    RemoteModel model = new RemoteModel();
-	    model.setSubnet(prefs.getInt("artnet-remote.server.subnet", 0));
-        model.setUniverse(prefs.getInt("artnet-remote.server.universe", 0));
+	    model.setSubnet(prefs.getInt("server.subnet", 0));
+        model.setUniverse(prefs.getInt("server.universe", 0));
         model.setBroadCastAddress(BroadCastAddress.valueOf(
                 BroadCastAddress.class,
-                prefs.get("artnet-remote.server.broadcast.address",
+                prefs.get("server.broadcast.address",
                 BroadCastAddress.PRIMARY.name())));
 
-	    model.setInPort(prefs.getInt("artnet-remote.server.inport",
+	    model.setInPort(prefs.getInt("server.inport",
 	            ArtNetServerManager.DEFAULT_ARTNET_PORT));
-        model.setOutputPort(prefs.getInt("artnet-remote.server.outport",
+        model.setOutputPort(prefs.getInt("server.outport",
                 ArtNetServerManager.DEFAULT_ARTNET_PORT));
 
         model.setHttpServerEnabled(
-                prefs.getBoolean("artnet-remote.server.httpserver.enable", false));
+                prefs.getBoolean("server.httpserver.enable", false));
         model.setHttpPort(
-                prefs.getInt("artnet-remote.server.httpserver.port",
+                prefs.getInt("server.httpserver.port",
                 HttpServerManager.DEFAULT_HTTP_PORT));
 
         return model;
@@ -165,17 +165,17 @@ public final class ArtNetRemote {
 	 * @param prefs the <code>Preferences</code> used to persist
 	 */
 	public static void persistRemoteModel(RemoteModel model, Preferences prefs) {
-	    prefs.putInt("artnet-remote.server.subnet", model.getSubnet());
-	    prefs.putInt("artnet-remote.server.universe", model.getUniverse());
-	    prefs.put("artnet-remote.server.broadcast.address",
+	    prefs.putInt("server.subnet", model.getSubnet());
+	    prefs.putInt("server.universe", model.getUniverse());
+	    prefs.put("server.broadcast.address",
 	            model.getBroadCastAddress().name());
 
-	    prefs.putInt("artnet-remote.server.inport", model.getInPort());
-        prefs.putInt("artnet-remote.server.outport", model.getOutPort());
+	    prefs.putInt("server.inport", model.getInPort());
+        prefs.putInt("server.outport", model.getOutPort());
 
-        prefs.putBoolean("artnet-remote.server.httpserver.enable",
+        prefs.putBoolean("server.httpserver.enable",
                 model.isHttpServerEnabled());
-        prefs.putInt("artnet-remote.server.httpserver.port",
+        prefs.putInt("server.httpserver.port",
                 model.getHttpPort());
 	}
 }
