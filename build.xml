@@ -30,6 +30,7 @@
 	<property name="lib" location="lib" />
 	<property name="res" location="resources" />
 	<property name="main-class" value="artnetremote.main.ArtNetRemote" />
+	<property name="version" value="0.1-dev" />
 
 	<path>
 		<!-- Define classpath -->
@@ -64,8 +65,8 @@
 	</target>
 	
 	<target name="dist" depends="compile, create_dist-dir" description="generate the distribution">
-		<!-- Put everything in ${build} into the artnet-${DSTAMP}.jar file -->
-		<jar jarfile="${dist}/artnet-remote-${DSTAMP}.jar" basedir="${build}">
+		<!-- Put everything in ${build} into the artnet-${version}.jar file -->
+		<jar jarfile="${dist}/artnet-remote-${version}.jar" basedir="${build}">
 			<manifest>
 				<attribute name="Main-Class" value="${main-class}" />
 			</manifest>
@@ -86,7 +87,7 @@
 			</patternset>
 		</unzip>
 		<!-- Create the jar -->
-		<jar jarfile="${dist}/artnet-remote-all-${DSTAMP}.jar">
+		<jar jarfile="${dist}/artnet-remote-all.jar">
 			<fileset dir="${build}" />
 			<fileset dir="${dist.tmp}" />
 			<manifest>
@@ -100,5 +101,13 @@
 		<!-- Delete the ${build} and ${dist} directory trees -->
 		<delete dir="${build}" />
 		<delete dir="${dist}" />
+	</target>
+	
+	<!-- required IzPack standalone-compiler -->
+	<taskdef name="IzPack" classpath="${lib}/standalone-compiler.jar"
+	         classname="com.izforge.izpack.ant.IzPackTask"/>
+	
+	<target name="dist_installer" depends="dist_all-in-one">
+		<IzPack input="install.xml" output="${dist}/artnet-remote-installer-${version}.jar" basedir="."/>
 	</target>
 </project>

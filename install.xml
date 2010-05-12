@@ -1,0 +1,78 @@
+<!--
+  This file is part of ArtNet-Remote.
+  
+  Copyright 2010 Jeremie GASTON-RAOUL & Alexandre COLLIGNON
+  
+  ArtNet-Remote is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+  
+  ArtNet-Remote is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+  GNU General Public License for more details.
+  
+  You should have received a copy of the GNU General Public License
+  along with ArtNet-Remote. If not, see <http://www.gnu.org/licenses/>.
+-->
+
+<?xml version="1.0" encoding="iso-8859-1" standalone="yes" ?>
+
+<installation version="1.0">
+    <info>
+        <appname>Artnet-Remote</appname>
+        <appversion>0.1-dev</appversion>
+        <authors>
+            <author name="Jeremie GASTON-RAOUL" email="jeremie.gaston-raoul@free.fr"/>
+            <author name="Alexandre COLLIGNON" email="alexandre@collign.net"/>
+        </authors>
+        <url>http://github.com/jeremiegastonraoul/artnet-remote/</url>
+    </info>
+
+    <guiprefs width="640" height="480" resizable="yes"/>
+
+    <locale>
+        <langpack iso3="eng"/>
+        <langpack iso3="fra"/>
+    </locale>
+
+    <resources>
+        <res id="LicencePanel.licence" src="LICENSE.txt"/>
+        <res id="InfoPanel.info" src="README.txt"/>
+    </resources>
+
+    <panels>
+        <panel classname="HelloPanel"/>
+        <panel classname="InfoPanel"/>
+        <panel classname="LicencePanel"/>
+        <panel classname="TargetPanel"/>
+        <panel classname="PacksPanel"/>
+        <panel classname="InstallPanel"/>
+        <panel classname="FinishPanel"/>
+    </panels>
+
+    <packs>
+        <pack name="Base" required="yes">
+            <description>The program files</description>
+            <file src="README.txt" targetdir="$INSTALL_PATH"/>
+            <file src="LICENSE.txt" targetdir="$INSTALL_PATH"/>
+            <!-- Could not use variable in src http://jira.codehaus.org/browse/IZPACK-488 -->
+            <file src="dist/artnet-remote-all.jar" targetdir="$INSTALL_PATH"/>
+        </pack>
+        <pack name="Docs" required="no">
+            <description>The documentation</description>
+            <file src="doc" targetdir="$INSTALL_PATH"/>
+            <!-- Recursive adding -->
+        </pack>
+        <pack name="Sources" required="no">
+            <description>The sources</description>
+            <file src="src" targetdir="$INSTALL_PATH"/>
+        </pack>
+        <pack name="ExternalLibraries" required="no">
+            <description>The external libraries</description>
+            <file src="lib" targetdir="$INSTALL_PATH"/>
+        </pack>
+    </packs>
+
+</installation>
