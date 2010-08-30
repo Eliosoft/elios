@@ -1,25 +1,25 @@
 <!--
-  This file is part of ArtNet-Remote.
+  This file is part of Elios.
   
   Copyright 2010 Jeremie GASTON-RAOUL & Alexandre COLLIGNON
   
-  ArtNet-Remote is free software: you can redistribute it and/or modify
+  Elios is free software: you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
   the Free Software Foundation, either version 3 of the License, or
   (at your option) any later version.
   
-  ArtNet-Remote is distributed in the hope that it will be useful,
+  Elios is distributed in the hope that it will be useful,
   but WITHOUT ANY WARRANTY; without even the implied warranty of
   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
   GNU General Public License for more details.
   
   You should have received a copy of the GNU General Public License
-  along with ArtNet-Remote. If not, see <http://www.gnu.org/licenses/>.
+  along with Elios. If not, see <http://www.gnu.org/licenses/>.
 -->
 
-<project name="artnet-remote" default="dist" basedir=".">
+<project name="elios" default="dist" basedir=".">
 	<description>
-        The ArtNet-Remote build file. 
+        The Elios build file. 
 		See README.txt for more details about the project
     </description>
 	<!-- set global properties for this build -->
@@ -29,7 +29,7 @@
 	<property name="dist.tmp" location="dist/tmp" />
 	<property name="lib" location="lib" />
 	<property name="res" location="resources" />
-	<property name="main-class" value="artnetremote.main.ArtNetRemote" />
+	<property name="main-class" value="net.eliosoft.elios.main.Elios" />
 	<property name="version" value="0.1-dev" />
 
 	<path>
@@ -66,7 +66,7 @@
 	
 	<target name="dist" depends="compile, create_dist-dir" description="generate the distribution">
 		<!-- Put everything in ${build} into the artnet-${version}.jar file -->
-		<jar jarfile="${dist}/artnet-remote-${version}.jar" basedir="${build}">
+		<jar jarfile="${dist}/elios-${version}.jar" basedir="${build}">
 			<manifest>
 				<attribute name="Main-Class" value="${main-class}" />
 			</manifest>
@@ -87,7 +87,7 @@
 			</patternset>
 		</unzip>
 		<!-- Create the jar -->
-		<jar jarfile="${dist}/artnet-remote-all.jar">
+		<jar jarfile="${dist}/elios-all.jar">
 			<fileset dir="${build}" />
 			<fileset dir="${dist.tmp}" />
 			<manifest>
@@ -108,6 +108,6 @@
 	         classname="com.izforge.izpack.ant.IzPackTask"/>
 	
 	<target name="dist_installer" depends="dist_all-in-one">
-		<IzPack input="install.xml" output="${dist}/artnet-remote-installer-${version}.jar" basedir="."/>
+		<IzPack input="install.xml" output="${dist}/elios-installer-${version}.jar" basedir="."/>
 	</target>
 </project>

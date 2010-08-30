@@ -1,4 +1,4 @@
-Project Name : ArtNet-Remote
+Project Name : Elios
 developed by : Jeremie GASTON-RAOUL
 
 ArtNet Remote is a free GUI which allows you to send DMX values to ArtNet nodes.
