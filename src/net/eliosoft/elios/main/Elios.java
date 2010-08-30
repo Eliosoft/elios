@@ -48,7 +48,7 @@ import net.eliosoft.elios.server.HttpServerManager;
 
 
 /**
- * Main Class of ArtNet Remote Software contains the main method
+ * Main Class of Elios Software contains the main method
  * used to launch the application.
  *
  * @author Jeremie GASTON-RAOUL
@@ -90,7 +90,7 @@ public final class Elios {
 			remoteModel.getLogsListModel().addLogger(l);
 		}
 
-		JFrame frame = new JFrame("ArtNet Remote");
+		JFrame frame = new JFrame("Elios");
 		final JTabbedPane tabbedPane = new JTabbedPane();
 		Container contentPane = frame.getContentPane();
 		contentPane.setLayout(new BorderLayout());
