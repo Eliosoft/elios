@@ -70,6 +70,7 @@ public class PrefsView implements ViewInterface {
 	private final JSpinner httpPortSpinner;
 
 	private final JCheckBox enableHttpServerCheckBox;
+	private final JCheckBox enableAdditiveModeCheckBox;
 
 
 	/**
@@ -88,48 +89,53 @@ public class PrefsView implements ViewInterface {
 
 		this.prefsPanel.add(artNetServer);
 
-		constraints.gridwidth = 2;		
 		constraints.gridy = 0;
+		constraints.gridwidth = 2;
+		this.enableAdditiveModeCheckBox = new JCheckBox(Messages.getString("prefsview.additivemode"), this.remoteModel.isAdditiveModeEnabled());
+		artNetServer.add(this.enableAdditiveModeCheckBox, constraints);
+		
+		constraints.gridwidth = 2;		
+		constraints.gridy = 1;
 		this.universeSpinner = new JSpinner(this.remoteModel.getUniverseSpinnerModel());
 		this.subnetSpinner = new JSpinner(this.remoteModel.getSubnetSpinnerModel());
 		JLabel subnetUniverseLabel = new JLabel(Messages.getString("prefsview.subnetuniverse")); //$NON-NLS-1$
 		artNetServer.add(subnetUniverseLabel, constraints);
 		constraints.gridwidth = 1;
-		constraints.gridy = 1;
+		constraints.gridy = 2;
 		artNetServer.add(this.subnetSpinner, constraints);
 		artNetServer.add(this.universeSpinner, constraints);
 
 		
 		constraints.gridwidth = 2;
-		constraints.gridy = 2;
+		constraints.gridy = 3;
 		this.broadcastAddressCombo = new JComboBox(this.remoteModel.getBroadcastAddressComboModel());
 		JLabel broadcastAddressLabel = new JLabel(Messages.getString("prefsview.broadcastaddress")); //$NON-NLS-1$
 		artNetServer.add(broadcastAddressLabel, constraints);
 		broadcastAddressLabel.setLabelFor(this.broadcastAddressCombo);
-		constraints.gridy = 3;
+		constraints.gridy = 4;
 		artNetServer.add(this.broadcastAddressCombo,constraints);
 		
 		constraints.gridwidth = 1;		
-		constraints.gridy = 4;
+		constraints.gridy = 5;
 		this.inPortSpinner = new JSpinner(this.remoteModel.getInPortSpinnerModel());
 		JLabel inPortLabel = new JLabel(Messages.getString("prefsview.port.in")); //$NON-NLS-1$
 		artNetServer.add(inPortLabel, constraints);
 		inPortLabel.setLabelFor(this.inPortSpinner);
 		artNetServer.add(this.inPortSpinner, constraints);
 
-		constraints.gridy = 5;
+		constraints.gridy = 6;
 		this.outPortSpinner = new JSpinner(this.remoteModel.getOutPortSpinnerModel());
 		JLabel outPortLabel = new JLabel(Messages.getString("prefsview.port.out")); //$NON-NLS-1$
 		artNetServer.add(outPortLabel, constraints);
 		outPortLabel.setLabelFor(this.outPortSpinner);
 		artNetServer.add(this.outPortSpinner, constraints);
 		
-		constraints.gridy = 6;
+		constraints.gridy = 7;
 		constraints.gridwidth = 2;
 		this.enableHttpServerCheckBox = new JCheckBox(Messages.getString("prefsview.httpserver"), this.remoteModel.isHttpServerEnabled());
 		artNetServer.add(this.enableHttpServerCheckBox, constraints);
 		
-		constraints.gridy = 7;
+		constraints.gridy = 8;
 		constraints.gridwidth = 1;
 		this.httpPortSpinner = new JSpinner(this.remoteModel.getHttpPortSpinnerModel());
 		JLabel httpPortLabel = new JLabel(Messages.getString("prefsview.port.http")); //$NON-NLS-1$
@@ -138,7 +144,7 @@ public class PrefsView implements ViewInterface {
 		artNetServer.add(this.httpPortSpinner, constraints);
 
 
-		constraints.gridy = 8;
+		constraints.gridy = 9;
 		constraints.gridwidth = 1;		
 		this.startArtNetButton = new JButton(Messages.getString("prefsview.start")); //$NON-NLS-1$
 		artNetServer.add(this.startArtNetButton, constraints);
@@ -236,5 +242,22 @@ public class PrefsView implements ViewInterface {
 	 */
 	public void removeEnableHttpServerCheckBoxListener(ActionListener actionListener){
 		this.enableHttpServerCheckBox.removeActionListener(actionListener);
+	}
+	
+		
+	/**
+	 * Add an Action Listener to the Enable Additive Mode checkbox.
+	 * @param actionListener the listener to add to the checkbox
+	 */
+	public void addEnableAdditiveModeCheckBoxListener(ActionListener actionListener){
+		this.enableAdditiveModeCheckBox.addActionListener(actionListener);
+	}
+
+	/**
+	 * Removes an Action Listener to the Enable Additive Mode checkbox.
+	 * @param actionListener the listener to remove to the checkbox
+	 */
+	public void removeEnableAdditiveModeCheckBoxListener(ActionListener actionListener){
+		this.enableAdditiveModeCheckBox.removeActionListener(actionListener);
 	}
 }

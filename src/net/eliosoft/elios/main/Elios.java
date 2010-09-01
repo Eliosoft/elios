@@ -153,6 +153,8 @@ public final class Elios {
 
         model.setHttpServerEnabled(
                 prefs.getBoolean("server.httpserver.enable", false));
+		model.setAdditiveModeEnabled(
+                prefs.getBoolean("server.additivemode.enable", false));
         model.setHttpPort(
                 prefs.getInt("server.httpserver.port",
                 HttpServerManager.DEFAULT_HTTP_PORT));
@@ -177,6 +179,8 @@ public final class Elios {
 
         prefs.putBoolean("server.httpserver.enable",
                 model.isHttpServerEnabled());
+		prefs.putBoolean("server.additivemode.enable",
+                model.isAdditiveModeEnabled());
         prefs.putInt("server.httpserver.port",
                 model.getHttpPort());
 	}

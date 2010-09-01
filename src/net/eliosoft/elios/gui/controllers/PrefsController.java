@@ -91,5 +91,12 @@ public class PrefsController {
 				remoteModel.setHttpServerEnabled(((JCheckBox)e.getSource()).isSelected());
 			}
 		});
+		
+		this.prefsView.addEnableAdditiveModeCheckBoxListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				remoteModel.setAdditiveModeEnabled(((JCheckBox)e.getSource()).isSelected());
+			}
+		});
 	}
 }

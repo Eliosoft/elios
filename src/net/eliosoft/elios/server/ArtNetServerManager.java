@@ -55,6 +55,7 @@ public class ArtNetServerManager {
 	private int subnet = 0;
 	private int universe = 0;
 	private int sequenceId = 0;
+	private boolean additiveModeEnabled = false;
 	
 	private static final Pattern commandLinePattern = Pattern.compile("^(((\\d{1,3})(/(\\d{1,3}))?)([\\+\\-]((\\d{1,3})(/(\\d{1,3}))?))*)@(F|(D?)(\\d{1,3}))$",Pattern.CASE_INSENSITIVE);
 	private static final Pattern channelPattern = Pattern.compile("([\\+\\-]?)(\\d{1,3})(/(\\d{1,3}))?",Pattern.CASE_INSENSITIVE);
@@ -182,6 +183,9 @@ public class ArtNetServerManager {
 	}
 
 	private void insertInDmxArray(List<Integer> channels, int value, boolean percent){
+		if(!additiveModeEnabled){
+			dmxArray = new byte[512];
+		}
 		byte dmxValue = (byte)value;
 		if(percent){
 			dmxValue = (byte)(value/100.0*255);
@@ -240,6 +244,16 @@ public class ArtNetServerManager {
 	 */
 	public void setUniverse(int universe) {
 		this.universe = universe;
+	}
+	
+	/**
+	 * Enable or disable the additive mode
+	 * 
+	 * @param additiveModeEnabled
+	 *            true to enable the additive mode, false to disable
+	 */
+	public void setAdditiveModeEnabled(boolean additiveModeEnabled) {
+		this.additiveModeEnabled = additiveModeEnabled;
 	}
 	
 }

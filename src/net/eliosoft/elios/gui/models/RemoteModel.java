@@ -64,6 +64,8 @@ public class RemoteModel {
 
 	private StringBuilder commandLine;
 	private boolean httpServerEnabled;
+	private boolean additiveModeEnabled;
+	
 	private List<RemoteModelListener> remoteModelChangedListeners;
 
 	private final static ArtNetServerManager artNetServerManager = ArtNetServerManager
@@ -415,6 +417,26 @@ public class RemoteModel {
 		this.httpServerEnabled = httpServerEnabled;
 	}
 
+		/**
+	 * Give the status of the additive mode enabling
+	 * 
+	 * @return true if additive mode is enabled, false if disabled
+	 */
+	public boolean isAdditiveModeEnabled() {
+		return this.additiveModeEnabled;
+	}
+
+	/**
+	 * Enable or disable the additive mode
+	 * 
+	 * @param additiveModeEnabled
+	 *            true to enable the additive mode, false to disable
+	 */
+	public void setAdditiveModeEnabled(boolean additiveModeEnabled) {
+		this.additiveModeEnabled = additiveModeEnabled;
+		RemoteModel.artNetServerManager.setAdditiveModeEnabled(this.additiveModeEnabled);
+	}
+	
 	/**
 	 * Adds an element to the list of listener of the remote model.
 	 * 
