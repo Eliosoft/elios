@@ -57,13 +57,14 @@ public class ArtNetServerManager {
 	private int sequenceId = 0;
 	private boolean additiveModeEnabled = false;
 	
-	private static final Pattern commandLinePattern = Pattern.compile("^(((\\d{1,3})(/(\\d{1,3}))?)([\\+\\-]((\\d{1,3})(/(\\d{1,3}))?))*)@(F|(D?)(\\d{1,3}))$",Pattern.CASE_INSENSITIVE);
+	private static final Pattern commandLinePattern = Pattern.compile("^(((\\d{1,3})(/(\\d{1,3}))?)([\\+\\-]((\\d{1,3})(/(\\d{1,3}))?))*)(@(F|(D?)(\\d{1,3}))){0,1}$",Pattern.CASE_INSENSITIVE);
 	private static final Pattern channelPattern = Pattern.compile("([\\+\\-]?)(\\d{1,3})(/(\\d{1,3}))?",Pattern.CASE_INSENSITIVE);
 	
 	private static final int COMMAND_LINE_PATTERN_CHANNEL_GROUP = 1;
-	private static final int COMMAND_LINE_PATTERN_LEVEL_GROUP = 11;
-	private static final int COMMAND_LINE_PATTERN_PERCENT_GROUP = 12;
-	private static final int COMMAND_LINE_PATTERN_LEVEL_VALUE_GROUP = 13;
+	private static final int COMMAND_LINE_PATTERN_AT_LEVEL_GROUP = 11;
+	private static final int COMMAND_LINE_PATTERN_LEVEL_GROUP = 12;
+	private static final int COMMAND_LINE_PATTERN_PERCENT_GROUP = 13;
+	private static final int COMMAND_LINE_PATTERN_LEVEL_VALUE_GROUP = 14;
 	
 	private static final int CHANNEL_PATTERN_EXCEPT_GROUP = 1;
 	private static final int CHANNEL_PATTERN_CHAN1_GROUP = 2;
@@ -160,8 +161,14 @@ public class ArtNetServerManager {
 					}
 				}
 				
-				boolean percent = (commandLineMatcher.group(COMMAND_LINE_PATTERN_PERCENT_GROUP) == null || commandLineMatcher.group(COMMAND_LINE_PATTERN_PERCENT_GROUP).isEmpty());
-				int value = (commandLineMatcher.group(COMMAND_LINE_PATTERN_LEVEL_GROUP).toUpperCase().compareTo("F") == 0) ? MAX_PERCENT_VALUE : Integer.parseInt(commandLineMatcher.group(COMMAND_LINE_PATTERN_LEVEL_VALUE_GROUP));
+				boolean hasLevel = !(commandLineMatcher.group(COMMAND_LINE_PATTERN_AT_LEVEL_GROUP) == null || commandLineMatcher.group(COMMAND_LINE_PATTERN_AT_LEVEL_GROUP).isEmpty());
+				boolean percent = false;
+				int value = MAX_DMX_VALUE;
+				
+				if(hasLevel){
+					percent = (commandLineMatcher.group(COMMAND_LINE_PATTERN_PERCENT_GROUP) == null || commandLineMatcher.group(COMMAND_LINE_PATTERN_PERCENT_GROUP).isEmpty());
+					value = (commandLineMatcher.group(COMMAND_LINE_PATTERN_LEVEL_GROUP).toUpperCase().compareTo("F") == 0) ? MAX_PERCENT_VALUE : Integer.parseInt(commandLineMatcher.group(COMMAND_LINE_PATTERN_LEVEL_VALUE_GROUP));
+				}
 				
 				if((percent && value > MAX_PERCENT_VALUE) || value > MAX_DMX_VALUE)
 					throw new BadSyntaxException();
