@@ -23,6 +23,8 @@ package net.eliosoft.elios.server;
 import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Map.Entry;
+import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
@@ -139,6 +141,8 @@ public class ArtNetServerManager {
 	 */
 	public void processCommandLine(String commandLine) throws BadSyntaxException {
 		String[] commands = commandLine.split(";");
+		HashMap<Integer,Byte> valuesToPush = new HashMap<Integer,Byte>();
+		
 		for(String command : commands){
 			Matcher commandLineMatcher = commandLinePattern.matcher(command);
 			if (commandLineMatcher.find()) {
@@ -173,12 +177,21 @@ public class ArtNetServerManager {
 				if((percent && value > MAX_PERCENT_VALUE) || value > MAX_DMX_VALUE)
 					throw new BadSyntaxException();
 				
-				insertInDmxArray(new ArrayList<Integer>(channels), value, percent);
+				//adding values to HashMap of values to push
+				
+				byte dmxValue = (byte)value;
+				if(percent){
+					dmxValue = (byte)(value/100.0*255);
+				}
+				for(int channel : channels){
+					valuesToPush.put(channel-1,dmxValue);
+				}
 			}
 			else{
 				throw new BadSyntaxException();
 			}
 		}
+		pushValuesInDmxArray(valuesToPush);
 		logger.info("Command line parsed : " + commandLine);
 
 	}
@@ -189,16 +202,16 @@ public class ArtNetServerManager {
 		}
 	}
 
-	private void insertInDmxArray(List<Integer> channels, int value, boolean percent){
+	private void resetDmxArray(){
+		dmxArray = new byte[512];
+	}
+	
+	private void pushValuesInDmxArray(HashMap<Integer,Byte> valuesMap){
 		if(!additiveModeEnabled){
-			dmxArray = new byte[512];
+			resetDmxArray();
 		}
-		byte dmxValue = (byte)value;
-		if(percent){
-			dmxValue = (byte)(value/100.0*255);
-		}
-		for(int channel : channels){
-			dmxArray[channel-1]=dmxValue;
+		for(Entry<Integer,Byte> value : valuesMap.entrySet()){
+			dmxArray[value.getKey()] = value.getValue();
 		}
 	}
 
