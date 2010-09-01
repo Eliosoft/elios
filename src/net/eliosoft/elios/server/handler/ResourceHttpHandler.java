@@ -27,7 +27,7 @@ public class ResourceHttpHandler implements HttpHandler {
 			}
 			
 			//TODO : move resources to a dedicated folder
-			InputStream resourceInputStream = this.getClass().getResourceAsStream("/elios/server/handler/files"+path);
+			InputStream resourceInputStream = this.getClass().getResourceAsStream("/net/eliosoft/elios/server/handler/files"+path);
 
 			if(resourceInputStream != null){
 				//TODO : find another solution to know the file size...
