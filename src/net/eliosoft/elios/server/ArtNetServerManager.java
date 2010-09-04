@@ -21,18 +21,14 @@
 package net.eliosoft.elios.server;
 
 import java.net.SocketException;
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map.Entry;
-import java.util.HashMap;
-import java.util.List;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import net.eliosoft.elios.main.LoggersManager;
-
-
 import artnet4j.ArtNetException;
 import artnet4j.ArtNetServer;
 import artnet4j.packets.ArtDmxPacket;
