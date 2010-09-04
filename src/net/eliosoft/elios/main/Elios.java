@@ -42,6 +42,7 @@ import net.eliosoft.elios.gui.views.LogsLineView;
 import net.eliosoft.elios.gui.views.LogsView;
 import net.eliosoft.elios.gui.views.PrefsView;
 import net.eliosoft.elios.gui.views.RemoteView;
+import net.eliosoft.elios.gui.views.ViewInterface;
 import net.eliosoft.elios.server.ArtNetServerManager;
 import net.eliosoft.elios.server.HttpServerManager;
 
@@ -99,10 +100,10 @@ public final class Elios {
 
 		contentPane.add(tabbedPane, BorderLayout.CENTER);
 		contentPane.add(logsLineView.getViewComponent(), BorderLayout.SOUTH);
-		tabbedPane.addTab("remote", remoteView.getViewComponent());
-		tabbedPane.addTab("prefs", prefsView.getViewComponent());
-		tabbedPane.addTab("logs", logsView.getViewComponent());
-		tabbedPane.addTab("about", aboutView.getViewComponent());
+		addViewToTab(tabbedPane, remoteView);
+		addViewToTab(tabbedPane, prefsView);
+		addViewToTab(tabbedPane, logsView);
+		addViewToTab(tabbedPane, aboutView);
 
 		tabbedPane.addChangeListener(new ChangeListener() {
 			@Override
@@ -183,5 +184,16 @@ public final class Elios {
                 model.isAdditiveModeEnabled());
         prefs.putInt("server.httpserver.port",
                 model.getHttpPort());
+	}
+	
+	/**
+	 * Adds a {@link ViewInterface} to a {@link JTabbedPane}. The localized 
+	 * title of the {@link ViewInterface} is used to define the title of the pane.
+	 * 
+	 * @param pane the {@link JTabbedPane}
+	 * @param v the {@link ViewInterface} to add
+	 */
+	private static void addViewToTab(JTabbedPane pane, ViewInterface v) {
+	  pane.addTab(v.getLocalizedTitle(), v.getViewComponent());
 	}
 }

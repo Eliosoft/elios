@@ -304,4 +304,12 @@ public class RemoteView implements ViewInterface {
 		remotePanel.add(button, constraints);
 		return button;
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public String getLocalizedTitle() {
+	    return Messages.getString("remoteview.title");
+	}
 }

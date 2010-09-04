@@ -260,4 +260,12 @@ public class PrefsView implements ViewInterface {
 	public void removeEnableAdditiveModeCheckBoxListener(ActionListener actionListener){
 		this.enableAdditiveModeCheckBox.removeActionListener(actionListener);
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public String getLocalizedTitle() {
+	    return Messages.getString("prefsview.title");
+	}
 }

@@ -130,4 +130,12 @@ public class LogsView implements ViewInterface {
 	public void removeClearLogsButtonListener(ActionListener listener) {
 		this.clearLogsButton.removeActionListener(listener);
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public String getLocalizedTitle() {
+	    return Messages.getString("logsview.title");
+	}
 }

@@ -31,4 +31,11 @@ public interface ViewInterface {
 	 * @return the view component
 	 */
 	public JComponent getViewComponent();
+	
+	/**
+	 * Returns the localized title of the view. 
+	 * 
+	 * @return the localized title.
+	 */
+	public String getLocalizedTitle();
 }

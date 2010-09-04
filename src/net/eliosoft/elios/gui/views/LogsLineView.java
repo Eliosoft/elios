@@ -97,4 +97,12 @@ public class LogsLineView implements ViewInterface {
 		}
 		logsLinePanel.revalidate();
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public String getLocalizedTitle() {
+	    return Messages.getString("logsview.title");
+	}
 }
