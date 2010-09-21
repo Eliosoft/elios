@@ -82,9 +82,6 @@ public class PrefsView implements ViewInterface {
 
 		JPanel artNetServer = new JPanel();
 		artNetServer.setName(Messages.getString("prefsview.artnetserver")); //$NON-NLS-1$
-		TitledBorder artNetServerBorder = BorderFactory.createTitledBorder(artNetServer.getName());
-		artNetServerBorder.setTitleJustification(TitledBorder.CENTER);
-		artNetServer.setBorder(artNetServerBorder);
 		artNetServer.setLayout(layout);
 
 		this.prefsPanel.add(artNetServer);
