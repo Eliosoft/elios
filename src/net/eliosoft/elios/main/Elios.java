@@ -29,6 +29,7 @@ import java.util.prefs.Preferences;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JTabbedPane;
+import javax.swing.UIManager;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -69,6 +70,13 @@ public final class Elios {
 	 * @param args command-line argument. Currently unused !
 	 */
 	public static void main(String[] args) {
+		
+		try {
+			UIManager.setLookAndFeel(
+			        UIManager.getSystemLookAndFeelClassName());
+		} catch (Exception e1) {
+			LoggersManager.getInstance().getLogger(Elios.class.getName()).info("Can not load system look and feel");
+		} 
 
 		final Preferences prefs = Preferences.userNodeForPackage(Elios.class);
         final RemoteModel remoteModel = createRemoteModel(prefs);
