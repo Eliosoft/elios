@@ -24,7 +24,7 @@
             <author name="Jeremie GASTON-RAOUL" email="jeremie.gastonraoul@free.fr"/>
             <author name="Alexandre COLLIGNON" email="alexandre@collign.net"/>
         </authors>
-        <url>http://github.com/jeremiegastonraoul/elios/</url>
+        <url>http://eliosoft.net</url>
     </info>
 
     <guiprefs width="640" height="480" resizable="yes"/>
@@ -37,7 +37,19 @@
     <resources>
         <res id="LicencePanel.licence" src="LICENSE.txt"/>
         <res id="InfoPanel.info" src="README.txt"/>
+        <res id="shortcutSpec.xml" src="installer/shortcut/shortcutSpec.xml" />
+        <res id="Unix_shortcutSpec.xml" src="installer/shortcut/Unix_shortcutSpec.xml" />
+        <res id="ShellLink.dll" src="installer/dll/ShellLink.dll" />
+        <res id="ShellLink_x64.dll" src="installer/dll/ShellLink_x64.dll" />
+        <res id="COIOSHelper.dll" src="installer/dll/COIOSHelper.dll" />
+        <res id="COIOSHelper_x64.dll" src="installer/dll/COIOSHelper_x64.dll" />
     </resources>
+
+    <native type="izpack" name="ShellLink.dll"/>
+    <native type="izpack" name="ShellLink_x64.dll"/>
+    <native type="3rdparty" name="COIOSHelper.dll" stage="both">
+        <os family="windows"/>
+    </native>
 
     <panels>
         <panel classname="HelloPanel"/>
@@ -46,6 +58,7 @@
         <panel classname="TargetPanel"/>
         <panel classname="PacksPanel"/>
         <panel classname="InstallPanel"/>
+        <panel classname="ShortcutPanel"/>
         <panel classname="FinishPanel"/>
     </panels>
 
@@ -65,6 +78,11 @@
         <pack name="Sources" required="no">
             <description>The sources</description>
             <file src="src" targetdir="$INSTALL_PATH"/>
+        </pack>
+        <pack name="JavaDoc" required="no">
+            <description>The documentation</description>
+            <file src="dist/javadoc" targetdir="$INSTALL_PATH"/>
+            <!-- Recursive adding -->
         </pack>
     </packs>
 
