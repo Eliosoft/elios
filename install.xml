@@ -66,10 +66,6 @@
             <description>The sources</description>
             <file src="src" targetdir="$INSTALL_PATH"/>
         </pack>
-        <pack name="ExternalLibraries" required="no">
-            <description>The external libraries</description>
-            <file src="lib" targetdir="$INSTALL_PATH"/>
-        </pack>
     </packs>
 
 </installation>

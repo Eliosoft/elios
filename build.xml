@@ -27,7 +27,10 @@
 	<property name="build" location="classes" />
 	<property name="dist" location="dist" />
 	<property name="dist.tmp" location="dist/tmp" />
+	<property name="dist.setup" location="dist/setup" />
+	<property name="dist.setup.launcher.conf" value="launcher.ini" />
 	<property name="lib" location="lib" />
+	<property name="installer" location="installer" />
 	<property name="res" location="resources" />
 	<property name="main-class" value="net.eliosoft.elios.main.Elios" />
 	<property name="version" value="0.1-dev" />
@@ -104,10 +107,38 @@
 	</target>
 	
 	<!-- required IzPack standalone-compiler -->
-	<taskdef name="IzPack" classpath="${lib}/standalone-compiler.jar"
+	<taskdef name="IzPack" classpath="${installer}/standalone-compiler.jar"
 	         classname="com.izforge.izpack.ant.IzPackTask"/>
 	
 	<target name="dist_installer" depends="dist_all-in-one">
-		<IzPack input="install.xml" output="${dist}/elios-installer-${version}.jar" basedir="."/>
+		<mkdir dir="${dist.setup}" />
+		<copy todir="${dist.setup}">
+			<fileset dir="${installer}/launcher/" />
+		</copy>
+		<IzPack input="install.xml" output="${dist.setup}/elios-installer-${version}.jar" basedir="."/>
+		<echo file="${dist.setup}/${dist.setup.launcher.conf}">
+#  This file is part of Elios.
+#  
+#  Copyright 2010 Jeremie GASTON-RAOUL &amp; Alexandre COLLIGNON
+#  
+#  Elios is free software: you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation, either version 3 of the License, or
+#  (at your option) any later version.
+#  
+#  Elios is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+#  GNU General Public License for more details.
+#  
+#  You should have received a copy of the GNU General Public License
+#  along with Elios. If not, see &lt;http://www.gnu.org/licenses/&gt;.
+
+jar = elios-installer-${version}.jar
+download = http://www.java.com/
+
+[win32]
+jre = jre/setup.exe
+		</echo>
 	</target>
 </project>
