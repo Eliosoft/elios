@@ -21,7 +21,7 @@
         <appname>Elios</appname>
         <appversion>0.1-dev</appversion>
         <authors>
-            <author name="Jeremie GASTON-RAOUL" email="jeremie.gaston-raoul@free.fr"/>
+            <author name="Jeremie GASTON-RAOUL" email="jeremie.gastonraoul@free.fr"/>
             <author name="Alexandre COLLIGNON" email="alexandre@collign.net"/>
         </authors>
         <url>http://github.com/jeremiegastonraoul/elios/</url>
