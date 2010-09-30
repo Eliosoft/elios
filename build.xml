@@ -116,13 +116,16 @@
 		<taskdef name="IzPack" classpath="${installer}/standalone-compiler.jar"
 			classname="com.izforge.izpack.ant.IzPackTask"/>
 
+		<mkdir dir="${dist.setup}" />
+		<IzPack input="install.xml" output="${dist.setup}/elios-installer-${version}.jar" basedir="."/>
+	</target>
+	
+	<target name="dist_win_installer" depends="dist_installer" description="build windows installer">
 		<!-- required Launch4j Cross-platform Java executable wrapper -->
 		<taskdef name="launch4j"
 			classname="net.sf.launch4j.ant.Launch4jTask"
 			classpath="${installer}/launch4j.jar:${installer}/xstream.jar" />
 		
-		<mkdir dir="${dist.setup}" />
-		<IzPack input="install.xml" output="${dist.setup}/elios-installer-${version}.jar" basedir="."/>
 		<launch4j configFile="./launch.xml" outfile="${dist.setup}/elios-installer-${version}.exe"/>
 	</target>
 </project>
