@@ -78,74 +78,74 @@ public class PrefsView implements ViewInterface {
 	public PrefsView(RemoteModel remoteModel) {
 		this.remoteModel = remoteModel;
 
-		JPanel artNetServer = new JPanel();
-		artNetServer.setName(Messages.getString("prefsview.artnetserver")); //$NON-NLS-1$
-		artNetServer.setLayout(layout);
+		JPanel serverPrefPanel = new JPanel();
+		serverPrefPanel.setName(Messages.getString("prefsview.artnetserver")); //$NON-NLS-1$
+		serverPrefPanel.setLayout(layout);
 
-		this.prefsPanel.add(artNetServer);
+		this.prefsPanel.add(serverPrefPanel);
 
 		constraints.gridy = 0;
 		constraints.gridwidth = 2;
 		this.enableAdditiveModeCheckBox = new JCheckBox(Messages.getString("prefsview.additivemode"), this.remoteModel.isAdditiveModeEnabled());
-		artNetServer.add(this.enableAdditiveModeCheckBox, constraints);
+		serverPrefPanel.add(this.enableAdditiveModeCheckBox, constraints);
 		
 		constraints.gridwidth = 2;		
 		constraints.gridy = 1;
 		this.universeSpinner = new JSpinner(this.remoteModel.getUniverseSpinnerModel());
 		this.subnetSpinner = new JSpinner(this.remoteModel.getSubnetSpinnerModel());
 		JLabel subnetUniverseLabel = new JLabel(Messages.getString("prefsview.subnetuniverse")); //$NON-NLS-1$
-		artNetServer.add(subnetUniverseLabel, constraints);
+		serverPrefPanel.add(subnetUniverseLabel, constraints);
 		constraints.gridwidth = 1;
 		constraints.gridy = 2;
-		artNetServer.add(this.subnetSpinner, constraints);
-		artNetServer.add(this.universeSpinner, constraints);
+		serverPrefPanel.add(this.subnetSpinner, constraints);
+		serverPrefPanel.add(this.universeSpinner, constraints);
 
 		
 		constraints.gridwidth = 2;
 		constraints.gridy = 3;
 		this.broadcastAddressCombo = new JComboBox(this.remoteModel.getBroadcastAddressComboModel());
 		JLabel broadcastAddressLabel = new JLabel(Messages.getString("prefsview.broadcastaddress")); //$NON-NLS-1$
-		artNetServer.add(broadcastAddressLabel, constraints);
+		serverPrefPanel.add(broadcastAddressLabel, constraints);
 		broadcastAddressLabel.setLabelFor(this.broadcastAddressCombo);
 		constraints.gridy = 4;
-		artNetServer.add(this.broadcastAddressCombo,constraints);
+		serverPrefPanel.add(this.broadcastAddressCombo,constraints);
 		
 		constraints.gridwidth = 1;		
 		constraints.gridy = 5;
 		this.inPortSpinner = new JSpinner(this.remoteModel.getInPortSpinnerModel());
 		JLabel inPortLabel = new JLabel(Messages.getString("prefsview.port.in")); //$NON-NLS-1$
-		artNetServer.add(inPortLabel, constraints);
+		serverPrefPanel.add(inPortLabel, constraints);
 		inPortLabel.setLabelFor(this.inPortSpinner);
-		artNetServer.add(this.inPortSpinner, constraints);
+		serverPrefPanel.add(this.inPortSpinner, constraints);
 
 		constraints.gridy = 6;
 		this.outPortSpinner = new JSpinner(this.remoteModel.getOutPortSpinnerModel());
 		JLabel outPortLabel = new JLabel(Messages.getString("prefsview.port.out")); //$NON-NLS-1$
-		artNetServer.add(outPortLabel, constraints);
+		serverPrefPanel.add(outPortLabel, constraints);
 		outPortLabel.setLabelFor(this.outPortSpinner);
-		artNetServer.add(this.outPortSpinner, constraints);
+		serverPrefPanel.add(this.outPortSpinner, constraints);
 		
 		constraints.gridy = 7;
 		constraints.gridwidth = 2;
 		this.enableHttpServerCheckBox = new JCheckBox(Messages.getString("prefsview.httpserver"), this.remoteModel.isHttpServerEnabled());
-		artNetServer.add(this.enableHttpServerCheckBox, constraints);
+		serverPrefPanel.add(this.enableHttpServerCheckBox, constraints);
 		
 		constraints.gridy = 8;
 		constraints.gridwidth = 1;
 		this.httpPortSpinner = new JSpinner(this.remoteModel.getHttpPortSpinnerModel());
 		JLabel httpPortLabel = new JLabel(Messages.getString("prefsview.port.http")); //$NON-NLS-1$
-		artNetServer.add(httpPortLabel, constraints);
+		serverPrefPanel.add(httpPortLabel, constraints);
 		outPortLabel.setLabelFor(this.httpPortSpinner);
-		artNetServer.add(this.httpPortSpinner, constraints);
+		serverPrefPanel.add(this.httpPortSpinner, constraints);
 
 
 		constraints.gridy = 9;
 		constraints.gridwidth = 1;		
 		this.startArtNetButton = new JButton(Messages.getString("prefsview.start")); //$NON-NLS-1$
-		artNetServer.add(this.startArtNetButton, constraints);
+		serverPrefPanel.add(this.startArtNetButton, constraints);
 		this.stopArtNetButton = new JButton(Messages.getString("prefsview.stop")); //$NON-NLS-1$
 		this.stopArtNetButton.setEnabled(false);
-		artNetServer.add(this.stopArtNetButton, constraints);
+		serverPrefPanel.add(this.stopArtNetButton, constraints);
 		
 		this.remoteModel.addRemoteModelChangedListener(new RemoteModelListener() {
 			@Override
