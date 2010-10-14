@@ -13,7 +13,7 @@
 			     applications="no"
 			     startMenu="yes"
 			     startup="no"
-			     target="java"
+			     target="javaw"
 				 commandLine="-jar &quot;$INSTALL_PATH/elios-all.jar&quot;"
 			     workingDirectory="$HOME"
 			     description="Elios"
@@ -24,35 +24,35 @@
 	   </shortcut>
 
     <shortcut
-            name="Elios@ver@ Html Documentation"
+            name="Elios Html Documentation"
             programGroup="yes"
             desktop="no"
             applications="no"
             startMenu="no"
             startup="no"
-            target="$INSTALL_PATH\doc\Elios\html\index.html"
+            target="$INSTALL_PATH\doc\html\index.html"
             commandLine=""
-            description="This opens a WebBrowser to look into the Elios @build.number@ (HTML) user documentation">
+            description="This opens a WebBrowser to look into the Elios (HTML) user documentation">
 
-        <createForPack name="Doc"/>
+        <createForPack name="Docs"/>
     </shortcut>
 
     <shortcut
-            name="Elios@ver@ Java Documentation"
+            name="Elios Java Documentation"
             programGroup="yes"
             desktop="no"
             applications="no"
             startMenu="no"
             startup="no"
-            target="$INSTALL_PATH\doc\Elios\javadoc\index.html"
+            target="$INSTALL_PATH\javadoc\index.html"
             commandLine=""
-            description="This opens a WebBrowser to look into the Elios @build.number@ (Java) developer documentation">
+            description="This opens a WebBrowser to look into the Elios (Java) developer documentation">
 
         <createForPack name="JavaDoc"/>
     </shortcut>
 
     <shortcut
-            name="Elios@ver@ Uninstaller"
+            name="Elios Uninstaller"
             programGroup="yes"
             desktop="no"
             applications="no"
@@ -62,9 +62,9 @@
             commandLine=""
             iconFile="%SystemRoot%\system32\SHELL32.dll"
             iconIndex="31"
-            description="This uninstalls Elios @build.number@">
+            description="This uninstalls Elios">
 
-        <createForPack name="Core"/>
+        <createForPack name="Base"/>
     </shortcut>
 
 </shortcuts>

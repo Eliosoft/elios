@@ -76,7 +76,7 @@
             iconIndex="0"
             type="Application"
             encoding="UTF-8"
-            description="This opens the user documentation">
+            description="This opens a WebBrowser to look into the Elios (HTML) user documentation">
 
         <createForPack name="Docs"/>
     </shortcut>
@@ -96,7 +96,7 @@
             iconIndex="0"
             type="Application"
             encoding="UTF-8"
-            description="This opens a WebBrowser to look into the Elios (HTML) Java documentation">
+            description="This opens a WebBrowser to look into the Elios (Java) developer documentation">
 
         <createForPack name="JavaDoc"/>
     </shortcut>
@@ -122,7 +122,7 @@
 
             TryExec="java -jar &quot;$INSTALL_PATH/Uninstaller/uninstaller.jar&quot;"
 
-            description="This uninstalls Elios @build.number@">
+            description="This uninstalls Elios">
         <createForPack name="Base"/>
     </shortcut>
 
