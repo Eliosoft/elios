@@ -23,6 +23,7 @@ import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.Locale;
 import java.util.logging.Logger;
 import java.util.prefs.Preferences;
 
@@ -36,6 +37,7 @@ import javax.swing.event.ChangeListener;
 import net.eliosoft.elios.gui.controllers.LogsController;
 import net.eliosoft.elios.gui.controllers.PrefsController;
 import net.eliosoft.elios.gui.controllers.RemoteController;
+import net.eliosoft.elios.gui.models.LocaleComboModel;
 import net.eliosoft.elios.gui.models.RemoteModel;
 import net.eliosoft.elios.gui.models.RemoteModel.BroadCastAddress;
 import net.eliosoft.elios.gui.views.AboutView;
@@ -79,14 +81,21 @@ public final class Elios {
 		} 
 
 		final Preferences prefs = Preferences.userNodeForPackage(Elios.class);
+		
+		String lang = prefs.get("ui.lang", Locale.getDefault().getLanguage());
+		Locale locale = new Locale(lang);
+		Locale.setDefault(locale);
+
         final RemoteModel remoteModel = createRemoteModel(prefs);
 		final RemoteView remoteView = new RemoteView(remoteModel);
 		//used to make relation between view and model
 		new RemoteController(remoteModel, remoteView);
 
-		PrefsView prefsView = new PrefsView(remoteModel);
+		final LocaleComboModel localeModel = new LocaleComboModel();
+		localeModel.setSelectedItem(locale);
+		PrefsView prefsView = new PrefsView(remoteModel, localeModel);
 		//used to make relation between view and model
-		new PrefsController(remoteModel, prefsView);
+		new PrefsController(remoteModel, localeModel, prefsView);
 
 		LogsView logsView = new LogsView(remoteModel);
 		//used to make relation between view and model
@@ -128,6 +137,8 @@ public final class Elios {
             @Override
             public void windowClosing(WindowEvent e) {
                 persistRemoteModel(remoteModel, prefs);
+                Locale l = (Locale)localeModel.getSelectedItem();
+                prefs.put("ui.lang", l.getLanguage());
             }
 		});
 

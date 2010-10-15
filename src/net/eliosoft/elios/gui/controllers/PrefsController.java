@@ -21,11 +21,17 @@ package net.eliosoft.elios.gui.controllers;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.MessageFormat;
+import java.util.Locale;
 import java.util.logging.Logger;
 
 import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 
+import net.eliosoft.elios.gui.models.LocaleComboModel;
 import net.eliosoft.elios.gui.models.RemoteModel;
+import net.eliosoft.elios.gui.views.Messages;
 import net.eliosoft.elios.gui.views.PrefsView;
 import net.eliosoft.elios.main.LoggersManager;
 
@@ -47,12 +53,12 @@ public class PrefsController {
 	/**
 	 * The default constructor for the prefs controller.
 	 * @param remoteModel the model associated to the controller
+	 * @param localeModel 
 	 * @param prefsView  the view associated to the controller
 	 */
-	public PrefsController(RemoteModel remoteModel, PrefsView prefsView) {
+	public PrefsController(RemoteModel remoteModel, LocaleComboModel localeModel, PrefsView prefsView) {
 		this.remoteModel = remoteModel;
 		this.prefsView = prefsView;
-
 		this.initListeners();
 	}
 
@@ -96,6 +102,15 @@ public class PrefsController {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				remoteModel.setAdditiveModeEnabled(((JCheckBox)e.getSource()).isSelected());
+			}
+		});
+		
+		this.prefsView.addLangComboListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JComboBox cb = (JComboBox)e.getSource();
+				Locale l = (Locale)cb.getSelectedItem();
+				JOptionPane.showMessageDialog(null, MessageFormat.format(Messages.getString("prefsview.lang.restart"), Messages.getString("ui.lang." + l.getLanguage())));
 			}
 		});
 	}

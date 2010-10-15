@@ -19,17 +19,22 @@
 
 package net.eliosoft.elios.gui.views;
 
+import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionListener;
+import java.util.Locale;
 
+import javax.swing.DefaultListCellRenderer;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
+import javax.swing.event.ListDataListener;
 
 import net.eliosoft.elios.gui.events.ArtNetStartedEvent;
 import net.eliosoft.elios.gui.events.ArtNetStoppedEvent;
@@ -37,6 +42,7 @@ import net.eliosoft.elios.gui.events.CommandLineValueChangedEvent;
 import net.eliosoft.elios.gui.events.HttpStartedEvent;
 import net.eliosoft.elios.gui.events.HttpStoppedEvent;
 import net.eliosoft.elios.gui.listeners.RemoteModelListener;
+import net.eliosoft.elios.gui.models.LocaleComboModel;
 import net.eliosoft.elios.gui.models.RemoteModel;
 
 
@@ -70,12 +76,15 @@ public class PrefsView implements ViewInterface {
 	private final JCheckBox enableHttpServerCheckBox;
 	private final JCheckBox enableAdditiveModeCheckBox;
 
+	private JComboBox langComboBox;
+
 
 	/**
 	 * The Constructor of the view.
 	 * @param remoteModel the model associated to the view
+	 * @param localeModel 
 	 */
-	public PrefsView(RemoteModel remoteModel) {
+	public PrefsView(RemoteModel remoteModel, LocaleComboModel localeModel) {
 		this.remoteModel = remoteModel;
 
 		JPanel serverPrefPanel = new JPanel();
@@ -146,6 +155,30 @@ public class PrefsView implements ViewInterface {
 		this.stopArtNetButton = new JButton(Messages.getString("prefsview.stop")); //$NON-NLS-1$
 		this.stopArtNetButton.setEnabled(false);
 		serverPrefPanel.add(this.stopArtNetButton, constraints);
+		
+		constraints.gridy = 10;
+		this.langComboBox = new JComboBox(localeModel);
+		langComboBox.setRenderer(new DefaultListCellRenderer() {
+			/**
+			 * serial UID.
+			 */
+			private static final long serialVersionUID = -8372082223569889802L;
+
+			@Override
+			public Component getListCellRendererComponent(JList list,
+					Object value, int index, boolean isSelected,
+					boolean cellHasFocus) {
+				
+				super.getListCellRendererComponent(list, value, index, isSelected,
+						cellHasFocus);
+				setText(Messages.getString("ui.lang." + ((Locale) value).getLanguage()));
+				return this;
+			}
+		});
+		JLabel langComboLabel = new JLabel(Messages.getString("prefsview.lang")); //$NON-NLS-1$
+		serverPrefPanel.add(langComboLabel, constraints); //$NON-NLS-1$
+		langComboLabel.setLabelFor(this.langComboBox);
+		serverPrefPanel.add(this.langComboBox,constraints);
 		
 		this.remoteModel.addRemoteModelChangedListener(new RemoteModelListener() {
 			@Override
@@ -255,6 +288,15 @@ public class PrefsView implements ViewInterface {
 	public void removeEnableAdditiveModeCheckBoxListener(ActionListener actionListener){
 		this.enableAdditiveModeCheckBox.removeActionListener(actionListener);
 	}
+	
+	/**
+	 * Add a {@link ListDataListener} to the lang combobox.
+	 * @param l the listener to add to the lang combobox
+	 */
+	public void addLangComboListener(ActionListener l) {
+		this.langComboBox.addActionListener(l);
+	}
+	
 	
 	/**
 	 * {@inheritDoc}
