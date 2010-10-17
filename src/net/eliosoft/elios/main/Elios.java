@@ -50,19 +50,16 @@ import net.eliosoft.elios.gui.views.ViewInterface;
 import net.eliosoft.elios.server.ArtNetServerManager;
 import net.eliosoft.elios.server.HttpServerManager;
 
-
-
 /**
- * Main Class of Elios Software contains the main method
- * used to launch the application.
- *
+ * Main Class of Elios Software contains the main method used to launch the
+ * application.
+ * 
  * @author Jeremie GASTON-RAOUL
  */
 public final class Elios {
 
 	/**
-	 * Do nothing more than ensure that no object
-	 * can be construct.
+	 * Do nothing more than ensure that no object can be construct.
 	 */
 	private Elios() {
 		// nothing
@@ -70,42 +67,42 @@ public final class Elios {
 
 	/**
 	 * Launches Elios.
-	 * @param args command-line argument. Currently unused !
+	 * 
+	 * @param args
+	 *            command-line argument. Currently unused !
 	 */
 	public static void main(String[] args) {
-		
+
 		try {
-			UIManager.setLookAndFeel(
-			        UIManager.getSystemLookAndFeelClassName());
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		} catch (Exception e1) {
-			LoggersManager.getInstance().getLogger(Elios.class.getName()).info("Can not load system look and feel");
-		} 
+			LoggersManager.getInstance().getLogger(Elios.class.getName())
+					.info("Can not load system look and feel");
+		}
 
 		final Preferences prefs = Preferences.userNodeForPackage(Elios.class);
-		
-		String lang = prefs.get("ui.lang", Locale.getDefault().getLanguage());
-		Locale locale = new Locale(lang);
-		Locale.setDefault(locale);
 
-        final RemoteModel remoteModel = createRemoteModel(prefs);
+		Locale locale = loadLocale(prefs);
+
+		final RemoteModel remoteModel = createRemoteModel(prefs);
 		final RemoteView remoteView = new RemoteView(remoteModel);
-		//used to make relation between view and model
+		// used to make relation between view and model
 		new RemoteController(remoteModel, remoteView);
 
 		final LocaleComboBoxModel localeModel = new LocaleComboBoxModel();
 		localeModel.setSelectedItem(locale);
 		PrefsView prefsView = new PrefsView(remoteModel, localeModel);
-		//used to make relation between view and model
+		// used to make relation between view and model
 		new PrefsController(remoteModel, localeModel, prefsView);
 
 		LogsView logsView = new LogsView(remoteModel);
-		//used to make relation between view and model
+		// used to make relation between view and model
 		new LogsController(remoteModel, logsView);
 
 		LogsLineView logsLineView = new LogsLineView(remoteModel);
 		AboutView aboutView = new AboutView();
-		
-		for(Logger l : LoggersManager.getInstance().getLoggersList()){
+
+		for (Logger l : LoggersManager.getInstance().getLoggersList()) {
 			remoteModel.getLogsListModel().addLogger(l);
 		}
 
@@ -114,7 +111,10 @@ public final class Elios {
 		Container contentPane = frame.getContentPane();
 		contentPane.setLayout(new BorderLayout());
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setIconImage(new ImageIcon(Elios.class.getResource("/net/eliosoft/elios/server/handler/files/favicon.ico")).getImage());
+		frame.setIconImage(new ImageIcon(
+				Elios.class
+						.getResource("/net/eliosoft/elios/server/handler/files/favicon.ico"))
+				.getImage());
 
 		contentPane.add(tabbedPane, BorderLayout.CENTER);
 		contentPane.add(logsLineView.getViewComponent(), BorderLayout.SOUTH);
@@ -126,21 +126,20 @@ public final class Elios {
 		tabbedPane.addChangeListener(new ChangeListener() {
 			@Override
 			public void stateChanged(ChangeEvent e) {
-		tabbedPane.getSelectedComponent().requestFocusInWindow();
+				tabbedPane.getSelectedComponent().requestFocusInWindow();
 			}
 		});
 		tabbedPane.setSelectedIndex(0);
 
 		frame.addWindowListener(new WindowAdapter() {
-            /**
+			/**
              *
 		     */
-            @Override
-            public void windowClosing(WindowEvent e) {
-                persistRemoteModel(remoteModel, prefs);
-                Locale l = (Locale)localeModel.getSelectedItem();
-                prefs.put("ui.lang", l.getLanguage());
-            }
+			@Override
+			public void windowClosing(WindowEvent e) {
+				persistRemoteModel(remoteModel, prefs);
+				persistLocale(prefs, localeModel);
+			}
 		});
 
 		frame.pack();
@@ -150,70 +149,107 @@ public final class Elios {
 	}
 
 	/**
-	 * Create a <code>RemoteModel</code> and retrieve the configuration
-	 * from the given <code>Preferences</code>.
-	 * If any configuration is found for a specific parameter, the default
-	 * value is used according to <code>RemoteModel</code>.
-	 *
-	 * @param prefs <code>Preferences</code> used to retrieve the configuration
+	 * Returns the {@link Locale} according to the {@link Preferences} given in
+	 * argument or the result of <code>Locale.getDefault()</code> if no
+	 * configuration as been already saved.
+	 * 
+	 * @param prefs
+	 *            {@link Preferences} node that contains the locale
+	 *            configuration
+	 * @return the {@link Locale} of the configuration or
+	 *         <code>Locale.getDefault()</code>
+	 */
+	private static Locale loadLocale(final Preferences prefs) {
+		String lang = prefs.get("ui.lang", Locale.getDefault().getLanguage());
+		Locale locale = new Locale(lang);
+		Locale.setDefault(locale);
+		return locale;
+	}
+
+	/**
+	 * Persists the current {@link Locale} to the given {@link Preferences}.
+	 * 
+	 * @param prefs
+	 *            {@link Preferences} where saved the current {@link Locale}
+	 * @param localeModel
+	 *            the {@link LocaleComboBoxModel} instance that contains the
+	 *            configured {@link Locale}
+	 */
+	private void persistLocale(final Preferences prefs,
+			final LocaleComboBoxModel localeModel) {
+		Locale l = (Locale) localeModel.getSelectedItem();
+		prefs.put("ui.lang", l.getLanguage());
+	}
+
+	/**
+	 * Create a <code>RemoteModel</code> and retrieve the configuration from the
+	 * given <code>Preferences</code>. If any configuration is found for a
+	 * specific parameter, the default value is used according to
+	 * <code>RemoteModel</code>.
+	 * 
+	 * @param prefs
+	 *            <code>Preferences</code> used to retrieve the configuration
 	 * @return a configured <code>RemoteModel</code>
 	 */
 	public static RemoteModel createRemoteModel(Preferences prefs) {
-	    RemoteModel model = new RemoteModel();
-	    model.setSubnet(prefs.getInt("server.subnet", 0));
-        model.setUniverse(prefs.getInt("server.universe", 0));
-        model.setBroadCastAddress(Enum.valueOf(
-                BroadCastAddress.class,
-                prefs.get("server.broadcast.address",
-                BroadCastAddress.PRIMARY.name())));
+		RemoteModel model = new RemoteModel();
+		model.setSubnet(prefs.getInt("server.subnet", 0));
+		model.setUniverse(prefs.getInt("server.universe", 0));
+		model.setBroadCastAddress(Enum.valueOf(
+				BroadCastAddress.class,
+				prefs.get("server.broadcast.address",
+						BroadCastAddress.PRIMARY.name())));
 
-	    model.setInPort(prefs.getInt("server.inport",
-	            ArtNetServerManager.DEFAULT_ARTNET_PORT));
-        model.setOutputPort(prefs.getInt("server.outport",
-                ArtNetServerManager.DEFAULT_ARTNET_PORT));
+		model.setInPort(prefs.getInt("server.inport",
+				ArtNetServerManager.DEFAULT_ARTNET_PORT));
+		model.setOutputPort(prefs.getInt("server.outport",
+				ArtNetServerManager.DEFAULT_ARTNET_PORT));
 
-        model.setHttpServerEnabled(
-                prefs.getBoolean("server.httpserver.enable", false));
-		model.setAdditiveModeEnabled(
-                prefs.getBoolean("server.additivemode.enable", false));
-        model.setHttpPort(
-                prefs.getInt("server.httpserver.port",
-                HttpServerManager.DEFAULT_HTTP_PORT));
+		model.setHttpServerEnabled(prefs.getBoolean("server.httpserver.enable",
+				false));
+		model.setAdditiveModeEnabled(prefs.getBoolean(
+				"server.additivemode.enable", false));
+		model.setHttpPort(prefs.getInt("server.httpserver.port",
+				HttpServerManager.DEFAULT_HTTP_PORT));
 
-        return model;
+		return model;
 	}
 
 	/**
 	 * Persits a remote model to the given <code>Preferences</code>.
-	 *
-	 * @param model the <code>RemoteModel</code> to store
-	 * @param prefs the <code>Preferences</code> used to persist
+	 * 
+	 * @param model
+	 *            the <code>RemoteModel</code> to store
+	 * @param prefs
+	 *            the <code>Preferences</code> used to persist
 	 */
 	public static void persistRemoteModel(RemoteModel model, Preferences prefs) {
-	    prefs.putInt("server.subnet", model.getSubnet());
-	    prefs.putInt("server.universe", model.getUniverse());
-	    prefs.put("server.broadcast.address",
-	            model.getBroadCastAddress().name());
+		prefs.putInt("server.subnet", model.getSubnet());
+		prefs.putInt("server.universe", model.getUniverse());
+		prefs.put("server.broadcast.address", model.getBroadCastAddress()
+				.name());
 
-	    prefs.putInt("server.inport", model.getInPort());
-        prefs.putInt("server.outport", model.getOutPort());
+		prefs.putInt("server.inport", model.getInPort());
+		prefs.putInt("server.outport", model.getOutPort());
 
-        prefs.putBoolean("server.httpserver.enable",
-                model.isHttpServerEnabled());
+		prefs.putBoolean("server.httpserver.enable",
+				model.isHttpServerEnabled());
 		prefs.putBoolean("server.additivemode.enable",
-                model.isAdditiveModeEnabled());
-        prefs.putInt("server.httpserver.port",
-                model.getHttpPort());
+				model.isAdditiveModeEnabled());
+		prefs.putInt("server.httpserver.port", model.getHttpPort());
 	}
-	
+
 	/**
-	 * Adds a {@link ViewInterface} to a {@link JTabbedPane}. The localized 
-	 * title of the {@link ViewInterface} is used to define the title of the pane.
+	 * Adds a {@link ViewInterface} to a {@link JTabbedPane}. The localized
+	 * title of the {@link ViewInterface} is used to define the title of the
+	 * pane.
 	 * 
-	 * @param pane the {@link JTabbedPane}
-	 * @param v the {@link ViewInterface} to add
+	 * @param pane
+	 *            the {@link JTabbedPane}
+	 * @param v
+	 *            the {@link ViewInterface} to add
 	 */
 	private static void addViewToTab(JTabbedPane pane, ViewInterface v) {
-	  pane.addTab(v.getLocalizedTitle(), v.getViewComponent());
+		pane.addTab(v.getLocalizedTitle(), v.getViewComponent());
 	}
 }
