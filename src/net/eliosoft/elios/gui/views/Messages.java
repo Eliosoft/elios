@@ -21,6 +21,9 @@ package net.eliosoft.elios.gui.views;
 
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
+import java.util.logging.Logger;
+
+import net.eliosoft.elios.main.LoggersManager;
 
 /**
  * This class provides i18n functionalities.
@@ -30,6 +33,8 @@ import java.util.ResourceBundle;
 public final class Messages {
 	/** bundle full qualified name. **/
 	private static final String BUNDLE_NAME = "net.eliosoft.elios.gui.views.messages"; //$NON-NLS-1$
+	
+	private static final Logger LOGGER = LoggersManager.getInstance().getLogger(Messages.class.getCanonicalName());
 
 	/** bundle instance. **/
 	private static final ResourceBundle RESOURCE_BUNDLE = ResourceBundle
@@ -53,6 +58,7 @@ public final class Messages {
 		try {
 			return RESOURCE_BUNDLE.getString(key);
 		} catch (MissingResourceException e) {
+			LOGGER.warning("missing i18n key [" + key + "]");
 			return '!' + key + '!';
 		}
 	}
