@@ -19,12 +19,14 @@
 
 package net.eliosoft.elios.gui.views;
 
+import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionListener;
 import java.util.Locale;
 
+import javax.swing.BorderFactory;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -45,119 +47,224 @@ import net.eliosoft.elios.gui.listeners.RemoteModelListener;
 import net.eliosoft.elios.gui.models.LocaleComboModel;
 import net.eliosoft.elios.gui.models.RemoteModel;
 
-
-
 /**
  * The view of application preferences.
- *
+ * 
  * @author Jeremie GASTON-RAOUL
  */
 public class PrefsView implements ViewInterface {
 
 	private RemoteModel remoteModel;
 
-	private final GridBagLayout layout = new GridBagLayout();
-	private final GridBagConstraints constraints = new GridBagConstraints();
+	private final JPanel prefsPanel;
 
-	private final JPanel prefsPanel = new JPanel();
+	private JButton startArtNetButton;
+	private JButton stopArtNetButton;
 
-	private final JButton startArtNetButton;
-	private final JButton stopArtNetButton;
-	
-	private final JSpinner inPortSpinner;
-	private final JSpinner outPortSpinner;
-	private final JSpinner universeSpinner;
-	private final JSpinner subnetSpinner;
-	
+	private JSpinner inPortSpinner;
+	private JSpinner outPortSpinner;
+	private JSpinner universeSpinner;
+	private JSpinner subnetSpinner;
+
 	private JComboBox broadcastAddressCombo;
 
-	private final JSpinner httpPortSpinner;
+	private JSpinner httpPortSpinner;
 
-	private final JCheckBox enableHttpServerCheckBox;
-	private final JCheckBox enableAdditiveModeCheckBox;
+	private JCheckBox enableHttpServerCheckBox;
+	private JCheckBox enableAdditiveModeCheckBox;
 
 	private JComboBox langComboBox;
 
+	private LocaleComboModel localeModel;
 
 	/**
 	 * The Constructor of the view.
-	 * @param remoteModel the model associated to the view
-	 * @param localeModel 
+	 * 
+	 * @param remoteModel
+	 *            the model associated to the view
+	 * @param localeModel
 	 */
 	public PrefsView(RemoteModel remoteModel, LocaleComboModel localeModel) {
 		this.remoteModel = remoteModel;
+		this.localeModel = localeModel;
 
+		prefsPanel = new JPanel(new BorderLayout());
+
+		// general panel
+		prefsPanel.add(createGeneralPane(), BorderLayout.NORTH);
+
+		// artnet panel
+		prefsPanel.add(createArtNetServerPane(), BorderLayout.CENTER);
+
+		// http server panel
+		prefsPanel.add(createHttpServerPane(), BorderLayout.SOUTH);
+
+		// initialize the listener
+		initListener();
+	}
+
+	/**
+	 * Initializes all the listeners.
+	 */
+	private void initListener() {
+		this.remoteModel
+				.addRemoteModelChangedListener(new RemoteModelListener() {
+					@Override
+					public void commandLineValueChanged(
+							CommandLineValueChangedEvent event) {
+					}
+
+					@Override
+					public void artNetStopped(ArtNetStoppedEvent event) {
+						startArtNetButton.setEnabled(true);
+						stopArtNetButton.setEnabled(false);
+						inPortSpinner.setEnabled(true);
+						outPortSpinner.setEnabled(true);
+
+						enableHttpServerCheckBox.setEnabled(true);
+						httpPortSpinner.setEnabled(true);
+					}
+
+					@Override
+					public void artNetStarted(ArtNetStartedEvent event) {
+						startArtNetButton.setEnabled(false);
+						stopArtNetButton.setEnabled(true);
+						inPortSpinner.setEnabled(false);
+						outPortSpinner.setEnabled(false);
+
+						enableHttpServerCheckBox.setEnabled(false);
+						httpPortSpinner.setEnabled(false);
+					}
+
+					@Override
+					public void httpStopped(HttpStoppedEvent event) {
+					}
+
+					@Override
+					public void httpStarted(HttpStartedEvent event) {
+					}
+				});
+	}
+
+	private JPanel createArtNetServerPane() {
 		JPanel serverPrefPanel = new JPanel();
 		serverPrefPanel.setName(Messages.getString("prefsview.artnetserver")); //$NON-NLS-1$
-		serverPrefPanel.setLayout(layout);
+		serverPrefPanel.setLayout(new GridBagLayout());
+		serverPrefPanel.setBorder(BorderFactory.createTitledBorder(Messages
+				.getString("prefsview.artnetserver"))); //$NON-NLS-1$
+		GridBagConstraints constraints = new GridBagConstraints();
 
-		this.prefsPanel.add(serverPrefPanel);
-
+		// additive
+		constraints.gridx = 0;
 		constraints.gridy = 0;
-		constraints.gridwidth = 2;
-		this.enableAdditiveModeCheckBox = new JCheckBox(Messages.getString("prefsview.additivemode"), this.remoteModel.isAdditiveModeEnabled());
+		constraints.fill = GridBagConstraints.HORIZONTAL;
+		constraints.anchor = GridBagConstraints.WEST;
+		constraints.weightx = 1;
+		this.enableAdditiveModeCheckBox = new JCheckBox(
+				Messages.getString("prefsview.additivemode"), this.remoteModel.isAdditiveModeEnabled()); //$NON-NLS-1$
 		serverPrefPanel.add(this.enableAdditiveModeCheckBox, constraints);
-		
-		constraints.gridwidth = 2;		
+
+		// subnet/universe
+		constraints.gridx = 0;
 		constraints.gridy = 1;
-		this.universeSpinner = new JSpinner(this.remoteModel.getUniverseSpinnerModel());
-		this.subnetSpinner = new JSpinner(this.remoteModel.getSubnetSpinnerModel());
-		JLabel subnetUniverseLabel = new JLabel(Messages.getString("prefsview.subnetuniverse")); //$NON-NLS-1$
-		serverPrefPanel.add(subnetUniverseLabel, constraints);
-		constraints.gridwidth = 1;
-		constraints.gridy = 2;
-		serverPrefPanel.add(this.subnetSpinner, constraints);
+		JLabel universeLabel = new JLabel(
+				Messages.getString("prefsview.subnet")); //$NON-NLS-1$
+		serverPrefPanel.add(universeLabel, constraints);
+
+		constraints.gridx = 1;
+		constraints.gridy = 1;
+		this.universeSpinner = new JSpinner(
+				this.remoteModel.getUniverseSpinnerModel());
 		serverPrefPanel.add(this.universeSpinner, constraints);
 
-		
-		constraints.gridwidth = 2;
+		constraints.gridx = 0;
+		constraints.gridy = 2;
+		JLabel subnetLabel = new JLabel(
+				Messages.getString("prefsview.universe")); //$NON-NLS-1$
+		serverPrefPanel.add(subnetLabel, constraints);
+
+		constraints.gridx = 1;
+		constraints.gridy = 2;
+		this.subnetSpinner = new JSpinner(
+				this.remoteModel.getSubnetSpinnerModel());
+		serverPrefPanel.add(this.subnetSpinner, constraints);
+
+		// broadcast
+		constraints.gridx = 0;
 		constraints.gridy = 3;
-		this.broadcastAddressCombo = new JComboBox(this.remoteModel.getBroadcastAddressComboModel());
-		JLabel broadcastAddressLabel = new JLabel(Messages.getString("prefsview.broadcastaddress")); //$NON-NLS-1$
+		JLabel broadcastAddressLabel = new JLabel(
+				Messages.getString("prefsview.broadcastaddress")); //$NON-NLS-1$
 		serverPrefPanel.add(broadcastAddressLabel, constraints);
 		broadcastAddressLabel.setLabelFor(this.broadcastAddressCombo);
+
+		constraints.gridx = 1;
+		constraints.gridy = 3;
+		this.broadcastAddressCombo = new JComboBox(
+				this.remoteModel.getBroadcastAddressComboModel());
+		serverPrefPanel.add(this.broadcastAddressCombo, constraints);
+
+		// in port
+		constraints.gridx = 0;
 		constraints.gridy = 4;
-		serverPrefPanel.add(this.broadcastAddressCombo,constraints);
-		
-		constraints.gridwidth = 1;		
-		constraints.gridy = 5;
-		this.inPortSpinner = new JSpinner(this.remoteModel.getInPortSpinnerModel());
 		JLabel inPortLabel = new JLabel(Messages.getString("prefsview.port.in")); //$NON-NLS-1$
 		serverPrefPanel.add(inPortLabel, constraints);
+
+		constraints.gridx = 1;
+		constraints.gridy = 4;
+		this.inPortSpinner = new JSpinner(
+				this.remoteModel.getInPortSpinnerModel());
 		inPortLabel.setLabelFor(this.inPortSpinner);
 		serverPrefPanel.add(this.inPortSpinner, constraints);
 
-		constraints.gridy = 6;
-		this.outPortSpinner = new JSpinner(this.remoteModel.getOutPortSpinnerModel());
-		JLabel outPortLabel = new JLabel(Messages.getString("prefsview.port.out")); //$NON-NLS-1$
+		// out port
+		constraints.gridx = 0;
+		constraints.gridy = 5;
+		JLabel outPortLabel = new JLabel(
+				Messages.getString("prefsview.port.out")); //$NON-NLS-1$
 		serverPrefPanel.add(outPortLabel, constraints);
+
+		constraints.gridx = 1;
+		constraints.gridy = 5;
+		this.outPortSpinner = new JSpinner(
+				this.remoteModel.getOutPortSpinnerModel());
 		outPortLabel.setLabelFor(this.outPortSpinner);
 		serverPrefPanel.add(this.outPortSpinner, constraints);
-		
-		constraints.gridy = 7;
-		constraints.gridwidth = 2;
-		this.enableHttpServerCheckBox = new JCheckBox(Messages.getString("prefsview.httpserver"), this.remoteModel.isHttpServerEnabled());
-		serverPrefPanel.add(this.enableHttpServerCheckBox, constraints);
-		
-		constraints.gridy = 8;
-		constraints.gridwidth = 1;
-		this.httpPortSpinner = new JSpinner(this.remoteModel.getHttpPortSpinnerModel());
-		JLabel httpPortLabel = new JLabel(Messages.getString("prefsview.port.http")); //$NON-NLS-1$
-		serverPrefPanel.add(httpPortLabel, constraints);
-		outPortLabel.setLabelFor(this.httpPortSpinner);
-		serverPrefPanel.add(this.httpPortSpinner, constraints);
 
-
-		constraints.gridy = 9;
-		constraints.gridwidth = 1;		
-		this.startArtNetButton = new JButton(Messages.getString("prefsview.start")); //$NON-NLS-1$
+		// start / stop
+		constraints.gridx = 0;
+		constraints.gridy = 6;
+		this.startArtNetButton = new JButton(
+				Messages.getString("prefsview.start")); //$NON-NLS-1$
 		serverPrefPanel.add(this.startArtNetButton, constraints);
-		this.stopArtNetButton = new JButton(Messages.getString("prefsview.stop")); //$NON-NLS-1$
+
+		constraints.gridx = 1;
+		constraints.gridy = 6;
+		this.stopArtNetButton = new JButton(
+				Messages.getString("prefsview.stop")); //$NON-NLS-1$
 		this.stopArtNetButton.setEnabled(false);
 		serverPrefPanel.add(this.stopArtNetButton, constraints);
-		
-		constraints.gridy = 10;
+
+		return serverPrefPanel;
+	}
+
+	/**
+	 * Creates a panel for the general preferences.
+	 * 
+	 * @return a panel containing input elements to set general preferences
+	 */
+	private JPanel createGeneralPane() {
+		final JPanel generalPrefsPanel = new JPanel();
+		generalPrefsPanel.setBorder(BorderFactory.createTitledBorder(Messages
+				.getString("prefsview.general"))); //$NON-NLS-1$
+		generalPrefsPanel.setLayout(new GridBagLayout());
+		GridBagConstraints constraints = new GridBagConstraints();
+
+		constraints.fill = GridBagConstraints.HORIZONTAL;
+		constraints.anchor = GridBagConstraints.WEST;
+		constraints.weightx = 1;
+
 		this.langComboBox = new JComboBox(localeModel);
+
 		langComboBox.setRenderer(new DefaultListCellRenderer() {
 			/**
 			 * serial UID.
@@ -168,56 +275,71 @@ public class PrefsView implements ViewInterface {
 			public Component getListCellRendererComponent(JList list,
 					Object value, int index, boolean isSelected,
 					boolean cellHasFocus) {
-				
-				super.getListCellRendererComponent(list, value, index, isSelected,
-						cellHasFocus);
-				setText(Messages.getString("ui.lang." + ((Locale) value).getLanguage()));
+
+				super.getListCellRendererComponent(list, value, index,
+						isSelected, cellHasFocus);
+				setText(Messages
+						.getString("ui.lang." + ((Locale) value).getLanguage())); //$NON-NLS-1$
 				return this;
 			}
 		});
+
+		// lang chooser
+		constraints.gridx = 0;
+		constraints.gridy = 0;
 		JLabel langComboLabel = new JLabel(Messages.getString("prefsview.lang")); //$NON-NLS-1$
-		serverPrefPanel.add(langComboLabel, constraints); //$NON-NLS-1$
+		generalPrefsPanel.add(langComboLabel, constraints);
+
+		constraints.gridx = 1;
+		constraints.gridy = 0;
 		langComboLabel.setLabelFor(this.langComboBox);
-		serverPrefPanel.add(this.langComboBox,constraints);
-		
-		this.remoteModel.addRemoteModelChangedListener(new RemoteModelListener() {
-			@Override
-			public void commandLineValueChanged(CommandLineValueChangedEvent event) { }
+		generalPrefsPanel.add(this.langComboBox, constraints);
 
-			@Override
-			public void artNetStopped(ArtNetStoppedEvent event) {
-				startArtNetButton.setEnabled(true);
-				stopArtNetButton.setEnabled(false);
-				inPortSpinner.setEnabled(true);
-				outPortSpinner.setEnabled(true);
+		return generalPrefsPanel;
+	}
 
-				enableHttpServerCheckBox.setEnabled(true);
-				httpPortSpinner.setEnabled(true);				
-			}
+	/**
+	 * Creates a panel for the http server preferences.
+	 * 
+	 * @return a panel containing input elements to set http server preferences
+	 */
+	private JPanel createHttpServerPane() {
+		final JPanel httpServerPrefsPanel = new JPanel();
+		httpServerPrefsPanel.setBorder(BorderFactory
+				.createTitledBorder("HTTP Server"));
+		httpServerPrefsPanel.setLayout(new GridBagLayout());
 
-			@Override
-			public void artNetStarted(ArtNetStartedEvent event) {
-				startArtNetButton.setEnabled(false);
-				stopArtNetButton.setEnabled(true);
-				inPortSpinner.setEnabled(false);
-				outPortSpinner.setEnabled(false);
+		GridBagConstraints constraints = new GridBagConstraints();
+		constraints.fill = GridBagConstraints.HORIZONTAL;
+		constraints.anchor = GridBagConstraints.WEST;
+		constraints.weightx = 1;
 
-				enableHttpServerCheckBox.setEnabled(false);
-				httpPortSpinner.setEnabled(false);
-			}
+		// http server started
+		constraints.gridx = 0;
+		constraints.gridy = 0;
+		this.enableHttpServerCheckBox = new JCheckBox(
+				Messages.getString("prefsview.httpserver"), this.remoteModel.isHttpServerEnabled()); //$NON-NLS-1$
+		httpServerPrefsPanel.add(this.enableHttpServerCheckBox, constraints);
 
-			@Override
-			public void httpStopped(HttpStoppedEvent event) {
-			}
+		// http port
+		constraints.gridx = 0;
+		constraints.gridy = 1;
+		JLabel httpPortLabel = new JLabel(
+				Messages.getString("prefsview.port.http")); //$NON-NLS-1$
+		httpServerPrefsPanel.add(httpPortLabel, constraints);
 
-			@Override
-			public void httpStarted(HttpStartedEvent event) {
-			}
-		});
+		constraints.gridx = 1;
+		constraints.gridy = 1;
+		this.httpPortSpinner = new JSpinner(
+				this.remoteModel.getHttpPortSpinnerModel());
+		httpServerPrefsPanel.add(this.httpPortSpinner, constraints);
+
+		return httpServerPrefsPanel;
 	}
 
 	/**
 	 * Returns the preferences panel component.
+	 * 
 	 * @return the panel Component
 	 */
 	public JComponent getViewComponent() {
@@ -226,7 +348,9 @@ public class PrefsView implements ViewInterface {
 
 	/**
 	 * Adds an Action Listener to the Start ArtNet Button.
-	 * @param actionListener the listener to add to the button
+	 * 
+	 * @param actionListener
+	 *            the listener to add to the button
 	 */
 	public void addStartArtNetButtonListener(ActionListener actionListener) {
 		this.startArtNetButton.addActionListener(actionListener);
@@ -234,7 +358,9 @@ public class PrefsView implements ViewInterface {
 
 	/**
 	 * Removes an Action Listener to the Start ArtNet Button.
-	 * @param actionListener the listener to remove to the button
+	 * 
+	 * @param actionListener
+	 *            the listener to remove to the button
 	 */
 	public void removeStartArtNetButtonListener(ActionListener actionListener) {
 		this.startArtNetButton.removeActionListener(actionListener);
@@ -242,7 +368,9 @@ public class PrefsView implements ViewInterface {
 
 	/**
 	 * Adds an Action Listener to the Stop ArtNet Button.
-	 * @param actionListener the listener to add to the button
+	 * 
+	 * @param actionListener
+	 *            the listener to add to the button
 	 */
 	public void addStopArtNetButtonListener(ActionListener actionListener) {
 		this.stopArtNetButton.addActionListener(actionListener);
@@ -250,59 +378,73 @@ public class PrefsView implements ViewInterface {
 
 	/**
 	 * Removes an Action Listener to the Stop ArtNet Button.
-	 * @param actionListener the listener to remove to the button
+	 * 
+	 * @param actionListener
+	 *            the listener to remove to the button
 	 */
 	public void removeStopArtNetButtonListener(ActionListener actionListener) {
 		this.stopArtNetButton.removeActionListener(actionListener);
 	}
-	
+
 	/**
 	 * Add an Action Listener to the Enable Http server checkbox.
-	 * @param actionListener the listener to add to the checkbox
+	 * 
+	 * @param actionListener
+	 *            the listener to add to the checkbox
 	 */
-	public void addEnableHttpServerCheckBoxListener(ActionListener actionListener){
+	public void addEnableHttpServerCheckBoxListener(
+			ActionListener actionListener) {
 		this.enableHttpServerCheckBox.addActionListener(actionListener);
 	}
 
 	/**
 	 * Removes an Action Listener to the Enable Http server checkbox.
-	 * @param actionListener the listener to remove to the checkbox
+	 * 
+	 * @param actionListener
+	 *            the listener to remove to the checkbox
 	 */
-	public void removeEnableHttpServerCheckBoxListener(ActionListener actionListener){
+	public void removeEnableHttpServerCheckBoxListener(
+			ActionListener actionListener) {
 		this.enableHttpServerCheckBox.removeActionListener(actionListener);
 	}
-	
-		
+
 	/**
 	 * Add an Action Listener to the Enable Additive Mode checkbox.
-	 * @param actionListener the listener to add to the checkbox
+	 * 
+	 * @param actionListener
+	 *            the listener to add to the checkbox
 	 */
-	public void addEnableAdditiveModeCheckBoxListener(ActionListener actionListener){
+	public void addEnableAdditiveModeCheckBoxListener(
+			ActionListener actionListener) {
 		this.enableAdditiveModeCheckBox.addActionListener(actionListener);
 	}
 
 	/**
 	 * Removes an Action Listener to the Enable Additive Mode checkbox.
-	 * @param actionListener the listener to remove to the checkbox
+	 * 
+	 * @param actionListener
+	 *            the listener to remove to the checkbox
 	 */
-	public void removeEnableAdditiveModeCheckBoxListener(ActionListener actionListener){
+	public void removeEnableAdditiveModeCheckBoxListener(
+			ActionListener actionListener) {
 		this.enableAdditiveModeCheckBox.removeActionListener(actionListener);
 	}
-	
+
 	/**
 	 * Add a {@link ListDataListener} to the lang combobox.
-	 * @param l the listener to add to the lang combobox
+	 * 
+	 * @param l
+	 *            the listener to add to the lang combobox
 	 */
 	public void addLangComboListener(ActionListener l) {
 		this.langComboBox.addActionListener(l);
 	}
-	
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	public String getLocalizedTitle() {
-	    return Messages.getString("prefsview.title");
+		return Messages.getString("prefsview.title"); //$NON-NLS-1$
 	}
 }
