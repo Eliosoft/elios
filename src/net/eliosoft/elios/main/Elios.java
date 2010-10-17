@@ -175,7 +175,7 @@ public final class Elios {
 	 *            the {@link LocaleComboBoxModel} instance that contains the
 	 *            configured {@link Locale}
 	 */
-	private void persistLocale(final Preferences prefs,
+	private static void persistLocale(final Preferences prefs,
 			final LocaleComboBoxModel localeModel) {
 		Locale l = (Locale) localeModel.getSelectedItem();
 		prefs.put("ui.lang", l.getLanguage());
