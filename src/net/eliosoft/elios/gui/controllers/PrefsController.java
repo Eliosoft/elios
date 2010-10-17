@@ -29,7 +29,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 
-import net.eliosoft.elios.gui.models.LocaleComboModel;
+import net.eliosoft.elios.gui.models.LocaleComboBoxModel;
 import net.eliosoft.elios.gui.models.RemoteModel;
 import net.eliosoft.elios.gui.views.Messages;
 import net.eliosoft.elios.gui.views.PrefsView;
@@ -56,7 +56,7 @@ public class PrefsController {
 	 * @param localeModel 
 	 * @param prefsView  the view associated to the controller
 	 */
-	public PrefsController(RemoteModel remoteModel, LocaleComboModel localeModel, PrefsView prefsView) {
+	public PrefsController(RemoteModel remoteModel, LocaleComboBoxModel localeModel, PrefsView prefsView) {
 		this.remoteModel = remoteModel;
 		this.prefsView = prefsView;
 		this.initListeners();

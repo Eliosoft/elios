@@ -6,11 +6,11 @@ import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 
 /**
- * {@link ComboBoxModel} that wrappes available locales for UI translation.
+ * {@link ComboBoxModel} that wraps available locales for UI translation.
  * 
  * @author acollign
  */
-public class LocaleComboModel extends DefaultComboBoxModel {
+public class LocaleComboBoxModel extends DefaultComboBoxModel {
 
 	
 	/**

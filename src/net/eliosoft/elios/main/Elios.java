@@ -37,7 +37,7 @@ import javax.swing.event.ChangeListener;
 import net.eliosoft.elios.gui.controllers.LogsController;
 import net.eliosoft.elios.gui.controllers.PrefsController;
 import net.eliosoft.elios.gui.controllers.RemoteController;
-import net.eliosoft.elios.gui.models.LocaleComboModel;
+import net.eliosoft.elios.gui.models.LocaleComboBoxModel;
 import net.eliosoft.elios.gui.models.RemoteModel;
 import net.eliosoft.elios.gui.models.RemoteModel.BroadCastAddress;
 import net.eliosoft.elios.gui.views.AboutView;
@@ -91,7 +91,7 @@ public final class Elios {
 		//used to make relation between view and model
 		new RemoteController(remoteModel, remoteView);
 
-		final LocaleComboModel localeModel = new LocaleComboModel();
+		final LocaleComboBoxModel localeModel = new LocaleComboBoxModel();
 		localeModel.setSelectedItem(locale);
 		PrefsView prefsView = new PrefsView(remoteModel, localeModel);
 		//used to make relation between view and model

@@ -44,7 +44,7 @@ import net.eliosoft.elios.gui.events.CommandLineValueChangedEvent;
 import net.eliosoft.elios.gui.events.HttpStartedEvent;
 import net.eliosoft.elios.gui.events.HttpStoppedEvent;
 import net.eliosoft.elios.gui.listeners.RemoteModelListener;
-import net.eliosoft.elios.gui.models.LocaleComboModel;
+import net.eliosoft.elios.gui.models.LocaleComboBoxModel;
 import net.eliosoft.elios.gui.models.RemoteModel;
 
 /**
@@ -75,7 +75,7 @@ public class PrefsView implements ViewInterface {
 
 	private JComboBox langComboBox;
 
-	private LocaleComboModel localeModel;
+	private LocaleComboBoxModel localeModel;
 
 	/**
 	 * The Constructor of the view.
@@ -84,7 +84,7 @@ public class PrefsView implements ViewInterface {
 	 *            the model associated to the view
 	 * @param localeModel
 	 */
-	public PrefsView(RemoteModel remoteModel, LocaleComboModel localeModel) {
+	public PrefsView(RemoteModel remoteModel, LocaleComboBoxModel localeModel) {
 		this.remoteModel = remoteModel;
 		this.localeModel = localeModel;
 
