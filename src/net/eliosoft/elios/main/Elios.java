@@ -43,6 +43,7 @@ import net.eliosoft.elios.gui.models.RemoteModel.BroadCastAddress;
 import net.eliosoft.elios.gui.views.AboutView;
 import net.eliosoft.elios.gui.views.LogsLineView;
 import net.eliosoft.elios.gui.views.LogsView;
+import net.eliosoft.elios.gui.views.Messages;
 import net.eliosoft.elios.gui.views.PrefsView;
 import net.eliosoft.elios.gui.views.RemoteView;
 import net.eliosoft.elios.gui.views.ViewInterface;
@@ -108,7 +109,7 @@ public final class Elios {
 			remoteModel.getLogsListModel().addLogger(l);
 		}
 
-		JFrame frame = new JFrame("Elios");
+		JFrame frame = new JFrame(Messages.getString("ui.title"));
 		final JTabbedPane tabbedPane = new JTabbedPane();
 		Container contentPane = frame.getContentPane();
 		contentPane.setLayout(new BorderLayout());
