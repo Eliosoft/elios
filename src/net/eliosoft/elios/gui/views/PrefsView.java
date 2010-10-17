@@ -342,6 +342,7 @@ public class PrefsView implements ViewInterface {
 	 * 
 	 * @return the panel Component
 	 */
+	@Override
 	public JComponent getViewComponent() {
 		return this.prefsPanel;
 	}

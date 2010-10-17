@@ -32,6 +32,7 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ListCellRenderer;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.event.ListDataEvent;
 import javax.swing.event.ListDataListener;
@@ -70,6 +71,7 @@ public class LogsView implements ViewInterface {
 			@Override
 			public void intervalAdded(final ListDataEvent e) {
 				SwingUtilities.invokeLater(new Runnable() {
+					@Override
 					public void run() {
 						logsList.ensureIndexIsVisible(e.getIndex0());
 					}
@@ -92,7 +94,7 @@ public class LogsView implements ViewInterface {
 
 		JScrollPane scrollPane = new JScrollPane(logsList);
 		scrollPane.setMinimumSize(new Dimension(200, 100));
-		scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		this.constraints.fill = GridBagConstraints.BOTH;
 		this.constraints.gridy = 0;
 		this.constraints.weightx = 1;
@@ -111,6 +113,7 @@ public class LogsView implements ViewInterface {
 	 * Returns the logs panel of the view.
 	 * @return the logs panel
 	 */
+	@Override
 	public JComponent getViewComponent() {
 		return this.logsPanel;
 	}

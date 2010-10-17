@@ -139,6 +139,7 @@ public class RemoteView implements ViewInterface {
 	 * @return the panel
 	 */
 
+	@Override
 	public JComponent getViewComponent() {
 		return this.remotePanel;
 	}

@@ -83,6 +83,7 @@ public class LogsLineView implements ViewInterface {
 	 * Returns the log field.
 	 * @return the log field of the view
 	 */
+	@Override
 	public JComponent getViewComponent() {
 		return this.logsLinePanel;
 	}

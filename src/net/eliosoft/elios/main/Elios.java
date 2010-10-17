@@ -162,7 +162,7 @@ public final class Elios {
 	    RemoteModel model = new RemoteModel();
 	    model.setSubnet(prefs.getInt("server.subnet", 0));
         model.setUniverse(prefs.getInt("server.universe", 0));
-        model.setBroadCastAddress(BroadCastAddress.valueOf(
+        model.setBroadCastAddress(Enum.valueOf(
                 BroadCastAddress.class,
                 prefs.get("server.broadcast.address",
                 BroadCastAddress.PRIMARY.name())));

@@ -34,7 +34,7 @@ public class ResourceHttpHandler implements HttpHandler {
 				httpExchange.sendResponseHeaders(200, resourceInputStream.available());
 				OutputStream os = httpExchange.getResponseBody();
 				
-				byte buffer[]=new byte[(int) Math.min(ResourceHttpHandler.MAX_BUFFER_SIZE, resourceInputStream.available())];
+				byte buffer[]=new byte[Math.min(ResourceHttpHandler.MAX_BUFFER_SIZE, resourceInputStream.available())];
 				int bytesRead = 0;
 				
 				while( (bytesRead = resourceInputStream.read(buffer)) != -1 ) {

@@ -45,6 +45,7 @@ public class AboutView implements ViewInterface {
 	 * Returns the about panel
 	 * @return the view component
 	 */
+	@Override
 	public JComponent getViewComponent() {
 		return this.aboutPanel;
 	}
