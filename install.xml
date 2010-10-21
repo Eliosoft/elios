@@ -75,11 +75,11 @@
             <file src="doc" targetdir="$INSTALL_PATH"/>
             <!-- Recursive adding -->
         </pack>
-        <pack name="Sources" required="no">
+        <pack name="Sources" required="no" preselected="no">
             <description>The sources</description>
             <file src="src" targetdir="$INSTALL_PATH"/>
         </pack>
-        <pack name="JavaDoc" required="no">
+        <pack name="JavaDoc" required="no" preselected="no">
             <description>The documentation</description>
             <file src="dist/javadoc" targetdir="$INSTALL_PATH"/>
             <!-- Recursive adding -->
