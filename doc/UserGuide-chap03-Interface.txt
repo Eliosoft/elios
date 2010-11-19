@@ -56,39 +56,39 @@ Preferences
 
 In the Prefs panel, you can set all application settings :
 
-* language : choose the language of Elios interface ;
+* *Language* : choose the language of Elios interface ;
 
-* Enable additive mode : in additive mode, each new command line let 
+* *Enable additive mode* : in additive mode, each new command line let 
 unselected circuits in their previous state ; in non-additive mode, all 
 circuits that are not selected are defaulted to 0% ;
 
-* DMX subnet : select on which DMX Subnet the command is send ;
+* *DMX subnet* : select on which DMX Subnet the command is send ;
 
-* DMX universe : select on which DMX Universe of the selected Subnet the 
+* *DMX universe* : select on which DMX Universe of the selected Subnet the 
 command is send ;
 
-* Broadcast address : the IP address on which ArtNet packets are 
+* *Broadcast address* : the IP address on which ArtNet packets are 
 broadcasted (use 127.255.255.255 if the node is on the same computer 
 than Elios ; use 2.255.255.255 or 10.255.255.255 following IP addresses 
 of the nodes on your network) ;
 
-* In Port : the port on which Elios is listening the network (do not use 
-something else than 6454 if you don't know what you do) ;
+* *In Port* : the port on which Elios is listening the network (**do not use 
+something else than 6454 if you don't know what you are doing**) ;
 
-* Out Port : the port on which Elios is emetting the network (do not use 
-something else than 6454 if you don't know what you do) ;
+* *Out Port* : the port on which Elios is emetting the network (**do not use 
+something else than 6454 if you don't know what you are doing**) ;
 
-* Start / Stop : these buttons are used to start or stop Elios ArtNet 
+* *Start / Stop* : these buttons are used to start or stop Elios ArtNet 
 server (you have to start the server before to send commands on the 
 network) ;
 
-* Enable Http Server : with the http server enabled, you can access 
+* *Enable Http Server* : with the http server enabled, you can access 
 Elios via your favorite web browser on any device device connected on 
 the same network (just type http://2.0.0.1:8080 on your browser where 
 2.0.0.1 is the ip of the computer running Elios and 8080 the Http port 
 that has been set in the prefs panel) ;
 
-* Http port : the port on which Elios http server is listening (default 
+* *Http port* : the port on which Elios http server is listening (default 
 to 8080) ;
 
 Logs

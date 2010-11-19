@@ -1,5 +1,6 @@
-Elios - User Guide (version 0.1)
-===============================
+% Elios - User Guide (version 0.1)
+% Jeremie GASTON-RAOUL
+  Alexandre COLLIGNON
 
 Abstract
 --------
@@ -9,10 +10,10 @@ Its goal is to help lighting technicians during installation and focus.
 
 It is developed in Java, so it is compatible with Windows, Linux and Mac OS.
 
-Author
-------
+More about the authors
+----------------------
 
-* Jeremie GASTON-RAOUL [jeremie.gastonraoul.free.fr](mailto:jeremie.gastonraoul@free.fr)
+* Jeremie GASTON-RAOUL [jeremie.gastonraoul@free.fr](mailto:jeremie.gastonraoul@free.fr)
 * Alexandre COLLIGNON [alexandre@collign.net](mailto:alexandre@collign.net)
 
 Licence and Source code
@@ -21,6 +22,10 @@ Licence and Source code
 Elios is a free software released under the GPL License v3. A copy of this 
 licence is available on the root folder of the application.
 
-The source code is freely available on our repository hosted by github.com :
+The source code is freely available on our repository hosted by [github.com](http://github.com) :
 
 [https://github.com/jeremiegastonraoul/elios](https://github.com/jeremiegastonraoul/elios)
+
+You can checkout the git repository with the clone command
+
+    git clone https://github.com/jeremiegastonraoul/elios.git
