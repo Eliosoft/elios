@@ -37,7 +37,7 @@
 	<property name="installer" location="installer" />
 	<property name="res" location="resources" />
 	<property name="main-class" value="net.eliosoft.elios.main.Elios" />
-	<property name="version" value="0.1-dev" />
+	<property name="version" value="0.1" />
 
 	<path>
 		<!-- Define classpath -->
