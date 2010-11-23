@@ -70,7 +70,7 @@
             startup="no"
             target="xdg-open"
             workingDirectory=""
-            commandLine="$INSTALL_PATH/doc/"
+            commandLine="$INSTALL_PATH/doc/html/UserGuide.html"
             initialState="noShow"
             iconFile="help"
             iconIndex="0"

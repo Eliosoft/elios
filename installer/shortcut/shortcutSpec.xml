@@ -30,7 +30,7 @@
             applications="no"
             startMenu="no"
             startup="no"
-            target="$INSTALL_PATH\doc\html\index.html"
+            target="$INSTALL_PATH\doc\html\UserGuide.html"
             commandLine=""
             description="This opens a WebBrowser to look into the Elios (HTML) user documentation">
 
