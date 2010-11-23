@@ -1,5 +1,5 @@
 Installation
-------------
+============
 
 ### Requirements
 
@@ -46,7 +46,7 @@ instal Elios. We advise you to read the licence before installing Elios.
 
 ![Licence](resources/install/Install-04-Licence.png "Licence")
 
-## Installation path
+### Installation path
 
 It's time to choose the path where you would like to install Elios. In most case, you will choose
 an unexisting folder... don't worry about the confirmation dialog, you can click OK.
@@ -74,7 +74,7 @@ A few seconds later, you will see a filled progress bar.
 
 ![Copy is finished](resources/install/Install-07-Copy_Finished.png "Copy is finished")
 
-### Setup shorcuts
+### Setup shortcuts
 
 Before using Elios, you are invite to choose wher you want that the installer copy shortcuts.
 

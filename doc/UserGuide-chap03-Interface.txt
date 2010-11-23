@@ -1,5 +1,5 @@
 Elios Interface
----------------
+===============
 
 There is 3 parts in Elios interface : tabs, panel and log line.
 In the tabs part, you can choose between the differents panels (*Remote*, 
@@ -7,10 +7,10 @@ In the tabs part, you can choose between the differents panels (*Remote*,
 In the panel part, you access the panel linked to the selected tab.
 In the Log line, you can read the last status log of the application.
 
-Command Line
-------------
+Remote
+------
 
-![Remonte tab](resources/elios/Elios-01-RemoteTab.png "Remote tab")
+![Remote tab](resources/elios/Elios-01-RemoteTab.png "Remote tab")
 
 To manage circuits levels, Elios uses a simple a command line syntax.
 Each line is a follow of simple commands (circuits at level sets) 
