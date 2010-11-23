@@ -57,7 +57,9 @@
 		     type="Application"
 		     encoding="UTF-8"
 		     KdeSubstUID="false"
-		     initialState="normal">   
+		     initialState="normal"
+		     iconFile="$INSTALL_PATH/elios_e_64x64.png"
+		     >   
 		     <createForPack name="Base"/>     
    </shortcut>
 

@@ -67,6 +67,8 @@
             <description>The program files</description>
             <file src="README.txt" targetdir="$INSTALL_PATH"/>
             <file src="LICENSE.txt" targetdir="$INSTALL_PATH"/>
+            <file src="resources/net/eliosoft/elios/gui/views/elios_e_64x64.png" targetdir="$INSTALL_PATH"/>
+            <file src="resources/net/eliosoft/elios/gui/views/elios_e.ico" targetdir="$INSTALL_PATH"/>
             <!-- Could not use variable in src http://jira.codehaus.org/browse/IZPACK-488 -->
             <file src="dist/elios-all.jar" targetdir="$INSTALL_PATH"/>
         </pack>

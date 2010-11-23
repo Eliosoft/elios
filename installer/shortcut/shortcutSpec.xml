@@ -19,7 +19,8 @@
 			     description="Elios"
 			     type="Application"
 			     encoding="UTF-8"
-			     initialState="normal">   
+			     initialState="normal"
+			     iconFile="$INSTALL_PATH\elios_e.ico">   
 			     <createForPack name="Base"/>     
 	   </shortcut>
 
