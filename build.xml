@@ -129,7 +129,7 @@
 		<delete dir="${dist.doc.html}" />
 	</target>
 	
-	<target name="dist_installer" depends="dist_all-in-one, javadoc" description="build installer">
+	<target name="dist_installer" depends="dist_all-in-one, javadoc, dist_userguide-html" description="build installer">
 		<!-- required IzPack standalone-compiler -->
 		<taskdef name="IzPack" classpath="${installer}/standalone-compiler.jar"
 			classname="com.izforge.izpack.ant.IzPackTask"/>
