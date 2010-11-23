@@ -2,6 +2,8 @@
 % Jeremie GASTON-RAOUL
   Alexandre COLLIGNON
 
+![](resources/elios/elios.png)
+
 Abstract
 --------
 

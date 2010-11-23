@@ -72,7 +72,7 @@
         </pack>
         <pack name="Docs" required="no">
             <description>The documentation</description>
-            <file src="doc" targetdir="$INSTALL_PATH"/>
+            <file src="dist/doc" targetdir="$INSTALL_PATH"/>
             <!-- Recursive adding -->
         </pack>
         <pack name="Sources" required="no" preselected="no">

@@ -19,43 +19,53 @@
 
 package net.eliosoft.elios.gui.views;
 
+import java.awt.GridLayout;
+
+import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 /**
- * The view of the About.
- * This view displays the About of the project.
- *
+ * The view of the About. This view displays the About of the project.
+ * 
  * @author Jeremie GASTON-RAOUL
  */
 public class AboutView implements ViewInterface {
 
-	private final JPanel aboutPanel = new JPanel();
+        private final JPanel aboutPanel = new JPanel();
 
-	/**
-	 * The constructor of the class.
-	 */
-	public AboutView() {
-		JLabel titleLabel = new JLabel(Messages.getString("aboutview.info"));
-		aboutPanel.add(titleLabel);
-	}
+        /**
+         * The constructor of the class.
+         */
+        public AboutView() {
+                JLabel icon = new JLabel(
+                                new ImageIcon(
+                                                getClass().getResource(
+                                                                "/net/eliosoft/elios/gui/views/elios_256x138.png")));
+                JLabel titleLabel = new JLabel(
+                                Messages.getString("aboutview.info"));
+                aboutPanel.setLayout(new GridLayout(2, 1));
+                aboutPanel.add(icon);
+                aboutPanel.add(titleLabel);
+        }
 
-	/**
-	 * Returns the about panel
-	 * @return the view component
-	 */
-	@Override
-	public JComponent getViewComponent() {
-		return this.aboutPanel;
-	}
+        /**
+         * Returns the about panel
+         * 
+         * @return the view component
+         */
+        @Override
+        public JComponent getViewComponent() {
+                return this.aboutPanel;
+        }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public String getLocalizedTitle() {
-	    return Messages.getString("aboutview.title");
-	}
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public String getLocalizedTitle() {
+                return Messages.getString("aboutview.title");
+        }
 
 }

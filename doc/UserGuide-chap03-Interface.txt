@@ -10,7 +10,7 @@ In the Log line, you can read the last status log of the application.
 Command Line
 ------------
 
-![Remonte tab](pictures/elios/Elios-01-RemoteTab.png "Remote tab")
+![Remonte tab](resources/elios/Elios-01-RemoteTab.png "Remote tab")
 
 To manage circuits levels, Elios uses a simple a command line syntax.
 Each line is a follow of simple commands (circuits at level sets) 
@@ -52,7 +52,7 @@ the line, hit "reset".
 Preferences
 -----------
 
-![Preferences tab](pictures/elios/Elios-02-PrefsTab.png "Preferences tab")
+![Preferences tab](resources/elios/Elios-02-PrefsTab.png "Preferences tab")
 
 In the Prefs panel, you can set all application settings :
 
@@ -94,7 +94,7 @@ to 8080) ;
 Logs
 ----
 
-![Logs tab](pictures/elios/Elios-03-LogsTab.png "Logs tab")
+![Logs tab](resources/elios/Elios-03-LogsTab.png "Logs tab")
 
 On the logs panel you can see all the things that have been done in 
 Elios : start and stop of server, parse of command line, errors 
@@ -104,7 +104,7 @@ If you wand to clear the logs, just hit "Clear Logs" button.
 About
 -----
 
-![About tab](pictures/elios/Elios-04-AboutTab.png "About tab")
+![About tab](resources/elios/Elios-04-AboutTab.png "About tab")
 
 That's just a simple panel displaying the names of people working on 
 Elios and version number...

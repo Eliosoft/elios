@@ -21,8 +21,10 @@ package net.eliosoft.elios.main;
 
 import java.awt.BorderLayout;
 import java.awt.Container;
+import java.awt.Image;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.Arrays;
 import java.util.Locale;
 import java.util.logging.Logger;
 import java.util.prefs.Preferences;
@@ -58,7 +60,17 @@ import net.eliosoft.elios.server.HttpServerManager;
  */
 public final class Elios {
 
-	/**
+    /**
+     * Icons array for the Elios application.
+     */
+	private static final Image[] icons = new Image[] {
+	  new ImageIcon(Elios.class.getResource("/net/eliosoft/elios/gui/views/elios_e_24x24.png")).getImage()      
+	  ,new ImageIcon(Elios.class.getResource("/net/eliosoft/elios/gui/views/elios_e_32x32.png")).getImage()      
+	  ,new ImageIcon(Elios.class.getResource("/net/eliosoft/elios/gui/views/elios_e_48x48.png")).getImage()      
+	  ,new ImageIcon(Elios.class.getResource("/net/eliosoft/elios/gui/views/elios_e_64x64.png")).getImage()      
+	};
+
+        /**
 	 * Do nothing more than ensure that no object can be construct.
 	 */
 	private Elios() {
@@ -107,14 +119,12 @@ public final class Elios {
 		}
 
 		JFrame frame = new JFrame(Messages.getString("ui.title"));
+		frame.setIconImages(Arrays.<Image>asList(icons));
 		final JTabbedPane tabbedPane = new JTabbedPane();
 		Container contentPane = frame.getContentPane();
 		contentPane.setLayout(new BorderLayout());
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setIconImage(new ImageIcon(
-				Elios.class
-						.getResource("/net/eliosoft/elios/server/handler/files/favicon.ico"))
-				.getImage());
+		frame.setIconImages(Arrays.asList(icons));
 
 		contentPane.add(tabbedPane, BorderLayout.CENTER);
 		contentPane.add(logsLineView.getViewComponent(), BorderLayout.SOUTH);

@@ -24,35 +24,35 @@ Elios is available in English and French. You have to choose one of them. Note t
 the langage you choose will be used for the installer only. You will have to set 
 the language on Elios too.
 
-![Language Selection](pictures/install/Install-01-Language_Selection.png "Language Selection")
+![Language Selection](resources/install/Install-01-Language_Selection.png "Language Selection")
 
 ### Introduction
 
 Nothing special about this first step. If you read this user guide, you already know everything about
 elios and its authors.
 
-![Introduction](pictures/install/Install-02-Introduction.png "Introduction")
+![Introduction](resources/install/Install-02-Introduction.png "Introduction")
 
 ### Information
 
 Feel free to read this informational step too.
 
-![Information](pictures/install/Install-03-Information.png "Information")
+![Information](resources/install/Install-03-Information.png "Information")
 
 ### Licence
 
 Elios is released under the GNU Public Licence version 3. You have to accept the licence to
 instal Elios. We advise you to read the licence before installing Elios.
 
-![Licence](pictures/install/Install-04-Licence.png "Licence")
+![Licence](resources/install/Install-04-Licence.png "Licence")
 
 ## Installation path
 
 It's time to choose the path where you would like to install Elios. In most case, you will choose
 an unexisting folder... don't worry about the confirmation dialog, you can click OK.
 
-![Installation path](pictures/install/Install-05a-Installation_Path.png "Installation path")
-![Directory confirmation](pictures/install/Install-05b-Directory_Confirmation.png "Directory confirmation")
+![Installation path](resources/install/Install-05a-Installation_Path.png "Installation path")
+![Directory confirmation](resources/install/Install-05b-Directory_Confirmation.png "Directory confirmation")
 
 ### Pack selection
 
@@ -66,22 +66,22 @@ Probably the most tricky step. It is time to choose what you exactly looking for
 
 * *JavaDoc* is the source code documentation (for developers).
 
-![Pack Selection](pictures/install/Install-06-Pack_Selection.png "Pack Selection")
+![Pack Selection](resources/install/Install-06-Pack_Selection.png "Pack Selection")
 
 ### Copy progress
 
 A few seconds later, you will see a filled progress bar.
 
-![Copy is finished](pictures/install/Install-07-Copy_Finished.png "Copy is finished")
+![Copy is finished](resources/install/Install-07-Copy_Finished.png "Copy is finished")
 
 ### Setup shorcuts
 
 Before using Elios, you are invite to choose wher you want that the installer copy shortcuts.
 
-![Setup shortcuts](pictures/install/Install-08-Setup_Shortcuts.png "Setup shortcuts")
+![Setup shortcuts](resources/install/Install-08-Setup_Shortcuts.png "Setup shortcuts")
 
 ### Done
 
 You have successfully installed Elios. It is time to give a try.
 
-![Done](pictures/install/Install-09-Done.png "Done")
+![Done](resources/install/Install-09-Done.png "Done")
