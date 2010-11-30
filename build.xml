@@ -67,9 +67,9 @@
 		</copy>
 	</target>
 
-    <target name="javadoc" depends="init" description="generate the javadoc">
-        <javadoc sourcepath="src/" destdir="dist/javadoc"/>
-    </target>
+    	<target name="javadoc" depends="init" description="generate the javadoc">
+        	<javadoc sourcepath="src/" destdir="dist/javadoc"/>
+    	</target>
 
 	<target name="dist_userguide-html" depends="init, create_dist-dir" description="generate the documentation in pdf format">
 		<copy todir="${dist.doc.html.res}">
