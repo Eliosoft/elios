@@ -28,6 +28,7 @@
 	<property name="dist" location="dist" />
 	<property name="doc" location="doc"/>
 	<property name="doc.res" location="doc/pictures"/>
+	<property name="doc.generator" location="doc/pandoc_wrapper.sh"/>
 	<property name="dist.doc.html" location="dist/doc/html"/>
 	<property name="dist.doc.html.res" location="dist/doc/html/resources"/>
 	<property name="dist.tmp" location="dist/tmp" />
@@ -74,12 +75,12 @@
 		<copy todir="${dist.doc.html.res}">
 			<fileset dir="${doc.res}" />
 		</copy>
-		<exec executable="pandoc" >
-		    <arg value="${doc}/*.txt"/>
+		<exec executable="${doc.generator}">
+			<arg value="${doc}/*.txt" />
 			<arg value="-o"/>
-			<arg value="${dist.doc.html}/UserGuide.html"/>
+			<arg value="${dist.doc.html}/UserGuide.html" />
 			<arg value="-s"/>
-		</exec>	
+		</exec>
 	</target>
 	
 	<target name="create_dist-dir">
