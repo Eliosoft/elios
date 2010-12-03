@@ -1,4 +1,4 @@
-% Elios - User Guide (version 0.1)
+% Elios - User Guide (version 0.2-dev)
 % Jeremie GASTON-RAOUL
   Alexandre COLLIGNON
 
