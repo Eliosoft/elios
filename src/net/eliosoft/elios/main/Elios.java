@@ -21,7 +21,16 @@ package net.eliosoft.elios.main;
 
 import java.awt.BorderLayout;
 import java.awt.Container;
+import java.awt.GradientPaint;
+import java.awt.GraphicsConfiguration;
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.Arrays;
@@ -31,10 +40,15 @@ import java.util.prefs.Preferences;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JTabbedPane;
+import javax.swing.KeyStroke;
 import javax.swing.UIManager;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import javax.swing.text.JTextComponent.KeyBinding;
 
 import net.eliosoft.elios.gui.controllers.LogsController;
 import net.eliosoft.elios.gui.controllers.PrefsController;
@@ -118,7 +132,7 @@ public final class Elios {
 			remoteModel.getLogsListModel().addLogger(l);
 		}
 
-		JFrame frame = new JFrame(Messages.getString("ui.title"));
+		final JFrame frame = new JFrame(Messages.getString("ui.title"));
 		frame.setIconImages(Arrays.<Image>asList(icons));
 		final JTabbedPane tabbedPane = new JTabbedPane();
 		Container contentPane = frame.getContentPane();
@@ -152,6 +166,24 @@ public final class Elios {
 			}
 		});
 
+		JMenuBar bar = new JMenuBar();
+		JMenuItem item = new JMenuItem("FullScreen", KeyEvent.VK_A);
+		bar.add(item);
+		frame.setJMenuBar(bar);
+		item.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent arg0) {
+                        final GraphicsDevice myDevice = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
+                        if(myDevice.isFullScreenSupported()) {
+                                if(myDevice.getFullScreenWindow() == null)
+                                        myDevice.setFullScreenWindow(frame);
+                                else
+                                        myDevice.setFullScreenWindow(null);
+                        }                
+                }
+        });
+				
+		
 		frame.pack();
 		frame.setVisible(true);
 
