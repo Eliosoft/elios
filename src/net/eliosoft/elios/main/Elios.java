@@ -43,6 +43,7 @@ import net.eliosoft.elios.gui.models.LocaleComboBoxModel;
 import net.eliosoft.elios.gui.models.RemoteModel;
 import net.eliosoft.elios.gui.models.RemoteModel.BroadCastAddress;
 import net.eliosoft.elios.gui.views.AboutView;
+import net.eliosoft.elios.gui.views.InputView;
 import net.eliosoft.elios.gui.views.LogsLineView;
 import net.eliosoft.elios.gui.views.LogsView;
 import net.eliosoft.elios.gui.views.Messages;
@@ -111,6 +112,8 @@ public final class Elios {
 		// used to make relation between view and model
 		new LogsController(remoteModel, logsView);
 
+		InputView inputView = new InputView(remoteModel);
+		
 		LogsLineView logsLineView = new LogsLineView(remoteModel);
 		AboutView aboutView = new AboutView();
 
@@ -129,6 +132,7 @@ public final class Elios {
 		contentPane.add(tabbedPane, BorderLayout.CENTER);
 		contentPane.add(logsLineView.getViewComponent(), BorderLayout.SOUTH);
 		addViewToTab(tabbedPane, remoteView);
+		addViewToTab(tabbedPane, inputView);
 		addViewToTab(tabbedPane, prefsView);
 		addViewToTab(tabbedPane, logsView);
 		addViewToTab(tabbedPane, aboutView);
