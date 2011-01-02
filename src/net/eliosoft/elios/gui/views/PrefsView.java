@@ -174,7 +174,7 @@ public class PrefsView implements ViewInterface {
 		constraints.gridx = 1;
 		constraints.gridy = 1;
 		this.universeSpinner = new JSpinner(
-				this.remoteModel.getUniverseSpinnerModel());
+				this.remoteModel.getSubnetSpinnerModel());
 		serverPrefPanel.add(this.universeSpinner, constraints);
 
 		constraints.gridx = 0;
@@ -186,7 +186,7 @@ public class PrefsView implements ViewInterface {
 		constraints.gridx = 1;
 		constraints.gridy = 2;
 		this.subnetSpinner = new JSpinner(
-				this.remoteModel.getSubnetSpinnerModel());
+				this.remoteModel.getUniverseSpinnerModel());
 		serverPrefPanel.add(this.subnetSpinner, constraints);
 
 		// broadcast
