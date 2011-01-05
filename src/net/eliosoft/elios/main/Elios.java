@@ -22,8 +22,6 @@ package net.eliosoft.elios.main;
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.Image;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.Arrays;
@@ -31,15 +29,9 @@ import java.util.Locale;
 import java.util.logging.Logger;
 import java.util.prefs.Preferences;
 
-import javax.swing.Box;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JSpinner;
 import javax.swing.JTabbedPane;
-import javax.swing.JToggleButton;
-import javax.swing.JToolBar;
 import javax.swing.UIManager;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -134,51 +126,7 @@ public final class Elios {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setIconImages(Arrays.asList(icons));
 
-		// Toolbar 
-		final JToolBar toolBar = new JToolBar();
-		final JToggleButton additiveMode = new JToggleButton();
-		additiveMode.setToolTipText(Messages.getString("prefsview.additivemode"));
-		additiveMode.setIcon(new ImageIcon(Elios.class.getResource("/net/eliosoft/elios/gui/views/preferences-desktop.png")));
-		additiveMode.setSelected(remoteModel.isAdditiveModeEnabled());
-		additiveMode.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent arg0) {
-                        remoteModel.setAdditiveModeEnabled(additiveMode.isSelected());
-                }
-        });
-		toolBar.add(additiveMode);
-		toolBar.addSeparator();
-        
-        final JButton quit = new JButton();
-        quit.setToolTipText("Quit");
-        quit.setIcon(new ImageIcon(Elios.class.getResource("/net/eliosoft/elios/gui/views/process-stop.png")));
-        quit.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent arg0) {
-                        frame.dispose();
-                }
-        });
-        
-        JLabel universeLabel = new JLabel(
-        Messages.getString("prefsview.subnet")); //$NON-NLS-1$
-        toolBar.add(universeLabel);
-        toolBar.add(Box.createHorizontalStrut(3));
-
-        JSpinner universeSpinner = new JSpinner(remoteModel.getUniverseSpinnerModel());
-        toolBar.add(universeSpinner);
-        toolBar.add(Box.createHorizontalStrut(3));
-
-        JLabel subnetLabel = new JLabel(
-                Messages.getString("prefsview.universe")); //$NON-NLS-1$
-        toolBar.add(subnetLabel);
-
-        JSpinner subnetSpinner = new JSpinner(remoteModel.getSubnetSpinnerModel());
-        toolBar.add(subnetSpinner);
-        toolBar.addSeparator();
-		toolBar.add(Box.createHorizontalGlue());
-		toolBar.add(quit);
-		contentPane.add(toolBar, BorderLayout.NORTH);
-		// 
+		contentPane.add(new ToolbarFactory(remoteModel).create(frame), BorderLayout.NORTH);
 		
 		contentPane.add(tabbedPane, BorderLayout.CENTER);
 		contentPane.add(logsLineView.getViewComponent(), BorderLayout.SOUTH);
