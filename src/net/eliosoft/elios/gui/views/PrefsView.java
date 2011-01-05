@@ -63,15 +63,12 @@ public class PrefsView implements ViewInterface {
 
 	private JSpinner inPortSpinner;
 	private JSpinner outPortSpinner;
-	private JSpinner universeSpinner;
-	private JSpinner subnetSpinner;
 
 	private JComboBox broadcastAddressCombo;
 
 	private JSpinner httpPortSpinner;
 
 	private JCheckBox enableHttpServerCheckBox;
-	private JCheckBox enableAdditiveModeCheckBox;
 
 	private JComboBox langComboBox;
 
@@ -153,64 +150,32 @@ public class PrefsView implements ViewInterface {
 		serverPrefPanel.setBorder(BorderFactory.createTitledBorder(Messages
 				.getString("prefsview.artnetserver"))); //$NON-NLS-1$
 		GridBagConstraints constraints = new GridBagConstraints();
-
-		// additive
-		constraints.gridx = 0;
-		constraints.gridy = 0;
 		constraints.fill = GridBagConstraints.HORIZONTAL;
 		constraints.anchor = GridBagConstraints.WEST;
 		constraints.weightx = 1;
-		this.enableAdditiveModeCheckBox = new JCheckBox(
-				Messages.getString("prefsview.additivemode"), this.remoteModel.isAdditiveModeEnabled()); //$NON-NLS-1$
-		serverPrefPanel.add(this.enableAdditiveModeCheckBox, constraints);
-
-		// subnet/universe
-		constraints.gridx = 0;
-		constraints.gridy = 1;
-		JLabel universeLabel = new JLabel(
-				Messages.getString("prefsview.subnet")); //$NON-NLS-1$
-		serverPrefPanel.add(universeLabel, constraints);
-
-		constraints.gridx = 1;
-		constraints.gridy = 1;
-		this.universeSpinner = new JSpinner(
-				this.remoteModel.getUniverseSpinnerModel());
-		serverPrefPanel.add(this.universeSpinner, constraints);
-
-		constraints.gridx = 0;
-		constraints.gridy = 2;
-		JLabel subnetLabel = new JLabel(
-				Messages.getString("prefsview.universe")); //$NON-NLS-1$
-		serverPrefPanel.add(subnetLabel, constraints);
-
-		constraints.gridx = 1;
-		constraints.gridy = 2;
-		this.subnetSpinner = new JSpinner(
-				this.remoteModel.getSubnetSpinnerModel());
-		serverPrefPanel.add(this.subnetSpinner, constraints);
 
 		// broadcast
 		constraints.gridx = 0;
-		constraints.gridy = 3;
+        constraints.gridy = 0;
 		JLabel broadcastAddressLabel = new JLabel(
 				Messages.getString("prefsview.broadcastaddress")); //$NON-NLS-1$
 		serverPrefPanel.add(broadcastAddressLabel, constraints);
 		broadcastAddressLabel.setLabelFor(this.broadcastAddressCombo);
 
 		constraints.gridx = 1;
-		constraints.gridy = 3;
+        constraints.gridy = 0;
 		this.broadcastAddressCombo = new JComboBox(
 				this.remoteModel.getBroadcastAddressComboModel());
 		serverPrefPanel.add(this.broadcastAddressCombo, constraints);
 
 		// in port
 		constraints.gridx = 0;
-		constraints.gridy = 4;
+        constraints.gridy = 1;
 		JLabel inPortLabel = new JLabel(Messages.getString("prefsview.port.in")); //$NON-NLS-1$
 		serverPrefPanel.add(inPortLabel, constraints);
 
 		constraints.gridx = 1;
-		constraints.gridy = 4;
+        constraints.gridy = 1;
 		this.inPortSpinner = new JSpinner(
 				this.remoteModel.getInPortSpinnerModel());
 		inPortLabel.setLabelFor(this.inPortSpinner);
@@ -218,13 +183,13 @@ public class PrefsView implements ViewInterface {
 
 		// out port
 		constraints.gridx = 0;
-		constraints.gridy = 5;
+		constraints.gridy = 2;
 		JLabel outPortLabel = new JLabel(
 				Messages.getString("prefsview.port.out")); //$NON-NLS-1$
 		serverPrefPanel.add(outPortLabel, constraints);
 
 		constraints.gridx = 1;
-		constraints.gridy = 5;
+		constraints.gridy = 2;
 		this.outPortSpinner = new JSpinner(
 				this.remoteModel.getOutPortSpinnerModel());
 		outPortLabel.setLabelFor(this.outPortSpinner);
@@ -232,13 +197,13 @@ public class PrefsView implements ViewInterface {
 
 		// start / stop
 		constraints.gridx = 0;
-		constraints.gridy = 6;
+		constraints.gridy = 3;
 		this.startArtNetButton = new JButton(
 				Messages.getString("prefsview.start")); //$NON-NLS-1$
 		serverPrefPanel.add(this.startArtNetButton, constraints);
 
 		constraints.gridx = 1;
-		constraints.gridy = 6;
+		constraints.gridy = 3;
 		this.stopArtNetButton = new JButton(
 				Messages.getString("prefsview.stop")); //$NON-NLS-1$
 		this.stopArtNetButton.setEnabled(false);
@@ -407,28 +372,6 @@ public class PrefsView implements ViewInterface {
 	public void removeEnableHttpServerCheckBoxListener(
 			ActionListener actionListener) {
 		this.enableHttpServerCheckBox.removeActionListener(actionListener);
-	}
-
-	/**
-	 * Add an Action Listener to the Enable Additive Mode checkbox.
-	 * 
-	 * @param actionListener
-	 *            the listener to add to the checkbox
-	 */
-	public void addEnableAdditiveModeCheckBoxListener(
-			ActionListener actionListener) {
-		this.enableAdditiveModeCheckBox.addActionListener(actionListener);
-	}
-
-	/**
-	 * Removes an Action Listener to the Enable Additive Mode checkbox.
-	 * 
-	 * @param actionListener
-	 *            the listener to remove to the checkbox
-	 */
-	public void removeEnableAdditiveModeCheckBoxListener(
-			ActionListener actionListener) {
-		this.enableAdditiveModeCheckBox.removeActionListener(actionListener);
 	}
 
 	/**
