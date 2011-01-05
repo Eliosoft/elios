@@ -31,7 +31,9 @@ import java.util.regex.Pattern;
 import net.eliosoft.elios.main.LoggersManager;
 import artnet4j.ArtNetException;
 import artnet4j.ArtNetServer;
+import artnet4j.events.ArtNetServerListener;
 import artnet4j.packets.ArtDmxPacket;
+import artnet4j.packets.ArtNetPacket;
 
 /**
  * The Manager of the Artnet Server
@@ -50,8 +52,8 @@ public class ArtNetServerManager {
 	private int inPort = ArtNetServerManager.DEFAULT_ARTNET_PORT;
 	private int outPort = ArtNetServerManager.DEFAULT_ARTNET_PORT;
 	private String broadcastAddress = ArtNetServer.DEFAULT_BROADCAST_IP;
-	private int subnet = 0;
-	private int universe = 0;
+	private int serverSubnet = 0;
+	private int serverUniverse = 0;
 	private int sequenceId = 0;
 	private boolean additiveModeEnabled = false;
 	
@@ -73,8 +75,13 @@ public class ArtNetServerManager {
 	
 	private static final int MAX_DMX_VALUE = 255;
 	private static final int MAX_PERCENT_VALUE = 100;
+
+	private static final int SUBNET_COUNT = 16;
+	private static final int UNIVERSE_COUNT = 16;
 	
-	private byte[] dmxArray = new byte[512];
+	private byte[] outputDmxArray = new byte[512];
+	private byte[][][] inputDmxArray = new byte[SUBNET_COUNT][UNIVERSE_COUNT][512];
+
 	
 	private final transient Logger logger = LoggersManager.getInstance().getLogger(ArtNetServerManager.class
 			.getName());
@@ -97,11 +104,10 @@ public class ArtNetServerManager {
 	 */
 	public void sendDmxCommand() {
 		ArtDmxPacket artDmxPacket = new ArtDmxPacket();
-		artDmxPacket.setUniverse(this.subnet, this.universe);
+		artDmxPacket.setUniverse(this.serverSubnet, this.serverUniverse);
 		artDmxPacket.setSequenceID(this.sequenceId  % 255);
-		artDmxPacket.setDMX(this.dmxArray, this.dmxArray.length);
+		artDmxPacket.setDMX(this.outputDmxArray, this.outputDmxArray.length);
 		this.artnetServer.broadcastPacket(artDmxPacket);
-
 		logger.info("broadcast DMX packet sent");
 
 		this.sequenceId++;
@@ -116,6 +122,8 @@ public class ArtNetServerManager {
 		this.artnetServer = new ArtNetServer(this.inPort, this.outPort);
 		this.artnetServer.setBroadcastAddress(this.broadcastAddress);
 		this.artnetServer.start();
+		initArtNetReceiver();
+		
 		logger.info("ArtNet Started");
 	}
 
@@ -198,17 +206,49 @@ public class ArtNetServerManager {
 		}
 	}
 
-	private void resetDmxArray(){
-		dmxArray = new byte[512];
+	private void resetOutputDmxArray(){
+		outputDmxArray = new byte[512];
 	}
 	
 	private void pushValuesInDmxArray(HashMap<Integer,Byte> valuesMap){
 		if(!additiveModeEnabled){
-			resetDmxArray();
+			resetOutputDmxArray();
 		}
 		for(Entry<Integer,Byte> value : valuesMap.entrySet()){
-			dmxArray[value.getKey()] = value.getValue();
+			outputDmxArray[value.getKey()] = value.getValue();
 		}
+	}
+	
+	private void initArtNetReceiver(){
+		this.artnetServer.addListener(new ArtNetServerListener() {			
+			@Override
+			public void artNetPacketReceived(ArtNetPacket artNetPacket) {
+				switch (artNetPacket.getType()) {
+				case ART_OUTPUT:
+					ArtDmxPacket artDmxPacket = (ArtDmxPacket)artNetPacket;
+					int subnet = artDmxPacket.getSubnetID();
+					int universe = artDmxPacket.getUniverseID();
+					System.arraycopy(artDmxPacket.getDmxData(), 0, inputDmxArray[subnet][universe], 0, artDmxPacket.getNumChannels());
+					break;
+
+				default:
+					break;
+				}
+			}
+			
+			@Override
+			public void artNetServerStopped(ArtNetServer artNetServer) {}
+
+			@Override
+			public void artNetServerStarted(ArtNetServer artNetServer) {}
+			
+			@Override
+			public void artNetPacketUnicasted(ArtNetPacket artNetPacket) {}
+			
+			@Override
+			public void artNetPacketBroadcasted(ArtNetPacket artNetPacket) {}
+		});
+
 	}
 
 	/**
@@ -223,13 +263,31 @@ public class ArtNetServerManager {
 	}
 
 	/**
-	 * get the server dmxArray
+	 * get the server output dmx array
 	 * @return the array
 	 */
-	public byte[] getDmxArray() {
-		return dmxArray;
+	public byte[] getOutputDmxArray() {
+		return outputDmxArray;
 	}
 
+	/**
+	 * get the server input dmx array for a given subnet and universe
+	 * @param subnet the subnet to select
+	 * @param universe the universe to select
+	 * @return the array
+	 */
+	public byte[] getInputDmxArray(int subnet, int universe) {
+		return inputDmxArray[subnet][universe];
+	}
+	
+	/**
+	 * get the server input dmx array with current server subnet and universe settings
+	 * @return the array
+	 */
+	public byte[] getCurrentInputDmxArray() {
+		return getInputDmxArray(this.serverSubnet, this.serverUniverse);
+	}
+	
 	/**
 	 * set the in port of the server
 	 * @param inPort the value of the port
@@ -251,7 +309,7 @@ public class ArtNetServerManager {
 	 * @param subnet the value of the subnet
 	 */
 	public void setSubnet(int subnet) {
-		this.subnet = subnet;
+		this.serverSubnet = subnet;
 	}
 
 	/**
@@ -259,7 +317,7 @@ public class ArtNetServerManager {
 	 * @param universe the value of the universe
 	 */
 	public void setUniverse(int universe) {
-		this.universe = universe;
+		this.serverUniverse = universe;
 	}
 	
 	/**

@@ -42,8 +42,6 @@ import net.eliosoft.elios.gui.listeners.RemoteModelListener;
 import net.eliosoft.elios.server.ArtNetServerManager;
 import net.eliosoft.elios.server.BadSyntaxException;
 import net.eliosoft.elios.server.HttpServerManager;
-
-
 import artnet4j.ArtNet;
 import artnet4j.ArtNetException;
 
@@ -397,7 +395,7 @@ public class RemoteModel {
 	public ComboBoxModel getBroadcastAddressComboModel() {
 		return this.broadcastAddressComboModel;
 	}
-
+	
 	/**
 	 * Give the status of the http server enabling
 	 * 
