@@ -98,13 +98,6 @@ public class PrefsController {
 			}
 		});
 		
-		this.prefsView.addEnableAdditiveModeCheckBoxListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				remoteModel.setAdditiveModeEnabled(((JCheckBox)e.getSource()).isSelected());
-			}
-		});
-		
 		this.prefsView.addLangComboListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
