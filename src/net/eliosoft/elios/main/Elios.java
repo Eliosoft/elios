@@ -172,24 +172,6 @@ public final class Elios {
 			}
 		});
 
-		JMenuBar bar = new JMenuBar();
-		JMenuItem item = new JMenuItem("FullScreen", KeyEvent.VK_A);
-		bar.add(item);
-		frame.setJMenuBar(bar);
-		item.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent arg0) {
-                        final GraphicsDevice myDevice = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
-                        if(myDevice.isFullScreenSupported()) {
-                                if(myDevice.getFullScreenWindow() == null)
-                                        myDevice.setFullScreenWindow(frame);
-                                else
-                                        myDevice.setFullScreenWindow(null);
-                        }                
-                }
-        });
-				
-		
 		frame.pack();
 		frame.setVisible(true);
 

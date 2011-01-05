@@ -1,5 +1,7 @@
 package net.eliosoft.elios.main;
 
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -57,6 +59,10 @@ public class ToolbarFactory {
 
 		addSubnet(toolBar);
 		toolBar.addSeparator();
+
+		addFullScreen(frame, toolBar);
+
+		toolBar.addSeparator();
 		toolBar.add(Box.createHorizontalGlue());
 
 		addQuit(frame, toolBar);
@@ -99,6 +105,35 @@ public class ToolbarFactory {
 			}
 		});
 		toolBar.add(quit);
+	}
+
+	private void addFullScreen(final JFrame frame, final JToolBar toolBar) {
+		final JToggleButton button = new JToggleButton();
+		button.setToolTipText(Messages
+				.getString("main.fullscreen")); //$NON-NLS-1$
+		button.setIcon(new ImageIcon(
+				Elios.class
+						.getResource("/net/eliosoft/elios/gui/views/view-fullscreen.png")));
+
+		final GraphicsDevice myDevice = GraphicsEnvironment
+				.getLocalGraphicsEnvironment().getDefaultScreenDevice();
+
+		// take care of disable the button is full screen mode is not supported
+		button.setEnabled(myDevice.isFullScreenSupported());
+
+		button.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				if (myDevice.getFullScreenWindow() == null) {
+					myDevice.setFullScreenWindow(frame);
+					button.setSelected(true);
+				} else {
+					myDevice.setFullScreenWindow(null);
+					button.setSelected(false);
+				}
+			}
+		});
+		toolBar.add(button);
 	}
 
 	/**
