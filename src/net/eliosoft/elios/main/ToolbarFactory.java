@@ -101,7 +101,9 @@ public class ToolbarFactory {
 		quit.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				frame.dispose();
+				//FIXME Replace with a shutdown process that take care of stop
+				// each thread/worker...
+				System.exit(0);
 			}
 		});
 		toolBar.add(quit);
