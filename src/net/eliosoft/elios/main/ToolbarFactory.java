@@ -192,12 +192,6 @@ public class ToolbarFactory {
 		//needed to unset this window as the fullscreen window.
 		device.setFullScreenWindow(null);
 		 
-		//make sure the size of the window is correct.
-		//setSize(800,600);
-		 
-		//recenter window
-		frame.setLocationRelativeTo(null);
-		 
 		//reset the display mode to what it was before
 		//we changed it.
 		frame.setVisible(true);
