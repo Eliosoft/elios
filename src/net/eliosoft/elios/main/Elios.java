@@ -124,8 +124,9 @@ public final class Elios {
 		// used to make relation between view and model
 		new LogsController(remoteModel, logsView);
 
-		InputTableModel inputTableModel = new InputTableModel(
-				ArtNetServerManager.getInstance());
+		final ArtNetServerManager artNetServerManager = ArtNetServerManager.getInstance();
+		final InputTableModel inputTableModel = new InputTableModel(
+				artNetServerManager);
 
 		InputView inputView = new InputView(remoteModel, inputTableModel);
 
@@ -141,7 +142,7 @@ public final class Elios {
 		final JTabbedPane tabbedPane = new JTabbedPane();
 		Container contentPane = frame.getContentPane();
 		contentPane.setLayout(new BorderLayout());
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.setIconImages(Arrays.asList(icons));
 
 		contentPane.add(new ToolbarFactory(remoteModel).create(frame),
@@ -164,13 +165,12 @@ public final class Elios {
 		tabbedPane.setSelectedIndex(0);
 
 		frame.addWindowListener(new WindowAdapter() {
-			/**
-             *
-		     */
 			@Override
-			public void windowClosing(WindowEvent e) {
+			public void windowClosed(WindowEvent e) {
 				persistRemoteModel(remoteModel, prefs);
 				persistLocale(prefs, localeModel);
+				inputTableModel.dispose();
+				artNetServerManager.stopArtNet();
 			}
 		});
 

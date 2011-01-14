@@ -18,6 +18,8 @@ public class InputTableModel extends DefaultTableModel {
 	private static final int ROW_COUNT = 512/COLUMN_COUNT;
 	private static final Integer[] ROW_HEADERS;
 	
+	private final SwingWorker<Void, byte[]> inputDmxArrayUpdater;
+
 	static{
 		ROW_HEADERS = new Integer[ROW_COUNT];
 		for(int i=0 ; i<ROW_COUNT ; i++){
@@ -30,7 +32,7 @@ public class InputTableModel extends DefaultTableModel {
 	 */
 	public InputTableModel(ArtNetServerManager serverManager) {
 		this.artNetServerManager = serverManager;
-		SwingWorker<Void, byte[]> inputDmxArrayUpdater = new SwingWorker<Void, byte[]>(){
+		inputDmxArrayUpdater = new SwingWorker<Void, byte[]>(){
 
 			@Override
 			protected Void doInBackground() throws Exception {
@@ -78,6 +80,10 @@ public class InputTableModel extends DefaultTableModel {
 	 */
 	public Integer[] getRowHeaders() {
 		return ROW_HEADERS;
+	}
+
+	public void dispose() {
+		inputDmxArrayUpdater.cancel(true);
 	}
 
 }
