@@ -13,7 +13,7 @@ public class InputTableModel extends DefaultTableModel {
 
 	private static final long serialVersionUID = -3171182606809834583L;
 	
-	private final static ArtNetServerManager artNetServerManager = ArtNetServerManager.getInstance();
+	private final ArtNetServerManager artNetServerManager;
 	private static final int COLUMN_COUNT = 16;
 	private static final int ROW_COUNT = 512/COLUMN_COUNT;
 	private static final Integer[] ROW_HEADERS;
@@ -28,7 +28,8 @@ public class InputTableModel extends DefaultTableModel {
 	/**
 	 * Default constructor of the class
 	 */
-	public InputTableModel() {
+	public InputTableModel(ArtNetServerManager serverManager) {
+		this.artNetServerManager = serverManager;
 		SwingWorker<Void, byte[]> inputDmxArrayUpdater = new SwingWorker<Void, byte[]>(){
 
 			@Override

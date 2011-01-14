@@ -21,16 +21,7 @@ package net.eliosoft.elios.main;
 
 import java.awt.BorderLayout;
 import java.awt.Container;
-import java.awt.GradientPaint;
-import java.awt.GraphicsConfiguration;
-import java.awt.GraphicsDevice;
-import java.awt.GraphicsEnvironment;
 import java.awt.Image;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.Arrays;
@@ -40,19 +31,15 @@ import java.util.prefs.Preferences;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
 import javax.swing.JTabbedPane;
-import javax.swing.KeyStroke;
 import javax.swing.UIManager;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import javax.swing.text.JTextComponent.KeyBinding;
 
 import net.eliosoft.elios.gui.controllers.LogsController;
 import net.eliosoft.elios.gui.controllers.PrefsController;
 import net.eliosoft.elios.gui.controllers.RemoteController;
+import net.eliosoft.elios.gui.models.InputTableModel;
 import net.eliosoft.elios.gui.models.LocaleComboBoxModel;
 import net.eliosoft.elios.gui.models.RemoteModel;
 import net.eliosoft.elios.gui.models.RemoteModel.BroadCastAddress;
@@ -75,17 +62,28 @@ import net.eliosoft.elios.server.HttpServerManager;
  */
 public final class Elios {
 
-    /**
-     * Icons array for the Elios application.
-     */
+	/**
+	 * Icons array for the Elios application.
+	 */
 	private static final Image[] icons = new Image[] {
-	  new ImageIcon(Elios.class.getResource("/net/eliosoft/elios/gui/views/elios_e_24x24.png")).getImage()      
-	  ,new ImageIcon(Elios.class.getResource("/net/eliosoft/elios/gui/views/elios_e_32x32.png")).getImage()      
-	  ,new ImageIcon(Elios.class.getResource("/net/eliosoft/elios/gui/views/elios_e_48x48.png")).getImage()      
-	  ,new ImageIcon(Elios.class.getResource("/net/eliosoft/elios/gui/views/elios_e_64x64.png")).getImage()      
-	};
+			new ImageIcon(
+					Elios.class
+							.getResource("/net/eliosoft/elios/gui/views/elios_e_24x24.png"))
+					.getImage(),
+			new ImageIcon(
+					Elios.class
+							.getResource("/net/eliosoft/elios/gui/views/elios_e_32x32.png"))
+					.getImage(),
+			new ImageIcon(
+					Elios.class
+							.getResource("/net/eliosoft/elios/gui/views/elios_e_48x48.png"))
+					.getImage(),
+			new ImageIcon(
+					Elios.class
+							.getResource("/net/eliosoft/elios/gui/views/elios_e_64x64.png"))
+					.getImage() };
 
-        /**
+	/**
 	 * Do nothing more than ensure that no object can be construct.
 	 */
 	private Elios() {
@@ -126,8 +124,11 @@ public final class Elios {
 		// used to make relation between view and model
 		new LogsController(remoteModel, logsView);
 
-		InputView inputView = new InputView(remoteModel);
-		
+		InputTableModel inputTableModel = new InputTableModel(
+				ArtNetServerManager.getInstance());
+
+		InputView inputView = new InputView(remoteModel, inputTableModel);
+
 		LogsLineView logsLineView = new LogsLineView(remoteModel);
 		AboutView aboutView = new AboutView();
 
@@ -136,15 +137,16 @@ public final class Elios {
 		}
 
 		final JFrame frame = new JFrame(Messages.getString("ui.title"));
-		frame.setIconImages(Arrays.<Image>asList(icons));
+		frame.setIconImages(Arrays.<Image> asList(icons));
 		final JTabbedPane tabbedPane = new JTabbedPane();
 		Container contentPane = frame.getContentPane();
 		contentPane.setLayout(new BorderLayout());
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setIconImages(Arrays.asList(icons));
 
-		contentPane.add(new ToolbarFactory(remoteModel).create(frame), BorderLayout.NORTH);
-		
+		contentPane.add(new ToolbarFactory(remoteModel).create(frame),
+				BorderLayout.NORTH);
+
 		contentPane.add(tabbedPane, BorderLayout.CENTER);
 		contentPane.add(logsLineView.getViewComponent(), BorderLayout.SOUTH);
 		addViewToTab(tabbedPane, remoteView);
@@ -222,7 +224,8 @@ public final class Elios {
 	 * @return a configured <code>RemoteModel</code>
 	 */
 	public static RemoteModel createRemoteModel(Preferences prefs) {
-		RemoteModel model = new RemoteModel();
+		RemoteModel model = new RemoteModel(ArtNetServerManager.getInstance(),
+				HttpServerManager.getInstance());
 		model.setSubnet(prefs.getInt("server.subnet", 0));
 		model.setUniverse(prefs.getInt("server.universe", 0));
 		model.setBroadCastAddress(Enum.valueOf(

@@ -66,10 +66,8 @@ public class RemoteModel {
 	
 	private List<RemoteModelListener> remoteModelChangedListeners;
 
-	private final static ArtNetServerManager artNetServerManager = ArtNetServerManager
-			.getInstance();
-	private final static HttpServerManager httpServerManager = HttpServerManager
-			.getInstance();
+	private final ArtNetServerManager artNetServerManager;
+	private final HttpServerManager httpServerManager;
 
 	private static final int MIN_PORT = 0;
 	private static final int MAX_PORT = 65535;
@@ -123,7 +121,9 @@ public class RemoteModel {
 	/**
 	 * Default constructor of the remote model
 	 */
-	public RemoteModel() {
+	public RemoteModel(ArtNetServerManager serverManager, HttpServerManager httpManager) {
+		this.artNetServerManager = serverManager;
+		this.httpServerManager = httpManager;
 		this.logsListModel = new LogsListModel();
 		this.logsListModel.addLogger(ArtNet.logger);
 		
@@ -162,7 +162,7 @@ public class RemoteModel {
 
 					@Override
 					public void contentsChanged(ListDataEvent e) {
-						RemoteModel.artNetServerManager
+						artNetServerManager
 								.setBroadcastAddress(((BroadCastAddress) broadcastAddressComboModel
 										.getSelectedItem()).getAddress());
 					}
@@ -171,7 +171,7 @@ public class RemoteModel {
 		this.inPortSpinnerModel.addChangeListener(new ChangeListener() {
 			@Override
 			public void stateChanged(ChangeEvent e) {
-				RemoteModel.artNetServerManager
+				artNetServerManager
 						.setInPort((Integer) inPortSpinnerModel.getValue());
 			}
 		});
@@ -179,7 +179,7 @@ public class RemoteModel {
 		this.outPortSpinnerModel.addChangeListener(new ChangeListener() {
 			@Override
 			public void stateChanged(ChangeEvent e) {
-				RemoteModel.artNetServerManager
+				artNetServerManager
 						.setOutPort((Integer) outPortSpinnerModel.getValue());
 			}
 		});
@@ -187,7 +187,7 @@ public class RemoteModel {
 		this.subnetSpinnerModel.addChangeListener(new ChangeListener() {
 			@Override
 			public void stateChanged(ChangeEvent e) {
-				RemoteModel.artNetServerManager
+				artNetServerManager
 						.setSubnet((Integer) subnetSpinnerModel.getValue());
 			}
 		});
@@ -195,7 +195,7 @@ public class RemoteModel {
 		this.universeSpinnerModel.addChangeListener(new ChangeListener() {
 			@Override
 			public void stateChanged(ChangeEvent e) {
-				RemoteModel.artNetServerManager
+				artNetServerManager
 						.setUniverse((Integer) universeSpinnerModel.getValue());
 			}
 		});
@@ -203,7 +203,7 @@ public class RemoteModel {
 		this.httpPortSpinnerModel.addChangeListener(new ChangeListener() {
 			@Override
 			public void stateChanged(ChangeEvent e) {
-				RemoteModel.httpServerManager
+				httpServerManager
 						.setInPort((Integer) httpPortSpinnerModel.getValue());
 			}
 		});
@@ -251,9 +251,9 @@ public class RemoteModel {
 	 * @throws BadSyntaxException if the command line to process and send has a bad syntax
 	 */
 	public void sendCommand() throws BadSyntaxException {
-		RemoteModel.artNetServerManager.processCommandLine(this.commandLine
+		artNetServerManager.processCommandLine(this.commandLine
 				.toString());
-		RemoteModel.artNetServerManager.sendDmxCommand();
+		artNetServerManager.sendDmxCommand();
 		this.resetCommandLine();
 	}
 
@@ -266,7 +266,7 @@ public class RemoteModel {
 	 *             if there is a problem with the server socket
 	 */
 	public void startArtNet() throws SocketException, ArtNetException {
-		RemoteModel.artNetServerManager.startArtNet();
+		artNetServerManager.startArtNet();
 		this.fireArtNetStarted();
 	}
 
@@ -274,7 +274,7 @@ public class RemoteModel {
 	 * Stops the ArtNet Server.
 	 */
 	public void stopArtNet() {
-		RemoteModel.artNetServerManager.stopArtNet();
+		artNetServerManager.stopArtNet();
 		this.fireArtNetStopped();
 	}
 
@@ -285,7 +285,7 @@ public class RemoteModel {
 	 *             if the server is unable to start
 	 */
 	public void startHttp() throws IOException {
-		RemoteModel.httpServerManager.startHttp();
+		httpServerManager.startHttp();
 		this.fireHttpStarted();
 	}
 
@@ -293,7 +293,7 @@ public class RemoteModel {
 	 * Stops the Http Server.
 	 */
 	public void stopHttp() {
-		RemoteModel.httpServerManager.stopHttp();
+		httpServerManager.stopHttp();
 		this.fireHttpStopped();
 	}
 
@@ -432,7 +432,7 @@ public class RemoteModel {
 	 */
 	public void setAdditiveModeEnabled(boolean additiveModeEnabled) {
 		this.additiveModeEnabled = additiveModeEnabled;
-		RemoteModel.artNetServerManager.setAdditiveModeEnabled(this.additiveModeEnabled);
+		artNetServerManager.setAdditiveModeEnabled(this.additiveModeEnabled);
 	}
 	
 	/**

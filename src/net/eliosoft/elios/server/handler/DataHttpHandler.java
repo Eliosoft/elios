@@ -22,7 +22,7 @@ import com.sun.net.httpserver.HttpHandler;
 public class DataHttpHandler implements HttpHandler {
 
 	private static final int MAX_BUFFER_SIZE = 1024*512;
-	private static ArtNetServerManager artNetServerManager = ArtNetServerManager.getInstance();
+	private final ArtNetServerManager artNetServerManager = ArtNetServerManager.getInstance();
 
 	private final transient Logger logger = LoggersManager.getInstance().getLogger(DataHttpHandler.class.getName());
 	
@@ -42,8 +42,8 @@ public class DataHttpHandler implements HttpHandler {
 			is.close();
 
 			try {
-				DataHttpHandler.artNetServerManager.processCommandLine(commandLine.toString());
-				DataHttpHandler.artNetServerManager.sendDmxCommand();
+				artNetServerManager.processCommandLine(commandLine.toString());
+				artNetServerManager.sendDmxCommand();
 			} catch (BadSyntaxException e) {
 				logger.severe("Bad syntax in Command Line");
 				String badRequest = "400 : Bad request !!!";

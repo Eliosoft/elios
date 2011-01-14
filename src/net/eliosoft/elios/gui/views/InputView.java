@@ -24,17 +24,15 @@ import net.eliosoft.elios.gui.models.RemoteModel;
  */
 public class InputView implements ViewInterface {
 	
-	private final RemoteModel remoteModel;
-	private final InputTableModel inputTableModel = new InputTableModel();
+	private final InputTableModel inputTableModel;
 	private final JPanel inputPanel = new JPanel(new BorderLayout());
 	
 	/**
 	 * The constructor of the Input View.
 	 * @param remoteModel the RemoteModel used by the view
 	 */
-	public InputView(RemoteModel remoteModel) {
-		this.remoteModel = remoteModel;
-		
+	public InputView(RemoteModel remoteModel, InputTableModel tableModel) {
+		this.inputTableModel = tableModel;
 		final JTable dmxTable = new JTable(this.inputTableModel);
 		dmxTable.setEnabled(false);
 		dmxTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
