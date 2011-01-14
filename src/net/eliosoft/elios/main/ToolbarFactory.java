@@ -125,10 +125,10 @@ public class ToolbarFactory {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				if (myDevice.getFullScreenWindow() == null) {
-					myDevice.setFullScreenWindow(frame);
+					turnOnFullScreen(frame, myDevice);
 					button.setSelected(true);
 				} else {
-					myDevice.setFullScreenWindow(null);
+					turnOffFullScreen(frame, myDevice);
 					button.setSelected(false);
 				}
 			}
@@ -175,6 +175,41 @@ public class ToolbarFactory {
 		JSpinner universeSpinner = new JSpinner(
 				remoteModel.getUniverseSpinnerModel());
 		toolBar.add(universeSpinner);
+	}
+	
+	private void turnOffFullScreen(JFrame frame, GraphicsDevice device){
+		//hide the frame so we can change it.
+		frame.setVisible(false);
+		 
+		//remove the frame from being displayable.
+		frame.dispose();
+		 
+		//put the borders back on the frame.
+		frame.setUndecorated(false);
+		 
+		//needed to unset this window as the fullscreen window.
+		device.setFullScreenWindow(null);
+		 
+		//reset the display mode to what it was before
+		//we changed it.
+		frame.setVisible(true);
+	}
+	
+	private void turnOnFullScreen(JFrame frame, GraphicsDevice device){		 
+		//hide everything
+		frame.setVisible(false);
+		 
+		//remove the frame from being displayable.
+		frame.dispose();
+		 
+		//remove borders around the frame
+		frame.setUndecorated(true);
+		 
+		//make the window fullscreen.
+		device.setFullScreenWindow(frame);
+		 
+		//show the frame
+		frame.setVisible(true);
 	}
 
 }
