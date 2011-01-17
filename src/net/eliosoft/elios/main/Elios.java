@@ -179,6 +179,7 @@ public final class Elios {
 					persistLocale(prefs, localeModel);
 					inputTableModel.dispose();
 					artNetServerManager.stopArtNet();
+					HttpServerManager.getInstance().stopHttp();
 				}
 			});
 			frame.pack();
