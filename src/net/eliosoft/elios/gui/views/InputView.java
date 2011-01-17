@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.text.MessageFormat;
 import java.util.Enumeration;
 
 import javax.swing.DefaultListCellRenderer;
@@ -49,6 +50,9 @@ public class InputView implements ViewInterface {
 				Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
 				int nonBlueLevel = 255-((Integer)value).intValue()*4/5;
 				c.setBackground(new Color(nonBlueLevel, nonBlueLevel, 255));
+				int channel = row*table.getColumnCount()+column+1;
+				int percentValue = (int)Math.ceil(((Integer)value).intValue()*100/255.0);
+				setToolTipText(MessageFormat.format(Messages.getString("inputview.tooltipmessage"),channel,value,percentValue));
 				return c;
 			}
 		});
