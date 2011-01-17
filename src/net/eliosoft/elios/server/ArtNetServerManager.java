@@ -124,7 +124,7 @@ public class ArtNetServerManager {
 		this.artnetServer.start();
 		initArtNetReceiver();
 		
-		logger.info("ArtNet Started");
+		logger.info("ArtNet Started (in:" + this.inPort + ", out:" + this.outPort +")");
 	}
 
 	/**
@@ -328,6 +328,24 @@ public class ArtNetServerManager {
 	 */
 	public void setAdditiveModeEnabled(boolean additiveModeEnabled) {
 		this.additiveModeEnabled = additiveModeEnabled;
+	}
+
+	/**
+	 * Returns the in port.
+	 *
+	 * @return the in port
+	 */
+	public int getInPort() {
+		return this.inPort;
+	}
+
+	/**
+	 * Returns the out port.
+	 *
+	 * @return the out port
+	 */
+	public int getOutPort() {
+		return this.outPort;
 	}
 	
 }

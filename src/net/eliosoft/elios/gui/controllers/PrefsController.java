@@ -23,17 +23,17 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.MessageFormat;
 import java.util.Locale;
-import java.util.logging.Logger;
 
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 
+import artnet4j.ArtNetException;
+
 import net.eliosoft.elios.gui.models.LocaleComboBoxModel;
 import net.eliosoft.elios.gui.models.RemoteModel;
 import net.eliosoft.elios.gui.views.Messages;
 import net.eliosoft.elios.gui.views.PrefsView;
-import net.eliosoft.elios.main.LoggersManager;
 
 
 
@@ -47,9 +47,6 @@ public class PrefsController {
 	private final RemoteModel remoteModel;
 	private final PrefsView prefsView;
 	
-	private final transient Logger logger = LoggersManager.getInstance().getLogger(PrefsController.class
-			.getName());
-
 	/**
 	 * The default constructor for the prefs controller.
 	 * @param remoteModel the model associated to the controller
@@ -63,31 +60,23 @@ public class PrefsController {
 	}
 
 	private void initListeners() {
-		this.prefsView.addStartArtNetButtonListener(new ActionListener() {
+		this.prefsView.addCancelButtonListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				try {
-					remoteModel.startArtNet();
-					if(remoteModel.isHttpServerEnabled()){
-						remoteModel.startHttp();
-					}
-				} catch (Exception exception) {
-					logger.severe(exception.getMessage());
-					exception.printStackTrace();
-					
-					remoteModel.stopHttp();
-					remoteModel.stopArtNet();
-				}
+				remoteModel.restoreArtNetServerManagerConfig();
 			}
 		});
 
-		this.prefsView.addStopArtNetButtonListener(new ActionListener() {
+		this.prefsView.addSaveButtonListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(remoteModel.isHttpServerEnabled()){
-					remoteModel.stopHttp();
+				try {
+					remoteModel.applyArtNetServerManagerConfig();
+				} catch (ArtNetException ane) {
+					JOptionPane.showMessageDialog(null,
+							MessageFormat.format(Messages.getString("error.server.cannotstart.message"), ane.getMessage()),
+							Messages.getString("error.server.cannotstart.title"), JOptionPane.ERROR_MESSAGE);
 				}
-				remoteModel.stopArtNet();
 			}
 		});
 		

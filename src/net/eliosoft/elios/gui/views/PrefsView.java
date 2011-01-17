@@ -28,6 +28,7 @@ import java.util.Locale;
 
 import javax.swing.BorderFactory;
 import javax.swing.DefaultListCellRenderer;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
@@ -46,6 +47,7 @@ import net.eliosoft.elios.gui.events.HttpStoppedEvent;
 import net.eliosoft.elios.gui.listeners.RemoteModelListener;
 import net.eliosoft.elios.gui.models.LocaleComboBoxModel;
 import net.eliosoft.elios.gui.models.RemoteModel;
+import net.eliosoft.elios.main.Elios;
 
 /**
  * The view of application preferences.
@@ -58,8 +60,8 @@ public class PrefsView implements ViewInterface {
 
 	private final JPanel prefsPanel;
 
-	private JButton startArtNetButton;
-	private JButton stopArtNetButton;
+	private JButton cancelButton;
+	private JButton saveButton;
 
 	private JSpinner inPortSpinner;
 	private JSpinner outPortSpinner;
@@ -113,24 +115,10 @@ public class PrefsView implements ViewInterface {
 
 					@Override
 					public void artNetStopped(ArtNetStoppedEvent event) {
-						startArtNetButton.setEnabled(true);
-						stopArtNetButton.setEnabled(false);
-						inPortSpinner.setEnabled(true);
-						outPortSpinner.setEnabled(true);
-
-						enableHttpServerCheckBox.setEnabled(true);
-						httpPortSpinner.setEnabled(true);
 					}
 
 					@Override
 					public void artNetStarted(ArtNetStartedEvent event) {
-						startArtNetButton.setEnabled(false);
-						stopArtNetButton.setEnabled(true);
-						inPortSpinner.setEnabled(false);
-						outPortSpinner.setEnabled(false);
-
-						enableHttpServerCheckBox.setEnabled(false);
-						httpPortSpinner.setEnabled(false);
 					}
 
 					@Override
@@ -195,19 +183,22 @@ public class PrefsView implements ViewInterface {
 		outPortLabel.setLabelFor(this.outPortSpinner);
 		serverPrefPanel.add(this.outPortSpinner, constraints);
 
-		// start / stop
+		// cancel / save
 		constraints.gridx = 0;
 		constraints.gridy = 3;
-		this.startArtNetButton = new JButton(
-				Messages.getString("prefsview.start")); //$NON-NLS-1$
-		serverPrefPanel.add(this.startArtNetButton, constraints);
+		this.cancelButton = new JButton(
+				Messages.getString("prefsview.cancel")); //$NON-NLS-1$
+		this.cancelButton.setIcon(new ImageIcon(Elios.class
+				.getResource("/net/eliosoft/elios/gui/views/edit-undo.png")));
+		serverPrefPanel.add(this.cancelButton, constraints);
 
 		constraints.gridx = 1;
 		constraints.gridy = 3;
-		this.stopArtNetButton = new JButton(
-				Messages.getString("prefsview.stop")); //$NON-NLS-1$
-		this.stopArtNetButton.setEnabled(false);
-		serverPrefPanel.add(this.stopArtNetButton, constraints);
+		this.saveButton = new JButton(
+				Messages.getString("prefsview.save")); //$NON-NLS-1$
+		serverPrefPanel.add(this.saveButton, constraints);
+		this.saveButton.setIcon(new ImageIcon(Elios.class
+				.getResource("/net/eliosoft/elios/gui/views/document-save.png")));
 
 		return serverPrefPanel;
 	}
@@ -318,8 +309,8 @@ public class PrefsView implements ViewInterface {
 	 * @param actionListener
 	 *            the listener to add to the button
 	 */
-	public void addStartArtNetButtonListener(ActionListener actionListener) {
-		this.startArtNetButton.addActionListener(actionListener);
+	public void addCancelButtonListener(ActionListener actionListener) {
+		this.cancelButton.addActionListener(actionListener);
 	}
 
 	/**
@@ -329,7 +320,7 @@ public class PrefsView implements ViewInterface {
 	 *            the listener to remove to the button
 	 */
 	public void removeStartArtNetButtonListener(ActionListener actionListener) {
-		this.startArtNetButton.removeActionListener(actionListener);
+		this.cancelButton.removeActionListener(actionListener);
 	}
 
 	/**
@@ -338,8 +329,8 @@ public class PrefsView implements ViewInterface {
 	 * @param actionListener
 	 *            the listener to add to the button
 	 */
-	public void addStopArtNetButtonListener(ActionListener actionListener) {
-		this.stopArtNetButton.addActionListener(actionListener);
+	public void addSaveButtonListener(ActionListener actionListener) {
+		this.saveButton.addActionListener(actionListener);
 	}
 
 	/**
@@ -349,7 +340,7 @@ public class PrefsView implements ViewInterface {
 	 *            the listener to remove to the button
 	 */
 	public void removeStopArtNetButtonListener(ActionListener actionListener) {
-		this.stopArtNetButton.removeActionListener(actionListener);
+		this.saveButton.removeActionListener(actionListener);
 	}
 
 	/**

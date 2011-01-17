@@ -24,6 +24,7 @@ import java.awt.Container;
 import java.awt.Image;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.text.MessageFormat;
 import java.util.Arrays;
 import java.util.Locale;
 import java.util.logging.Logger;
@@ -31,10 +32,13 @@ import java.util.prefs.Preferences;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
 import javax.swing.UIManager;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+
+import artnet4j.ArtNetException;
 
 import net.eliosoft.elios.gui.controllers.LogsController;
 import net.eliosoft.elios.gui.controllers.PrefsController;
@@ -109,75 +113,86 @@ public final class Elios {
 
 		Locale locale = loadLocale(prefs);
 
-		final RemoteModel remoteModel = createRemoteModel(prefs);
-		final RemoteView remoteView = new RemoteView(remoteModel);
-		// used to make relation between view and model
-		new RemoteController(remoteModel, remoteView);
+		try {
+			final RemoteModel remoteModel = createRemoteModel(prefs);
 
-		final LocaleComboBoxModel localeModel = new LocaleComboBoxModel();
-		localeModel.setSelectedItem(locale);
-		PrefsView prefsView = new PrefsView(remoteModel, localeModel);
-		// used to make relation between view and model
-		new PrefsController(remoteModel, localeModel, prefsView);
+			final RemoteView remoteView = new RemoteView(remoteModel);
+			// used to make relation between view and model
+			new RemoteController(remoteModel, remoteView);
 
-		LogsView logsView = new LogsView(remoteModel);
-		// used to make relation between view and model
-		new LogsController(remoteModel, logsView);
+			final LocaleComboBoxModel localeModel = new LocaleComboBoxModel();
+			localeModel.setSelectedItem(locale);
+			PrefsView prefsView = new PrefsView(remoteModel, localeModel);
+			// used to make relation between view and model
+			new PrefsController(remoteModel, localeModel, prefsView);
 
-		final ArtNetServerManager artNetServerManager = ArtNetServerManager.getInstance();
-		final InputTableModel inputTableModel = new InputTableModel(
-				artNetServerManager);
+			LogsView logsView = new LogsView(remoteModel);
+			// used to make relation between view and model
+			new LogsController(remoteModel, logsView);
 
-		InputView inputView = new InputView(remoteModel, inputTableModel);
+			final ArtNetServerManager artNetServerManager = ArtNetServerManager
+					.getInstance();
+			final InputTableModel inputTableModel = new InputTableModel(
+					artNetServerManager);
 
-		LogsLineView logsLineView = new LogsLineView(remoteModel);
-		AboutView aboutView = new AboutView();
+			InputView inputView = new InputView(remoteModel, inputTableModel);
 
-		for (Logger l : LoggersManager.getInstance().getLoggersList()) {
-			remoteModel.getLogsListModel().addLogger(l);
+			LogsLineView logsLineView = new LogsLineView(remoteModel);
+			AboutView aboutView = new AboutView();
+
+			for (Logger l : LoggersManager.getInstance().getLoggersList()) {
+				remoteModel.getLogsListModel().addLogger(l);
+			}
+
+			final JFrame frame = new JFrame(Messages.getString("ui.title"));
+			frame.setIconImages(Arrays.<Image> asList(icons));
+			final JTabbedPane tabbedPane = new JTabbedPane();
+			Container contentPane = frame.getContentPane();
+			contentPane.setLayout(new BorderLayout());
+			frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+			frame.setIconImages(Arrays.asList(icons));
+
+			contentPane.add(new ToolbarFactory(remoteModel).create(frame),
+					BorderLayout.NORTH);
+
+			contentPane.add(tabbedPane, BorderLayout.CENTER);
+			contentPane
+					.add(logsLineView.getViewComponent(), BorderLayout.SOUTH);
+			addViewToTab(tabbedPane, remoteView);
+			addViewToTab(tabbedPane, inputView);
+			addViewToTab(tabbedPane, prefsView);
+			addViewToTab(tabbedPane, logsView);
+			addViewToTab(tabbedPane, aboutView);
+
+			tabbedPane.addChangeListener(new ChangeListener() {
+				@Override
+				public void stateChanged(ChangeEvent e) {
+					tabbedPane.getSelectedComponent().requestFocusInWindow();
+				}
+			});
+			tabbedPane.setSelectedIndex(0);
+
+			frame.addWindowListener(new WindowAdapter() {
+				@Override
+				public void windowClosed(WindowEvent e) {
+					persistRemoteModel(remoteModel, prefs);
+					persistLocale(prefs, localeModel);
+					inputTableModel.dispose();
+					artNetServerManager.stopArtNet();
+				}
+			});
+			frame.pack();
+			frame.setVisible(true);
+
+			tabbedPane.getSelectedComponent().requestFocusInWindow();
+
+			// last call because we want to be sure that every listeners are registered
+			remoteModel.applyArtNetServerManagerConfig();
+		} catch (ArtNetException e1) {
+			JOptionPane.showMessageDialog(null,
+					MessageFormat.format(Messages.getString("error.server.cannotstart.message"), e1.getMessage()),
+					Messages.getString("error.server.cannotstart.title"), JOptionPane.ERROR_MESSAGE);
 		}
-
-		final JFrame frame = new JFrame(Messages.getString("ui.title"));
-		frame.setIconImages(Arrays.<Image> asList(icons));
-		final JTabbedPane tabbedPane = new JTabbedPane();
-		Container contentPane = frame.getContentPane();
-		contentPane.setLayout(new BorderLayout());
-		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		frame.setIconImages(Arrays.asList(icons));
-
-		contentPane.add(new ToolbarFactory(remoteModel).create(frame),
-				BorderLayout.NORTH);
-
-		contentPane.add(tabbedPane, BorderLayout.CENTER);
-		contentPane.add(logsLineView.getViewComponent(), BorderLayout.SOUTH);
-		addViewToTab(tabbedPane, remoteView);
-		addViewToTab(tabbedPane, inputView);
-		addViewToTab(tabbedPane, prefsView);
-		addViewToTab(tabbedPane, logsView);
-		addViewToTab(tabbedPane, aboutView);
-
-		tabbedPane.addChangeListener(new ChangeListener() {
-			@Override
-			public void stateChanged(ChangeEvent e) {
-				tabbedPane.getSelectedComponent().requestFocusInWindow();
-			}
-		});
-		tabbedPane.setSelectedIndex(0);
-
-		frame.addWindowListener(new WindowAdapter() {
-			@Override
-			public void windowClosed(WindowEvent e) {
-				persistRemoteModel(remoteModel, prefs);
-				persistLocale(prefs, localeModel);
-				inputTableModel.dispose();
-				artNetServerManager.stopArtNet();
-			}
-		});
-
-		frame.pack();
-		frame.setVisible(true);
-
-		tabbedPane.getSelectedComponent().requestFocusInWindow();
 	}
 
 	/**
@@ -223,7 +238,8 @@ public final class Elios {
 	 *            <code>Preferences</code> used to retrieve the configuration
 	 * @return a configured <code>RemoteModel</code>
 	 */
-	public static RemoteModel createRemoteModel(Preferences prefs) {
+	public static RemoteModel createRemoteModel(Preferences prefs)
+			throws ArtNetException {
 		RemoteModel model = new RemoteModel(ArtNetServerManager.getInstance(),
 				HttpServerManager.getInstance());
 		model.setSubnet(prefs.getInt("server.subnet", 0));
@@ -244,7 +260,6 @@ public final class Elios {
 				"server.additivemode.enable", false));
 		model.setHttpPort(prefs.getInt("server.httpserver.port",
 				HttpServerManager.DEFAULT_HTTP_PORT));
-
 		return model;
 	}
 

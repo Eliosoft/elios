@@ -145,7 +145,6 @@ public class RemoteModel {
 
 		this.commandLine = new StringBuilder();
 		this.remoteModelChangedListeners = new ArrayList<RemoteModelListener>();
-
 		this.initModelsListeners();
 	}
 
@@ -167,22 +166,6 @@ public class RemoteModel {
 										.getSelectedItem()).getAddress());
 					}
 				});
-
-		this.inPortSpinnerModel.addChangeListener(new ChangeListener() {
-			@Override
-			public void stateChanged(ChangeEvent e) {
-				artNetServerManager
-						.setInPort((Integer) inPortSpinnerModel.getValue());
-			}
-		});
-
-		this.outPortSpinnerModel.addChangeListener(new ChangeListener() {
-			@Override
-			public void stateChanged(ChangeEvent e) {
-				artNetServerManager
-						.setOutPort((Integer) outPortSpinnerModel.getValue());
-			}
-		});
 
 		this.subnetSpinnerModel.addChangeListener(new ChangeListener() {
 			@Override
@@ -573,4 +556,35 @@ public class RemoteModel {
     public void setBroadCastAddress(BroadCastAddress broadcastAddress){
         broadcastAddressComboModel.setSelectedItem(broadcastAddress);
     }
+
+    /**
+     * Restores the configuration according to the current configuration
+     * of the {@link ArtNetServerManager}.
+     */
+	public void restoreArtNetServerManagerConfig() {
+		inPortSpinnerModel.setValue(artNetServerManager.getInPort());
+		outPortSpinnerModel.setValue(artNetServerManager.getOutPort());
+	}
+
+	/**
+	 * Applies the configuration to the {@link ArtNetServerManager}.
+	 * As a consequence, the server is restarted.
+	 */
+	public void applyArtNetServerManagerConfig() throws ArtNetException {
+		artNetServerManager.setInPort((Integer)inPortSpinnerModel.getValue());
+		artNetServerManager.setOutPort((Integer)outPortSpinnerModel.getValue());
+		this.stopArtNet();
+		this.stopHttp();
+		try {
+			this.startArtNet();
+			if(isHttpServerEnabled())
+				try {
+					this.startHttp();
+				} catch (IOException e) {
+					new ArtNetException(e.getMessage(), e.getCause());
+				}
+		} catch (SocketException e) {
+			throw new ArtNetException(e.getMessage(), e.getCause());
+		}
+	}
 }
