@@ -269,6 +269,14 @@ public class ArtNetServerManager {
 	public byte[] getOutputDmxArray() {
 		return outputDmxArray;
 	}
+	
+	/**
+	 * set the server output dmx array
+	 * @param dmxArray the value of the dmx array
+	 */
+	public void setOutputDmxArray(byte[] dmxArray) {
+		this.outputDmxArray = dmxArray;
+	}
 
 	/**
 	 * get the server input dmx array for a given subnet and universe

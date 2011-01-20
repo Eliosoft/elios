@@ -29,6 +29,7 @@ public class InputTableModel extends DefaultTableModel {
 	
 	/**
 	 * Default constructor of the class
+	 * @param serverManager the server manager used by the model
 	 */
 	public InputTableModel(ArtNetServerManager serverManager) {
 		this.artNetServerManager = serverManager;
@@ -82,6 +83,9 @@ public class InputTableModel extends DefaultTableModel {
 		return ROW_HEADERS;
 	}
 
+	/**
+	 * dispose the model before closing the application
+	 */
 	public void dispose() {
 		inputDmxArrayUpdater.cancel(true);
 	}

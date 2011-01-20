@@ -40,6 +40,7 @@ import javax.swing.event.ChangeListener;
 
 import artnet4j.ArtNetException;
 
+import net.eliosoft.elios.gui.controllers.CuesController;
 import net.eliosoft.elios.gui.controllers.LogsController;
 import net.eliosoft.elios.gui.controllers.PrefsController;
 import net.eliosoft.elios.gui.controllers.RemoteController;
@@ -48,6 +49,7 @@ import net.eliosoft.elios.gui.models.LocaleComboBoxModel;
 import net.eliosoft.elios.gui.models.RemoteModel;
 import net.eliosoft.elios.gui.models.RemoteModel.BroadCastAddress;
 import net.eliosoft.elios.gui.views.AboutView;
+import net.eliosoft.elios.gui.views.CuesView;
 import net.eliosoft.elios.gui.views.InputView;
 import net.eliosoft.elios.gui.views.LogsLineView;
 import net.eliosoft.elios.gui.views.LogsView;
@@ -56,6 +58,7 @@ import net.eliosoft.elios.gui.views.PrefsView;
 import net.eliosoft.elios.gui.views.RemoteView;
 import net.eliosoft.elios.gui.views.ViewInterface;
 import net.eliosoft.elios.server.ArtNetServerManager;
+import net.eliosoft.elios.server.CuesManager;
 import net.eliosoft.elios.server.HttpServerManager;
 
 /**
@@ -134,9 +137,12 @@ public final class Elios {
 					.getInstance();
 			final InputTableModel inputTableModel = new InputTableModel(
 					artNetServerManager);
-
 			InputView inputView = new InputView(remoteModel, inputTableModel);
-
+			
+			CuesView cuesView = new CuesView(remoteModel);
+			// used to make relation between view and model
+			new CuesController(remoteModel, cuesView);
+			
 			LogsLineView logsLineView = new LogsLineView(remoteModel);
 			AboutView aboutView = new AboutView();
 
@@ -159,6 +165,7 @@ public final class Elios {
 			contentPane
 					.add(logsLineView.getViewComponent(), BorderLayout.SOUTH);
 			addViewToTab(tabbedPane, remoteView);
+			addViewToTab(tabbedPane, cuesView);
 			addViewToTab(tabbedPane, inputView);
 			addViewToTab(tabbedPane, prefsView);
 			addViewToTab(tabbedPane, logsView);
@@ -239,10 +246,9 @@ public final class Elios {
 	 *            <code>Preferences</code> used to retrieve the configuration
 	 * @return a configured <code>RemoteModel</code>
 	 */
-	public static RemoteModel createRemoteModel(Preferences prefs)
-			throws ArtNetException {
+	public static RemoteModel createRemoteModel(Preferences prefs){
 		RemoteModel model = new RemoteModel(ArtNetServerManager.getInstance(),
-				HttpServerManager.getInstance());
+				HttpServerManager.getInstance(), CuesManager.getInstance());
 		model.setSubnet(prefs.getInt("server.subnet", 0));
 		model.setUniverse(prefs.getInt("server.universe", 0));
 		model.setBroadCastAddress(Enum.valueOf(

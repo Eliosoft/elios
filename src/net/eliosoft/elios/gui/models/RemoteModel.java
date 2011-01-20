@@ -41,6 +41,8 @@ import net.eliosoft.elios.gui.events.HttpStoppedEvent;
 import net.eliosoft.elios.gui.listeners.RemoteModelListener;
 import net.eliosoft.elios.server.ArtNetServerManager;
 import net.eliosoft.elios.server.BadSyntaxException;
+import net.eliosoft.elios.server.Cue;
+import net.eliosoft.elios.server.CuesManager;
 import net.eliosoft.elios.server.HttpServerManager;
 import artnet4j.ArtNet;
 import artnet4j.ArtNetException;
@@ -68,6 +70,8 @@ public class RemoteModel {
 
 	private final ArtNetServerManager artNetServerManager;
 	private final HttpServerManager httpServerManager;
+	private final CuesManager cuesManager;
+	private CuesListModel cuesListModel;
 
 	private static final int MIN_PORT = 0;
 	private static final int MAX_PORT = 65535;
@@ -120,11 +124,16 @@ public class RemoteModel {
 
 	/**
 	 * Default constructor of the remote model
+	 * @param serverManager the server manager used by the model
+	 * @param httpManager the http manager used by the model
+	 * @param cuesManager the cues manager used by the model
 	 */
-	public RemoteModel(ArtNetServerManager serverManager, HttpServerManager httpManager) {
+	public RemoteModel(ArtNetServerManager serverManager, HttpServerManager httpManager, CuesManager cuesManager) {
 		this.artNetServerManager = serverManager;
 		this.httpServerManager = httpManager;
+		this.cuesManager = cuesManager;
 		this.logsListModel = new LogsListModel();
+		this.cuesListModel = new CuesListModel(this.cuesManager);
 		this.logsListModel.addLogger(ArtNet.logger);
 		
 		this.inPortSpinnerModel = new SpinnerNumberModel(
@@ -195,8 +204,7 @@ public class RemoteModel {
 	/**
 	 * Add a character to the command line.
 	 * 
-	 * @param c
-	 *            the character added
+	 * @param c the character added
 	 */
 	public void addToCommandLine(Character c) {
 		this.commandLine.append(c);
@@ -569,6 +577,7 @@ public class RemoteModel {
 	/**
 	 * Applies the configuration to the {@link ArtNetServerManager}.
 	 * As a consequence, the server is restarted.
+	 * @throws ArtNetException exception thrown if server can't be started.
 	 */
 	public void applyArtNetServerManagerConfig() throws ArtNetException {
 		artNetServerManager.setInPort((Integer)inPortSpinnerModel.getValue());
@@ -586,5 +595,40 @@ public class RemoteModel {
 		} catch (SocketException e) {
 			throw new ArtNetException(e.getMessage(), e.getCause());
 		}
+	}
+
+	/**
+	 * Gets the model of the cues list.
+	 * 
+	 * @return the cues list model
+	 */
+	public CuesListModel getCuesListModel() {
+		return this.cuesListModel;
+	}
+
+	/**
+	 * Stores the current state of the dmx array in a cue.
+	 * @param cueName the name of the cue to store
+	 */
+	public void storeCue(String cueName) {
+		cuesListModel.addCue(new Cue(cueName,artNetServerManager.getOutputDmxArray()));
+	}
+
+
+	/**
+	 * Load the given cue.
+	 * @param cue the cue to load
+	 */
+	public void loadCue(Cue cue) {
+		artNetServerManager.setOutputDmxArray(cue.getDmxArray());
+		artNetServerManager.sendDmxCommand();
+	}
+	
+	/**
+	 * Removes the given cue from the model.
+	 * @param cue the cue to remove
+	 */
+	public void removeCue(Cue cue) {
+		cuesListModel.removeCue(cue);
 	}
 }
