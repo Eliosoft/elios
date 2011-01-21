@@ -19,7 +19,6 @@
 
 package net.eliosoft.elios.gui.views;
 
-import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionListener;
@@ -50,9 +49,6 @@ import net.eliosoft.elios.gui.models.RemoteModel;
  * @author Jeremie GASTON-RAOUL
  */
 public class RemoteView implements ViewInterface {
-	
-	private static final int BUTTON_WIDTH = 70;
-	private static final int BUTTON_HEIGHT = 40;
 	
 	private final RemoteModel remoteModel;
 
@@ -105,9 +101,9 @@ public class RemoteView implements ViewInterface {
 
 		this.commandLineTextField.setEditable(false);
 		this.commandLineTextField.setFocusable(false);
-		this.commandLineTextField.setMinimumSize(new Dimension(RemoteView.BUTTON_WIDTH*4,RemoteView.BUTTON_HEIGHT));
-		this.commandLineTextField.setPreferredSize(new Dimension(RemoteView.BUTTON_WIDTH*4,RemoteView.BUTTON_HEIGHT));
-		this.constraints.fill = GridBagConstraints.HORIZONTAL;
+		this.constraints.fill = GridBagConstraints.BOTH;
+		this.constraints.weightx = 1;
+		this.constraints.weighty = 1;
 		this.constraints.gridy = 0;
 		this.constraints.gridwidth = 4;
 		this.remotePanel.add(this.commandLineTextField, this.constraints);
@@ -295,10 +291,6 @@ public class RemoteView implements ViewInterface {
 		button.setEnabled(enabled);
 		button.setFocusable(false);
 		
-		button.setMinimumSize(new Dimension(RemoteView.BUTTON_WIDTH,RemoteView.BUTTON_HEIGHT));
-		button.setPreferredSize(new Dimension(RemoteView.BUTTON_WIDTH,RemoteView.BUTTON_HEIGHT));
-
-		this.constraints.fill = GridBagConstraints.HORIZONTAL;
 		this.constraints.gridy = gridY;
 		this.constraints.gridwidth = gridWidth;
 
