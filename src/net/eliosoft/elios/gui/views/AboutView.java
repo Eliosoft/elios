@@ -25,6 +25,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 /**
  * The view of the About. This view displays the About of the project.
@@ -44,7 +45,7 @@ public class AboutView implements ViewInterface {
                                                 getClass().getResource(
                                                                 "/net/eliosoft/elios/gui/views/elios_256x138.png")));
                 JLabel titleLabel = new JLabel(
-                                Messages.getString("aboutview.info"));
+                                Messages.getString("aboutview.info"),SwingConstants.CENTER);
                 aboutPanel.setLayout(new GridLayout(2, 1));
                 aboutPanel.add(icon);
                 aboutPanel.add(titleLabel);
