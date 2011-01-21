@@ -149,7 +149,7 @@ public class ToolbarFactory {
 		additiveMode
 				.setIcon(new ImageIcon(
 						Elios.class
-								.getResource("/net/eliosoft/elios/gui/views/preferences-desktop.png")));
+								.getResource("/net/eliosoft/elios/gui/views/additive-mode.png")));
 		additiveMode.setSelected(remoteModel.isAdditiveModeEnabled());
 		additiveMode.addActionListener(new ActionListener() {
 			@Override
