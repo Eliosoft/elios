@@ -611,7 +611,7 @@ public class RemoteModel {
 	 * @param cueName the name of the cue to store
 	 */
 	public void storeCue(String cueName) {
-		cuesListModel.addCue(new Cue(cueName,artNetServerManager.getOutputDmxArray()));
+		cuesListModel.addCue(new Cue(cueName,artNetServerManager.getCurrentOutputDmxArray()));
 	}
 
 
@@ -620,7 +620,7 @@ public class RemoteModel {
 	 * @param cue the cue to load
 	 */
 	public void loadCue(Cue cue) {
-		artNetServerManager.setOutputDmxArray(cue.getDmxArray());
+		artNetServerManager.setCurrentOutputDmxArray(cue.getDmxArray());
 		artNetServerManager.sendDmxCommand();
 	}
 	

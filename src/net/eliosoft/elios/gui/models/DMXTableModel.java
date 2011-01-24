@@ -9,16 +9,18 @@ import net.eliosoft.elios.server.ArtNetServerManager;
  * This is the model of the DMX input table
  * @author Jeremie GASTON-RAOUL
  */
-public class InputTableModel extends DefaultTableModel {
+public class DMXTableModel extends DefaultTableModel {
 
 	private static final long serialVersionUID = -3171182606809834583L;
-	
-	private final ArtNetServerManager artNetServerManager;
 	private static final int COLUMN_COUNT = 16;
 	private static final int ROW_COUNT = 512/COLUMN_COUNT;
 	private static final Integer[] ROW_HEADERS;
 	
-	private final SwingWorker<Void, byte[]> inputDmxArrayUpdater;
+	private final ArtNetServerManager artNetServerManager;
+
+	private final SwingWorker<Void, byte[]> dmxArrayUpdater;
+	
+	private boolean inputEnabled = false;
 
 	static{
 		ROW_HEADERS = new Integer[ROW_COUNT];
@@ -31,9 +33,9 @@ public class InputTableModel extends DefaultTableModel {
 	 * Default constructor of the class
 	 * @param serverManager the server manager used by the model
 	 */
-	public InputTableModel(ArtNetServerManager serverManager) {
+	public DMXTableModel(ArtNetServerManager serverManager) {
 		this.artNetServerManager = serverManager;
-		inputDmxArrayUpdater = new SwingWorker<Void, byte[]>(){
+		dmxArrayUpdater = new SwingWorker<Void, byte[]>(){
 
 			@Override
 			protected Void doInBackground() throws Exception {
@@ -45,7 +47,7 @@ public class InputTableModel extends DefaultTableModel {
 			
 		};
 		
-		inputDmxArrayUpdater.execute();
+		dmxArrayUpdater.execute();
 	}
 	
 	@Override
@@ -66,7 +68,7 @@ public class InputTableModel extends DefaultTableModel {
 	@Override
 	public Integer getValueAt(int row, int column) {
 		int index = column+row*COLUMN_COUNT;
-		int intValue = ((Byte)artNetServerManager.getCurrentInputDmxArray()[index]).intValue();
+		int intValue = inputEnabled ? ((Byte)artNetServerManager.getCurrentInputDmxArray()[index]).intValue() : ((Byte)artNetServerManager.getCurrentOutputDmxArray()[index]).intValue();
 		return intValue < 0 ? intValue + 256 : intValue;
 	}
 	
@@ -87,7 +89,23 @@ public class InputTableModel extends DefaultTableModel {
 	 * dispose the model before closing the application
 	 */
 	public void dispose() {
-		inputDmxArrayUpdater.cancel(true);
+		dmxArrayUpdater.cancel(true);
 	}
-
+	
+	/**
+	 * Gets the status of input enabling.
+	 * @return true if input is enabled, false if output is enabled
+	 */
+	public boolean isInputEnabled() {
+		return inputEnabled;
+	}
+	
+	/**
+	 * Set the status of input enabling.
+	 * @param inputEnabled the status of input enabling
+	 */
+	public void setInputEnabled(boolean inputEnabled) {
+		this.inputEnabled = inputEnabled;
+	}
+	
 }

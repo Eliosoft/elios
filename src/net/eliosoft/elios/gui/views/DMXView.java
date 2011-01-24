@@ -4,37 +4,56 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.event.ActionListener;
 import java.text.MessageFormat;
 import java.util.Enumeration;
 
+import javax.swing.ButtonGroup;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.JComponent;
 import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
 
-import net.eliosoft.elios.gui.models.InputTableModel;
+import net.eliosoft.elios.gui.models.DMXTableModel;
 import net.eliosoft.elios.gui.models.RemoteModel;
 
 /**
- * The view of ArtNet input. This class display DMX value braodcasted on the network in a table
+ * The view of DMX table. This class display DMX values in input or output of the server
  * @author Jeremie GASTON-RAOUL
  */
-public class InputView implements ViewInterface {
+public class DMXView implements ViewInterface {
 	
-	private final InputTableModel inputTableModel;
-	private final JPanel inputPanel = new JPanel(new BorderLayout());
+	private final DMXTableModel dmxTableModel;
+	private final JPanel dmxPanel = new JPanel(new BorderLayout());
+	private final JRadioButton inRadio;
+	private final JRadioButton outRadio;
 	
 	/**
-	 * The constructor of the Input View.
+	 * The constructor of the DMX View.
 	 * @param remoteModel the RemoteModel used by the view
+	 * @param tableModel the DMXTableModel used by the view
 	 */
-	public InputView(RemoteModel remoteModel, InputTableModel tableModel) {
-		this.inputTableModel = tableModel;
-		final JTable dmxTable = new JTable(this.inputTableModel);
+	public DMXView(RemoteModel remoteModel, DMXTableModel tableModel) {
+		this.dmxTableModel = tableModel;
+		
+		ButtonGroup inOutRadioGroup = new ButtonGroup();
+		JPanel inOutRadioPanel = new JPanel();
+		inRadio = new JRadioButton(Messages.getString("dmxview.inputradio"),false);
+		inRadio.setActionCommand("input");
+		outRadio = new JRadioButton(Messages.getString("dmxview.outputradio"),true);
+		outRadio.setActionCommand("output");
+		inOutRadioGroup.add(inRadio);
+		inOutRadioGroup.add(outRadio);
+		inOutRadioPanel.add(inRadio);
+		inOutRadioPanel.add(outRadio);
+		this.dmxPanel.add(inOutRadioPanel,BorderLayout.NORTH);
+				
+		final JTable dmxTable = new JTable(this.dmxTableModel);
 		dmxTable.setEnabled(false);
 		dmxTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		dmxTable.getTableHeader().setReorderingAllowed(false);
@@ -52,7 +71,7 @@ public class InputView implements ViewInterface {
 				c.setBackground(new Color(nonBlueLevel, nonBlueLevel, 255));
 				int channel = row*table.getColumnCount()+column+1;
 				int percentValue = (int)Math.ceil(((Integer)value).intValue()*100/255.0);
-				setToolTipText(MessageFormat.format(Messages.getString("inputview.tooltipmessage"),channel,value,percentValue));
+				setToolTipText(MessageFormat.format(Messages.getString("dmxview.tooltipmessage"),channel,value,percentValue));
 				return c;
 			}
 		});
@@ -64,7 +83,7 @@ public class InputView implements ViewInterface {
 			column.setPreferredWidth(width);
 		}
 		
-		JList dmxTableRowHeader = new JList(this.inputTableModel.getRowHeaders());
+		JList dmxTableRowHeader = new JList(this.dmxTableModel.getRowHeaders());
 		dmxTableRowHeader.setCellRenderer(new DefaultListCellRenderer() {
 			private static final long serialVersionUID = -6533501111809246770L;
 
@@ -78,23 +97,41 @@ public class InputView implements ViewInterface {
 		JScrollPane scrollPane = new JScrollPane(dmxTable);
 		scrollPane.setRowHeaderView(dmxTableRowHeader);
 		scrollPane.setPreferredSize(new Dimension(200,200));
-		this.inputPanel.add(scrollPane,BorderLayout.CENTER);
+		this.dmxPanel.add(scrollPane,BorderLayout.CENTER);
 	}
 
+	/**
+	 * Add an action listener to in and out radio buttons.
+	 * @param actionListener the listener to add
+	 */
+	public void addInOutRadioActionListener(ActionListener actionListener){
+		inRadio.addActionListener(actionListener);
+		outRadio.addActionListener(actionListener);
+	}
+	
+	/**
+	 * Remove an action listener from in and out radion buttons.
+	 * @param actionListener the listener to remove
+	 */
+	public void removeInOutRadioActionListener(ActionListener actionListener){
+		inRadio.removeActionListener(actionListener);
+		outRadio.removeActionListener(actionListener);
+	}
+	
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	public String getLocalizedTitle() {
-	    return Messages.getString("inputview.title");
+	    return Messages.getString("dmxview.title");
 	}
 
 	/**
-	 * Returns the input panel of the view.
-	 * @return the input panel
+	 * Returns the DMX panel of the view.
+	 * @return the DMX panel
 	 */
 	@Override
 	public JComponent getViewComponent() {
-		return this.inputPanel;
+		return this.dmxPanel;
 	}
 }

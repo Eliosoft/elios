@@ -41,16 +41,17 @@ import javax.swing.event.ChangeListener;
 import artnet4j.ArtNetException;
 
 import net.eliosoft.elios.gui.controllers.CuesController;
+import net.eliosoft.elios.gui.controllers.DMXController;
 import net.eliosoft.elios.gui.controllers.LogsController;
 import net.eliosoft.elios.gui.controllers.PrefsController;
 import net.eliosoft.elios.gui.controllers.RemoteController;
-import net.eliosoft.elios.gui.models.InputTableModel;
+import net.eliosoft.elios.gui.models.DMXTableModel;
 import net.eliosoft.elios.gui.models.LocaleComboBoxModel;
 import net.eliosoft.elios.gui.models.RemoteModel;
 import net.eliosoft.elios.gui.models.RemoteModel.BroadCastAddress;
 import net.eliosoft.elios.gui.views.AboutView;
 import net.eliosoft.elios.gui.views.CuesView;
-import net.eliosoft.elios.gui.views.InputView;
+import net.eliosoft.elios.gui.views.DMXView;
 import net.eliosoft.elios.gui.views.LogsLineView;
 import net.eliosoft.elios.gui.views.LogsView;
 import net.eliosoft.elios.gui.views.Messages;
@@ -135,9 +136,11 @@ public final class Elios {
 
 			final ArtNetServerManager artNetServerManager = ArtNetServerManager
 					.getInstance();
-			final InputTableModel inputTableModel = new InputTableModel(
+			final DMXTableModel dmxTableModel = new DMXTableModel(
 					artNetServerManager);
-			InputView inputView = new InputView(remoteModel, inputTableModel);
+			DMXView dmxView = new DMXView(remoteModel, dmxTableModel);
+			// used to make relation between view and model
+			new DMXController(dmxTableModel, dmxView);
 			
 			CuesView cuesView = new CuesView(remoteModel);
 			// used to make relation between view and model
@@ -166,7 +169,7 @@ public final class Elios {
 					.add(logsLineView.getViewComponent(), BorderLayout.SOUTH);
 			addViewToTab(tabbedPane, remoteView);
 			addViewToTab(tabbedPane, cuesView);
-			addViewToTab(tabbedPane, inputView);
+			addViewToTab(tabbedPane, dmxView);
 			addViewToTab(tabbedPane, prefsView);
 			addViewToTab(tabbedPane, logsView);
 			addViewToTab(tabbedPane, aboutView);
@@ -184,7 +187,7 @@ public final class Elios {
 				public void windowClosed(WindowEvent e) {
 					persistRemoteModel(remoteModel, prefs);
 					persistLocale(prefs, localeModel);
-					inputTableModel.dispose();
+					dmxTableModel.dispose();
 					artNetServerManager.stopArtNet();
 					HttpServerManager.getInstance().stopHttp();
 				}
