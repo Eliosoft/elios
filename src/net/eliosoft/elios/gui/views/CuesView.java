@@ -25,6 +25,7 @@ import java.awt.event.ActionListener;
 import java.text.MessageFormat;
 
 import javax.swing.DefaultListCellRenderer;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JList;
@@ -37,6 +38,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import net.eliosoft.elios.gui.models.RemoteModel;
+import net.eliosoft.elios.main.Elios;
 import net.eliosoft.elios.server.Cue;
 
 /**
@@ -94,10 +96,13 @@ public class CuesView implements ViewInterface {
 			}
 		});
 
-		storeButton = new JButton(Messages.getString("cuesview.storebutton"));
-		loadButton = new JButton(Messages.getString("cuesview.loadbutton"));
+		storeButton = new JButton(Messages.getString("cuesview.storebutton"), new ImageIcon(Elios.class
+				.getResource("/net/eliosoft/elios/gui/views/document-save-as.png")));
+		loadButton = new JButton(Messages.getString("cuesview.loadbutton"), new ImageIcon(Elios.class
+				.getResource("/net/eliosoft/elios/gui/views/document-open.png")));
 		loadButton.setEnabled(false);
-		removeButton = new JButton(Messages.getString("cuesview.removebutton"));
+		removeButton = new JButton(Messages.getString("cuesview.removebutton"), new ImageIcon(Elios.class
+				.getResource("/net/eliosoft/elios/gui/views/edit-delete.png")));
 		removeButton.setEnabled(false);
 		
 		JPanel buttonsPanel = new JPanel();

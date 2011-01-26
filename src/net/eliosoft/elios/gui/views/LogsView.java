@@ -26,6 +26,7 @@ import java.awt.GridBagLayout;
 import java.awt.event.ActionListener;
 import java.util.logging.LogRecord;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JList;
@@ -38,6 +39,7 @@ import javax.swing.event.ListDataEvent;
 import javax.swing.event.ListDataListener;
 
 import net.eliosoft.elios.gui.models.RemoteModel;
+import net.eliosoft.elios.main.Elios;
 
 
 
@@ -101,7 +103,8 @@ public class LogsView implements ViewInterface {
 		this.constraints.weighty = 1;
 		this.logsPanel.add(scrollPane, this.constraints);
 
-		this.clearLogsButton = new JButton(Messages.getString("logsview.clear")); //$NON-NLS-1$
+		this.clearLogsButton = new JButton(Messages.getString("logsview.clear"), new ImageIcon(Elios.class
+				.getResource("/net/eliosoft/elios/gui/views/edit-clear.png"))); //$NON-NLS-1$
 		this.constraints.fill = GridBagConstraints.NONE;
 		this.constraints.gridy = 1;
 		this.constraints.weightx = 0;
