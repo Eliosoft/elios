@@ -41,10 +41,10 @@ import net.eliosoft.elios.gui.models.RemoteModel;
 public class LogsLineView implements ViewInterface {
 
 	private final RemoteModel remoteModel;
-	
-	private final static JLabel EMPTY_LABEL = new JLabel(" ");
 
 	private final JPanel logsLinePanel = new JPanel();
+
+	private JLabel logLabel;
 
 	/**
 	 * The constructor of the class.
@@ -53,8 +53,8 @@ public class LogsLineView implements ViewInterface {
 	public LogsLineView(RemoteModel remoteModel) {
 		this.remoteModel = remoteModel;
 		this.logsLinePanel.setBorder(BorderFactory.createEtchedBorder());
-		this.logsLinePanel.add(LogsLineView.EMPTY_LABEL);
-
+		this.logLabel = new JLabel(LogsViewHelper.DEFAULT_TEXT);
+		this.logsLinePanel.add(logLabel);
 		this.initRemoteModelListener();
 	}
 
@@ -63,17 +63,17 @@ public class LogsLineView implements ViewInterface {
 
 			@Override
 			public void intervalRemoved(ListDataEvent e) {
-				replaceLabel();
+				updateLabel();
 			}
 
 			@Override
 			public void intervalAdded(ListDataEvent e) {
-				replaceLabel();
+				updateLabel();
 			}
 
 			@Override
 			public void contentsChanged(ListDataEvent e) {
-				replaceLabel();
+				updateLabel();
 			}
 		});
 
@@ -88,15 +88,17 @@ public class LogsLineView implements ViewInterface {
 		return this.logsLinePanel;
 	}
 	
-	private void replaceLabel(){
-		logsLinePanel.removeAll();
+	/**
+	 * Update the label according to the current LogRecord.
+	 */
+	private void updateLabel(){
 		if(remoteModel.getLogsListModel().getSize() > 0){
-			logsLinePanel.add(new JLogRecordLabel((LogRecord) remoteModel.getLogsListModel().getElementAt(remoteModel.getLogsListModel().getSize()-1)));
+			final LogRecord logRecord = (LogRecord) remoteModel.getLogsListModel().getElementAt(remoteModel.getLogsListModel().getSize()-1);
+			LogsViewHelper.LOG_DECORATOR.update(logLabel, logRecord);
 		}
 		else{
-			logsLinePanel.add(LogsLineView.EMPTY_LABEL);
+			logLabel.setText(LogsViewHelper.DEFAULT_TEXT);
 		}
-		logsLinePanel.revalidate();
 	}
 	
 	/**
