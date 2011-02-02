@@ -126,6 +126,8 @@ public class PrefsView implements ViewInterface {
 				.getResource("/net/eliosoft/elios/gui/views/edit-undo.png")));
 		buttonPanel.add(this.cancelButton);
 
+		buttonPanel.add(Box.createHorizontalStrut(5));
+
 		this.saveButton = new JButton(
 				Messages.getString("prefsview.save")); //$NON-NLS-1$
 		buttonPanel.add(this.saveButton);
