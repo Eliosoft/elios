@@ -19,7 +19,6 @@
 
 package net.eliosoft.elios.gui.views;
 
-import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -27,6 +26,8 @@ import java.awt.event.ActionListener;
 import java.util.Locale;
 
 import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -87,19 +88,51 @@ public class PrefsView implements ViewInterface {
 		this.remoteModel = remoteModel;
 		this.localeModel = localeModel;
 
-		prefsPanel = new JPanel(new BorderLayout());
+		prefsPanel = new JPanel();
 
+		prefsPanel.setLayout(new BoxLayout(prefsPanel, BoxLayout.Y_AXIS));
+		
 		// general panel
-		prefsPanel.add(createGeneralPane(), BorderLayout.NORTH);
+		prefsPanel.add(createGeneralPane());
 
 		// artnet panel
-		prefsPanel.add(createArtNetServerPane(), BorderLayout.CENTER);
+		prefsPanel.add(createArtNetServerPane());
 
 		// http server panel
-		prefsPanel.add(createHttpServerPane(), BorderLayout.SOUTH);
+		prefsPanel.add(createHttpServerPane());
+		
+		// add a glue to have a so beautiful fullscreen layout
+		prefsPanel.add(Box.createVerticalGlue());
+		
+		// button panel
+		prefsPanel.add(createButtonPane());
 
 		// initialize the listener
 		initListener();
+	}
+
+	private Component createButtonPane() {
+
+		JPanel buttonPanel = new JPanel();
+
+		buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.X_AXIS));
+		
+		buttonPanel.add(Box.createGlue());
+		
+		// cancel / save
+		this.cancelButton = new JButton(
+				Messages.getString("prefsview.cancel")); //$NON-NLS-1$
+		this.cancelButton.setIcon(new ImageIcon(Elios.class
+				.getResource("/net/eliosoft/elios/gui/views/edit-undo.png")));
+		buttonPanel.add(this.cancelButton);
+
+		this.saveButton = new JButton(
+				Messages.getString("prefsview.save")); //$NON-NLS-1$
+		buttonPanel.add(this.saveButton);
+		this.saveButton.setIcon(new ImageIcon(Elios.class
+				.getResource("/net/eliosoft/elios/gui/views/document-save.png")));
+
+		return buttonPanel;
 	}
 
 	/**
@@ -182,23 +215,6 @@ public class PrefsView implements ViewInterface {
 				this.remoteModel.getOutPortSpinnerModel());
 		outPortLabel.setLabelFor(this.outPortSpinner);
 		serverPrefPanel.add(this.outPortSpinner, constraints);
-
-		// cancel / save
-		constraints.gridx = 0;
-		constraints.gridy = 3;
-		this.cancelButton = new JButton(
-				Messages.getString("prefsview.cancel")); //$NON-NLS-1$
-		this.cancelButton.setIcon(new ImageIcon(Elios.class
-				.getResource("/net/eliosoft/elios/gui/views/edit-undo.png")));
-		serverPrefPanel.add(this.cancelButton, constraints);
-
-		constraints.gridx = 1;
-		constraints.gridy = 3;
-		this.saveButton = new JButton(
-				Messages.getString("prefsview.save")); //$NON-NLS-1$
-		serverPrefPanel.add(this.saveButton, constraints);
-		this.saveButton.setIcon(new ImageIcon(Elios.class
-				.getResource("/net/eliosoft/elios/gui/views/document-save.png")));
 
 		return serverPrefPanel;
 	}
