@@ -22,6 +22,8 @@ package net.eliosoft.elios.gui.views;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.text.MessageFormat;
 
 import javax.swing.DefaultListCellRenderer;
@@ -61,9 +63,19 @@ public class CuesView implements ViewInterface {
 	 * 
 	 * @param remoteModel
 	 */
-	public CuesView(RemoteModel remoteModel) {
-		this.remoteModel = remoteModel;
+	public CuesView(RemoteModel rModel) {
+		this.remoteModel = rModel;
 		cuesList = new JList(this.remoteModel.getCuesListModel());
+
+		cuesList.addMouseListener(new MouseAdapter() {
+		    public void mouseClicked(MouseEvent e) {
+		        if (e.getClickCount() == 2) {
+		            int index = cuesList.locationToIndex(e.getPoint());
+		            remoteModel.loadCue(remoteModel.getCuesListModel().getElementAt(index));
+		         }
+		    }
+		});
+
 		JScrollPane scrollPane = new JScrollPane(cuesList);
 		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		
