@@ -52,10 +52,6 @@ public class ToolbarFactory {
 	public JToolBar create(final JFrame frame) {
 		final JToolBar toolBar = new JToolBar();
 
-		addSaveCue(frame, toolBar, remoteModel);
-		toolBar.addSeparator();
-		toolBar.add(Box.createHorizontalStrut(3));
-
 		addAdditiveMode(toolBar);
 		toolBar.addSeparator();
 
@@ -63,6 +59,9 @@ public class ToolbarFactory {
 		toolBar.add(Box.createHorizontalStrut(3));
 
 		addSubnet(toolBar);
+		toolBar.addSeparator();
+
+		addSaveCue(frame, toolBar, remoteModel);
 		toolBar.addSeparator();
 
 		addFullScreen(frame, toolBar);
