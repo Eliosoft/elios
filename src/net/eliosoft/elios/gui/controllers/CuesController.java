@@ -56,7 +56,8 @@ public class CuesController {
 			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				remoteModel.storeCue(CuesViewHelper.askForCueName(cuesView.getViewComponent()));
+				remoteModel.storeCue(CuesViewHelper.askForCueName(cuesView.getViewComponent(),
+						CuesViewHelper.getNextDefaultCueName(remoteModel.getCuesListModel())));
 			}
 		});
 
