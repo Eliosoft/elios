@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
@@ -39,6 +40,7 @@ import net.eliosoft.elios.gui.events.CommandLineValueChangedEvent;
 import net.eliosoft.elios.gui.events.HttpStartedEvent;
 import net.eliosoft.elios.gui.events.HttpStoppedEvent;
 import net.eliosoft.elios.gui.listeners.RemoteModelListener;
+import net.eliosoft.elios.main.LoggersManager;
 import net.eliosoft.elios.server.ArtNetServerManager;
 import net.eliosoft.elios.server.BadSyntaxException;
 import net.eliosoft.elios.server.Cue;
@@ -80,6 +82,8 @@ public class RemoteModel {
 	private static final int MIN_UNIVERSE = 0;
 	private static final int MAX_UNIVERSE = 15;
 	
+	private final Logger logger = LoggersManager.getInstance().getLogger(RemoteModel.class.getCanonicalName());
+
 	/**
 	 * Broadcast Address.
 	 *
@@ -619,9 +623,10 @@ public class RemoteModel {
 	 * Load the given cue.
 	 * @param cue the cue to load
 	 */
-	public void loadCue(Cue cue) {
+	public void loadCue(Cue cue) {;
 		artNetServerManager.setCurrentOutputDmxArray(cue.getDmxArray());
 		artNetServerManager.sendDmxCommand();
+		logger.info("Cue [" + cue.getName() + "] sent");
 	}
 	
 	/**

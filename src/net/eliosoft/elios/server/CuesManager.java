@@ -61,7 +61,7 @@ public class CuesManager {
 			throw new IllegalArgumentException("a cue with this name is already set");
 		}
 		else{
-			logger.info("Cue saved");
+			logger.info("Cue [" + cue.getName() + "] added");
 			cuesMap.put(cue.getName(), cue);
 		}
 	}
@@ -71,7 +71,7 @@ public class CuesManager {
 	 * @param name the name of the cue to remove
 	 */
 	public void removeCue(String name){
-		logger.info("Cue removed");
+		logger.info("Cue [" + name + "] removed");
 		cuesMap.remove(name);
 	}
 	
@@ -81,7 +81,7 @@ public class CuesManager {
 	 * @return the requested cue if found or null if no cue is found
 	 */
 	public Cue getCue(String name){
-		logger.info("Cue loaded");
+		logger.info("Cue [" + name + "] loaded");
 		return cuesMap.get(name);
 	}
 
