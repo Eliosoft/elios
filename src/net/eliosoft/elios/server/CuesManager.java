@@ -23,6 +23,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Logger;
+
+import net.eliosoft.elios.main.LoggersManager;
 
 /**
  * A manager for the cues
@@ -30,6 +33,9 @@ import java.util.Map;
  * @author Jeremie GASTON-RAOUL
  */
 public class CuesManager {
+
+	private final Logger logger = LoggersManager.getInstance().getLogger(CuesManager.class.getCanonicalName());
+
 	private Map<String, Cue> cuesMap = new HashMap<String, Cue>();
 	private static CuesManager instance;
 	
@@ -55,6 +61,7 @@ public class CuesManager {
 			throw new IllegalArgumentException("a cue with this name is already set");
 		}
 		else{
+			logger.info("Cue saved");
 			cuesMap.put(cue.getName(), cue);
 		}
 	}
@@ -64,6 +71,7 @@ public class CuesManager {
 	 * @param name the name of the cue to remove
 	 */
 	public void removeCue(String name){
+		logger.info("Cue removed");
 		cuesMap.remove(name);
 	}
 	
@@ -73,6 +81,7 @@ public class CuesManager {
 	 * @return the requested cue if found or null if no cue is found
 	 */
 	public Cue getCue(String name){
+		logger.info("Cue loaded");
 		return cuesMap.get(name);
 	}
 
