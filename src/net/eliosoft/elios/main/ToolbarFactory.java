@@ -15,6 +15,7 @@ import javax.swing.JToggleButton;
 import javax.swing.JToolBar;
 
 import net.eliosoft.elios.gui.models.RemoteModel;
+import net.eliosoft.elios.gui.views.CuesViewHelper;
 import net.eliosoft.elios.gui.views.Messages;
 
 /**
@@ -50,6 +51,10 @@ public class ToolbarFactory {
 	 */
 	public JToolBar create(final JFrame frame) {
 		final JToolBar toolBar = new JToolBar();
+
+		addSaveCue(frame, toolBar, remoteModel);
+		toolBar.addSeparator();
+		toolBar.add(Box.createHorizontalStrut(3));
 
 		addAdditiveMode(toolBar);
 		toolBar.addSeparator();
@@ -159,6 +164,31 @@ public class ToolbarFactory {
 		});
 		toolBar.add(additiveMode);
 	}
+
+	/**
+	 * Add a button that open a dialog to save the current DMX array into a cue.
+	 *
+	 * @param frame the root frame (set as the parent of the dialog)
+	 * @param toolBar the {@link JToolBar} in which the button will be added
+	 * @param rModel the {@link RemoteModel} used to store the cue
+	 */
+	private void addSaveCue(final JFrame frame, final JToolBar toolBar, final RemoteModel rModel) {
+		JButton storeButton = new JButton();
+		storeButton.setIcon(new ImageIcon(Elios.class
+				.getResource("/net/eliosoft/elios/gui/views/document-save-as.png")));
+
+		storeButton.setToolTipText(Messages.getString("cuesview.storebutton"));
+
+		storeButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				rModel.storeCue(CuesViewHelper.askForCueName(frame));
+			}
+		});
+
+		toolBar.add(storeButton);
+	}
+
 
 	/**
 	 * Adds the universe components to the toolbar.

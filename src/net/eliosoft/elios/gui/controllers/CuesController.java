@@ -24,6 +24,7 @@ import java.awt.event.ActionListener;
 
 import net.eliosoft.elios.gui.models.RemoteModel;
 import net.eliosoft.elios.gui.views.CuesView;
+import net.eliosoft.elios.gui.views.CuesViewHelper;
 import net.eliosoft.elios.server.Cue;
 
 
@@ -55,10 +56,7 @@ public class CuesController {
 			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				String cueName = cuesView.getNewCueName();
-				if(cueName != null){
-					remoteModel.storeCue(cueName);
-				}
+				remoteModel.storeCue(CuesViewHelper.askForCueName(cuesView.getViewComponent()));
 			}
 		});
 
