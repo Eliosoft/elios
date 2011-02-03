@@ -23,17 +23,17 @@ public class CuesViewHelper {
 
 	/**
 	 * Prompts a dialog that will be closed only if the given cue name is not an
-	 * empty string after trim. The return string is always valid (not null and
-	 * not empty). The input is filled with the default name given in argument.
+	 * empty string after trim. The null value is possible if the user cancels the operation or closes the dialog
+	 * The input is filled with the default name given in argument.
 	 *
 	 *
 	 * @param parent
 	 *            the parent component of the dialog
-	 * @return the cue name (not null and not empty)
+	 * @return the cue name or null if the dialog has been closed or cancelled
 	 */
 	public static String askForCueName(final Component parent, String defaultName) {
-		String cueName = null;
-		while (cueName == null || "".equals(cueName.trim())) {
+		String cueName = "";
+		while (cueName != null && "".equals(cueName.trim())) {
 			// ask for a cue name as long as the String is empty
 			cueName = (String) JOptionPane.showInputDialog(parent,
 					Messages.getString("cuesview.getnamemessage"), null,
