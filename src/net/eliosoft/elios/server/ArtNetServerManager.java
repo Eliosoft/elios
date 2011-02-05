@@ -41,7 +41,11 @@ import artnet4j.packets.ArtNetPacket;
  * @author Jeremie GASTON-RAOUL
  */
 public class ArtNetServerManager {
-	private static final int DMX_CHANNELS_COUNT = 512;
+	
+	/**
+	 * The max number of DMX channels
+	 */
+	public static final int DMX_CHANNELS_COUNT = 512;
 
 	private static ArtNetServerManager instance;
 	

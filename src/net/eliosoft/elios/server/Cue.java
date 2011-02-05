@@ -27,7 +27,7 @@ package net.eliosoft.elios.server;
  */
 public class Cue {
 	private String name;
-	private byte[] dmxArray;
+	private byte[] dmxArray = new byte[ArtNetServerManager.DMX_CHANNELS_COUNT];
 	
 	
 	/**
@@ -37,7 +37,7 @@ public class Cue {
 	 */
 	public Cue(String name, byte[] dmxArray) {
 		this.name = name;
-		this.dmxArray = dmxArray;
+		System.arraycopy(dmxArray, 0, this.dmxArray, 0, ArtNetServerManager.DMX_CHANNELS_COUNT);
 	}
 
 	/**
@@ -69,7 +69,7 @@ public class Cue {
 	 * @param dmxArray the dmxArray to set
 	 */
 	public void setDmxArray(byte[] dmxArray) {
-		this.dmxArray = dmxArray;
+		System.arraycopy(dmxArray, 0, this.dmxArray, 0, ArtNetServerManager.DMX_CHANNELS_COUNT);
 	}
 	
 	
