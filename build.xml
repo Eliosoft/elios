@@ -31,8 +31,9 @@
 	<property name="doc.generator" location="doc/pandoc_wrapper.sh"/>
 	<property name="dist.doc.html" location="dist/doc/html"/>
 	<property name="dist.doc.html.res" location="dist/doc/html/resources"/>
-	<property name="dist.tmp" location="dist/tmp" />
+	<property name="dist.jar.tmp" location="dist/tmp/jar" />
 	<property name="dist.setup" location="dist/setup" />
+	<property name="dist.setup.tmp" location="dist/tmp/setup" />
 	<property name="dist.setup.launcher.conf" value="launcher.ini" />
 	<property name="lib" location="lib" />
 	<property name="installer" location="installer" />
@@ -85,11 +86,10 @@
 	
 	<target name="create_dist-dir">
 		<!-- Create the distribution directory -->
-		<mkdir dir="${dist}" />
 		<mkdir dir="${dist.doc.html}" />
 	</target>
 	
-	<target name="dist" depends="compile, create_dist-dir" description="generate the distribution">
+	<target name="dist" depends="compile, valorize_properties, create_dist-dir" description="generate the distribution">
 		<!-- Put everything in ${build} into the artnet-${version}.jar file -->
 		<jar jarfile="${dist}/elios-${version}.jar" basedir="${build}">
 			<manifest>
@@ -98,10 +98,10 @@
 		</jar>
 	</target>
 	
-	<target name="dist_all-in-one" depends="compile, create_dist-dir" description="generate the all-in-one distribution">
-		<mkdir dir="${dist.tmp}" />
+	<target name="dist_all-in-one" depends="compile, valorize_properties, create_dist-dir" description="generate the all-in-one distribution">
+		<mkdir dir="${dist.jar.tmp}" />
 		<!-- Extract jar lib to a temporary dir -->
-		<unzip dest="${dist.tmp}">
+		<unzip dest="${dist.jar.tmp}">
 			<fileset dir="${lib}">
 				<include name="*.jar" />
 			</fileset>
@@ -114,12 +114,12 @@
 		<!-- Create the jar -->
 		<jar jarfile="${dist}/elios-all.jar">
 			<fileset dir="${build}" />
-			<fileset dir="${dist.tmp}" />
+			<fileset dir="${dist.jar.tmp}" />
 			<manifest>
 				<attribute name="Main-Class" value="${main-class}" />
 			</manifest>
 		</jar>
-		<delete dir="${dist.tmp}"/>
+		<delete dir="${dist.jar.tmp}"/>
 	</target>
 	
 	<target name="clean" description="clean up">
@@ -130,13 +130,25 @@
 		<delete dir="${dist.doc.html}" />
 	</target>
 	
-	<target name="dist_installer" depends="dist_all-in-one, javadoc, dist_userguide-html" description="build installer">
+	<target name="dist_installer" depends="dist_all-in-one, javadoc, dist_userguide-html, valorize_documentation" description="build installer">
 		<!-- required IzPack standalone-compiler -->
 		<taskdef name="IzPack" classpath="${installer}/standalone-compiler.jar"
 			classname="com.izforge.izpack.ant.IzPackTask"/>
 
+	    <mkdir dir="${dist.setup.tmp}" />
+
+		<copy todir="${dist.setup.tmp}">
+			  <fileset file="install.xml" />
+	    </copy>
+
+		<replace dir="${dist.setup.tmp}" token="@ver@" value="${version}">
+			  <include name="install.xml"/>
+		</replace>
+
 		<mkdir dir="${dist.setup}" />
-		<IzPack input="install.xml" output="${dist.setup}/elios-installer-${version}.jar" basedir="."/>
+		<IzPack input="${dist.setup.tmp}/install.xml" output="${dist.setup}/elios-installer-${version}.jar" basedir="."/>
+
+        <delete dir="${dist.setup.tmp}" />
 	</target>
 	
 	<target name="dist_win_installer" depends="dist_installer" description="build windows installer">
@@ -144,7 +156,34 @@
 		<taskdef name="launch4j"
 			classname="net.sf.launch4j.ant.Launch4jTask"
 			classpath="${installer}/launch4j.jar:${installer}/xstream.jar" />
+
+        <mkdir dir="${dist.setup.tmp}" />
+
+        <copy todir="${dist.setup.tmp}">
+              <fileset file="launch.xml" />
+        </copy>
+
+        <replace dir="${dist.setup.tmp}" token="@ver@" value="${version}">
+              <include name="launch.xml"/>
+        </replace>
+		<replace dir="${dist.setup.tmp}" token="@dist.setup@" value="${dist.setup}">
+		      <include name="launch.xml"/>
+		</replace>
 		
-		<launch4j configFile="./launch.xml" outfile="${dist.setup}/elios-installer-${version}.exe"/>
+		<launch4j configFile="${dist.setup.tmp}/launch.xml" outfile="${dist.setup}/elios-installer-${version}.exe"/>
+
+        <delete dir="${dist.setup.tmp}" />
 	</target>
+
+	<target name="valorize_properties" depends="compile" description="valorize token in properties files">
+	    <replace dir="${build}" token="@ver@" value="${version}">
+	        <include name="**/*.properties"/>
+		</replace>
+	</target>
+
+   <target name="valorize_documentation" depends="dist_userguide-html" description="valorize token in user guides files">
+        <replace dir="${dist.doc.html}" token="@ver@" value="${version}">
+            <include name="**/*.html"/>
+        </replace>
+    </target>
 </project>

@@ -1,8 +1,8 @@
 <launch4jConfig>
   <dontWrapJar>false</dontWrapJar>
   <headerType>gui</headerType>
-  <jar>./dist/setup/elios-installer-0.2-dev.jar</jar>
-  <outfile>./dist/setup/elios-installer-0.2-dev.exe</outfile>
+  <jar>@dist.setup@/elios-installer-@ver@.jar</jar>
+  <outfile>@dist.setup@/elios-installer-@ver@.exe</outfile>
   <errTitle></errTitle>
   <cmdLine></cmdLine>
   <chdir></chdir>
