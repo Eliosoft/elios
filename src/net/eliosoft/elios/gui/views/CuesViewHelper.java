@@ -52,4 +52,21 @@ public class CuesViewHelper {
 		}
 		return cueName;
 	}
+
+	/**
+	 * Prompts a dialog that print an error
+	 * @param parent the parent component of the dialog
+	 * @param exception the exception thrown
+	 * @param cueName the name of the concerned cue
+	 */
+	public static void printError(final Component parent, Exception exception, String cueName) {
+		String message;
+		if(exception instanceof IllegalArgumentException){
+			message = MessageFormat.format(Messages.getString("cuesview.cuenamealreadyusedmessage"),cueName);
+		}
+		else{
+			message = exception.getLocalizedMessage();
+		}
+		JOptionPane.showMessageDialog(parent, message, null, JOptionPane.ERROR_MESSAGE);
+	}
 }

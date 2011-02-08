@@ -59,7 +59,11 @@ public class CuesController {
 				final String cueName = CuesViewHelper.askForCueName(cuesView.getViewComponent(), remoteModel.getCuesListModel().getNextDefaultCueName());
 
 				if(cueName != null)
-					remoteModel.storeCue(cueName);
+					try {
+						remoteModel.storeCue(cueName);						
+					} catch (Exception exception) {
+						CuesViewHelper.printError(cuesView.getViewComponent(), exception, cueName);
+					}
 			}
 		});
 
@@ -79,7 +83,7 @@ public class CuesController {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				Cue cue = cuesView.getSelectedCue();
-				if(cue != null &&CuesViewHelper.confirmCueRemove(cuesView.getViewComponent(),cue.getName())){
+				if(cue != null && CuesViewHelper.confirmCueRemove(cuesView.getViewComponent(),cue.getName())){
 					remoteModel.removeCue(cue);
 				}
 			}
