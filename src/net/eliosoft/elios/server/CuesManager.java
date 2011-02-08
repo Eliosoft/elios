@@ -19,7 +19,10 @@
 
 package net.eliosoft.elios.server;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -90,6 +93,29 @@ public class CuesManager {
 	 * @return a list containing the cues
 	 */
 	public List<Cue> getCues(){
-		return new ArrayList<Cue>(cuesMap.values());
+		ArrayList<Cue> cuesList = new ArrayList<Cue>(cuesMap.values());
+		Collections.sort(cuesList, new Comparator<Cue>() {
+
+			@Override
+			public int compare(Cue c1, Cue c2) {
+				return c1.getName().compareTo(c2.getName());
+			}
+		});
+		return cuesList;
+	}
+
+	/**
+	 * get an unused cue name
+	 * @return an unused cue name
+	 */
+	public String getUnusedCueName() {
+		int cueNumber = cuesMap.values().size();
+		DecimalFormat decimalFormat = new DecimalFormat("000");
+		String cueName;
+		do{
+			cueName = "Cue#" + decimalFormat.format(cueNumber);
+			cueNumber++;
+		}while(cuesMap.containsKey(cueName));
+		return cueName;
 	}
 }

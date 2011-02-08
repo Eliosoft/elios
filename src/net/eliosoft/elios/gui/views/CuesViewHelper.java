@@ -1,10 +1,9 @@
 package net.eliosoft.elios.gui.views;
 
 import java.awt.Component;
+import java.text.MessageFormat;
 
 import javax.swing.JOptionPane;
-
-import net.eliosoft.elios.gui.models.CuesListModel;
 
 /**
  * This class provides some useful static method for Cue views.
@@ -22,13 +21,25 @@ public class CuesViewHelper {
 	}
 
 	/**
+	 * Ask user for confirmation before to delete a cue.
+	 * @param parent the parent component of the dialog
+	 * @param cueName the name of the cue to delete
+	 * @return true if confirmed, false in not
+	 */
+	public static boolean confirmCueRemove(final Component parent, String cueName){
+		int option = JOptionPane.showConfirmDialog(parent,MessageFormat.format(Messages.getString("cuesview.confirmremovemessage"),cueName),null,JOptionPane.OK_CANCEL_OPTION,JOptionPane.WARNING_MESSAGE);
+		if(option == 0){
+			return true;
+		}
+		return false;
+	}
+	
+	/**
 	 * Prompts a dialog that will be closed only if the given cue name is not an
 	 * empty string after trim. The null value is possible if the user cancels the operation or closes the dialog
 	 * The input is filled with the default name given in argument.
-	 *
-	 *
-	 * @param parent
-	 *            the parent component of the dialog
+	 * @param parent the parent component of the dialog
+	 * @param defaultName the default name for the cue
 	 * @return the cue name or null if the dialog has been closed or cancelled
 	 */
 	public static String askForCueName(final Component parent, String defaultName) {
@@ -40,15 +51,5 @@ public class CuesViewHelper {
 					JOptionPane.PLAIN_MESSAGE, null, null, defaultName);
 		}
 		return cueName;
-	}
-
-	/**
-	 * Returns a Cue name according to the state of the model.
-	 *
-	 * @param model CuesListModel used to compute the name.
-	 * @return a string that could be used as a cue name.
-	 */
-	public static String getNextDefaultCueName(CuesListModel model) {
-		return "Cue#" + model.getSize();
 	}
 }

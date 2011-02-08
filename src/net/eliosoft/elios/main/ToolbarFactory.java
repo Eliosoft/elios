@@ -181,8 +181,7 @@ public class ToolbarFactory {
 		storeButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				final String cueName = CuesViewHelper.askForCueName(frame,
-						CuesViewHelper.getNextDefaultCueName(remoteModel.getCuesListModel()));
+				final String cueName = CuesViewHelper.askForCueName(frame,remoteModel.getCuesListModel().getNextDefaultCueName());
 
 				if(cueName != null)
 					rModel.storeCue(cueName);

@@ -56,8 +56,7 @@ public class CuesController {
 			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				final String cueName = CuesViewHelper.askForCueName(cuesView.getViewComponent(),
-						CuesViewHelper.getNextDefaultCueName(remoteModel.getCuesListModel()));
+				final String cueName = CuesViewHelper.askForCueName(cuesView.getViewComponent(), remoteModel.getCuesListModel().getNextDefaultCueName());
 
 				if(cueName != null)
 					remoteModel.storeCue(cueName);
@@ -80,7 +79,7 @@ public class CuesController {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				Cue cue = cuesView.getSelectedCue();
-				if(cue != null &&cuesView.confirmCueRemove(cue.getName())){
+				if(cue != null &&CuesViewHelper.confirmCueRemove(cuesView.getViewComponent(),cue.getName())){
 					remoteModel.removeCue(cue);
 				}
 			}
