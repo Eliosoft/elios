@@ -106,6 +106,8 @@ of the ArtNetServer on the subnet and universe selected in the toolbar.
 You can have more accurate information (channel number, percent and DMX values) 
 of each channel by putting your cursor over the corresponding cell. 
 
+For the moment, cues are not saved when Elios is closed. You have to recreate
+them at each startup of the application.
 
 Preferences
 -----------
