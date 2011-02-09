@@ -19,9 +19,11 @@
 
 package net.eliosoft.elios.gui.views;
 
+import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.GridLayout;
 import java.awt.event.ActionListener;
 import java.util.Locale;
 
@@ -89,23 +91,26 @@ public class PrefsView implements ViewInterface {
 		this.localeModel = localeModel;
 
 		prefsPanel = new JPanel();
+		prefsPanel.setLayout(new BorderLayout());
 
-		prefsPanel.setLayout(new BoxLayout(prefsPanel, BoxLayout.Y_AXIS));
-		
+		JPanel globalPane = new JPanel(new GridLayout(4, 0));
+
 		// general panel
-		prefsPanel.add(createGeneralPane());
+		globalPane.add(createGeneralPane());
 
 		// artnet panel
-		prefsPanel.add(createArtNetServerPane());
+		globalPane.add(createArtNetServerPane());
 
 		// http server panel
-		prefsPanel.add(createHttpServerPane());
+		globalPane.add(createHttpServerPane());
 		
 		// add a glue to have a so beautiful fullscreen layout
-		prefsPanel.add(Box.createVerticalGlue());
+		globalPane.add(Box.createVerticalGlue());
 		
+		prefsPanel.add(globalPane, BorderLayout.NORTH);
+
 		// button panel
-		prefsPanel.add(createButtonPane());
+		prefsPanel.add(createButtonPane(), BorderLayout.SOUTH);
 
 		// initialize the listener
 		initListener();
