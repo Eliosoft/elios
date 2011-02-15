@@ -169,9 +169,9 @@ public class ToolbarFactory {
 	 *
 	 * @param frame the root frame (set as the parent of the dialog)
 	 * @param toolBar the {@link JToolBar} in which the button will be added
-	 * @param rModel the {@link RemoteModel} used to store the cue
+	 * @param remoteModel the {@link RemoteModel} used to store the cue
 	 */
-	private void addSaveCue(final JFrame frame, final JToolBar toolBar, final RemoteModel rModel) {
+	private void addSaveCue(final JFrame frame, final JToolBar toolBar, final RemoteModel remoteModel) {
 		JButton storeButton = new JButton();
 		storeButton.setIcon(new ImageIcon(Elios.class
 				.getResource("/net/eliosoft/elios/gui/views/document-save-as.png")));
@@ -181,11 +181,15 @@ public class ToolbarFactory {
 		storeButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				final String cueName = CuesViewHelper.askForCueName(frame,
-						CuesViewHelper.getNextDefaultCueName(remoteModel.getCuesListModel()));
+				final String cueName = CuesViewHelper.askForCueName(frame,remoteModel.getCuesListModel().getNextDefaultCueName());
 
-				if(cueName != null)
-					rModel.storeCue(cueName);
+				if(cueName != null){
+					try {
+						remoteModel.storeCue(cueName);						
+					} catch (Exception exception) {
+						CuesViewHelper.printError(frame, exception, cueName);
+					}
+				}
 			}
 		});
 

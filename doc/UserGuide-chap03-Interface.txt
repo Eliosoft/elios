@@ -1,18 +1,41 @@
 Elios Interface
 ===============
 
-There is 3 parts in Elios interface : tabs, panel and log line.
+There is 4 parts in Elios interface : toolbar, tabs, panel and log line.
+The toolbar make an easiest access to common functions.
 In the tabs part, you can choose between the differents panels (*Remote*, 
-*Prefs*, *Logs* and *About*).
+*Cues*, *DMX Table*, *Prefs*, *Logs* and *About*).
 In the panel part, you access the panel linked to the selected tab.
 In the Log line, you can read the last status log of the application.
+
+Toolbar
+-------
+
+![Toolbar](resources/elios/Elios-01-Toolbar.png "Toolbar")
+
+The toolbar gives you an easy access to quite common functions :
+
+* *Enable additive mode button* : in additive mode, each new command line let 
+unselected circuits in their previous state ; in non-additive mode, all 
+circuits that are not selected are defaulted to 0% ;
+
+* *DMX subnet* : select on which DMX Subnet Elios is active ;
+
+* *DMX universe* : select on which DMX Universe of the selected Subnet 
+Elios is active ;
+
+* *Store Cue button* : allows you to store the current DMX output in a Cue 
+(this is the same button than the one in *Cues* panel) ;
+
+* *Fullscreen button* : allows you to switch on/off fullscreen mode of Elios.
+
 
 Remote
 ------
 
-![Remote tab](resources/elios/Elios-01-RemoteTab.png "Remote tab")
+![Remote tab](resources/elios/Elios-02-RemoteTab.png "Remote tab")
 
-To manage circuits levels, Elios uses a simple a command line syntax.
+To manage circuits levels, Elios uses a simple command line syntax.
 Each line is a follow of simple commands (circuits at level sets) 
 separated by a ";".
 
@@ -45,27 +68,55 @@ circuits 1,2,3,4,5 at a 50% level and circuit 7 at a 80% level).
 With this syntax, you can run quite touchy commands.
 For example, if you type "1/5-4+10/12+7@80;20/24-21-23@D5", you will set 
 1,2,3,5,7,10,11,12 at 80% and 20,22,23 at a 5 DMX value.
-To run a command line, hit the "Enter" button. If you want to delete all 
-the last char, hit "delete" and if you prefer to remove everything on 
-the line, hit "reset".
+
+If you don't write the level part of the command, circuits will be set 
+to full ("1/5-4+10/12+7" will set circuits 1,2,3,5,7,10,11,12 at 
+a 100% level).
+
+To run a command line, hit the *Enter* button. If you want to delete all 
+the last char, hit *Del* and if you prefer to remove everything on 
+the line, hit *Reset*.
+
+The commands are sent on the Subnet and Universe selected in the toolbar.
+
+Cues
+----
+
+![Cues tab](resources/elios/Elios-03-CuesTab.png "Cues tab")
+
+The Cues panel allows you to save and load states of the DMX array.
+
+To store a cue, click on the *Store* button, then enter an unused name 
+in the popup that appears and click *Ok*.
+
+To load a cue, select a cue in the list and click on the *Load* button, 
+or just double-click on the cue in the list.
+
+To delete a cue, select a cue in the list, click on the *Delete* button,
+and confirm your choice in the popup that appears.
+
+DMX Table
+---------
+
+![DMX Table tab](resources/elios/Elios-04-DMXTableTab.png "DMX Table tab")
+
+DMX Table panel shows you the current state of input and output
+of the ArtNetServer on the subnet and universe selected in the toolbar.
+
+You can have more accurate information (channel number, percent and DMX values) 
+of each channel by putting your cursor over the corresponding cell. 
+
+For the moment, cues are not saved when Elios is closed. You have to recreate
+them at each startup of the application.
 
 Preferences
 -----------
 
-![Preferences tab](resources/elios/Elios-02-PrefsTab.png "Preferences tab")
+![Preferences tab](resources/elios/Elios-05-PrefsTab.png "Preferences tab")
 
-In the Prefs panel, you can set all application settings :
+On the Prefs panel, you can set all application settings :
 
 * *Language* : choose the language of Elios interface ;
-
-* *Enable additive mode* : in additive mode, each new command line let 
-unselected circuits in their previous state ; in non-additive mode, all 
-circuits that are not selected are defaulted to 0% ;
-
-* *DMX subnet* : select on which DMX Subnet the command is send ;
-
-* *DMX universe* : select on which DMX Universe of the selected Subnet the 
-command is send ;
 
 * *Broadcast address* : the IP address on which ArtNet packets are 
 broadcasted (use 127.255.255.255 if the node is on the same computer 
@@ -78,10 +129,6 @@ something else than 6454 if you don't know what you are doing**) ;
 * *Out Port* : the port on which Elios is emetting the network (**do not use 
 something else than 6454 if you don't know what you are doing**) ;
 
-* *Start / Stop* : these buttons are used to start or stop Elios ArtNet 
-server (you have to start the server before to send commands on the 
-network) ;
-
 * *Enable Http Server* : with the http server enabled, you can access 
 Elios via your favorite web browser on any device device connected on 
 the same network (just type http://2.0.0.1:8080 on your browser where 
@@ -91,10 +138,14 @@ that has been set in the prefs panel) ;
 * *Http port* : the port on which Elios http server is listening (default 
 to 8080) ;
 
+* *Cancel / Save buttons* : these buttons are used to save or cancel 
+preferencies changes (when you save new preferencies, ArtNet server and
+Http server are restarted) ;
+
 Logs
 ----
 
-![Logs tab](resources/elios/Elios-03-LogsTab.png "Logs tab")
+![Logs tab](resources/elios/Elios-06-LogsTab.png "Logs tab")
 
 On the logs panel you can see all the things that have been done in 
 Elios : start and stop of server, parse of command line, errors 
@@ -104,7 +155,7 @@ If you wand to clear the logs, just hit "Clear Logs" button.
 About
 -----
 
-![About tab](resources/elios/Elios-04-AboutTab.png "About tab")
+![About tab](resources/elios/Elios-07-AboutTab.png "About tab")
 
 That's just a simple panel displaying the names of people working on 
 Elios and version number...

@@ -24,14 +24,12 @@ import java.awt.Component;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.text.MessageFormat;
 
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JList;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
@@ -61,10 +59,10 @@ public class CuesView implements ViewInterface {
 	/**
 	 * The constructor of the class.
 	 * 
-	 * @param remoteModel
+	 * @param remoteModel the model associated to the view
 	 */
-	public CuesView(RemoteModel rModel) {
-		this.remoteModel = rModel;
+	public CuesView(final RemoteModel remoteModel) {
+		this.remoteModel = remoteModel;
 		cuesList = new JList(this.remoteModel.getCuesListModel());
 
 		cuesList.addMouseListener(new MouseAdapter() {
@@ -190,27 +188,6 @@ public class CuesView implements ViewInterface {
 	 */
 	public Cue getSelectedCue(){
 		return (Cue)cuesList.getSelectedValue();
-	}
-
-	/**
-	 * Gets the new cue name by opening an Input Dialog
-	 * @return the new cue name
-	 */
-	public String getNewCueName() {
-		return (String)JOptionPane.showInputDialog(cuesPanel,Messages.getString("cuesview.getnamemessage"),null,JOptionPane.PLAIN_MESSAGE,null,null,null);
-	}
-	
-	/**
-	 * Ask user for confirmation before to delete a cue.
-	 * @param cueName the name of the cue to delete
-	 * @return true if confirmed, false in not
-	 */
-	public boolean confirmCueRemove(String cueName){
-		int option = JOptionPane.showConfirmDialog(cuesPanel,MessageFormat.format(Messages.getString("cuesview.confirmremovemessage"),cueName),null,JOptionPane.OK_CANCEL_OPTION,JOptionPane.WARNING_MESSAGE);
-		if(option == 0){
-			return true;
-		}
-		return false;
 	}
 	
 	/**

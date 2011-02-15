@@ -4,10 +4,12 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.event.ActionListener;
 import java.text.MessageFormat;
 import java.util.Enumeration;
 
+import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.JComponent;
@@ -16,7 +18,9 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 
 import net.eliosoft.elios.gui.models.DMXTableModel;
@@ -30,6 +34,8 @@ public class DMXView implements ViewInterface {
 	
 	private final DMXTableModel dmxTableModel;
 	private final JPanel dmxPanel = new JPanel(new BorderLayout());
+	private final int cellWidth = dmxPanel.getFontMetrics(dmxPanel.getFont()).stringWidth("255")*2;
+	private final int cellHeight = dmxPanel.getFontMetrics(dmxPanel.getFont()).getHeight()*2;
 	private final JRadioButton inRadio;
 	private final JRadioButton outRadio;
 	
@@ -52,45 +58,73 @@ public class DMXView implements ViewInterface {
 		inOutRadioPanel.add(inRadio);
 		inOutRadioPanel.add(outRadio);
 		this.dmxPanel.add(inOutRadioPanel,BorderLayout.NORTH);
+		
+		final TableCellRenderer headerCellRenderer = new DefaultTableCellRenderer(){
+			private static final long serialVersionUID = -7628430686172752221L;
+
+			@Override
+			public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+				super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+				setHorizontalAlignment(SwingConstants.CENTER);
+				setFont(getFont().deriveFont(getFont().getStyle() ^ Font.BOLD));
+				if((row == 0 && column == -1) || (row == -1 && column == 0)){
+					setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.LIGHT_GRAY));
+				}else if(row == -1){
+					setBorder(BorderFactory.createMatteBorder(1, 0, 1, 1, Color.LIGHT_GRAY));
+				}else if(column == -1){
+					setBorder(BorderFactory.createMatteBorder(0, 1, 1, 1, Color.LIGHT_GRAY));
+				}
 				
+				setBackground(new Color(230, 230, 230));
+				return this;
+			}
+		};
+		
 		final JTable dmxTable = new JTable(this.dmxTableModel);
 		dmxTable.setEnabled(false);
 		dmxTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		dmxTable.getTableHeader().setReorderingAllowed(false);
 		dmxTable.getTableHeader().setResizingAllowed(false);
 		dmxTable.setGridColor(Color.LIGHT_GRAY);
-				
+		dmxTable.getTableHeader().setPreferredSize(new Dimension(dmxTableModel.getColumnCount()*cellWidth, cellHeight));
+		dmxTable.setRowHeight(cellHeight);
+		
+		dmxTable.getTableHeader().setDefaultRenderer(headerCellRenderer);
+		
 		dmxTable.setDefaultRenderer(Integer.class, new DefaultTableCellRenderer() {
 			private static final long serialVersionUID = 8556900685268227709L;
 			
 			@Override
 			public Component getTableCellRendererComponent(JTable table, Object value,
 					boolean isSelected, boolean hasFocus, int row, int column) {
-				Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+				super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
 				int nonBlueLevel = 255-((Integer)value).intValue()*4/5;
-				c.setBackground(new Color(nonBlueLevel, nonBlueLevel, 255));
+				setBackground(new Color(nonBlueLevel, nonBlueLevel, 255));
 				int channel = row*table.getColumnCount()+column+1;
 				int percentValue = (int)Math.ceil(((Integer)value).intValue()*100/255.0);
 				setToolTipText(MessageFormat.format(Messages.getString("dmxview.tooltipmessage"),channel,value,percentValue));
-				return c;
+				setHorizontalAlignment(SwingConstants.CENTER);
+				return this;
 			}
 		});
 		
-		int width = dmxTable.getFontMetrics(dmxTable.getFont()).stringWidth("255 ");
 		Enumeration<TableColumn> columns = dmxTable.getColumnModel().getColumns();
 		while(columns.hasMoreElements()){
 			TableColumn column = columns.nextElement();
-			column.setPreferredWidth(width);
+			column.setPreferredWidth(cellWidth);
 		}
 		
 		JList dmxTableRowHeader = new JList(this.dmxTableModel.getRowHeaders());
+		dmxTableRowHeader.setFixedCellHeight(cellHeight);
+		dmxTableRowHeader.setFixedCellWidth(cellWidth);
 		dmxTableRowHeader.setCellRenderer(new DefaultListCellRenderer() {
 			private static final long serialVersionUID = -6533501111809246770L;
 
 			@Override
 			public Component getListCellRendererComponent(JList list, Object value,
 					int index, boolean isSelected, boolean cellHasFocus) {
-				return dmxTable.getTableHeader().getDefaultRenderer().getTableCellRendererComponent(dmxTable, value, isSelected, cellHasFocus, index,0);
+				Component c = headerCellRenderer.getTableCellRendererComponent(dmxTable, value, isSelected, cellHasFocus, index,-1);
+				return c;
 			}
 		});
 

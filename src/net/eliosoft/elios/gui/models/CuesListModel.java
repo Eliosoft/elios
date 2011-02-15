@@ -71,4 +71,13 @@ public class CuesListModel extends AbstractListModel {
 		this.fireIntervalRemoved(this, index, index);
 	}
 	
+	/**
+	 * Returns a Cue name according to the state of the model.
+	 *
+	 * @return a string that could be used as a cue name.
+	 */
+	public String getNextDefaultCueName() {
+		return cuesManager.getUnusedCueName();
+	}
+	
 }
