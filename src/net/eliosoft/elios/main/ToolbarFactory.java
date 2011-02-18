@@ -55,10 +55,10 @@ public class ToolbarFactory {
 		addAdditiveMode(toolBar);
 		toolBar.addSeparator();
 
-		addUniverse(toolBar);
+		addSubnet(toolBar);
 		toolBar.add(Box.createHorizontalStrut(3));
 
-		addSubnet(toolBar);
+		addUniverse(toolBar);
 		toolBar.addSeparator();
 
 		addSaveCue(frame, toolBar, remoteModel);
@@ -82,7 +82,7 @@ public class ToolbarFactory {
 	 */
 	private void addSubnet(final JToolBar toolBar) {
 		JLabel subnetLabel = new JLabel(
-				Messages.getString("prefsview.universe")); //$NON-NLS-1$
+				Messages.getString("prefsview.subnet")); //$NON-NLS-1$
 		toolBar.add(subnetLabel);
 
 		JSpinner subnetSpinner = new JSpinner(
@@ -205,7 +205,7 @@ public class ToolbarFactory {
 	 */
 	private void addUniverse(final JToolBar toolBar) {
 		JLabel universeLabel = new JLabel(
-				Messages.getString("prefsview.subnet")); //$NON-NLS-1$
+				Messages.getString("prefsview.universe")); //$NON-NLS-1$
 		toolBar.add(universeLabel);
 		toolBar.add(Box.createHorizontalStrut(3));
 
