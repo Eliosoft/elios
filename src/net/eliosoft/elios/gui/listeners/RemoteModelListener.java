@@ -24,6 +24,7 @@ import net.eliosoft.elios.gui.events.ArtNetStoppedEvent;
 import net.eliosoft.elios.gui.events.CommandLineValueChangedEvent;
 import net.eliosoft.elios.gui.events.HttpStartedEvent;
 import net.eliosoft.elios.gui.events.HttpStoppedEvent;
+import net.eliosoft.elios.server.events.AdditiveModeValueChangedEvent;
 
 /**
  * This interface describes the methods that must be implemented
@@ -62,4 +63,10 @@ public interface RemoteModelListener {
 	 * @param event the event corresponding to the stop of the server
 	 */
 	void httpStopped(HttpStoppedEvent event);
+	
+	/**
+	 * This method is called when the value of the additive mode has changed.
+	 * @param event the event corresponding to the change of the additive mode
+	 */
+	void additiveModeValueChanged(AdditiveModeValueChangedEvent event);
 }

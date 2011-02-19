@@ -14,9 +14,16 @@ import javax.swing.JSpinner;
 import javax.swing.JToggleButton;
 import javax.swing.JToolBar;
 
+import net.eliosoft.elios.gui.events.ArtNetStartedEvent;
+import net.eliosoft.elios.gui.events.ArtNetStoppedEvent;
+import net.eliosoft.elios.gui.events.CommandLineValueChangedEvent;
+import net.eliosoft.elios.gui.events.HttpStartedEvent;
+import net.eliosoft.elios.gui.events.HttpStoppedEvent;
+import net.eliosoft.elios.gui.listeners.RemoteModelListener;
 import net.eliosoft.elios.gui.models.RemoteModel;
 import net.eliosoft.elios.gui.views.CuesViewHelper;
 import net.eliosoft.elios.gui.views.Messages;
+import net.eliosoft.elios.server.events.AdditiveModeValueChangedEvent;
 
 /**
  * Create a {@link JToolBar} to offer easy access to most common configuration
@@ -159,6 +166,28 @@ public class ToolbarFactory {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				remoteModel.setAdditiveModeEnabled(additiveMode.isSelected());
+			}
+		});
+		remoteModel.addRemoteModelChangedListener(new RemoteModelListener() {
+			
+			@Override
+			public void httpStopped(HttpStoppedEvent event) {}
+			
+			@Override
+			public void httpStarted(HttpStartedEvent event) {}
+			
+			@Override
+			public void commandLineValueChanged(CommandLineValueChangedEvent event) {}
+			
+			@Override
+			public void artNetStopped(ArtNetStoppedEvent event) {}
+			
+			@Override
+			public void artNetStarted(ArtNetStartedEvent event) {}
+			
+			@Override
+			public void additiveModeValueChanged(AdditiveModeValueChangedEvent event) {
+				additiveMode.setSelected(event.isAdditiveModeEnabled());
 			}
 		});
 		toolBar.add(additiveMode);

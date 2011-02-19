@@ -40,6 +40,7 @@ import net.eliosoft.elios.gui.events.HttpStartedEvent;
 import net.eliosoft.elios.gui.events.HttpStoppedEvent;
 import net.eliosoft.elios.gui.listeners.RemoteModelListener;
 import net.eliosoft.elios.gui.models.RemoteModel;
+import net.eliosoft.elios.server.events.AdditiveModeValueChangedEvent;
 
 
 
@@ -95,6 +96,8 @@ public class RemoteView implements ViewInterface {
 			public void httpStarted(HttpStartedEvent event) {}
 			@Override
 			public void httpStopped(HttpStoppedEvent event) {}
+			@Override
+			public void additiveModeValueChanged(AdditiveModeValueChangedEvent event) {}
 		});
 
 		this.remotePanel.setLayout(layout);

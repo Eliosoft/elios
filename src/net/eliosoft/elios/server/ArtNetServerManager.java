@@ -21,14 +21,20 @@
 package net.eliosoft.elios.server;
 
 import java.net.SocketException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map.Entry;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import net.eliosoft.elios.main.LoggersManager;
+import net.eliosoft.elios.server.events.AdditiveModeValueChangedEvent;
+import net.eliosoft.elios.server.events.SubnetValueChangedEvent;
+import net.eliosoft.elios.server.events.UniverseValueChangedEvent;
+import net.eliosoft.elios.server.listeners.ArtNetServerManagerListener;
 import artnet4j.ArtNetException;
 import artnet4j.ArtNetServer;
 import artnet4j.events.ArtNetServerListener;
@@ -91,6 +97,8 @@ public class ArtNetServerManager {
 	
 	private final transient Logger logger = LoggersManager.getInstance().getLogger(ArtNetServerManager.class
 			.getName());
+
+	private List<ArtNetServerManagerListener> artnetServerManagerChangedListeners = new ArrayList<ArtNetServerManagerListener>();
 	
 	private ArtNetServerManager(){}
 	
@@ -344,14 +352,16 @@ public class ArtNetServerManager {
 	 */
 	public void setSubnet(int subnet) {
 		this.serverSubnet = subnet;
+		fireSubnetValueChanged();
 	}
-
+	
 	/**
 	 * set the dmx universe
 	 * @param universe the value of the universe
 	 */
 	public void setUniverse(int universe) {
 		this.serverUniverse = universe;
+		fireUniverseValueChanged();
 	}
 	
 	/**
@@ -362,6 +372,7 @@ public class ArtNetServerManager {
 	 */
 	public void setAdditiveModeEnabled(boolean additiveModeEnabled) {
 		this.additiveModeEnabled = additiveModeEnabled;
+		fireAdditiveModeValueChanged();
 	}
 
 	/**
@@ -381,5 +392,74 @@ public class ArtNetServerManager {
 	public int getOutPort() {
 		return this.outPort;
 	}
+
+	/**
+	 * Returns the dmx subnet.
+	 *
+	 * @return the dmx subnet
+	 */
+	public int getSubnet() {
+		return this.serverSubnet;
+	}
 	
+	/**
+	 * Returns the dmx universe.
+	 *
+	 * @return the dmx universe
+	 */
+	public int getUniverse() {
+		return this.serverUniverse;
+	}
+	
+	
+	/**
+	 * Returns the status of the additive mode.
+	 * 
+	 * @return the status of additive mode
+	 */
+	public boolean isAdditiveModeEnabled() {
+		return this.additiveModeEnabled;
+	}
+	
+	/**
+	 * Adds an element to the list of listener of the artnet server manager.
+	 * 
+	 * @param listener
+	 *            the listener to add
+	 */
+	public void addArtNetServerManagerChangedListener(ArtNetServerManagerListener listener) {
+		this.artnetServerManagerChangedListeners.add(listener);
+	}
+
+	/**
+	 * Removes an element to the list of listener of the artnet server manager.
+	 * 
+	 * @param listener
+	 *            the listener to remove
+	 */
+	public void removeArtNetServerManagerChangedListener(ArtNetServerManagerListener listener) {
+		this.artnetServerManagerChangedListeners.remove(listener);
+	}
+
+	
+	private void fireSubnetValueChanged() {
+		for (ArtNetServerManagerListener listener : this.artnetServerManagerChangedListeners) {
+			SubnetValueChangedEvent e = new SubnetValueChangedEvent(this.serverSubnet);
+			listener.subnetValueChanged(e);
+		}
+	}
+	
+	private void fireUniverseValueChanged() {
+		for (ArtNetServerManagerListener listener : this.artnetServerManagerChangedListeners) {
+			UniverseValueChangedEvent e = new UniverseValueChangedEvent(this.serverUniverse);
+			listener.universeValueChanged(e);
+		}
+	}
+	
+	private void fireAdditiveModeValueChanged() {
+		for (ArtNetServerManagerListener listener : this.artnetServerManagerChangedListeners) {
+			AdditiveModeValueChangedEvent e = new AdditiveModeValueChangedEvent(this.additiveModeEnabled);
+			listener.additiveModeValueChanged(e);
+		}
+	}
 }

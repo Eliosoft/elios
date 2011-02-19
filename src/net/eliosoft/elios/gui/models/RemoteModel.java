@@ -46,6 +46,10 @@ import net.eliosoft.elios.server.BadSyntaxException;
 import net.eliosoft.elios.server.Cue;
 import net.eliosoft.elios.server.CuesManager;
 import net.eliosoft.elios.server.HttpServerManager;
+import net.eliosoft.elios.server.events.AdditiveModeValueChangedEvent;
+import net.eliosoft.elios.server.events.SubnetValueChangedEvent;
+import net.eliosoft.elios.server.events.UniverseValueChangedEvent;
+import net.eliosoft.elios.server.listeners.ArtNetServerManagerListener;
 import artnet4j.ArtNet;
 import artnet4j.ArtNetException;
 
@@ -203,6 +207,25 @@ public class RemoteModel {
 						.setInPort((Integer) httpPortSpinnerModel.getValue());
 			}
 		});
+		
+		this.artNetServerManager.addArtNetServerManagerChangedListener(new ArtNetServerManagerListener() {
+			
+			@Override
+			public void universeValueChanged(UniverseValueChangedEvent event) {
+				universeSpinnerModel.setValue(event.getUniverse());
+			}
+			
+			@Override
+			public void subnetValueChanged(SubnetValueChangedEvent event) {
+				subnetSpinnerModel.setValue(event.getSubnet());
+			}
+			
+			@Override
+			public void additiveModeValueChanged(AdditiveModeValueChangedEvent event) {
+				additiveModeEnabled = event.isAdditiveModeEnabled();
+				fireAdditiveModeValueChanged();
+			}
+		});
 	}
 
 	/**
@@ -327,6 +350,14 @@ public class RemoteModel {
 			listener.commandLineValueChanged(e);
 		}
 	}
+	
+	private void fireAdditiveModeValueChanged() {
+		for (RemoteModelListener listener : this.remoteModelChangedListeners) {
+			AdditiveModeValueChangedEvent e = new AdditiveModeValueChangedEvent(
+					this.isAdditiveModeEnabled());
+			listener.additiveModeValueChanged(e);
+		}
+	}
 
 	/**
 	 * Returns the model of the logs list.
@@ -446,7 +477,7 @@ public class RemoteModel {
 	 * @param listener
 	 *            the listener to remove
 	 */
-	public void removeRemoteModelChangedChangedListener(
+	public void removeRemoteModelChangedListener(
 			RemoteModelListener listener) {
 		this.remoteModelChangedListeners.remove(listener);
 	}

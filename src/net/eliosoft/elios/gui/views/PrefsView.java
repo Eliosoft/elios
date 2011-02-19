@@ -42,12 +42,6 @@ import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.event.ListDataListener;
 
-import net.eliosoft.elios.gui.events.ArtNetStartedEvent;
-import net.eliosoft.elios.gui.events.ArtNetStoppedEvent;
-import net.eliosoft.elios.gui.events.CommandLineValueChangedEvent;
-import net.eliosoft.elios.gui.events.HttpStartedEvent;
-import net.eliosoft.elios.gui.events.HttpStoppedEvent;
-import net.eliosoft.elios.gui.listeners.RemoteModelListener;
 import net.eliosoft.elios.gui.models.LocaleComboBoxModel;
 import net.eliosoft.elios.gui.models.RemoteModel;
 import net.eliosoft.elios.main.Elios;
@@ -111,9 +105,6 @@ public class PrefsView implements ViewInterface {
 
 		// button panel
 		prefsPanel.add(createButtonPane(), BorderLayout.SOUTH);
-
-		// initialize the listener
-		initListener();
 	}
 
 	private Component createButtonPane() {
@@ -140,35 +131,6 @@ public class PrefsView implements ViewInterface {
 				.getResource("/net/eliosoft/elios/gui/views/document-save.png")));
 
 		return buttonPanel;
-	}
-
-	/**
-	 * Initializes all the listeners.
-	 */
-	private void initListener() {
-		this.remoteModel
-				.addRemoteModelChangedListener(new RemoteModelListener() {
-					@Override
-					public void commandLineValueChanged(
-							CommandLineValueChangedEvent event) {
-					}
-
-					@Override
-					public void artNetStopped(ArtNetStoppedEvent event) {
-					}
-
-					@Override
-					public void artNetStarted(ArtNetStartedEvent event) {
-					}
-
-					@Override
-					public void httpStopped(HttpStoppedEvent event) {
-					}
-
-					@Override
-					public void httpStarted(HttpStartedEvent event) {
-					}
-				});
 	}
 
 	private JPanel createArtNetServerPane() {

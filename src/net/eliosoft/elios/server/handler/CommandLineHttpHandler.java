@@ -19,19 +19,19 @@ import com.sun.net.httpserver.HttpHandler;
  * @author Jeremie GASTON-RAOUL
  *
  */
-public class DataHttpHandler implements HttpHandler {
+public class CommandLineHttpHandler implements HttpHandler {
 
 	private static final int MAX_BUFFER_SIZE = 1024*512;
 	private final ArtNetServerManager artNetServerManager = ArtNetServerManager.getInstance();
 
-	private final transient Logger logger = LoggersManager.getInstance().getLogger(DataHttpHandler.class.getName());
+	private final transient Logger logger = LoggersManager.getInstance().getLogger(CommandLineHttpHandler.class.getName());
 	
 	@Override
 	public void handle(HttpExchange httpExchange) throws IOException {
 		if(httpExchange.getRequestMethod().equalsIgnoreCase("POST")){
 			InputStream is = httpExchange.getRequestBody();
 			
-			byte buffer[]=new byte[DataHttpHandler.MAX_BUFFER_SIZE]; 
+			byte buffer[]=new byte[CommandLineHttpHandler.MAX_BUFFER_SIZE]; 
 			int bytesRead = 0;
 			
 			StringBuilder commandLine = new StringBuilder();

@@ -25,7 +25,8 @@ import java.net.InetSocketAddress;
 import java.util.logging.Logger;
 
 import net.eliosoft.elios.main.LoggersManager;
-import net.eliosoft.elios.server.handler.DataHttpHandler;
+import net.eliosoft.elios.server.handler.CommandLineHttpHandler;
+import net.eliosoft.elios.server.handler.ParamsHttpHandler;
 import net.eliosoft.elios.server.handler.ResourceHttpHandler;
 
 
@@ -41,8 +42,8 @@ public class HttpServerManager {
 	private static HttpServerManager instance;
 	
 	private final ResourceHttpHandler resourceHttpHandler = new ResourceHttpHandler();
-	private final DataHttpHandler dataHttpHandler = new DataHttpHandler();
-	
+	private final CommandLineHttpHandler commanLineHttpHandler = new CommandLineHttpHandler();
+	private final ParamsHttpHandler paramsHttpHandler = new ParamsHttpHandler();
 	/**
 	 * default value for http port
 	 */
@@ -100,7 +101,8 @@ public class HttpServerManager {
 	private void initHttpServer() throws IOException{
 		this.httpServer = HttpServer.create(new InetSocketAddress(this.inPort), 0);
 		this.httpServer.createContext("/", this.resourceHttpHandler);
-		this.httpServer.createContext("/data", this.dataHttpHandler);
+		this.httpServer.createContext("/data/commandLine", this.commanLineHttpHandler);
+		this.httpServer.createContext("/data/params", this.paramsHttpHandler);
 	}
 	
 }
