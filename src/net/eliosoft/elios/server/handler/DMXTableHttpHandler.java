@@ -19,30 +19,20 @@ import com.sun.net.httpserver.HttpHandler;
  * @author Jeremie GASTON-RAOUL
  *
  */
-public class ParamsHttpHandler implements HttpHandler {
+public class DMXTableHttpHandler implements HttpHandler {
 
 	private static final int MAX_BUFFER_SIZE = 1024*512;
 	private final ArtNetServerManager artNetServerManager = ArtNetServerManager.getInstance();
 
-	private final transient Logger logger = LoggersManager.getInstance().getLogger(ParamsHttpHandler.class.getName());
+	private final transient Logger logger = LoggersManager.getInstance().getLogger(DMXTableHttpHandler.class.getName());
 	
 	@Override
 	public void handle(HttpExchange httpExchange) throws IOException {
-		if(httpExchange.getRequestMethod().equalsIgnoreCase("POST")){
-			InputStream is = httpExchange.getRequestBody();
-			
-			byte buffer[]=new byte[ParamsHttpHandler.MAX_BUFFER_SIZE]; 
-			int bytesRead = 0;
-			
-			StringBuilder paramsLine = new StringBuilder();
-			
-			while( (bytesRead = is.read(buffer)) != -1 ) {
-				paramsLine.append(new String(buffer,0,bytesRead));
-			}
-			is.close();
+		if(httpExchange.getRequestMethod().equalsIgnoreCase("GET")){
+			byte[] dmxArray = null;
 			try {
-				String[] paramsList = paramsLine.toString().split("&");
-				
+				String query = httpExchange.getRequestURI().getQuery();
+				String[] paramsList = query.split("&");
 				HashMap<String, String> paramsMap = new HashMap<String, String>();
 				for(String param : paramsList){
 					String[] keyValue = param.split("=");
@@ -54,24 +44,21 @@ public class ParamsHttpHandler implements HttpHandler {
 					}
 				}
 				
-				String subnetParam = paramsMap.get("subnet");
-				if(subnetParam != null){
-					int subnet = Integer.parseInt(subnetParam);
-					artNetServerManager.setSubnet(subnet);
+				String typeParam = paramsMap.get("type");
+				if(typeParam != null){
+					if(typeParam.equals("input")){
+						dmxArray = artNetServerManager.getCurrentInputDmxArray();
+					}
+					else if(typeParam.equals("output")){
+						dmxArray = artNetServerManager.getCurrentOutputDmxArray();
+					}
+					else{
+						throw new BadSyntaxException();
+					}
 				}
-				
-				String universeParam = paramsMap.get("universe");
-				if(universeParam != null){
-					int universe = Integer.parseInt(universeParam);
-					artNetServerManager.setUniverse(universe);
+				else{
+					throw new BadSyntaxException();
 				}
-				
-				String additiveModeParam = paramsMap.get("additiveMode");
-				if(additiveModeParam != null){
-					boolean additiveMode = Boolean.parseBoolean(additiveModeParam);
-					artNetServerManager.setAdditiveModeEnabled(additiveMode);
-				}
-
 			} catch (BadSyntaxException e) {
 				logger.severe("Bad syntax in params");
 				String badRequest = "400 : Bad request !!!";
@@ -80,16 +67,17 @@ public class ParamsHttpHandler implements HttpHandler {
 				httpExchange.getResponseBody().close();
 			}
 
-			String responseOk = "200 : OK !";
-			httpExchange.sendResponseHeaders(200, responseOk.length());
+			StringBuilder sb = new StringBuilder();
+			for(Byte channelValue : dmxArray){
+				int intValue = channelValue.intValue();
+				sb.append(intValue < 0 ? intValue + 256 : intValue).append(",");
+			}
+			sb.deleteCharAt(sb.length()-1);
+			
+			String responseOk = sb.toString();
+			httpExchange.sendResponseHeaders(200, responseOk.getBytes().length);
 			httpExchange.getResponseBody().write(responseOk.getBytes());
 			httpExchange.getResponseBody().close();
-		}
-		else if(httpExchange.getRequestMethod().equalsIgnoreCase("GET")){
-			String responseOk = "subnet="+artNetServerManager.getSubnet()+"&universe="+artNetServerManager.getUniverse()+"&additiveMode="+artNetServerManager.isAdditiveModeEnabled();
-			httpExchange.sendResponseHeaders(200, responseOk.length());
-			httpExchange.getResponseBody().write(responseOk.getBytes());
-			httpExchange.getResponseBody().close();			
 		}
 		else{
 			String badMethod = "405 : Method not allowed !!!";

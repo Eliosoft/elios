@@ -23,6 +23,23 @@
 <TITLE>Elios</TITLE>
 <STYLE type="text/css">
 <!--
+div{
+	text-align: center;
+	align: center;
+}
+
+table{
+	border-spacing: 0px;
+	border-collapse: collapse;
+	border: solid 1px black;
+	text-align: center;
+	width: 100%;
+}
+
+td {
+	border: solid 1px black;
+}
+
 .red
 {
 	color: red;
@@ -33,13 +50,26 @@
 	color: green;
 }
 
-table {
-	border: solid 1px black;
-	text-align:center;
+.bold {
+	font-weight: bold;
+}
+
+#tabs table{
+	width: 290px;
+	background: #D8D8D8;
+	cursor:pointer;cursor:hand;
+}
+
+#remote td {
+	border: none;
 }
 
 #toolbar {
+	margin-left: auto; 
+	margin-right: auto;
 	text-align: center;
+	width: 288px;
+	border: solid 1px black;
 }
 
 .title {
@@ -62,10 +92,41 @@ table {
 	border-width: 1px;
 }
 
+.tab{
+	width: 290px;
+	margin-left: auto; 
+	margin-right: auto;
+	cursor: default;
+}
+
 #responseMessage {
 	font-size: 30px;
 	background-color: #BBBBBB;
 }
+
+#remoteTab {
+	display: block;
+}
+
+#remoteTab td {
+	border: none;
+}
+
+#cuesTab {
+	display: none;
+}
+
+#dmxTableTab {
+	display: none;
+	width: 288px;
+	border: solid 1px black;
+}
+
+#dmxTable {
+	height: 300px;
+	overflow: auto;
+}
+
 -->
 </STYLE>
 
@@ -75,12 +136,28 @@ var send_xhr_object = null;
 var params_xhr_object = null;
 var isRequestActive = false;
 var context="/data/";
+var elements = new Array();
+
 
 var init = function()
 {
 	//alert("load");
+	elements["remoteTab"] = document.getElementById("remoteTab");
+	elements["cuesTab"] = document.getElementById("cuesTab");
+	elements["dmxTableTab"] = document.getElementById("dmxTableTab");
+
+	elements["dmxTable"] = document.getElementById("dmxTable");
+	
+	elements["remoteButton"] = document.getElementById("remoteButton");
+	elements["cuesButton"] = document.getElementById("cuesButton");
+	elements["dmxTableButton"] = document.getElementById("dmxTableButton");
+	
+	elements["responseMessage"] = document.getElementById("responseMessage");
+	
 	send_xhr_object = createXHRObject();
 	params_xhr_object = createXHRObject();
+	dmxTable_xhr_object = createXHRObject();
+	
 	if(!send_xhr_object){
 		alert("pas d'objet send");
 		return;
@@ -89,6 +166,12 @@ var init = function()
 		alert("pas d'objet params");
 		return;
 	}
+	if(!dmxTable_xhr_object){
+		alert("pas d'objet params");
+		return;
+	}
+	
+	updateDMXTable();
 	updateParams();
 }
 
@@ -110,23 +193,6 @@ var updateParams = function(){
 	makeRequest(params_xhr_object,'get','',context+'params',setNewParams);
 }
 
-var setNewParams = function(xhr_object){
-	var paramsList = xhr_object.responseText.split('&');
-	for(i in paramsList){
-		var keyValue = paramsList[i].split('=');
-		var paramElement = document.getElementById(keyValue[0]);
-		if(paramElement){
-			if(keyValue[0] == 'additiveMode'){
-				paramElement.checked =  (keyValue[1] == 'true');
-			}
-			else{
-				paramElement.value = keyValue[1];
-			}
-		}
-	}
-	setTimeout(updateParams,1000);
-}
-
 var makeRequest = function(xhr_object,method,query,url,responseHandler)
 {
 	xhr_object.open(method,url,true);
@@ -144,17 +210,33 @@ var makeRequest = function(xhr_object,method,query,url,responseHandler)
 	isRequestActive = true;
 }
 
+var setNewParams = function(xhr_object){
+	var paramsList = xhr_object.responseText.split('&');
+	for(i in paramsList){
+		var keyValue = paramsList[i].split('=');
+		var paramElement = document.getElementById(keyValue[0]);
+		if(paramElement){
+			if(keyValue[0] == 'additiveMode'){
+				paramElement.checked =  (keyValue[1] == 'true');
+			}
+			else{
+				paramElement.value = keyValue[1];
+			}
+		}
+	}
+	setTimeout(updateParams,1000);
+}
+
 var showResult= function(xhr_object)
 {
-	var responseMessageElement = document.getElementById("responseMessage");
-	responseMessageElement.firstChild.nodeValue = xhr_object.responseText;
+	elements["responseMessage"].firstChild.nodeValue = xhr_object.responseText;
 	
 	if(xhr_object.status==200){
-		responseMessageElement.className = "green";
+		elements["responseMessage"].className = "green";
 		document.sendData.line.value = "";
 	}
 	else{
-		responseMessageElement.className = "red";
+		elements["responseMessage"].className = "red";
 	}
 }
 
@@ -168,6 +250,82 @@ var delLastChar = function(){
 	if( length > 0){
 		document.sendData.line.value = document.sendData.line.value.substring(0,length-1);
 	}
+}
+
+var switchView= function(view){
+	switch(view){
+		case "remote":
+			elements["remoteTab"].style.display = "block";
+			elements["cuesTab"].style.display = "none";
+			elements["dmxTableTab"].style.display = "none";
+			
+			elements["remoteButton"].style.fontWeight = "bold";
+			elements["cuesButton"].style.fontWeight = "normal";
+			elements["dmxTableButton"].style.fontWeight = "normal";
+			break;
+		case "cues":
+			elements["remoteTab"].style.display = "none";
+			elements["cuesTab"].style.display = "block";
+			elements["dmxTableTab"].style.display = "none";
+			
+			elements["remoteButton"].style.fontWeight = "normal";
+			elements["cuesButton"].style.fontWeight = "bold";
+			elements["dmxTableButton"].style.fontWeight = "normal";
+			break;
+		case "dmxTable":
+			elements["remoteTab"].style.display = "none";
+			elements["cuesTab"].style.display = "none";
+			elements["dmxTableTab"].style.display = "block";
+			
+			elements["remoteButton"].style.fontWeight = "normal";
+			elements["cuesButton"].style.fontWeight = "normal";
+			elements["dmxTableButton"].style.fontWeight = "bold";
+			break;
+	}
+}
+
+var updateDMXTable = function(){
+	var type = "";
+	for( i = 0; i < document.dmxTableOptionsForm.type.length; i++ )
+	{
+		if( document.dmxTableOptionsForm.type[i].checked == true ){
+			type = document.dmxTableOptionsForm.type[i].value;
+		}
+	}
+	makeRequest(dmxTable_xhr_object,'get','',context+'dmxTable?type='+type,setNewDMXTable);
+}
+
+var setNewDMXTable = function(xhr_object){
+	// remove all children from element
+	var element = elements['dmxTable'];
+	while (element.firstChild) {
+		element.removeChild(element.firstChild);
+	}
+	if(xhr_object.status==200){
+		var values = xhr_object.responseText.split(',');
+		var table=document.createElement('TABLE');
+		var tbdy=document.createElement('TBODY');
+		table.appendChild(tbdy);
+		for (var i=0 ; i<64 ; i++){
+			var tr=document.createElement('TR');
+			tbdy.appendChild(tr);
+			for (var j=0 ; j<8 ; j++){
+				var td=document.createElement('TD');
+				var channel = i*8+j+1;
+				var value = values[channel - 1];
+				var percentValue = Math.ceil(value*100/255);
+				td.title="Channel : "+(channel)+"\nDMX value : "+value+"\nPercent value : "+percentValue+"%";
+				td.width="12.5%";
+				var nonBlueLevel = Math.ceil(255-value*4/5).toString(16);
+				td.style.backgroundColor="#"+nonBlueLevel+nonBlueLevel+"FF";
+				td.appendChild(document.createTextNode(value));
+				tr.appendChild(td);
+			}
+		}
+		element.appendChild(table);
+	}
+	element.appendChild(document.createTextNode(xhr_object.responseText));
+	setTimeout(updateDMXTable,1000);
 }
 
 -->
@@ -213,50 +371,75 @@ var delLastChar = function(){
 		<OPTION>14</OPTION>
 		<OPTION>15</OPTION>
 	</SELECT>
-	Additive : 
+	<BR/>
+	Additive mode : 
 	<INPUT type="checkbox" id="additiveMode" onchange="makeRequest(send_xhr_object,'post','additiveMode='+this.checked,context+'params',showResult); return false"/>
 </DIV>
-<DIV id="command" name="command">
+<DIV id="tabs" name="tabs">
+	<TABLE align="center">
+		<TR>
+			<TD id="remoteButton" style="font-weight: bold;" onclick="switchView('remote')">REMOTE</TD>
+			<TD id="cuesButton" onclick="switchView('cues')">CUES</TD>
+			<TD id="dmxTableButton" onclick="switchView('dmxTable')">DMX TABLE</TD>
+		</TR>
+	</TABLE>
+</DIV>
+<DIV id="remoteTab" class="tab">
 	<FORM onsubmit="return false" name="sendData" id="sendData">
 		<TABLE align="center">
-			<TR>
-				<TD COLSPAN="4"><INPUT class="commandLine" name="line" type="text" id="line" value="" size="40"></TD>
-			</TR>
-			<TR>
-				<TD><INPUT class="button" type="submit" name="key1" value="1" onclick="addToCommandLine('1')"></TD>
-				<TD><INPUT class="button" type="submit" name="key2" value="2" onclick="addToCommandLine('2')"></TD>
-				<TD><INPUT class="button" type="submit" name="key3" value="3" onclick="addToCommandLine('3')"></TD>
-				<TD><INPUT class="button" type="submit" name="key_plus" value="+" onclick="addToCommandLine('+')"></TD>
-			</TR>
-			<TR>
-				<TD><INPUT class="button" type="submit" name="key4" value="4" onclick="addToCommandLine('4')"></TD>
-				<TD><INPUT class="button" type="submit" name="key5" value="5" onclick="addToCommandLine('5')"></TD>
-				<TD><INPUT class="button" type="submit" name="key6" value="6" onclick="addToCommandLine('6')"></TD>
-				<TD><INPUT class="button" type="submit" name="key_minus" value="-" onclick="addToCommandLine('-')"></TD>
-			</TR>
-			<TR>
-				<TD><INPUT class="button" type="submit" name="key7" value="7" onclick="addToCommandLine('7')"></TD>
-				<TD><INPUT class="button" type="submit" name="key8" value="8" onclick="addToCommandLine('8')"></TD>
-				<TD><INPUT class="button" type="submit" name="key9" value="9" onclick="addToCommandLine('9')"></TD>
-				<TD><INPUT class="button" type="submit" name="key_thru" value="/" onclick="addToCommandLine('/')"></TD>
-			</TR>
-			<TR>
-				<TD><INPUT class="button" type="submit" name="key_sep" value=";" onclick="addToCommandLine(';')"></TD>
-				<TD><INPUT class="button" type="submit" name="key0" value="0" onclick="addToCommandLine('0')"></TD>
-				<TD><INPUT class="button" type="submit" name="key_at" value="@" onclick="addToCommandLine('@')"></TD>
-				<TD><INPUT class="button" type="submit" name="key_full" value="F" onclick="addToCommandLine('F')"></TD>
-			</TR>
-			<TR>
-				<TD><INPUT class="button" type="submit" name="Delete" value="Del" onclick="delLastChar(); return false"></TD>
-				<TD><INPUT class="button" type="submit" name="Enter" value="Enter" onclick="makeRequest(send_xhr_object,'post',document.sendData.line.value,context+'commandLine',showResult); return false"></TD>
-				<TD><INPUT class="button" type="reset" name="Reset" id="Reset" value="Reset"></TD>
-				<TD><INPUT class="button" type="submit" name="key_dmx" value="D" onclick="addToCommandLine('D')"></TD>
-			</TR>
-			<TR>
-				<TD COLSPAN="4" id="responseMessage" align="center" class="green">&nbsp;</TD>
-			</TR>
+			<TBODY>
+				<TR>
+					<TD COLSPAN="4"><INPUT class="commandLine" name="line" type="text" id="line" value="" size="40"></TD>
+				</TR>
+				<TR>
+					<TD><INPUT class="button" type="submit" name="key1" value="1" onclick="addToCommandLine('1')"></TD>
+					<TD><INPUT class="button" type="submit" name="key2" value="2" onclick="addToCommandLine('2')"></TD>
+					<TD><INPUT class="button" type="submit" name="key3" value="3" onclick="addToCommandLine('3')"></TD>
+					<TD><INPUT class="button" type="submit" name="key_plus" value="+" onclick="addToCommandLine('+')"></TD>
+				</TR>
+				<TR>
+					<TD><INPUT class="button" type="submit" name="key4" value="4" onclick="addToCommandLine('4')"></TD>
+					<TD><INPUT class="button" type="submit" name="key5" value="5" onclick="addToCommandLine('5')"></TD>
+					<TD><INPUT class="button" type="submit" name="key6" value="6" onclick="addToCommandLine('6')"></TD>
+					<TD><INPUT class="button" type="submit" name="key_minus" value="-" onclick="addToCommandLine('-')"></TD>
+				</TR>
+				<TR>
+					<TD><INPUT class="button" type="submit" name="key7" value="7" onclick="addToCommandLine('7')"></TD>
+					<TD><INPUT class="button" type="submit" name="key8" value="8" onclick="addToCommandLine('8')"></TD>
+					<TD><INPUT class="button" type="submit" name="key9" value="9" onclick="addToCommandLine('9')"></TD>
+					<TD><INPUT class="button" type="submit" name="key_thru" value="/" onclick="addToCommandLine('/')"></TD>
+				</TR>
+				<TR>
+					<TD><INPUT class="button" type="submit" name="key_sep" value=";" onclick="addToCommandLine(';')"></TD>
+					<TD><INPUT class="button" type="submit" name="key0" value="0" onclick="addToCommandLine('0')"></TD>
+					<TD><INPUT class="button" type="submit" name="key_at" value="@" onclick="addToCommandLine('@')"></TD>
+					<TD><INPUT class="button" type="submit" name="key_full" value="F" onclick="addToCommandLine('F')"></TD>
+				</TR>
+				<TR>
+					<TD><INPUT class="button" type="submit" name="Delete" value="Del" onclick="delLastChar(); return false"></TD>
+					<TD><INPUT class="button" type="submit" name="Enter" value="Enter" onclick="makeRequest(send_xhr_object,'post',document.sendData.line.value,context+'commandLine',showResult); return false"></TD>
+					<TD><INPUT class="button" type="reset" name="Reset" id="Reset" value="Reset"></TD>
+					<TD><INPUT class="button" type="submit" name="key_dmx" value="D" onclick="addToCommandLine('D')"></TD>
+				</TR>
+				<TR>
+					<TD COLSPAN="4" id="responseMessage" align="center" class="green">&nbsp;</TD>
+				</TR>
+			</TBODY>
 		</TABLE>
 	</FORM>
+</DIV>
+<DIV id="cuesTab" class="tab">
+	Not Implemented Yet !!!
+</DIV>
+<DIV id="dmxTableTab" class="tab">
+	<DIV id="dmxTableOptions">
+		<FORM id="dmxTableOptionsForm"  name="dmxTableOptionsForm">
+			<INPUT type="radio" name="type" value="input"> Input
+			<INPUT type="radio" name="type" value="output" checked> Output
+		</FORM>
+	</DIV>
+	<DIV id="dmxTable">
+	</DIV>
 </DIV>
 <P>&nbsp;</P>
 <P >&nbsp;</P>
