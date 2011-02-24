@@ -324,7 +324,9 @@ var setNewDMXTable = function(xhr_object){
 		}
 		element.appendChild(table);
 	}
-	element.appendChild(document.createTextNode(xhr_object.responseText));
+	else{
+		element.appendChild(document.createTextNode(xhr_object.responseText));
+	}
 	setTimeout(updateDMXTable,1000);
 }
 
