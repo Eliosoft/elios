@@ -38,8 +38,6 @@ import javax.swing.UIManager;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import artnet4j.ArtNetException;
-
 import net.eliosoft.elios.gui.controllers.CuesController;
 import net.eliosoft.elios.gui.controllers.DMXController;
 import net.eliosoft.elios.gui.controllers.LogsController;
@@ -49,6 +47,7 @@ import net.eliosoft.elios.gui.models.DMXTableModel;
 import net.eliosoft.elios.gui.models.LocaleComboBoxModel;
 import net.eliosoft.elios.gui.models.RemoteModel;
 import net.eliosoft.elios.gui.models.RemoteModel.BroadCastAddress;
+import net.eliosoft.elios.gui.models.UpdateModel;
 import net.eliosoft.elios.gui.views.AboutView;
 import net.eliosoft.elios.gui.views.CuesView;
 import net.eliosoft.elios.gui.views.DMXView;
@@ -61,6 +60,11 @@ import net.eliosoft.elios.gui.views.ViewInterface;
 import net.eliosoft.elios.server.ArtNetServerManager;
 import net.eliosoft.elios.server.CuesManager;
 import net.eliosoft.elios.server.HttpServerManager;
+import net.eliosoft.elios.server.ReleaseCode;
+import net.eliosoft.elios.server.ReleaseInformation;
+import net.eliosoft.elios.server.ReleaseInformationRepository;
+import net.eliosoft.elios.server.ReleaseInformationRepositoryImpl;
+import artnet4j.ArtNetException;
 
 /**
  * Main Class of Elios Software contains the main method used to launch the
@@ -70,6 +74,11 @@ import net.eliosoft.elios.server.HttpServerManager;
  */
 public final class Elios {
 
+    	/**
+    	 * The logger.
+    	 */
+    	private static final Logger LOGGER = LoggersManager.getInstance().getLogger(Elios.class.getName());
+    
 	/**
 	 * Icons array for the Elios application.
 	 */
@@ -109,8 +118,7 @@ public final class Elios {
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		} catch (Exception e1) {
-			LoggersManager.getInstance().getLogger(Elios.class.getName())
-					.info("Can not load system look and feel");
+		    LOGGER.info("Can not load system look and feel");
 		}
 
 		final Preferences prefs = Preferences.userNodeForPackage(Elios.class);
@@ -121,12 +129,14 @@ public final class Elios {
 			final RemoteModel remoteModel = createRemoteModel(prefs);
 
 			final RemoteView remoteView = new RemoteView(remoteModel);
+
+			UpdateModel uModel = new UpdateModel(prefs);
 			// used to make relation between view and model
 			new RemoteController(remoteModel, remoteView);
 
 			final LocaleComboBoxModel localeModel = new LocaleComboBoxModel();
 			localeModel.setSelectedItem(locale);
-			PrefsView prefsView = new PrefsView(remoteModel, localeModel);
+			PrefsView prefsView = new PrefsView(remoteModel, localeModel, uModel);
 			// used to make relation between view and model
 			new PrefsController(remoteModel, localeModel, prefsView);
 
@@ -141,11 +151,11 @@ public final class Elios {
 			DMXView dmxView = new DMXView(remoteModel, dmxTableModel);
 			// used to make relation between view and model
 			new DMXController(dmxTableModel, dmxView);
-			
+
 			CuesView cuesView = new CuesView(remoteModel);
 			// used to make relation between view and model
 			new CuesController(remoteModel, cuesView);
-			
+
 			LogsLineView logsLineView = new LogsLineView(remoteModel);
 			AboutView aboutView = new AboutView();
 
@@ -195,15 +205,45 @@ public final class Elios {
 			frame.pack();
 			frame.setVisible(true);
 
+			checkForUpdate(prefs, uModel, frame);
+
 			tabbedPane.getSelectedComponent().requestFocusInWindow();
 
-			// last call because we want to be sure that every listeners are registered
+			// last call because we want to be sure that every listeners are
+			// registered
 			remoteModel.applyArtNetServerManagerConfig();
 		} catch (ArtNetException e1) {
-			JOptionPane.showMessageDialog(null,
-					MessageFormat.format(Messages.getString("error.server.cannotstart.message"), e1.getMessage()),
-					Messages.getString("error.server.cannotstart.title"), JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, MessageFormat.format(
+					Messages.getString("error.server.cannotstart.message"),
+					e1.getMessage()), Messages
+					.getString("error.server.cannotstart.title"),
+					JOptionPane.ERROR_MESSAGE);
 		}
+	}
+
+	private static void checkForUpdate(final Preferences prefs,
+		UpdateModel uModel, final JFrame frame) {
+	    try {
+		ReleaseInformationRepository riRepo = new ReleaseInformationRepositoryImpl(prefs);
+		ReleaseInformationDialogBuilder ridBuilder = new ReleaseInformationDialogBuilder(
+			frame, riRepo, uModel);
+
+		if (uModel.updateIsNecessary()) {
+		    // TODO move to a swing worker
+		    ReleaseInformation ri = riRepo.getLatest();
+		    ReleaseCode currentRelease = riRepo.getInstalledReleaseCode();
+		    if (currentRelease.before(
+			    ri.getReleaseCode())) {
+			ridBuilder.forReleaseCode(ri.getReleaseCode()).build()
+			.setVisible(true);
+		    }
+		}
+	    } catch (IllegalStateException ise) {
+		LOGGER.info("Error during update process, launch the post install process to fix context.");
+		// TODO post install process must be done during the install,
+		// here we consider that the user is still using the first public release.
+		PostInstallProcess.main(new String[] {"0.1", "http://update.eliosoft.net/"});
+	    }
 	}
 
 	/**
@@ -249,7 +289,7 @@ public final class Elios {
 	 *            <code>Preferences</code> used to retrieve the configuration
 	 * @return a configured <code>RemoteModel</code>
 	 */
-	public static RemoteModel createRemoteModel(Preferences prefs){
+	public static RemoteModel createRemoteModel(Preferences prefs) {
 		RemoteModel model = new RemoteModel(ArtNetServerManager.getInstance(),
 				HttpServerManager.getInstance(), CuesManager.getInstance());
 		model.setSubnet(prefs.getInt("server.subnet", 0));

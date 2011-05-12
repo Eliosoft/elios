@@ -19,6 +19,7 @@
 
 package net.eliosoft.elios.gui.views;
 
+import java.text.MessageFormat;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 import java.util.logging.Logger;
@@ -27,14 +28,15 @@ import net.eliosoft.elios.main.LoggersManager;
 
 /**
  * This class provides i18n functionalities.
- *
+ * 
  * @author Alexandre COLLIGNON
  */
 public final class Messages {
 	/** bundle full qualified name. **/
 	private static final String BUNDLE_NAME = "net.eliosoft.elios.gui.views.messages"; //$NON-NLS-1$
-	
-	private static final Logger LOGGER = LoggersManager.getInstance().getLogger(Messages.class.getCanonicalName());
+
+	private static final Logger LOGGER = LoggersManager.getInstance()
+			.getLogger(Messages.class.getCanonicalName());
 
 	/** bundle instance. **/
 	private static final ResourceBundle RESOURCE_BUNDLE = ResourceBundle
@@ -50,16 +52,61 @@ public final class Messages {
 	/**
 	 * Returns the localized text of the given key if the resource is found,
 	 * returns !key! (key is the argument) otherwise.
-	 *
-	 * @param key string that identified a localized text
+	 * 
+	 * @param key
+	 *            string that identified a localized text
 	 * @return the localized text or !key! is the resource is not found
 	 */
 	public static String getString(String key) {
 		try {
 			return RESOURCE_BUNDLE.getString(key);
 		} catch (MissingResourceException e) {
-			LOGGER.warning("missing i18n key [" + key + "]");
-			return '!' + key + '!';
+			return fallbackTranslation(key);
 		}
+	}
+
+	/**
+	 * Returns the localized text of the given key if the resource is found or
+	 * throws a MissingResourceException.
+	 * 
+	 * @param key
+	 *            string that identified a localized text
+	 * @return the localized text
+	 * @throws MissingResourceException
+	 *             if the resource is not found
+	 */
+	private static String internalGetString(String key)
+			throws MissingResourceException {
+		return RESOURCE_BUNDLE.getString(key);
+	}
+
+	/**
+	 * Returns a formatted localized string identified by the given
+	 * key. The string is populated according to {@link MessageFormat}.
+	 * 
+	 * @param key
+	 *            string that identified a localized text
+	 * @param objects
+	 *            variable arguments of Object that will used to populated the string
+	 * @return the populated localized text, returns !key! (key is the argument)
+	 *         otherwise.
+	 */
+	public static String getString(String key, Object... objects) {
+		try {
+			return new MessageFormat(internalGetString(key)).format(objects);
+		} catch (MissingResourceException e) {
+			return fallbackTranslation(key);
+		}
+	}
+
+	/**
+	 * Returns the given string between "!".
+	 * 
+	 * @param key a string
+	 * @return the given string between "!"
+	 */
+	private static String fallbackTranslation(String key) {
+		LOGGER.warning("missing i18n key [" + key + "]");
+		return '!' + key + '!';
 	}
 }

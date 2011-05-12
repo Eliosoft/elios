@@ -44,6 +44,7 @@ import javax.swing.event.ListDataListener;
 
 import net.eliosoft.elios.gui.models.LocaleComboBoxModel;
 import net.eliosoft.elios.gui.models.RemoteModel;
+import net.eliosoft.elios.gui.models.UpdateModel;
 import net.eliosoft.elios.main.Elios;
 
 /**
@@ -73,6 +74,8 @@ public class PrefsView implements ViewInterface {
 
 	private LocaleComboBoxModel localeModel;
 
+	private UpdateModel updateModel;
+
 	/**
 	 * The Constructor of the view.
 	 * 
@@ -80,9 +83,10 @@ public class PrefsView implements ViewInterface {
 	 *            the model associated to the view
 	 * @param localeModel
 	 */
-	public PrefsView(RemoteModel remoteModel, LocaleComboBoxModel localeModel) {
+	public PrefsView(RemoteModel remoteModel, LocaleComboBoxModel localeModel, UpdateModel updateModel) {
 		this.remoteModel = remoteModel;
 		this.localeModel = localeModel;
+		this.updateModel = updateModel;
 
 		prefsPanel = new JPanel();
 		prefsPanel.setLayout(new BorderLayout());
@@ -235,6 +239,20 @@ public class PrefsView implements ViewInterface {
 		constraints.gridy = 0;
 		langComboLabel.setLabelFor(this.langComboBox);
 		generalPrefsPanel.add(this.langComboBox, constraints);
+
+		// update chooser
+		UpdateFrequencyChooserView view = new UpdateFrequencyChooserView(updateModel);
+		JComponent viewComponent = view.getViewComponent();
+
+		constraints.gridx = 0;
+		constraints.gridy = 1;
+		JLabel updateViewLabel = new JLabel(view.getLocalizedTitle()); 
+		generalPrefsPanel.add(updateViewLabel, constraints);
+		langComboLabel.setLabelFor(viewComponent);
+		constraints.gridx = 1;
+		constraints.gridy = 1;
+
+		generalPrefsPanel.add(viewComponent, constraints);
 
 		return generalPrefsPanel;
 	}
