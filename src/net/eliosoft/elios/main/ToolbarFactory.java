@@ -4,12 +4,14 @@ import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.MessageFormat;
 
 import javax.swing.Box;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JSpinner;
 import javax.swing.JToggleButton;
 import javax.swing.JToolBar;
@@ -243,39 +245,71 @@ public class ToolbarFactory {
 		toolBar.add(universeSpinner);
 	}
 	
+	/**
+	 * Try to turn the full screen off. If something goes wrong, just try to set the frame visible.
+	 * 
+	 * @param frame the {@link JFrame} to display in full screen mode
+	 * @param device the {@link GraphicsDevice} on which the frame must be display
+	 */
 	private void turnOffFullScreen(JFrame frame, GraphicsDevice device){
-		//hide the frame so we can change it.
-		frame.setVisible(false);
-		 
-		//remove the frame from being displayable.
-		frame.dispose();
-		 
-		//put the borders back on the frame.
-		frame.setUndecorated(false);
-		 
-		//needed to unset this window as the fullscreen window.
-		device.setFullScreenWindow(null);
-		 
-		//reset the display mode to what it was before
-		//we changed it.
-		frame.setVisible(true);
+		try {
+			//hide the frame so we can change it.
+			frame.setVisible(false);
+			 
+			//remove the frame from being displayable.
+			frame.dispose();
+			 
+			//put the borders back on the frame.
+			frame.setUndecorated(false);
+			 
+			//needed to unset this window as the fullscreen window.
+			device.setFullScreenWindow(null);
+			 
+			//reset the display mode to what it was before
+			//we changed it.
+			frame.setVisible(true);
+		} catch(Exception e) { // ugly catch
+			JOptionPane.showMessageDialog(frame, MessageFormat.format(
+					Messages.getString("error.fullscreen.off.message"),
+					e.getMessage()), Messages
+					.getString("error.fullscreen.title"),
+					JOptionPane.ERROR_MESSAGE);
+		} finally {
+			//show the frame
+			frame.setVisible(true);
+		}
+		
 	}
 	
+	/**
+	 * Try to turn the full screen on. If something goes wrong, just try to set the frame visible.
+	 * 
+	 * @param frame the {@link JFrame} to display in full screen mode
+	 * @param device the {@link GraphicsDevice} on which the frame must be display
+	 */
 	private void turnOnFullScreen(JFrame frame, GraphicsDevice device){		 
-		//hide everything
-		frame.setVisible(false);
-		 
-		//remove the frame from being displayable.
-		frame.dispose();
-		 
-		//remove borders around the frame
-		frame.setUndecorated(true);
-		 
-		//make the window fullscreen.
-		device.setFullScreenWindow(frame);
-		 
-		//show the frame
-		frame.setVisible(true);
+		try {
+			//hide everything
+			frame.setVisible(false);
+			 
+			//remove the frame from being displayable.
+			frame.dispose();
+			 
+			//remove borders around the frame
+			frame.setUndecorated(true);
+			 
+			//make the window fullscreen.
+			device.setFullScreenWindow(frame);
+		} catch(Exception e) { // ugly catch
+			JOptionPane.showMessageDialog(frame, MessageFormat.format(
+					Messages.getString("error.fullscreen.on.message"),
+					e.getMessage()), Messages
+					.getString("error.fullscreen.title"),
+					JOptionPane.ERROR_MESSAGE);
+		} finally {
+			//show the frame
+			frame.setVisible(true);
+		}
 	}
 
 }
