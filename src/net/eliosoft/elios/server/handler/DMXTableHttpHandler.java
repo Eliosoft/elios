@@ -1,7 +1,6 @@
 package net.eliosoft.elios.server.handler;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.HashMap;
 import java.util.logging.Logger;
 
@@ -21,7 +20,7 @@ import com.sun.net.httpserver.HttpHandler;
  */
 public class DMXTableHttpHandler implements HttpHandler {
 
-	private static final int MAX_BUFFER_SIZE = 1024*512;
+//	private static final int MAX_BUFFER_SIZE = 1024*512;
 	private final ArtNetServerManager artNetServerManager = ArtNetServerManager.getInstance();
 
 	private final transient Logger logger = LoggersManager.getInstance().getLogger(DMXTableHttpHandler.class.getName());
