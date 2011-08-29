@@ -224,20 +224,22 @@ public final class Elios {
 	private static void checkForUpdate(final Preferences prefs,
 		UpdateModel uModel, final JFrame frame) {
 	    try {
-		ReleaseInformationRepository riRepo = new ReleaseInformationRepositoryImpl(prefs);
-		ReleaseInformationDialogBuilder ridBuilder = new ReleaseInformationDialogBuilder(
-			frame, riRepo, uModel);
-
-		if (uModel.updateIsNecessary()) {
-		    // TODO move to a swing worker
-		    ReleaseInformation ri = riRepo.getLatest();
-		    ReleaseCode currentRelease = riRepo.getInstalledReleaseCode();
-		    if (currentRelease.before(
-			    ri.getReleaseCode())) {
-			ridBuilder.forReleaseCode(ri.getReleaseCode()).build()
-			.setVisible(true);
-		    }
-		}
+			ReleaseInformationRepository riRepo = new ReleaseInformationRepositoryImpl(prefs);
+			ReleaseInformationDialogBuilder ridBuilder = new ReleaseInformationDialogBuilder(
+				frame, riRepo, uModel);
+	
+			if (uModel.updateIsNecessary()) {
+			    // TODO move to a swing worker
+			    ReleaseInformation ri = riRepo.getLatest();
+			    if(ri != null) { // null if data could not be fetch
+				    ReleaseCode currentRelease = riRepo.getInstalledReleaseCode();
+				    if (currentRelease.before(
+					    ri.getReleaseCode())) {
+					ridBuilder.forReleaseCode(ri.getReleaseCode()).build()
+					.setVisible(true);
+				    }
+			    }
+			}
 	    } catch (IllegalStateException ise) {
 		LOGGER.info("Error during update process, launch the post install process to fix context.");
 		// TODO post install process must be done during the install,
