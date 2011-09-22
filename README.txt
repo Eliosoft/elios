@@ -1,5 +1,5 @@
 Project Name : Elios
-developed by : Jeremie GASTON-RAOUL
+developed by : Jeremie GASTON-RAOUL & Alexandre COLLIGNON
 
 Elios is a free GUI which allows you to send DMX values to ArtNet nodes.
 Its goal is to help lighting technicians during installation and focus.
