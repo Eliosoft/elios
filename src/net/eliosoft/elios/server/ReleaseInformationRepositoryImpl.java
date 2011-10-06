@@ -4,12 +4,15 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URI;
+import java.net.URLConnection;
 import java.nio.charset.Charset;
 import java.text.MessageFormat;
 import java.util.prefs.Preferences;
 
 public class ReleaseInformationRepositoryImpl implements
 		ReleaseInformationRepository {
+
+	private static final int FETCH_TIMEOUT = 5000;
 
 	public static final String URL_PATTERN = "{0}/{1}.euf";
 
@@ -76,7 +79,7 @@ public class ReleaseInformationRepositoryImpl implements
 			IOException {
 		InputStream stream = null;
 		try {
-			stream = uri.toURL().openStream();
+			stream = streamOfUri(uri);
 
 			StringBuilder sb = new StringBuilder();
 			byte[] buf = new byte[4096];
@@ -93,6 +96,15 @@ public class ReleaseInformationRepositoryImpl implements
 			if (stream != null)
 				stream.close();
 		}
+	}
+
+	private InputStream streamOfUri(URI uri) throws IOException,
+		MalformedURLException {
+	    InputStream stream;
+	    final URLConnection cn = uri.toURL().openConnection();
+	    cn.setConnectTimeout(FETCH_TIMEOUT);
+	    stream = cn.getInputStream();
+	    return stream;
 	}
 
 	private URI buildURI(ReleaseCode code) {

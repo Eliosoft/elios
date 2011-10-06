@@ -46,8 +46,8 @@ import net.eliosoft.elios.gui.controllers.RemoteController;
 import net.eliosoft.elios.gui.models.DMXTableModel;
 import net.eliosoft.elios.gui.models.LocaleComboBoxModel;
 import net.eliosoft.elios.gui.models.RemoteModel;
-import net.eliosoft.elios.gui.models.UpdateModel;
 import net.eliosoft.elios.gui.models.RemoteModel.BroadCastAddress;
+import net.eliosoft.elios.gui.models.UpdateModel;
 import net.eliosoft.elios.gui.views.AboutView;
 import net.eliosoft.elios.gui.views.CuesView;
 import net.eliosoft.elios.gui.views.DMXView;
@@ -233,30 +233,38 @@ public final class Elios {
 	 * @param frame the Elios frame
 	 */
 	private static void checkForUpdate(final Preferences prefs,
-		UpdateModel uModel, final JFrame frame) {
-		try {
+		final UpdateModel uModel, final JFrame frame) {
+		
+	    new Thread() {
+
+		@Override
+		public void run() {
+		    try {
 			ReleaseInformationRepository riRepo = new ReleaseInformationRepositoryImpl(prefs);
 			ReleaseInformationDialogBuilder ridBuilder = new ReleaseInformationDialogBuilder(
 				frame, riRepo, uModel);
-	
 			if (uModel.updateIsNecessary()) {
-			    // TODO move to a swing worker
+			    LOGGER.fine("Check for update");
 			    ReleaseInformation ri = riRepo.getLatest();
 			    if(ri != null) { // null if data could not be fetch
-				    ReleaseCode currentRelease = riRepo.getInstalledReleaseCode();
-				    if (currentRelease.before(
-					    ri.getReleaseCode())) {
-					ridBuilder.forReleaseCode(ri.getReleaseCode()).build()
-					.setVisible(true);
-				    }
+				ReleaseCode currentRelease = riRepo.getInstalledReleaseCode();
+				if (currentRelease.before(
+					ri.getReleaseCode())) {
+				    ridBuilder.forReleaseCode(ri.getReleaseCode()).build()
+				    .setVisible(true);
+				}
+			    } else {
+				LOGGER.fine("No release information found");
 			    }
 			}
-	    } catch (IllegalStateException ise) {
+		    } catch (IllegalStateException ise) {
 			LOGGER.info("Error during update process, launch the post install process to fix context.");
 			// TODO post install process must be done during the install,
 			// here we consider that the user is still using the first public release.
 			PostInstallProcess.main(new String[] {"0.1", "http://update.eliosoft.net/"});
-	    }
+		    }
+		}
+	    }.start();
 	}
 
 	/**
