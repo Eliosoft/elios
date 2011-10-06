@@ -46,8 +46,8 @@ import net.eliosoft.elios.gui.controllers.RemoteController;
 import net.eliosoft.elios.gui.models.DMXTableModel;
 import net.eliosoft.elios.gui.models.LocaleComboBoxModel;
 import net.eliosoft.elios.gui.models.RemoteModel;
-import net.eliosoft.elios.gui.models.RemoteModel.BroadCastAddress;
 import net.eliosoft.elios.gui.models.UpdateModel;
+import net.eliosoft.elios.gui.models.RemoteModel.BroadCastAddress;
 import net.eliosoft.elios.gui.views.AboutView;
 import net.eliosoft.elios.gui.views.CuesView;
 import net.eliosoft.elios.gui.views.DMXView;
@@ -74,10 +74,10 @@ import artnet4j.ArtNetException;
  */
 public final class Elios {
 
-    	/**
-    	 * The logger.
-    	 */
-    	private static final Logger LOGGER = LoggersManager.getInstance().getLogger(Elios.class.getName());
+	/**
+	 * The logger.
+	 */
+	private static final Logger LOGGER = LoggersManager.getInstance().getLogger(Elios.class.getName());
     
 	/**
 	 * Icons array for the Elios application.
@@ -122,7 +122,7 @@ public final class Elios {
 		}
 
 		final Preferences prefs = Preferences.userNodeForPackage(Elios.class);
-
+ 
 		Locale locale = loadLocale(prefs);
 
 		try {
@@ -195,11 +195,15 @@ public final class Elios {
 			frame.addWindowListener(new WindowAdapter() {
 				@Override
 				public void windowClosed(WindowEvent e) {
-					persistRemoteModel(remoteModel, prefs);
-					persistLocale(prefs, localeModel);
-					dmxTableModel.dispose();
-					artNetServerManager.stopArtNet();
-					HttpServerManager.getInstance().stopHttp();
+					try {
+						persistRemoteModel(remoteModel, prefs);
+						persistLocale(prefs, localeModel);
+						dmxTableModel.dispose();
+						artNetServerManager.stopArtNet();
+						HttpServerManager.getInstance().stopHttp();
+					} finally {
+						System.exit(0);
+					}
 				}
 			});
 			frame.pack();
@@ -221,9 +225,16 @@ public final class Elios {
 		}
 	}
 
+	/**
+	 * Check update of Elios.
+	 * 
+	 * @param prefs the preferences
+	 * @param uModel the update model
+	 * @param frame the Elios frame
+	 */
 	private static void checkForUpdate(final Preferences prefs,
 		UpdateModel uModel, final JFrame frame) {
-	    try {
+		try {
 			ReleaseInformationRepository riRepo = new ReleaseInformationRepositoryImpl(prefs);
 			ReleaseInformationDialogBuilder ridBuilder = new ReleaseInformationDialogBuilder(
 				frame, riRepo, uModel);
@@ -241,10 +252,10 @@ public final class Elios {
 			    }
 			}
 	    } catch (IllegalStateException ise) {
-		LOGGER.info("Error during update process, launch the post install process to fix context.");
-		// TODO post install process must be done during the install,
-		// here we consider that the user is still using the first public release.
-		PostInstallProcess.main(new String[] {"0.1", "http://update.eliosoft.net/"});
+			LOGGER.info("Error during update process, launch the post install process to fix context.");
+			// TODO post install process must be done during the install,
+			// here we consider that the user is still using the first public release.
+			PostInstallProcess.main(new String[] {"0.1", "http://update.eliosoft.net/"});
 	    }
 	}
 
