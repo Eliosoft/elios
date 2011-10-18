@@ -25,6 +25,7 @@ import net.eliosoft.elios.gui.listeners.RemoteModelListener;
 import net.eliosoft.elios.gui.models.RemoteModel;
 import net.eliosoft.elios.gui.views.CuesViewHelper;
 import net.eliosoft.elios.gui.views.Messages;
+import net.eliosoft.elios.main.ApplicationState.State;
 import net.eliosoft.elios.server.events.AdditiveModeValueChangedEvent;
 
 /**
@@ -38,6 +39,7 @@ public class ToolbarFactory {
 
 	/** The {@link RemoteModel}. **/
 	private RemoteModel remoteModel;
+	private ApplicationState state;
 
 	/**
 	 * Constructs a {@link ToolbarFactory} based on the given
@@ -45,9 +47,11 @@ public class ToolbarFactory {
 	 * 
 	 * @param remoteModel
 	 *            a {@link RemoteModel} used to access to the Remote state.
+	 * @param state a {@link ApplicationState} 
 	 */
-	public ToolbarFactory(RemoteModel remoteModel) {
+	public ToolbarFactory(RemoteModel remoteModel, ApplicationState state) {
 		this.remoteModel = remoteModel;
+		this.state = state;
 	}
 
 	/**
@@ -114,7 +118,7 @@ public class ToolbarFactory {
 		quit.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				frame.dispose();
+			    state.changeState(State.SHUTTING_DOWN);
 			}
 		});
 		toolBar.add(quit);

@@ -57,6 +57,7 @@ import net.eliosoft.elios.gui.views.Messages;
 import net.eliosoft.elios.gui.views.PrefsView;
 import net.eliosoft.elios.gui.views.RemoteView;
 import net.eliosoft.elios.gui.views.ViewInterface;
+import net.eliosoft.elios.main.ApplicationState.State;
 import net.eliosoft.elios.server.ArtNetServerManager;
 import net.eliosoft.elios.server.CuesManager;
 import net.eliosoft.elios.server.HttpServerManager;
@@ -126,6 +127,9 @@ public final class Elios {
 		Locale locale = loadLocale(prefs);
 
 		try {
+		    	final ApplicationState state = new ApplicationState();
+		    
+		    
 			final RemoteModel remoteModel = createRemoteModel(prefs);
 
 			final RemoteView remoteView = new RemoteView(remoteModel);
@@ -168,10 +172,10 @@ public final class Elios {
 			final JTabbedPane tabbedPane = new JTabbedPane();
 			Container contentPane = frame.getContentPane();
 			contentPane.setLayout(new BorderLayout());
-			frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+			frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 			frame.setIconImages(Arrays.asList(icons));
 
-			contentPane.add(new ToolbarFactory(remoteModel).create(frame),
+			contentPane.add(new ToolbarFactory(remoteModel, state).create(frame),
 					BorderLayout.NORTH);
 
 			contentPane.add(tabbedPane, BorderLayout.CENTER);
@@ -192,20 +196,32 @@ public final class Elios {
 			});
 			tabbedPane.setSelectedIndex(0);
 
-			frame.addWindowListener(new WindowAdapter() {
-				@Override
-				public void windowClosed(WindowEvent e) {
-					try {
-						persistRemoteModel(remoteModel, prefs);
-						persistLocale(prefs, localeModel);
-						dmxTableModel.dispose();
-						artNetServerManager.stopArtNet();
-						HttpServerManager.getInstance().stopHttp();
-					} finally {
-						System.exit(0);
-					}
+			state.addListener(new ApplicationState.Listener() {
+			    
+			    @Override
+			    public void stateChanged(State oldState, State newState) {
+				try {
+				    if(State.SHUTTING_DOWN == newState) {
+					LOGGER.info("Application is shutting down");
+					persistRemoteModel(remoteModel, prefs);
+					persistLocale(prefs, localeModel);
+					dmxTableModel.dispose();
+					artNetServerManager.stopArtNet();
+					HttpServerManager.getInstance().stopHttp();
+				    }
+				} finally {
+				    System.exit(0);
 				}
+			    }
 			});
+			
+			frame.addWindowListener(new WindowAdapter() {
+        			@Override
+        			public void windowClosing(WindowEvent e) {
+        			    state.changeState(State.SHUTTING_DOWN);
+        			}
+			});
+			
 			frame.pack();
 			frame.setVisible(true);
 
