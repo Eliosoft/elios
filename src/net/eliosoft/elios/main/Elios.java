@@ -24,6 +24,11 @@ import java.awt.Container;
 import java.awt.Image;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.Arrays;
 import java.util.Locale;
@@ -331,6 +336,16 @@ public final class Elios {
 				"server.additivemode.enable", false));
 		model.setHttpPort(prefs.getInt("server.httpserver.port",
 				HttpServerManager.DEFAULT_HTTP_PORT));
+		
+		
+		try {
+		    model.load(new FileInputStream(System.getProperty("user.home") + File.separator + ".elios" + File.separator + "elios.cues"));
+		} catch (FileNotFoundException e) {
+		    LOGGER.warning("Can not load cues" + e.getMessage());
+		} catch (IOException e) {
+		    LOGGER.warning("Can not load cues" + e.getMessage());
+		}
+		
 		return model;
 	}
 
@@ -356,6 +371,22 @@ public final class Elios {
 		prefs.putBoolean("server.additivemode.enable",
 				model.isAdditiveModeEnabled());
 		prefs.putInt("server.httpserver.port", model.getHttpPort());
+		
+		try {
+		    final String directory = System.getProperty("user.home") + File.separator + ".elios";
+		    
+		    File dir = new File(directory);
+		    if(!dir.isDirectory()) {
+			dir.mkdir();
+		    }
+		    
+		    model.persist(new FileOutputStream(System.getProperty("user.home") + File.separator + ".elios" +File.separator + "elios.cues"));
+		} catch (FileNotFoundException e) {
+		    LOGGER.warning("Can not persist current cues" + e.getMessage());
+		} catch (IOException e) {
+		    LOGGER.warning("Can not persist current cues " + e.getMessage());
+		}
+		
 	}
 
 	/**
