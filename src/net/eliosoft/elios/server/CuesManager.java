@@ -19,6 +19,10 @@
 
 package net.eliosoft.elios.server;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -29,6 +33,9 @@ import java.util.Map;
 import java.util.logging.Logger;
 
 import net.eliosoft.elios.main.LoggersManager;
+
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 /**
  * A manager for the cues
@@ -117,5 +124,13 @@ public class CuesManager {
 			cueNumber++;
 		}while(cuesMap.containsKey(cueName));
 		return cueName;
+	}
+	
+	public void persist(OutputStream stream) throws IOException {
+	    stream.write(new Gson().toJson(cuesMap).getBytes());
+	}
+
+	public void load(InputStream stream) {
+	    cuesMap = new Gson().fromJson(new InputStreamReader(stream), new TypeToken<Map<String, Cue>>() {}.getType());
 	}
 }

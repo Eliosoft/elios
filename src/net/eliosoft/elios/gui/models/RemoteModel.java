@@ -20,6 +20,8 @@
 package net.eliosoft.elios.gui.models;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +35,8 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ListDataEvent;
 import javax.swing.event.ListDataListener;
+
+import org.xml.sax.InputSource;
 
 import net.eliosoft.elios.gui.events.ArtNetStartedEvent;
 import net.eliosoft.elios.gui.events.ArtNetStoppedEvent;
@@ -666,5 +670,13 @@ public class RemoteModel {
 	 */
 	public void removeCue(Cue cue) {
 		cuesListModel.removeCue(cue);
+	}
+
+	public void persist(OutputStream stream) throws IOException {
+	    cuesManager.persist(stream);
+	}
+	
+	public void load(InputStream stream) throws IOException {
+	    cuesManager.load(stream);
 	}
 }
