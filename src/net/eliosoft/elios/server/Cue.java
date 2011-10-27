@@ -29,6 +29,13 @@ public class Cue {
 	private String name;
 	private byte[] dmxArray = new byte[ArtNetServerManager.DMX_CHANNELS_COUNT];
 	
+	/**
+	 * Constructs an empty {@link Cue}. This constructor is mainly 
+	 * used for deserialization.
+	 */
+	Cue() {
+	    // nothing to do here.
+	}
 	
 	/**
 	 * The constructor method for the cue object.
@@ -68,7 +75,7 @@ public class Cue {
 	 * Sets the DMX Array
 	 * @param dmxArray the dmxArray to set
 	 */
-	public void setDmxArray(byte[] dmxArray) {
+	void setDmxArray(byte[] dmxArray) {
 		System.arraycopy(dmxArray, 0, this.dmxArray, 0, ArtNetServerManager.DMX_CHANNELS_COUNT);
 	}
 	

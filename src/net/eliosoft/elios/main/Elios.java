@@ -24,6 +24,10 @@ import java.awt.Container;
 import java.awt.Image;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.Arrays;
 import java.util.Locale;
@@ -74,6 +78,12 @@ import artnet4j.ArtNetException;
  * @author Jeremie GASTON-RAOUL
  */
 public final class Elios {
+
+    	/** Folder in which data are stored. **/
+    	private static final String ELIOS_DATA_FOLDER = System.getProperty("user.home") + File.separator + ".elios";
+
+	/** Filename of the file used for cues list persistence. **/
+	private static final String CUESLIST_FILENAME = ELIOS_DATA_FOLDER + File.separator + "elios.cues";
 
 	/**
 	 * The logger.
@@ -347,6 +357,13 @@ public final class Elios {
 				"server.additivemode.enable", false));
 		model.setHttpPort(prefs.getInt("server.httpserver.port",
 				HttpServerManager.DEFAULT_HTTP_PORT));
+		
+		try {
+		    model.load(new FileInputStream(CUESLIST_FILENAME));
+		} catch (IOException e) {
+		    LOGGER.warning("Can not load cues " + e.getMessage());
+		}
+		
 		return model;
 	}
 
@@ -372,6 +389,18 @@ public final class Elios {
 		prefs.putBoolean("server.additivemode.enable",
 				model.isAdditiveModeEnabled());
 		prefs.putInt("server.httpserver.port", model.getHttpPort());
+		
+		try {
+		    File dir = new File(ELIOS_DATA_FOLDER);
+		    if(!dir.isDirectory()) { // create root folder if needed
+			dir.mkdir(); 
+		    }
+		    
+		    model.persist(new FileOutputStream(CUESLIST_FILENAME));
+		} catch (IOException e) {
+		    LOGGER.warning("Can not persist current cues : " + e.getMessage());
+		}
+		
 	}
 
 	/**
