@@ -26,6 +26,7 @@ import java.util.logging.Logger;
 
 import net.eliosoft.elios.main.LoggersManager;
 import net.eliosoft.elios.server.handler.CommandLineHttpHandler;
+import net.eliosoft.elios.server.handler.CuesHttpHandler;
 import net.eliosoft.elios.server.handler.DMXTableHttpHandler;
 import net.eliosoft.elios.server.handler.ParamsHttpHandler;
 import net.eliosoft.elios.server.handler.ResourceHttpHandler;
@@ -46,6 +47,7 @@ public class HttpServerManager {
 	private final CommandLineHttpHandler commanLineHttpHandler = new CommandLineHttpHandler();
 	private final ParamsHttpHandler paramsHttpHandler = new ParamsHttpHandler();
 	private final DMXTableHttpHandler dmxTableHttpHandler = new DMXTableHttpHandler();
+	private final CuesHttpHandler cuesHttpHandler = new CuesHttpHandler();
 
 	/**
 	 * default value for http port
@@ -107,6 +109,7 @@ public class HttpServerManager {
 		this.httpServer.createContext("/data/commandLine", this.commanLineHttpHandler);
 		this.httpServer.createContext("/data/params", this.paramsHttpHandler);
 		this.httpServer.createContext("/data/dmxTable", this.dmxTableHttpHandler);
+		this.httpServer.createContext("/data/cues", this.cuesHttpHandler);
 	}
 	
 }

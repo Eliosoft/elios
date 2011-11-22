@@ -92,6 +92,13 @@ td {
 	border-width: 1px;
 }
 
+.largeButton {
+	font-size: 18px;
+	width: 94px;
+	height: 40px;
+	border-width: 1px;
+}
+
 .tab{
 	width: 290px;
 	margin-left: auto; 
@@ -114,6 +121,16 @@ td {
 
 #cuesTab {
 	display: none;
+	width: 288px;
+	border: solid 1px black;
+}
+
+#cuesTab table, td {
+	border: none;
+}
+
+#cuesList {
+	width: 286px;
 }
 
 #dmxTableTab {
@@ -134,9 +151,12 @@ td {
 <!--
 var send_xhr_object = null;
 var params_xhr_object = null;
+var dmxTable_xhr_object = null;
+var cuesList_xhr_object = null;
 var isRequestActive = false;
 var context="/data/";
 var elements = new Array();
+var cues = "";
 
 
 var init = function()
@@ -147,6 +167,7 @@ var init = function()
 	elements["dmxTableTab"] = document.getElementById("dmxTableTab");
 
 	elements["dmxTable"] = document.getElementById("dmxTable");
+	elements["cuesList"] = document.getElementById("cuesList");
 	
 	elements["remoteButton"] = document.getElementById("remoteButton");
 	elements["cuesButton"] = document.getElementById("cuesButton");
@@ -157,6 +178,7 @@ var init = function()
 	send_xhr_object = createXHRObject();
 	params_xhr_object = createXHRObject();
 	dmxTable_xhr_object = createXHRObject();
+	cuesList_xhr_object = createXHRObject();
 	
 	if(!send_xhr_object){
 		alert("pas d'objet send");
@@ -167,12 +189,17 @@ var init = function()
 		return;
 	}
 	if(!dmxTable_xhr_object){
-		alert("pas d'objet params");
+		alert("pas d'objet dmxTable");
+		return;
+	}
+	if(!cuesList_xhr_object){
+		alert("pas d'objet cuesList");
 		return;
 	}
 	
 	updateDMXTable();
 	updateParams();
+	updateCuesList();
 }
 
 var createXHRObject = function()
@@ -330,6 +357,51 @@ var setNewDMXTable = function(xhr_object){
 	setTimeout(updateDMXTable,1000);
 }
 
+
+var updateCuesList = function(){
+	makeRequest(cuesList_xhr_object,'get','',context+'cues?action=cuesList',setNewCuesList);
+}
+
+var setNewCuesList = function(xhr_object){
+	if(xhr_object.status==200){
+		var newCues = xhr_object.responseText;
+		if(newCues != cues){
+			cues = newCues;
+			// remove all children from element
+			var element = elements['cuesList'];
+			while (element.firstChild) {
+				element.removeChild(element.firstChild);
+			}
+			var values = cues.split(',');
+			for (var i=0 ; i<values.length ; i++){
+				var option=document.createElement('OPTION');
+				element.appendChild(option);
+				var value = values[i];
+				option.appendChild(document.createTextNode(value));
+			}
+		}
+	}
+	else{
+		// remove all children from element
+		var element = elements['cuesList'];
+		while (element.firstChild) {
+			element.removeChild(element.firstChild);
+		}
+		element.appendChild(document.createTextNode(xhr_object.responseText));
+	}
+	setTimeout(updateCuesList,1000);
+}
+
+var storeCue = function(){
+	var xhr_object = createXHRObject();
+	xhr_object.open("GET", context+"cues?action=unusedCueName", false);
+	xhr_object.send(null);
+	var name = prompt('Cue Name ?',xhr_object.responseText);
+	if(name!=null && name!=''){
+		makeRequest(send_xhr_object,'post','action=store&cueName='+name,context+'cues',showResult);
+	}
+	return false;
+}
 -->
 </SCRIPT>
 </HEAD><BODY onload="init();">
@@ -431,7 +503,19 @@ var setNewDMXTable = function(xhr_object){
 	</FORM>
 </DIV>
 <DIV id="cuesTab" class="tab">
-	Not Implemented Yet !!!
+	<FORM onsubmit="return false" name="cues" id="cues">
+		<SELECT name="cuesList" id="cuesList" onchange="return false" size="20">
+		</SELECT>
+		<TABLE align="center">
+			<TBODY>
+				<TR>
+					<TD><INPUT class="largeButton" type="submit" name="Store" id="Store" value="Store" onclick="storeCue(); return false"></TD>
+					<TD><INPUT class="largeButton" type="submit" name="Load" id="Load" value="Load" onclick="makeRequest(send_xhr_object,'post','action=load&cueName='+document.cues.cuesList.value,context+'cues',showResult); return false"></TD>
+					<TD><INPUT class="largeButton" type="submit" name="Delete" id="Delete" value="Delete" onclick="if(document.cues.cuesList.value!='' &&  confirm('Do you want to delete the cue ?')){makeRequest(send_xhr_object,'post','action=delete&cueName='+document.cues.cuesList.value,context+'cues',showResult);} return false"></TD>
+				</TR>
+			</TBODY>
+		</TABLE>
+	</FORM>
 </DIV>
 <DIV id="dmxTableTab" class="tab">
 	<DIV id="dmxTableOptions">
