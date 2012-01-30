@@ -26,9 +26,9 @@ public class ReleaseInformationRepositoryImpl implements
 
 	public ReleaseInformationRepositoryImpl(Preferences prefs) {
 		String rootUrlStr = prefs.get(RELEASEINFO_ROOT_URL, null);
-		if(rootUrlStr == null)
+		if(rootUrlStr == null) {
 			throw new IllegalStateException("Unable to retrieve the URL of the release information url");
-		
+		}
 		rootUrl = URI.create(rootUrlStr);
 		this.prefs = prefs;
 	}
@@ -86,15 +86,17 @@ public class ReleaseInformationRepositoryImpl implements
 
 			for (;;) {
 				int i = stream.read(buf);
-				if (i == -1)
+				if (i == -1) {
 					break;
+				}
 				sb.append(new String(buf, 0, i, Charset.forName("UTF-8")));
 			}
 
 			return ReleaseInformation.fromJSON(sb.toString());
 		} finally {
-			if (stream != null)
+			if (stream != null) {
 				stream.close();
+			}
 		}
 	}
 

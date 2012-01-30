@@ -58,12 +58,13 @@ public class CuesController {
 			public void actionPerformed(ActionEvent arg0) {
 				final String cueName = CuesViewHelper.askForCueName(cuesView.getViewComponent(), remoteModel.getCuesListModel().getNextDefaultCueName());
 
-				if(cueName != null)
+				if(cueName != null) {
 					try {
 						remoteModel.storeCue(cueName);						
 					} catch (Exception exception) {
 						CuesViewHelper.printError(cuesView.getViewComponent(), exception, cueName);
 					}
+				}
 			}
 		});
 

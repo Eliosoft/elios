@@ -77,10 +77,11 @@ public class ReleaseInformationDialogBuilder {
 	public ReleaseInformationDialogBuilder(Frame parent,
 			ReleaseInformationRepository repository, UpdateModel uSupport) {
 
-		if (repository == null)
+		if (repository == null) {
 			throw new IllegalArgumentException(
 					"The ReleaseInformationRepository could not be null");
-
+		}
+		
 		this.parent = parent;
 		this.repository = repository;
 		this.uSupport = uSupport;

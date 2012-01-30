@@ -72,10 +72,12 @@ public class UpdateModel {
 
 	public boolean updateIsNecessary() {
 		Frequency frequency = getFrequency();
-		if (frequency == Frequency.ALWAYS)
+		if (frequency == Frequency.ALWAYS) {
 			return true;
-		if (frequency == Frequency.NEVER)
+		}
+		if (frequency == Frequency.NEVER) {
 			return false;
+		}
 		long latest = prefs.getLong(UpdateModel.UPDATE_LATEST_CHECK_PREFS_KEY,
 				Frequency.DAILY.getValue());
 

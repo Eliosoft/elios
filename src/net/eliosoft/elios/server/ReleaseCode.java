@@ -113,10 +113,12 @@ public class ReleaseCode implements Comparable<ReleaseCode> {
 	@Override
 	public int compareTo(ReleaseCode o) {
 		Double d = Double.valueOf(extractCode(this) - extractCode(o));
-		if (d > 0)
+		if (d > 0) {
 			return 1;
-		if (d < 0)
+		}
+		if (d < 0) {
 			return -1;
+		}
 		return 0;
 	}
 
@@ -130,8 +132,9 @@ public class ReleaseCode implements Comparable<ReleaseCode> {
 		Matcher matcher = VALIDATION_PATTERN.matcher(rc.code);
 		matcher.matches(); // always true
 		Double value = Double.valueOf(matcher.group(1));
-		if (rc.isUnderDevelopment())
+		if (rc.isUnderDevelopment()) {
 			value -= 0.00000001;
+		}
 		return value;
 	}
 
@@ -147,10 +150,12 @@ public class ReleaseCode implements Comparable<ReleaseCode> {
 	}
 	
 	public boolean before(ReleaseCode code) {
-		if(this.compareTo(code) == -1)
+		if(this.compareTo(code) == -1) {
 			return true;
-		if(this.compareTo(code) == 0 && isUnderDevelopment())
+		}
+		if(this.compareTo(code) == 0 && isUnderDevelopment()) {
 			return true;
+		}
 		return false;
 	}
 	

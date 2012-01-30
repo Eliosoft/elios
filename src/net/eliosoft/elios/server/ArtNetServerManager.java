@@ -192,8 +192,9 @@ public class ArtNetServerManager {
 					value = (commandLineMatcher.group(COMMAND_LINE_PATTERN_LEVEL_GROUP).toUpperCase().compareTo("F") == 0) ? MAX_PERCENT_VALUE : Integer.parseInt(commandLineMatcher.group(COMMAND_LINE_PATTERN_LEVEL_VALUE_GROUP));
 				}
 				
-				if((percent && value > MAX_PERCENT_VALUE) || value > MAX_DMX_VALUE)
+				if((percent && value > MAX_PERCENT_VALUE) || value > MAX_DMX_VALUE) {
 					throw new BadSyntaxException();
+				}
 				
 				//adding values to HashMap of values to push
 				

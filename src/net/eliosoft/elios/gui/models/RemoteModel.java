@@ -36,8 +36,6 @@ import javax.swing.event.ChangeListener;
 import javax.swing.event.ListDataEvent;
 import javax.swing.event.ListDataListener;
 
-import org.xml.sax.InputSource;
-
 import net.eliosoft.elios.gui.events.ArtNetStartedEvent;
 import net.eliosoft.elios.gui.events.ArtNetStoppedEvent;
 import net.eliosoft.elios.gui.events.CommandLineValueChangedEvent;
@@ -625,12 +623,13 @@ public class RemoteModel {
 		this.stopHttp();
 		try {
 			this.startArtNet();
-			if(isHttpServerEnabled())
+			if(isHttpServerEnabled()) {
 				try {
 					this.startHttp();
 				} catch (IOException e) {
 					new ArtNetException(e.getMessage(), e.getCause());
 				}
+			}
 		} catch (SocketException e) {
 			throw new ArtNetException(e.getMessage(), e.getCause());
 		}
