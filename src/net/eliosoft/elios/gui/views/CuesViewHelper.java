@@ -11,7 +11,7 @@ import javax.swing.JOptionPane;
  * @author acollign
  * @since Feb 3, 2011
  */
-public class CuesViewHelper {
+public final class CuesViewHelper {
 
 	/**
 	 * Helper class can not be instantiate.
