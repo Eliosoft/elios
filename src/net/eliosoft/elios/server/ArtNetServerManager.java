@@ -69,8 +69,8 @@ public class ArtNetServerManager {
 	private int sequenceId = 0;
 	private boolean additiveModeEnabled = false;
 	
-	private static final Pattern commandLinePattern = Pattern.compile("^(((\\d{1,3})(/(\\d{1,3}))?)([\\+\\-]((\\d{1,3})(/(\\d{1,3}))?))*)(@(F|(D?)(\\d{1,3}))){0,1}$",Pattern.CASE_INSENSITIVE);
-	private static final Pattern channelPattern = Pattern.compile("([\\+\\-]?)(\\d{1,3})(/(\\d{1,3}))?",Pattern.CASE_INSENSITIVE);
+	private static final Pattern COMMANDLINE_PATTERN = Pattern.compile("^(((\\d{1,3})(/(\\d{1,3}))?)([\\+\\-]((\\d{1,3})(/(\\d{1,3}))?))*)(@(F|(D?)(\\d{1,3}))){0,1}$",Pattern.CASE_INSENSITIVE);
+	private static final Pattern CHANNEL_PATTERN = Pattern.compile("([\\+\\-]?)(\\d{1,3})(/(\\d{1,3}))?",Pattern.CASE_INSENSITIVE);
 	
 	private static final int COMMAND_LINE_PATTERN_CHANNEL_GROUP = 1;
 	private static final int COMMAND_LINE_PATTERN_AT_LEVEL_GROUP = 11;
@@ -162,9 +162,9 @@ public class ArtNetServerManager {
 		HashMap<Integer,Byte> valuesToPush = new HashMap<Integer,Byte>();
 		
 		for(String command : commands){
-			Matcher commandLineMatcher = commandLinePattern.matcher(command);
+			Matcher commandLineMatcher = COMMANDLINE_PATTERN.matcher(command);
 			if (commandLineMatcher.find()) {
-				Matcher channelMatcher = channelPattern.matcher(commandLineMatcher.group(COMMAND_LINE_PATTERN_CHANNEL_GROUP));
+				Matcher channelMatcher = CHANNEL_PATTERN.matcher(commandLineMatcher.group(COMMAND_LINE_PATTERN_CHANNEL_GROUP));
 				HashSet<Integer> channels = new HashSet<Integer>();
 				while (channelMatcher.find()) {
 					boolean except = (channelMatcher.group(CHANNEL_PATTERN_EXCEPT_GROUP).compareTo("-") == 0);
