@@ -49,7 +49,7 @@ public class ReleaseInformationDialogBuilder {
 	 *            the object built by the implementation
 	 */
 	public interface Builder<T> {
-		public T build();
+		T build();
 	}
 
 	/** parent {@link Frame}. **/

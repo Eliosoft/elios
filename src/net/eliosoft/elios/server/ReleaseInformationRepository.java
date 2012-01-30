@@ -12,7 +12,7 @@ public interface ReleaseInformationRepository {
 	 * 
 	 * @return the {@link ReleaseCode} of current installed version
 	 */
-	public ReleaseCode getInstalledReleaseCode();
+	ReleaseCode getInstalledReleaseCode();
 	
 	
 	/**
@@ -20,14 +20,14 @@ public interface ReleaseInformationRepository {
 	 * 
 	 * @return the {@link ReleaseInformation} of current installed version
 	 */
-	public ReleaseInformation getInstalled();
+	ReleaseInformation getInstalled();
 	
 	/**
 	 * Returns the {@link ReleaseInformation} of the latest release.
 	 * 
 	 * @return the {@link ReleaseInformation} of the latest release
 	 */
-	public ReleaseInformation getLatest();
+	ReleaseInformation getLatest();
 
 	/**
 	 * Returns the {@link ReleaseInformation} of the release identified by
@@ -37,6 +37,6 @@ public interface ReleaseInformationRepository {
 	 *            a {@link ReleaseCode}
 	 * @return a {@link ReleaseInformation} or null if any release was found
 	 */
-	public ReleaseInformation getByReleaseCode(ReleaseCode releaseCode);
+	ReleaseInformation getByReleaseCode(ReleaseCode releaseCode);
 
 }
