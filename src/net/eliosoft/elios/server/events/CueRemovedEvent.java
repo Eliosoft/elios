@@ -25,22 +25,22 @@ package net.eliosoft.elios.server.events;
  * @author Jeremie GASTON-RAOUL
  */
 public class CueRemovedEvent {
-	private int cueIndex;
+	private String cueName;
 
 	/**
 	 * Constructor method to instantiate a new event.
-	 * @param cueIndex the index of the removed cue in the cuesList
+	 * @param cueName the name of the removed cue in the cuesList
 	 */
-	public CueRemovedEvent(int cueIndex) {
-		this.cueIndex = cueIndex;
+	public CueRemovedEvent(String cueName) {
+		this.cueName = cueName;
 	}
 
 	/**
-	 * Returns the index of the removed cue
-	 * @return the cueIndex
+	 * Returns the name of the removed cue
+	 * @return the cue name
 	 */
-	public int getCueIndex() {
-		return cueIndex;
+	public String getCueName() {
+		return cueName;
 	}
 	
 }

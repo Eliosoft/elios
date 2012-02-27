@@ -23,6 +23,9 @@ import javax.swing.AbstractListModel;
 
 import net.eliosoft.elios.server.Cue;
 import net.eliosoft.elios.server.CuesManager;
+import net.eliosoft.elios.server.events.CueAddedEvent;
+import net.eliosoft.elios.server.events.CueRemovedEvent;
+import net.eliosoft.elios.server.listeners.CuesManagerListener;
 
 /**
  * A {@code ListModel} that wrap a CuesList
@@ -35,10 +38,22 @@ public class CuesListModel extends AbstractListModel {
 	private final CuesManager cuesManager;
 	
 	/**
-	 * @param cuesManager
+	 * @param cuesMngr
 	 */
-	public CuesListModel(CuesManager cuesManager) {
-		this.cuesManager = cuesManager;
+	public CuesListModel(CuesManager cuesMngr) {
+		this.cuesManager = cuesMngr;
+		this.cuesManager.addCuesManagerChangedListener(new CuesManagerListener() {
+			
+			@Override
+			public void cueRemoved(CueRemovedEvent event) {
+				fireContentsChanged(this, 0, cuesManager.getCues().size());
+			}
+			
+			@Override
+			public void cueAdded(CueAddedEvent event) {
+				fireContentsChanged(this, 0, cuesManager.getCues().size());
+			}
+		});
 	}
 	
 	@Override

@@ -25,22 +25,22 @@ package net.eliosoft.elios.server.events;
  * @author Jeremie GASTON-RAOUL
  */
 public class CueAddedEvent {
-	private int cueIndex;
+	private String cueName;
 
 	/**
 	 * Constructor method to instantiate a new event.
-	 * @param cueIndex the index of the new cue in the cuesList
+	 * @param cueName the name of the new cue in the cuesList
 	 */
-	public CueAddedEvent(int cueIndex) {
-		this.cueIndex = cueIndex;
+	public CueAddedEvent(String cueName) {
+		this.cueName = cueName;
 	}
 
 	/**
-	 * Returns the index of the new cue
-	 * @return the cueIndex
+	 * Returns the name of the new cue
+	 * @return the cue name
 	 */
-	public int getCueIndex() {
-		return cueIndex;
+	public String getCueName() {
+		return cueName;
 	}
 	
 }
