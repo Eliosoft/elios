@@ -81,7 +81,8 @@ public class PrefsView implements ViewInterface {
 	 * 
 	 * @param remoteModel
 	 *            the model associated to the view
-	 * @param localeModel
+	 * @param localeModel the associated {@link LocaleComboBoxModel}
+	 * @param updateModel the associated {@link UpdateModel}
 	 */
 	public PrefsView(RemoteModel remoteModel, LocaleComboBoxModel localeModel, UpdateModel updateModel) {
 		this.remoteModel = remoteModel;

@@ -12,14 +12,24 @@ import javax.swing.JList;
 import net.eliosoft.elios.gui.models.UpdateModel;
 import net.eliosoft.elios.gui.models.UpdateModel.Frequency;
 
+/**
+ * A view that allow the user to choose the frequency of the update check.
+ * 
+ * @author acollign
+ */
 public class UpdateFrequencyChooserView implements ViewInterface {
 
 	private final UpdateModel model;
 
+	/**
+	 * Constructs an {@link UpdateFrequencyChooserView}.
+	 * 
+	 * @param updateModel the underlying {@link UpdateModel}
+	 */
 	public UpdateFrequencyChooserView(UpdateModel updateModel) {
 		this.model = updateModel;
 	}
-	
+
 	@Override
 	public JComponent getViewComponent() {
 		final JComboBox freqCbx = new JComboBox(Frequency.values());
@@ -27,10 +37,10 @@ public class UpdateFrequencyChooserView implements ViewInterface {
 		freqCbx.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				model.saveUpdateFrequency((Frequency)freqCbx.getSelectedItem());
+				model.saveUpdateFrequency((Frequency) freqCbx.getSelectedItem());
 			}
 		});
-		
+
 		freqCbx.setRenderer(new DefaultListCellRenderer() {
 
 			/** serial id. **/
@@ -52,6 +62,11 @@ public class UpdateFrequencyChooserView implements ViewInterface {
 		return freqCbx;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see net.eliosoft.elios.gui.views.ViewInterface#getLocalizedTitle()
+	 */
 	@Override
 	public String getLocalizedTitle() {
 		return Messages.getString("updatefreqchooserview.title");

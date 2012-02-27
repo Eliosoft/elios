@@ -671,11 +671,24 @@ public class RemoteModel {
 		cuesListModel.removeCue(cue);
 	}
 
+	/**
+	 * Persists the current cues to the given {@link OutputStream}.
+	 *
+	 * @param stream the stream used to store the cues
+	 * @throws IOException if something goes wrong when persisting
+	 * @see CuesManager#load(InputStream)
+	 */
 	public void persist(OutputStream stream) throws IOException {
 	    cuesManager.persist(stream);
 	}
 	
-	public void load(InputStream stream) throws IOException {
+	/**
+	 * Loads cues from the given {@link InputStream}.
+	 *
+	 * @param stream {@link InputStream} from which the cues must be load
+	 * @see CuesManager#persist(OutputStream)
+	 */
+	public void load(InputStream stream) {
 	    cuesManager.load(stream);
 	}
 }

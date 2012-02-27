@@ -5,7 +5,7 @@ import java.util.regex.Pattern;
 
 /**
  * This class represents a release code. The valid code matches the
- * {@link ReleaseCode.VALIDATION_PATTERN} pattern.
+ * {@link net.eliosoft.elios.server.ReleaseCode#VALIDATION_PATTERN} pattern.
  * 
  * @author E362200
  */
@@ -21,11 +21,13 @@ public class ReleaseCode implements Comparable<ReleaseCode> {
 	public static final Pattern VALIDATION_PATTERN = Pattern
 			.compile("([0-9]\\.[0-9]*)(" + DEVELOPMENT_SUFFIX + ")*");
 
-	
+	/**
+	 * Constructs an empty release code.
+	 */
 	ReleaseCode() {
-		
+		// nothing
 	}
-	
+
 	/**
 	 * Constructs a {@link ReleaseCode} with the given code.
 	 * 
@@ -125,7 +127,8 @@ public class ReleaseCode implements Comparable<ReleaseCode> {
 	/**
 	 * Extracts a {@link Double} representation of the code.
 	 * 
-	 * @param rc a {@link ReleaseCode}
+	 * @param rc
+	 *            a {@link ReleaseCode}
 	 * @return a {@link Double} representation of the code
 	 */
 	private Double extractCode(ReleaseCode rc) {
@@ -143,22 +146,40 @@ public class ReleaseCode implements Comparable<ReleaseCode> {
 	 * development.
 	 * 
 	 * @return true if the current ReleaseCode is associated to a release under
-	 * development
+	 *         development
 	 */
 	public boolean isUnderDevelopment() {
 		return code.endsWith(DEVELOPMENT_SUFFIX);
 	}
-	
+
+	/**
+	 * Returns true if the current release code is older that the given one,
+	 * false otherwise.
+	 * 
+	 * @param code
+	 *            a {@link ReleaseCode} instance
+	 * @return true if the current release code is older than the given one,
+	 *         false otherwise
+	 */
 	public boolean before(ReleaseCode code) {
-		if(this.compareTo(code) == -1) {
+		if (this.compareTo(code) == -1) {
 			return true;
 		}
-		if(this.compareTo(code) == 0 && isUnderDevelopment()) {
+		if (this.compareTo(code) == 0 && isUnderDevelopment()) {
 			return true;
 		}
 		return false;
 	}
-	
+
+	/**
+	 * Returns true if the current release code is newer than the given one,
+	 * false otherwise.
+	 * 
+	 * @param code
+	 *            a {@link ReleaseCode} instance
+	 * @return true if the current release code is newer than the given one,
+	 *         false otherwise
+	 */
 	public boolean after(ReleaseCode code) {
 		return !code.before(this);
 	}

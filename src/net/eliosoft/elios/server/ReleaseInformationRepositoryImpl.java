@@ -9,21 +9,41 @@ import java.nio.charset.Charset;
 import java.text.MessageFormat;
 import java.util.prefs.Preferences;
 
+/**
+ * A {@link ReleaseInformationRepository} implementation.
+ * 
+ * @author acollign
+ */
 public class ReleaseInformationRepositoryImpl implements
 		ReleaseInformationRepository {
 
 	private static final int FETCH_TIMEOUT = 5000;
 
+	/**
+	 * The pattern of the URL of the Elios update file.
+	 */
 	public static final String URL_PATTERN = "{0}/{1}.euf";
 
+	/**
+	 * The release info root URL preference key.
+	 */
 	public static final String RELEASEINFO_ROOT_URL = "releaseinfo.root.url";
 
+	/**
+	 * The current release preference key.
+	 */
 	public static final String RELEASEINFO_CURENT_RELEASE_CODE = "releaseinfo.current.release";
 
 	private final URI rootUrl;
 
 	private final Preferences prefs;
 
+	/**
+	 * Constructs a {@link ReleaseInformationRepositoryImpl} according to the configuration
+	 * stored in the {@link Preferences}.
+	 * 
+	 * @param prefs a {@link Preferences} instance
+	 */
 	public ReleaseInformationRepositoryImpl(Preferences prefs) {
 		String rootUrlStr = prefs.get(RELEASEINFO_ROOT_URL, null);
 		if(rootUrlStr == null) {

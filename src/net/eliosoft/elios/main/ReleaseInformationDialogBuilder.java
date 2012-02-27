@@ -49,6 +49,12 @@ public class ReleaseInformationDialogBuilder {
 	 *            the object built by the implementation
 	 */
 	public interface Builder<T> {
+		
+		/**
+		 * Build an instance of T.
+		 * 
+		 * @return an instance of T
+		 */
 		T build();
 	}
 
@@ -73,6 +79,7 @@ public class ReleaseInformationDialogBuilder {
 	 *            the parent of the {@link JDialog} that will be created
 	 * @param repository
 	 *            the source of information
+	 * @param uSupport the {@link UpdateModel} instance
 	 */
 	public ReleaseInformationDialogBuilder(Frame parent,
 			ReleaseInformationRepository repository, UpdateModel uSupport) {
