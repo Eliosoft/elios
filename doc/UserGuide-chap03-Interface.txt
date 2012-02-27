@@ -106,8 +106,7 @@ of the ArtNetServer on the subnet and universe selected in the toolbar.
 You can have more accurate information (channel number, percent and DMX values) 
 of each channel by putting your cursor over the corresponding cell. 
 
-For the moment, cues are not saved when Elios is closed. You have to recreate
-them at each startup of the application.
+Cues are saved when Elios is closed. You will find them back when you will reopen the app.
 
 Preferences
 -----------
@@ -117,6 +116,8 @@ Preferences
 On the Prefs panel, you can set all application settings :
 
 * *Language* : choose the language of Elios interface ;
+
+* *Check update* : choose the frequency of checking for new versions of Elios ;
 
 * *Broadcast address* : the IP address on which ArtNet packets are 
 broadcasted (use 127.255.255.255 if the node is on the same computer 
