@@ -68,6 +68,8 @@ public class LogsViewHelper {
 
 			if (record.getLevel().equals(Level.SEVERE)) {
 				label.setForeground(Color.RED);
+			} else {
+				label.setForeground(Color.BLACK);
 			}
 
 			return label;
