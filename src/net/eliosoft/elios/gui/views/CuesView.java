@@ -66,7 +66,8 @@ public class CuesView implements ViewInterface {
 		cuesList = new JList(this.remoteModel.getCuesListModel());
 
 		cuesList.addMouseListener(new MouseAdapter() {
-		    public void mouseClicked(MouseEvent e) {
+		    @Override
+			public void mouseClicked(MouseEvent e) {
 		        if (e.getClickCount() == 2) {
 		            int index = cuesList.locationToIndex(e.getPoint());
 		            remoteModel.loadCue(remoteModel.getCuesListModel().getElementAt(index));

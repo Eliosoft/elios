@@ -39,6 +39,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
 import javax.swing.UIManager;
+import javax.swing.WindowConstants;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -182,7 +183,7 @@ public final class Elios {
 			final JTabbedPane tabbedPane = new JTabbedPane();
 			Container contentPane = frame.getContentPane();
 			contentPane.setLayout(new BorderLayout());
-			frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+			frame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 			frame.setIconImages(Arrays.asList(icons));
 
 			contentPane.add(new ToolbarFactory(remoteModel, state).create(frame),
