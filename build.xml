@@ -29,6 +29,7 @@
 	<property name="doc" location="doc"/>
 	<property name="doc.res" location="doc/pictures"/>
 	<property name="doc.generator" location="doc/pandoc_wrapper.sh"/>
+	<property name="dist.javadoc" location="dist/javadoc"/>
 	<property name="dist.doc.html" location="dist/doc/html"/>
 	<property name="dist.doc.html.res" location="dist/doc/html/resources"/>
 	<property name="dist.jar.tmp" location="dist/tmp/jar" />
@@ -68,11 +69,12 @@
 		</copy>
 	</target>
 
-    	<target name="javadoc" depends="init" description="generate the javadoc">
-        	<javadoc sourcepath="src/" destdir="dist/javadoc"/>
-    	</target>
+	<target name="javadoc" depends="init" description="generate the javadoc">
+		<!-- Classpath is set to fix warnings during the generation -->
+		<javadoc sourcepath="${src}" destdir="${dist.javadoc}" classpath="${lib}/artnet4j.jar;${lib}/gson-1.6.jar" />
+	</target>
 
-	<target name="dist_userguide-html" depends="init, create_dist-dir" description="generate the documentation in pdf format">
+	<target name="dist_userguide-html" depends="init, create_dist-dir" description="generate the documentation in HTML format">
 		<copy todir="${dist.doc.html.res}">
 			<fileset dir="${doc.res}" />
 		</copy>
