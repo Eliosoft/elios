@@ -21,25 +21,28 @@ package net.eliosoft.elios.server.events;
 
 /**
  * Event fired when subnet value has changed.
- *
+ * 
  * @author Jeremie GASTON-RAOUL
  */
 public class SubnetValueChangedEvent {
-	private int subnet;
+    private int subnet;
 
-	/**
-	 * Constructor method to instantiate a new event.
-	 * @param subnet the new subnet value
-	 */
-	public SubnetValueChangedEvent(int subnet) {
-		this.subnet = subnet;
-	}
+    /**
+     * Constructor method to instantiate a new event.
+     * 
+     * @param subnet
+     *            the new subnet value
+     */
+    public SubnetValueChangedEvent(int subnet) {
+	this.subnet = subnet;
+    }
 
-	/**
-	 * Returns the subnet value of the event.
-	 * @return the new subnet value
-	 */
-	public int getSubnet() {
-		return subnet;
-	}
+    /**
+     * Returns the subnet value of the event.
+     * 
+     * @return the new subnet value
+     */
+    public int getSubnet() {
+	return subnet;
+    }
 }

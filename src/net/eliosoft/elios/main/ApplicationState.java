@@ -25,14 +25,16 @@ public class ApplicationState {
      * @author acollign
      */
     public interface Listener {
-    	
-    	/**
-    	 * Call when the internal state of the {@link ApplicationState} change.
-    	 * 
-    	 * @param oldState the old state
-    	 * @param newState the new state
-    	 */
-    	void stateChanged(State oldState, State newState);
+
+	/**
+	 * Call when the internal state of the {@link ApplicationState} change.
+	 * 
+	 * @param oldState
+	 *            the old state
+	 * @param newState
+	 *            the new state
+	 */
+	void stateChanged(State oldState, State newState);
     }
 
     /**

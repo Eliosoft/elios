@@ -30,82 +30,85 @@ import javax.swing.event.ListDataListener;
 
 import net.eliosoft.elios.gui.models.RemoteModel;
 
-
-
 /**
- * The view of the Logs Line.
- * This view displays the last line of logs in a text field.
- *
+ * The view of the Logs Line. This view displays the last line of logs in a text
+ * field.
+ * 
  * @author Jeremie GASTON-RAOUL
  */
 public class LogsLineView implements ViewInterface {
 
-	private final RemoteModel remoteModel;
+    private final RemoteModel remoteModel;
 
-	private final JPanel logsLinePanel = new JPanel();
+    private final JPanel logsLinePanel = new JPanel();
 
-	private JLabel logLabel;
+    private JLabel logLabel;
 
-	/**
-	 * The constructor of the class.
-	 * @param remoteModel the model associated with this view
-	 */
-	public LogsLineView(RemoteModel remoteModel) {
-		this.remoteModel = remoteModel;
-		this.logsLinePanel.setBorder(BorderFactory.createEtchedBorder());
-		this.logLabel = new JLabel(LogsViewHelper.DEFAULT_TEXT);
-		this.logsLinePanel.add(logLabel);
-		this.initRemoteModelListener();
-	}
+    /**
+     * The constructor of the class.
+     * 
+     * @param remoteModel
+     *            the model associated with this view
+     */
+    public LogsLineView(RemoteModel remoteModel) {
+	this.remoteModel = remoteModel;
+	this.logsLinePanel.setBorder(BorderFactory.createEtchedBorder());
+	this.logLabel = new JLabel(LogsViewHelper.DEFAULT_TEXT);
+	this.logsLinePanel.add(logLabel);
+	this.initRemoteModelListener();
+    }
 
-	private void initRemoteModelListener() {
-		this.remoteModel.getLogsListModel().addListDataListener(new ListDataListener() {
+    private void initRemoteModelListener() {
+	this.remoteModel.getLogsListModel().addListDataListener(
+		new ListDataListener() {
 
-			@Override
-			public void intervalRemoved(ListDataEvent e) {
-				updateLabel();
-			}
+		    @Override
+		    public void intervalRemoved(ListDataEvent e) {
+			updateLabel();
+		    }
 
-			@Override
-			public void intervalAdded(ListDataEvent e) {
-				updateLabel();
-			}
+		    @Override
+		    public void intervalAdded(ListDataEvent e) {
+			updateLabel();
+		    }
 
-			@Override
-			public void contentsChanged(ListDataEvent e) {
-				updateLabel();
-			}
+		    @Override
+		    public void contentsChanged(ListDataEvent e) {
+			updateLabel();
+		    }
 		});
 
-	}
+    }
 
-	/**
-	 * Returns the log field.
-	 * @return the log field of the view
-	 */
-	@Override
-	public JComponent getViewComponent() {
-		return this.logsLinePanel;
+    /**
+     * Returns the log field.
+     * 
+     * @return the log field of the view
+     */
+    @Override
+    public JComponent getViewComponent() {
+	return this.logsLinePanel;
+    }
+
+    /**
+     * Update the label according to the current LogRecord.
+     */
+    private void updateLabel() {
+	if (remoteModel.getLogsListModel().getSize() > 0) {
+	    final LogRecord logRecord = (LogRecord) remoteModel
+		    .getLogsListModel().getElementAt(
+			    remoteModel.getLogsListModel().getSize() - 1);
+	    LogsViewHelper.LOG_DECORATOR.update(logLabel, logRecord);
+	} else {
+	    logLabel.setText(LogsViewHelper.DEFAULT_TEXT);
 	}
-	
-	/**
-	 * Update the label according to the current LogRecord.
-	 */
-	private void updateLabel(){
-		if(remoteModel.getLogsListModel().getSize() > 0){
-			final LogRecord logRecord = (LogRecord) remoteModel.getLogsListModel().getElementAt(remoteModel.getLogsListModel().getSize()-1);
-			LogsViewHelper.LOG_DECORATOR.update(logLabel, logRecord);
-		}
-		else{
-			logLabel.setText(LogsViewHelper.DEFAULT_TEXT);
-		}
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public String getLocalizedTitle() {
-	    return Messages.getString("logsview.title");
-	}
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String getLocalizedTitle() {
+	return Messages.getString("logsview.title");
+    }
 }

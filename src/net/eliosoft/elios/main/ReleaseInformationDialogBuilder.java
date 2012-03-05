@@ -40,219 +40,223 @@ import net.eliosoft.elios.server.ReleaseInformationRepository;
  */
 public class ReleaseInformationDialogBuilder {
 
+    /**
+     * A simple interface to apply the GOF {@link Builder} pattern.
+     * 
+     * @author E362200
+     * 
+     * @param <T>
+     *            the object built by the implementation
+     */
+    public interface Builder<T> {
+
 	/**
-	 * A simple interface to apply the GOF {@link Builder} pattern.
+	 * Build an instance of T.
 	 * 
-	 * @author E362200
-	 * 
-	 * @param <T>
-	 *            the object built by the implementation
+	 * @return an instance of T
 	 */
-	public interface Builder<T> {
-		
-		/**
-		 * Build an instance of T.
-		 * 
-		 * @return an instance of T
-		 */
-		T build();
+	T build();
+    }
+
+    /** parent {@link Frame}. **/
+    private final Frame parent;
+
+    /** identifier of the shown release. **/
+    private ReleaseCode releaseCode;
+
+    /** repository used to retrieve {@link ReleaseInformation}. **/
+    private final ReleaseInformationRepository repository;
+
+    /** update support. **/
+    private final UpdateModel uSupport;
+
+    /**
+     * Creates a {@link ReleaseInformationDialogBuilder}. The parent
+     * {@link Frame} will be used as a parent of the created {@link JDialog},
+     * the {@link ReleaseInformationRepository} as a source of data.
+     * 
+     * @param parent
+     *            the parent of the {@link JDialog} that will be created
+     * @param repository
+     *            the source of information
+     * @param uSupport
+     *            the {@link UpdateModel} instance
+     */
+    public ReleaseInformationDialogBuilder(Frame parent,
+	    ReleaseInformationRepository repository, UpdateModel uSupport) {
+
+	if (repository == null) {
+	    throw new IllegalArgumentException(
+		    "The ReleaseInformationRepository could not be null");
 	}
 
-	/** parent {@link Frame}. **/
-	private final Frame parent;
+	this.parent = parent;
+	this.repository = repository;
+	this.uSupport = uSupport;
+    }
 
-	/** identifier of the shown release. **/
-	private ReleaseCode releaseCode;
+    /**
+     * Build the {@link JDialog} of the release identified by the
+     * {@link ReleaseCode}.
+     * 
+     * @param code
+     *            the {@link ReleaseCode} of the release to display
+     * @return the built dialog
+     */
+    private JDialog build(ReleaseCode code) {
 
-	/** repository used to retrieve {@link ReleaseInformation}. **/
-	private final ReleaseInformationRepository repository;
+	// TODO loading must be done in a swing worker
+	final ReleaseInformation ri = repository.getLatest();
 
-	/** update support. **/
-	private final UpdateModel uSupport;
+	final JDialog dialog = new JDialog(parent,
+		Messages.getString("updatedialog.title"));
+	dialog.setSize(360, 360);
 
-	/**
-	 * Creates a {@link ReleaseInformationDialogBuilder}. The parent
-	 * {@link Frame} will be used as a parent of the created {@link JDialog},
-	 * the {@link ReleaseInformationRepository} as a source of data.
-	 * 
-	 * @param parent
-	 *            the parent of the {@link JDialog} that will be created
-	 * @param repository
-	 *            the source of information
-	 * @param uSupport the {@link UpdateModel} instance
-	 */
-	public ReleaseInformationDialogBuilder(Frame parent,
-			ReleaseInformationRepository repository, UpdateModel uSupport) {
+	JPanel panel = new JPanel();
+	panel.setLayout(new BorderLayout());
+	dialog.add(panel);
 
-		if (repository == null) {
-			throw new IllegalArgumentException(
-					"The ReleaseInformationRepository could not be null");
+	Box box = createRevisionPanel(ri);
+	panel.add(box, BorderLayout.NORTH);
+
+	JComponent comp = createReleaseNoteAndUpdatePane(ri);
+
+	panel.add(comp, BorderLayout.CENTER);
+
+	Box buttonBox = createButtonPanel(ri, dialog);
+	panel.add(buttonBox, BorderLayout.SOUTH);
+
+	return dialog;
+    }
+
+    private JComponent createReleaseNoteAndUpdatePane(
+	    final ReleaseInformation ri) {
+
+	JPanel panel = new JPanel();
+	panel.setLayout(new BorderLayout());
+
+	URL url = ri.getReleaseNoteUrl();
+	JEditorPane view = new JEditorPane();
+	JScrollPane editorScrollPane = new JScrollPane(view);
+	try {
+	    view.setPage(url);
+	} catch (IOException e) {
+	    view.setText(Messages.getString("updatedialog.error.network", url));
+	}
+	panel.add(editorScrollPane, BorderLayout.CENTER);
+
+	Box uBox = Box.createHorizontalBox();
+	UpdateFrequencyChooserView updateFrequencyChooserView = new UpdateFrequencyChooserView(
+		uSupport);
+	uBox.add(new JLabel(updateFrequencyChooserView.getLocalizedTitle()));
+
+	JComponent updateComponent = updateFrequencyChooserView
+		.getViewComponent();
+	uBox.add(updateComponent);
+
+	panel.add(uBox, BorderLayout.SOUTH);
+	return panel;
+    }
+
+    private Box createButtonPanel(final ReleaseInformation ri,
+	    final JDialog dialog) {
+	Box buttonBox = Box.createHorizontalBox();
+	buttonBox.add(Box.createHorizontalGlue());
+	JButton closeBtn = new JButton(Messages.getString("updatedialog.close"));
+
+	closeBtn.setIcon(new ImageIcon(Elios.class
+		.getResource("/net/eliosoft/elios/gui/views/dialog-close.png")));
+
+	closeBtn.addActionListener(new ActionListener() {
+	    @Override
+	    public void actionPerformed(ActionEvent e) {
+		dialog.dispose();
+		uSupport.markAsChecked();
+	    }
+	});
+	buttonBox.add(closeBtn);
+
+	if (Desktop.isDesktopSupported()) {
+	    final Desktop desktop = Desktop.getDesktop();
+	    JButton openInBrowser = new JButton(
+		    Messages.getString("updatedialog.openwebbrowser"));
+
+	    openInBrowser
+		    .setIcon(new ImageIcon(
+			    Elios.class
+				    .getResource("/net/eliosoft/elios/gui/views/internet-web-browser.png")));
+
+	    openInBrowser.addActionListener(new ActionListener() {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+		    try {
+			desktop.browse(ri.getDownloadUrl().toURI());
+		    } catch (IOException e1) {
+			JOptionPane.showMessageDialog(
+				dialog,
+				Messages.getString(
+					"updatedialog.error.cannotopenbrowser.message",
+					e1.getLocalizedMessage()),
+				Messages.getString("updatedialog.error.cannotopenbrowser.title"),
+				JOptionPane.ERROR_MESSAGE);
+			dialog.dispose();
+		    } catch (URISyntaxException e1) {
+			throw new AssertionError(e1.getMessage());
+		    }
 		}
-		
-		this.parent = parent;
-		this.repository = repository;
-		this.uSupport = uSupport;
+	    });
+	    buttonBox.add(openInBrowser);
+	} else {
+	    buttonBox.add(Box.createGlue());
 	}
+	return buttonBox;
+    }
 
-	/**
-	 * Build the {@link JDialog} of the release identified by the
-	 * {@link ReleaseCode}.
-	 * 
-	 * @param code
-	 *            the {@link ReleaseCode} of the release to display
-	 * @return the built dialog
-	 */
-	private JDialog build(ReleaseCode code) {
+    private Box createRevisionPanel(final ReleaseInformation ri) {
+	JLabel currentReleaseLbl = new JLabel(Messages.getString(
+		"updatedialog.release.current", repository
+			.getInstalledReleaseCode().getCode()));
+	JLabel newReleaseLbl = new JLabel(Messages.getString(
+		"updatedialog.release.new", ri.getReleaseCode().getCode(),
+		new SimpleDateFormat().format(new Date(ri.getReleaseTime()))));
+	Box box = Box.createVerticalBox();
 
-		// TODO loading must be done in a swing worker
-		final ReleaseInformation ri = repository.getLatest();
+	box.add(currentReleaseLbl);
+	box.add(newReleaseLbl);
+	return box;
+    }
 
-		final JDialog dialog = new JDialog(parent,
-				Messages.getString("updatedialog.title"));
-		dialog.setSize(360, 360);
+    /**
+     * Defines the release code that identified the {@link ReleaseInformation}
+     * to display.
+     * 
+     * @param code
+     *            the string representation of the release code that identified
+     *            the {@link ReleaseInformation} to display
+     * @return a {@link Builder} implementation that allow you to finally build
+     *         the {@link JDialog}.
+     */
+    public Builder<JDialog> forReleaseCode(String code) {
+	return forReleaseCode(ReleaseCode.create(code));
+    }
 
-		JPanel panel = new JPanel();
-		panel.setLayout(new BorderLayout());
-		dialog.add(panel);
-
-		Box box = createRevisionPanel(ri);
-		panel.add(box, BorderLayout.NORTH);
-
-		JComponent comp = createReleaseNoteAndUpdatePane(ri);
-
-		panel.add(comp, BorderLayout.CENTER);
-
-		Box buttonBox = createButtonPanel(ri, dialog);
-		panel.add(buttonBox, BorderLayout.SOUTH);
-
-		return dialog;
-	}
-
-	private JComponent createReleaseNoteAndUpdatePane(
-			final ReleaseInformation ri) {
-
-		JPanel panel = new JPanel();
-		panel.setLayout(new BorderLayout());
-
-		URL url = ri.getReleaseNoteUrl();
-		JEditorPane view = new JEditorPane();
-		JScrollPane editorScrollPane = new JScrollPane(view);
-		try {
-			view.setPage(url);
-		} catch (IOException e) {
-			view.setText(Messages.getString("updatedialog.error.network", url));
-		}
-		panel.add(editorScrollPane, BorderLayout.CENTER);
-
-		Box uBox = Box.createHorizontalBox();
-		UpdateFrequencyChooserView updateFrequencyChooserView = new UpdateFrequencyChooserView(uSupport);
-		uBox.add(new JLabel(updateFrequencyChooserView.getLocalizedTitle()));
-		
-		JComponent updateComponent = updateFrequencyChooserView.getViewComponent();
-		uBox.add(updateComponent);
-
-		panel.add(uBox, BorderLayout.SOUTH);
-		return panel;
-	}
-
-	private Box createButtonPanel(final ReleaseInformation ri,
-			final JDialog dialog) {
-		Box buttonBox = Box.createHorizontalBox();
-		buttonBox.add(Box.createHorizontalGlue());
-		JButton closeBtn = new JButton(Messages.getString("updatedialog.close"));
-
-		closeBtn.setIcon(new ImageIcon(Elios.class
-				.getResource("/net/eliosoft/elios/gui/views/dialog-close.png")));
-
-		closeBtn.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				dialog.dispose();
-				uSupport.markAsChecked();
-			}
-		});
-		buttonBox.add(closeBtn);
-
-		if (Desktop.isDesktopSupported()) {
-			final Desktop desktop = Desktop.getDesktop();
-			JButton openInBrowser = new JButton(
-					Messages.getString("updatedialog.openwebbrowser"));
-
-			openInBrowser
-					.setIcon(new ImageIcon(
-							Elios.class
-									.getResource("/net/eliosoft/elios/gui/views/internet-web-browser.png")));
-
-			openInBrowser.addActionListener(new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					try {
-						desktop.browse(ri.getDownloadUrl().toURI());
-					} catch (IOException e1) {
-						JOptionPane.showMessageDialog(
-								dialog,
-								Messages.getString(
-										"updatedialog.error.cannotopenbrowser.message",
-										e1.getLocalizedMessage()),
-								Messages.getString("updatedialog.error.cannotopenbrowser.title"),
-								JOptionPane.ERROR_MESSAGE);
-						dialog.dispose();
-					} catch (URISyntaxException e1) {
-						throw new AssertionError(e1.getMessage());
-					}
-				}
-			});
-			buttonBox.add(openInBrowser);
-		} else {
-			buttonBox.add(Box.createGlue());
-		}
-		return buttonBox;
-	}
-
-	private Box createRevisionPanel(final ReleaseInformation ri) {
-		JLabel currentReleaseLbl = new JLabel(Messages.getString(
-				"updatedialog.release.current", repository.getInstalledReleaseCode().getCode()));
-		JLabel newReleaseLbl = new JLabel(Messages.getString(
-				"updatedialog.release.new", ri.getReleaseCode().getCode(),
-				new SimpleDateFormat().format(new Date(ri.getReleaseTime()))));
-		Box box = Box.createVerticalBox();
-
-		box.add(currentReleaseLbl);
-		box.add(newReleaseLbl);
-		return box;
-	}
-
-	/**
-	 * Defines the release code that identified the {@link ReleaseInformation}
-	 * to display.
-	 * 
-	 * @param code
-	 *            the string representation of the release code that identified
-	 *            the {@link ReleaseInformation} to display
-	 * @return a {@link Builder} implementation that allow you to finally build
-	 *         the {@link JDialog}.
-	 */
-	public Builder<JDialog> forReleaseCode(String code) {
-		return forReleaseCode(ReleaseCode.create(code));
-	}
-
-	/**
-	 * Defines the release code that identified the {@link ReleaseInformation}
-	 * to display.
-	 * 
-	 * @param code
-	 *            the {@link ReleaseCode} that identified the
-	 *            {@link ReleaseInformation} to display
-	 * @return a {@link Builder} implementation that allow you to finally build
-	 *         the {@link JDialog}.
-	 */
-	public Builder<JDialog> forReleaseCode(ReleaseCode code) {
-		this.releaseCode = code;
-		return new Builder<JDialog>() {
-			@Override
-			public JDialog build() {
-				return ReleaseInformationDialogBuilder.this.build(releaseCode);
-			}
-		};
-	}
+    /**
+     * Defines the release code that identified the {@link ReleaseInformation}
+     * to display.
+     * 
+     * @param code
+     *            the {@link ReleaseCode} that identified the
+     *            {@link ReleaseInformation} to display
+     * @return a {@link Builder} implementation that allow you to finally build
+     *         the {@link JDialog}.
+     */
+    public Builder<JDialog> forReleaseCode(ReleaseCode code) {
+	this.releaseCode = code;
+	return new Builder<JDialog>() {
+	    @Override
+	    public JDialog build() {
+		return ReleaseInformationDialogBuilder.this.build(releaseCode);
+	    }
+	};
+    }
 }

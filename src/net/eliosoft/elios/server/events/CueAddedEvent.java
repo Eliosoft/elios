@@ -21,26 +21,29 @@ package net.eliosoft.elios.server.events;
 
 /**
  * Event fired when a cue has been added.
- *
+ * 
  * @author Jeremie GASTON-RAOUL
  */
 public class CueAddedEvent {
-	private String cueName;
+    private String cueName;
 
-	/**
-	 * Constructor method to instantiate a new event.
-	 * @param cueName the name of the new cue in the cuesList
-	 */
-	public CueAddedEvent(String cueName) {
-		this.cueName = cueName;
-	}
+    /**
+     * Constructor method to instantiate a new event.
+     * 
+     * @param cueName
+     *            the name of the new cue in the cuesList
+     */
+    public CueAddedEvent(String cueName) {
+	this.cueName = cueName;
+    }
 
-	/**
-	 * Returns the name of the new cue
-	 * @return the cue name
-	 */
-	public String getCueName() {
-		return cueName;
-	}
-	
+    /**
+     * Returns the name of the new cue
+     * 
+     * @return the cue name
+     */
+    public String getCueName() {
+	return cueName;
+    }
+
 }

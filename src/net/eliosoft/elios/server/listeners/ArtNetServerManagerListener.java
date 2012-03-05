@@ -23,29 +23,34 @@ import net.eliosoft.elios.server.events.AdditiveModeValueChangedEvent;
 import net.eliosoft.elios.server.events.SubnetValueChangedEvent;
 import net.eliosoft.elios.server.events.UniverseValueChangedEvent;
 
-
 /**
- * This interface describes the methods that must be implemented
- * by classes which want to be a listener of the ArtNet server manager.
- *
+ * This interface describes the methods that must be implemented by classes
+ * which want to be a listener of the ArtNet server manager.
+ * 
  * @author Jeremie GASTON-RAOUL
  */
 public interface ArtNetServerManagerListener {
-	/**
-	 * This method is called when the value of the subnet has changed.
-	 * @param event the event corresponding to the change of the subnet
-	 */
-	void subnetValueChanged(SubnetValueChangedEvent event);
-	
-	/**
-	 * This method is called when the value of the universe has changed.
-	 * @param event the event corresponding to the change of the universe
-	 */
-	void universeValueChanged(UniverseValueChangedEvent event);
-	
-	/**
-	 * This method is called when the value of the additive mode has changed.
-	 * @param event the event corresponding to the change of the additive mode
-	 */
-	void additiveModeValueChanged(AdditiveModeValueChangedEvent event);
+    /**
+     * This method is called when the value of the subnet has changed.
+     * 
+     * @param event
+     *            the event corresponding to the change of the subnet
+     */
+    void subnetValueChanged(SubnetValueChangedEvent event);
+
+    /**
+     * This method is called when the value of the universe has changed.
+     * 
+     * @param event
+     *            the event corresponding to the change of the universe
+     */
+    void universeValueChanged(UniverseValueChangedEvent event);
+
+    /**
+     * This method is called when the value of the additive mode has changed.
+     * 
+     * @param event
+     *            the event corresponding to the change of the additive mode
+     */
+    void additiveModeValueChanged(AdditiveModeValueChangedEvent event);
 }

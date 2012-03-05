@@ -21,26 +21,29 @@ package net.eliosoft.elios.gui.events;
 
 /**
  * Event fired when CommandLine value has changed.
- *
+ * 
  * @author Jeremie GASTON-RAOUL
  */
 public class CommandLineValueChangedEvent {
 
-	private String command;
+    private String command;
 
-	/**
-	 * Constructor method to instantiate a new event.
-	 * @param command the new command line value
-	 */
-	public CommandLineValueChangedEvent(String command) {
-		this.command = command;
-	}
+    /**
+     * Constructor method to instantiate a new event.
+     * 
+     * @param command
+     *            the new command line value
+     */
+    public CommandLineValueChangedEvent(String command) {
+	this.command = command;
+    }
 
-	/**
-	 * Returns the Command Line value of the event.
-	 * @return the new CommandLine value
-	 */
-	public String getCommand() {
-		return command;
-	}
+    /**
+     * Returns the Command Line value of the event.
+     * 
+     * @return the new CommandLine value
+     */
+    public String getCommand() {
+	return command;
+    }
 }

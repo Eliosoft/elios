@@ -25,36 +25,37 @@ import java.awt.event.ActionListener;
 import net.eliosoft.elios.gui.models.RemoteModel;
 import net.eliosoft.elios.gui.views.LogsView;
 
-
-
 /**
  * The controller of the log view.
- *
+ * 
  * @author Jeremie GASTON-RAOUL
  */
 public class LogsController {
 
-	private final RemoteModel remoteModel;
-	private final LogsView logsView;
+    private final RemoteModel remoteModel;
+    private final LogsView logsView;
 
-	/**
-	 * The constructor of the LogsController class.
-	 * @param remoteModel the model associated with this Controller
-	 * @param logsView the view associated with this Controller
-	 */
-	public LogsController(RemoteModel remoteModel, LogsView logsView) {
-		this.remoteModel = remoteModel;
-		this.logsView = logsView;
+    /**
+     * The constructor of the LogsController class.
+     * 
+     * @param remoteModel
+     *            the model associated with this Controller
+     * @param logsView
+     *            the view associated with this Controller
+     */
+    public LogsController(RemoteModel remoteModel, LogsView logsView) {
+	this.remoteModel = remoteModel;
+	this.logsView = logsView;
 
-		this.initButtonsListeners();
-	}
+	this.initButtonsListeners();
+    }
 
-	private void initButtonsListeners() {
-		this.logsView.addClearLogsButtonListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				remoteModel.getLogsListModel().clearLogsList();
-			}
-		});
-	}
+    private void initButtonsListeners() {
+	this.logsView.addClearLogsButtonListener(new ActionListener() {
+	    @Override
+	    public void actionPerformed(ActionEvent e) {
+		remoteModel.getLogsListModel().clearLogsList();
+	    }
+	});
+    }
 }

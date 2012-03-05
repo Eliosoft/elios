@@ -29,85 +29,87 @@ import javax.swing.AbstractListModel;
 
 /**
  * A {@code ListModel} that wrap one or more {@code java.util.Logger}.
- *
+ * 
  * @author Jeremie GASTON-RAOUL
  * @author Alexandre COLLIGNON
  */
 public class LogsListModel extends AbstractListModel {
 
-	private static final long serialVersionUID = -3782927318483496410L;
+    private static final long serialVersionUID = -3782927318483496410L;
 
-	/** list of logs. **/
-	private List<LogRecord> logs;
+    /** list of logs. **/
+    private List<LogRecord> logs;
 
-	/**
-	 * Constructs a {@code LogsListModel} that wraps the
-	 * {@code java.util.Logger} given in argument.
-	 *
-	 */
-	public LogsListModel() {
-		logs = new ArrayList<LogRecord>();
+    /**
+     * Constructs a {@code LogsListModel} that wraps the
+     * {@code java.util.Logger} given in argument.
+     * 
+     */
+    public LogsListModel() {
+	logs = new ArrayList<LogRecord>();
+    }
+
+    /**
+     * Adds a {@code java.util.Logger} to wrap.
+     * 
+     * @param logger
+     *            {@code java.util.Logger} to wrap
+     */
+    public void addLogger(final Logger logger) {
+	logger.addHandler(new Handler() {
+
+	    @Override
+	    public void publish(LogRecord record) {
+		addLogRecord(record);
+	    }
+
+	    @Override
+	    public void flush() {
+		// nothing
+	    }
+
+	    @Override
+	    public void close() {
+		logger.info(logger.getName() + " is closing");
+	    }
+	});
+    }
+
+    /**
+     * Adds a log record in the list.
+     * 
+     * @param logRecord
+     *            the log record to add
+     */
+    private void addLogRecord(LogRecord logRecord) {
+	logs.add(logRecord);
+	this.fireIntervalAdded(this, logs.size() - 1, logs.size() - 1);
+    }
+
+    /**
+     * Removes all log records of the list.
+     */
+    public void clearLogsList() {
+	int lastSize = logs.size();
+	if (lastSize > 0) {
+	    logs.clear();
+	    this.fireIntervalRemoved(this, 0, lastSize - 1);
 	}
+    }
 
-	/**
-	 * Adds a {@code java.util.Logger} to wrap.
-	 *
-	 * @param logger {@code java.util.Logger} to wrap
-	 */
-	public void addLogger(final Logger logger) {
-		logger.addHandler(new Handler() {
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Object getElementAt(int index) {
+	return logs.get(index);
+    }
 
-			@Override
-			public void publish(LogRecord record) {
-				addLogRecord(record);
-			}
-
-			@Override
-			public void flush() {
-				// nothing
-			}
-
-			@Override
-			public void close() {
-				logger.info(logger.getName() + " is closing");
-			}
-		});
-	}
-
-	/**
-	 * Adds a log record in the list.
-	 *
-	 * @param logRecord the log record to add
-	 */
-	private void addLogRecord(LogRecord logRecord) {
-		logs.add(logRecord);
-		this.fireIntervalAdded(this, logs.size() - 1, logs.size() - 1);
-	}
-
-	/**
-	 * Removes all log records of the list.
-	 */
-	public void clearLogsList() {
-		int lastSize = logs.size();
-		if (lastSize > 0) {
-			logs.clear();
-			this.fireIntervalRemoved(this, 0, lastSize - 1);
-		}
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public Object getElementAt(int index) {
-		return logs.get(index);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public int getSize() {
-		return logs.size();
-	}
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getSize() {
+	return logs.size();
+    }
 }

@@ -48,154 +48,181 @@ import net.eliosoft.elios.server.Cue;
  */
 public class CuesView implements ViewInterface {
 
-	private final JPanel cuesPanel = new JPanel(new BorderLayout());
-	private final RemoteModel remoteModel;
-	
-	private final JButton storeButton;
-	private final JButton loadButton;
-	private final JButton removeButton;
-	private final JList cuesList;
+    private final JPanel cuesPanel = new JPanel(new BorderLayout());
+    private final RemoteModel remoteModel;
 
-	/**
-	 * The constructor of the class.
-	 * 
-	 * @param remoteModel the model associated to the view
-	 */
-	public CuesView(final RemoteModel remoteModel) {
-		this.remoteModel = remoteModel;
-		cuesList = new JList(this.remoteModel.getCuesListModel());
+    private final JButton storeButton;
+    private final JButton loadButton;
+    private final JButton removeButton;
+    private final JList cuesList;
 
-		cuesList.addMouseListener(new MouseAdapter() {
-		    @Override
-			public void mouseClicked(MouseEvent e) {
-		        if (e.getClickCount() == 2) {
-		            int index = cuesList.locationToIndex(e.getPoint());
-		            remoteModel.loadCue(remoteModel.getCuesListModel().getElementAt(index));
-		         }
-		    }
-		});
+    /**
+     * The constructor of the class.
+     * 
+     * @param remoteModel
+     *            the model associated to the view
+     */
+    public CuesView(final RemoteModel remoteModel) {
+	this.remoteModel = remoteModel;
+	cuesList = new JList(this.remoteModel.getCuesListModel());
 
-		JScrollPane scrollPane = new JScrollPane(cuesList);
-		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-		
-		cuesList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		cuesList.setCellRenderer(new DefaultListCellRenderer() {
-			
-			private static final long serialVersionUID = -3018960552174916077L;
+	cuesList.addMouseListener(new MouseAdapter() {
+	    @Override
+	    public void mouseClicked(MouseEvent e) {
+		if (e.getClickCount() == 2) {
+		    int index = cuesList.locationToIndex(e.getPoint());
+		    remoteModel.loadCue(remoteModel.getCuesListModel()
+			    .getElementAt(index));
+		}
+	    }
+	});
 
-			@Override
-			public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
-				super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
-				Cue cue = (Cue)value;
-				setText(cue.getName());
+	JScrollPane scrollPane = new JScrollPane(cuesList);
+	scrollPane
+		.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 
-				return this;
-			}
-		});
-		cuesList.addListSelectionListener(new ListSelectionListener() {
-			
-			@Override
-			public void valueChanged(ListSelectionEvent e) {
-				if(getSelectedCue() == null){
-					loadButton.setEnabled(false);
-					removeButton.setEnabled(false);
-				}
-				else{
-					loadButton.setEnabled(true);
-					removeButton.setEnabled(true);
-				}
-			}
-		});
+	cuesList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+	cuesList.setCellRenderer(new DefaultListCellRenderer() {
 
-		storeButton = new JButton(Messages.getString("cuesview.storebutton"), new ImageIcon(Elios.class
+	    private static final long serialVersionUID = -3018960552174916077L;
+
+	    @Override
+	    public Component getListCellRendererComponent(JList list,
+		    Object value, int index, boolean isSelected,
+		    boolean cellHasFocus) {
+		super.getListCellRendererComponent(list, value, index,
+			isSelected, cellHasFocus);
+		Cue cue = (Cue) value;
+		setText(cue.getName());
+
+		return this;
+	    }
+	});
+	cuesList.addListSelectionListener(new ListSelectionListener() {
+
+	    @Override
+	    public void valueChanged(ListSelectionEvent e) {
+		if (getSelectedCue() == null) {
+		    loadButton.setEnabled(false);
+		    removeButton.setEnabled(false);
+		} else {
+		    loadButton.setEnabled(true);
+		    removeButton.setEnabled(true);
+		}
+	    }
+	});
+
+	storeButton = new JButton(
+		Messages.getString("cuesview.storebutton"),
+		new ImageIcon(
+			Elios.class
 				.getResource("/net/eliosoft/elios/gui/views/document-save-as.png")));
-		loadButton = new JButton(Messages.getString("cuesview.loadbutton"), new ImageIcon(Elios.class
+	loadButton = new JButton(
+		Messages.getString("cuesview.loadbutton"),
+		new ImageIcon(
+			Elios.class
 				.getResource("/net/eliosoft/elios/gui/views/document-open.png")));
-		loadButton.setEnabled(false);
-		removeButton = new JButton(Messages.getString("cuesview.removebutton"), new ImageIcon(Elios.class
+	loadButton.setEnabled(false);
+	removeButton = new JButton(
+		Messages.getString("cuesview.removebutton"),
+		new ImageIcon(
+			Elios.class
 				.getResource("/net/eliosoft/elios/gui/views/edit-delete.png")));
-		removeButton.setEnabled(false);
-		
-		JPanel buttonsPanel = new JPanel();
-		buttonsPanel.add(storeButton);
-		buttonsPanel.add(loadButton);
-		buttonsPanel.add(removeButton);
-		
-		cuesPanel.add(scrollPane,BorderLayout.CENTER);
-		cuesPanel.add(buttonsPanel,BorderLayout.SOUTH);
-	}
+	removeButton.setEnabled(false);
 
-	/**
-	 * Returns the cues panel
-	 * 
-	 * @return the view component
-	 */
-	@Override
-	public JComponent getViewComponent() {
-		return this.cuesPanel;
-	}
-	
-	/**
-	 * Adds an action listener to the store button.
-	 * @param listener the listener to add
-	 */
-	public void addStoreButtonListener(ActionListener listener) {
-		this.storeButton.addActionListener(listener);
-	}
+	JPanel buttonsPanel = new JPanel();
+	buttonsPanel.add(storeButton);
+	buttonsPanel.add(loadButton);
+	buttonsPanel.add(removeButton);
 
-	/**
-	 * Removes an action listener to the store button.
-	 * @param listener the listener to remove
-	 */
-	public void removeStoreButtonListener(ActionListener listener) {
-		this.storeButton.removeActionListener(listener);
-	}
-	
-	/**
-	 * Adds an action listener to the load button.
-	 * @param listener the listener to add
-	 */
-	public void addLoadButtonListener(ActionListener listener) {
-		this.loadButton.addActionListener(listener);
-	}
+	cuesPanel.add(scrollPane, BorderLayout.CENTER);
+	cuesPanel.add(buttonsPanel, BorderLayout.SOUTH);
+    }
 
-	/**
-	 * Removes an action listener to the load button.
-	 * @param listener the listener to remove
-	 */
-	public void removeLoadButtonListener(ActionListener listener) {
-		this.loadButton.removeActionListener(listener);
-	}
-	
-	/**
-	 * Adds an action listener to the remove button.
-	 * @param listener the listener to add
-	 */
-	public void addRemoveButtonListener(ActionListener listener) {
-		this.removeButton.addActionListener(listener);
-	}
+    /**
+     * Returns the cues panel
+     * 
+     * @return the view component
+     */
+    @Override
+    public JComponent getViewComponent() {
+	return this.cuesPanel;
+    }
 
-	/**
-	 * Removes an action listener to the remove button.
-	 * @param listener the listener to remove
-	 */
-	public void removeRemoveButtonListener(ActionListener listener) {
-		this.removeButton.removeActionListener(listener);
-	}
-	
-	/**
-	 * Gets the selected cue.
-	 * @return the selected cue
-	 */
-	public Cue getSelectedCue(){
-		return (Cue)cuesList.getSelectedValue();
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public String getLocalizedTitle() {
-		return Messages.getString("cuesview.title");
-	}
+    /**
+     * Adds an action listener to the store button.
+     * 
+     * @param listener
+     *            the listener to add
+     */
+    public void addStoreButtonListener(ActionListener listener) {
+	this.storeButton.addActionListener(listener);
+    }
+
+    /**
+     * Removes an action listener to the store button.
+     * 
+     * @param listener
+     *            the listener to remove
+     */
+    public void removeStoreButtonListener(ActionListener listener) {
+	this.storeButton.removeActionListener(listener);
+    }
+
+    /**
+     * Adds an action listener to the load button.
+     * 
+     * @param listener
+     *            the listener to add
+     */
+    public void addLoadButtonListener(ActionListener listener) {
+	this.loadButton.addActionListener(listener);
+    }
+
+    /**
+     * Removes an action listener to the load button.
+     * 
+     * @param listener
+     *            the listener to remove
+     */
+    public void removeLoadButtonListener(ActionListener listener) {
+	this.loadButton.removeActionListener(listener);
+    }
+
+    /**
+     * Adds an action listener to the remove button.
+     * 
+     * @param listener
+     *            the listener to add
+     */
+    public void addRemoveButtonListener(ActionListener listener) {
+	this.removeButton.addActionListener(listener);
+    }
+
+    /**
+     * Removes an action listener to the remove button.
+     * 
+     * @param listener
+     *            the listener to remove
+     */
+    public void removeRemoveButtonListener(ActionListener listener) {
+	this.removeButton.removeActionListener(listener);
+    }
+
+    /**
+     * Gets the selected cue.
+     * 
+     * @return the selected cue
+     */
+    public Cue getSelectedCue() {
+	return (Cue) cuesList.getSelectedValue();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String getLocalizedTitle() {
+	return Messages.getString("cuesview.title");
+    }
 }

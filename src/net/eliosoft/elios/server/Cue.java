@@ -23,62 +23,71 @@ package net.eliosoft.elios.server;
  * An object representing a DMX universe state
  * 
  * @author Jeremie GASTON-RAOUL
- *
+ * 
  */
 public class Cue {
-	private String name;
-	private byte[] dmxArray = new byte[ArtNetServerManager.DMX_CHANNELS_COUNT];
-	
-	/**
-	 * Constructs an empty {@link Cue}. This constructor is mainly 
-	 * used for deserialization.
-	 */
-	Cue() {
-	    // nothing to do here.
-	}
-	
-	/**
-	 * The constructor method for the cue object.
-	 * @param name the name of the cue
-	 * @param dmxArray the dmx array of the cue
-	 */
-	public Cue(String name, byte[] dmxArray) {
-		this.name = name;
-		System.arraycopy(dmxArray, 0, this.dmxArray, 0, ArtNetServerManager.DMX_CHANNELS_COUNT);
-	}
+    private String name;
+    private byte[] dmxArray = new byte[ArtNetServerManager.DMX_CHANNELS_COUNT];
 
-	/**
-	 * Returns the name.
-	 * @return the name
-	 */
-	public String getName() {
-		return name;
-	}
-	
-	/**
-	 * Sets the name
-	 * @param name the name to set
-	 */
-	public void setName(String name) {
-		this.name = name;
-	}
-	
-	/**
-	 * Return the DMX Array
-	 * @return the dmxArray
-	 */
-	public byte[] getDmxArray() {
-		return dmxArray;
-	}
-	
-	/**
-	 * Sets the DMX Array
-	 * @param dmxArray the dmxArray to set
-	 */
-	void setDmxArray(byte[] dmxArray) {
-		System.arraycopy(dmxArray, 0, this.dmxArray, 0, ArtNetServerManager.DMX_CHANNELS_COUNT);
-	}
-	
-	
+    /**
+     * Constructs an empty {@link Cue}. This constructor is mainly used for
+     * deserialization.
+     */
+    Cue() {
+	// nothing to do here.
+    }
+
+    /**
+     * The constructor method for the cue object.
+     * 
+     * @param name
+     *            the name of the cue
+     * @param dmxArray
+     *            the dmx array of the cue
+     */
+    public Cue(String name, byte[] dmxArray) {
+	this.name = name;
+	System.arraycopy(dmxArray, 0, this.dmxArray, 0,
+		ArtNetServerManager.DMX_CHANNELS_COUNT);
+    }
+
+    /**
+     * Returns the name.
+     * 
+     * @return the name
+     */
+    public String getName() {
+	return name;
+    }
+
+    /**
+     * Sets the name
+     * 
+     * @param name
+     *            the name to set
+     */
+    public void setName(String name) {
+	this.name = name;
+    }
+
+    /**
+     * Return the DMX Array
+     * 
+     * @return the dmxArray
+     */
+    public byte[] getDmxArray() {
+	return dmxArray;
+    }
+
+    /**
+     * Sets the DMX Array
+     * 
+     * @param dmxArray
+     *            the dmxArray to set
+     */
+    void setDmxArray(byte[] dmxArray) {
+	System.arraycopy(dmxArray, 0, this.dmxArray, 0,
+		ArtNetServerManager.DMX_CHANNELS_COUNT);
+    }
 
 }

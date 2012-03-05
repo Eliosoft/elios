@@ -21,25 +21,28 @@ package net.eliosoft.elios.server.events;
 
 /**
  * Event fired when additive mode status has changed.
- *
+ * 
  * @author Jeremie GASTON-RAOUL
  */
 public class AdditiveModeValueChangedEvent {
-	private boolean additiveModeEnabled;
+    private boolean additiveModeEnabled;
 
-	/**
-	 * Constructor method to instantiate a new event.
-	 * @param additiveModeEnabled the new additive mode status value
-	 */
-	public AdditiveModeValueChangedEvent(boolean additiveModeEnabled) {
-		this.additiveModeEnabled = additiveModeEnabled;
-	}
+    /**
+     * Constructor method to instantiate a new event.
+     * 
+     * @param additiveModeEnabled
+     *            the new additive mode status value
+     */
+    public AdditiveModeValueChangedEvent(boolean additiveModeEnabled) {
+	this.additiveModeEnabled = additiveModeEnabled;
+    }
 
-	/**
-	 * Returns the additive mode status value of the event.
-	 * @return the new additive mode status value
-	 */
-	public boolean isAdditiveModeEnabled() {
-		return additiveModeEnabled;
-	}
+    /**
+     * Returns the additive mode status value of the event.
+     * 
+     * @return the new additive mode status value
+     */
+    public boolean isAdditiveModeEnabled() {
+	return additiveModeEnabled;
+    }
 }

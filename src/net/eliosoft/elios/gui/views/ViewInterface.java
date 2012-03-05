@@ -23,19 +23,21 @@ import javax.swing.JComponent;
 
 /**
  * The common interface between the different views of the application
+ * 
  * @author Jeremie GASTON-RAOUL
  */
 public interface ViewInterface {
-	/**
-	 * get the component containing the view
-	 * @return the view component
-	 */
-	JComponent getViewComponent();
-	
-	/**
-	 * Returns the localized title of the view. 
-	 * 
-	 * @return the localized title.
-	 */
-	String getLocalizedTitle();
+    /**
+     * get the component containing the view
+     * 
+     * @return the view component
+     */
+    JComponent getViewComponent();
+
+    /**
+     * Returns the localized title of the view.
+     * 
+     * @return the localized title.
+     */
+    String getLocalizedTitle();
 }

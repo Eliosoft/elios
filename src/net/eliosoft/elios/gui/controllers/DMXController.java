@@ -25,38 +25,39 @@ import java.awt.event.ActionListener;
 import net.eliosoft.elios.gui.models.DMXTableModel;
 import net.eliosoft.elios.gui.views.DMXView;
 
-
-
 /**
  * The controller of the cues view.
- *
+ * 
  * @author Jeremie GASTON-RAOUL
  */
 public class DMXController {
 
-	private final DMXTableModel dmxTableModel;	
-	private final DMXView dmxView;
+    private final DMXTableModel dmxTableModel;
+    private final DMXView dmxView;
 
+    /**
+     * The constructor of the DMXController class.
+     * 
+     * @param dmxTableModel
+     *            the dmx table model associated with this Controller
+     * @param dmxView
+     *            the view associated with this Controller
+     */
+    public DMXController(DMXTableModel dmxTableModel, DMXView dmxView) {
+	this.dmxTableModel = dmxTableModel;
+	this.dmxView = dmxView;
 
-	/**
-	 * The constructor of the DMXController class.
-	 * @param dmxTableModel the dmx table model associated with this Controller
-	 * @param dmxView the view associated with this Controller
-	 */
-	public DMXController(DMXTableModel dmxTableModel, DMXView dmxView) {
-		this.dmxTableModel = dmxTableModel;
-		this.dmxView = dmxView;
+	this.initListeners();
+    }
 
-		this.initListeners();
-	}
+    private void initListeners() {
+	this.dmxView.addInOutRadioActionListener(new ActionListener() {
 
-	private void initListeners() {
-		this.dmxView.addInOutRadioActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent actionEvent) {
-				dmxTableModel.setInputEnabled(actionEvent.getActionCommand().equals("input"));
-			}
-		});
-	}
+	    @Override
+	    public void actionPerformed(ActionEvent actionEvent) {
+		dmxTableModel.setInputEnabled(actionEvent.getActionCommand()
+			.equals("input"));
+	    }
+	});
+    }
 }

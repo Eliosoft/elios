@@ -29,70 +29,78 @@ import net.eliosoft.elios.server.listeners.CuesManagerListener;
 
 /**
  * A {@code ListModel} that wrap a CuesList
+ * 
  * @author Jeremie GASTON-RAOUL
  */
 public class CuesListModel extends AbstractListModel {
 
-	private static final long serialVersionUID = 5232976112210058420L;
+    private static final long serialVersionUID = 5232976112210058420L;
 
-	private final CuesManager cuesManager;
-	
-	/**
-	 * @param cuesMngr
-	 */
-	public CuesListModel(CuesManager cuesMngr) {
-		this.cuesManager = cuesMngr;
-		this.cuesManager.addCuesManagerChangedListener(new CuesManagerListener() {
-			
-			@Override
-			public void cueRemoved(CueRemovedEvent event) {
-				fireContentsChanged(this, 0, cuesManager.getCues().size());
-			}
-			
-			@Override
-			public void cueAdded(CueAddedEvent event) {
-				fireContentsChanged(this, 0, cuesManager.getCues().size());
-			}
+    private final CuesManager cuesManager;
+
+    /**
+     * @param cuesMngr
+     */
+    public CuesListModel(CuesManager cuesMngr) {
+	this.cuesManager = cuesMngr;
+	this.cuesManager
+		.addCuesManagerChangedListener(new CuesManagerListener() {
+
+		    @Override
+		    public void cueRemoved(CueRemovedEvent event) {
+			fireContentsChanged(this, 0, cuesManager.getCues()
+				.size());
+		    }
+
+		    @Override
+		    public void cueAdded(CueAddedEvent event) {
+			fireContentsChanged(this, 0, cuesManager.getCues()
+				.size());
+		    }
 		});
-	}
-	
-	@Override
-	public Cue getElementAt(int index) {
-		return cuesManager.getCues().get(index);
-	}
-	
-	@Override
-	public int getSize() {
-		return cuesManager.getCues().size();
-	}
+    }
 
-	/**
-	 * add a cue to the cuesList
-	 * @param cue the cue to add
-	 */
-	public void addCue(Cue cue) {
-		cuesManager.addCue(cue);
-		int index = cuesManager.getCues().size() - 1;
-		this.fireIntervalAdded(this, index, index);
-	}
+    @Override
+    public Cue getElementAt(int index) {
+	return cuesManager.getCues().get(index);
+    }
 
-	/**
-	 * remove a cue from the cuesList
-	 * @param cue the cue to remove
-	 */
-	public void removeCue(Cue cue) {
-		int index = cuesManager.getCues().indexOf(cue);
-		cuesManager.removeCue(cue.getName());
-		this.fireIntervalRemoved(this, index, index);
-	}
-	
-	/**
-	 * Returns a Cue name according to the state of the model.
-	 *
-	 * @return a string that could be used as a cue name.
-	 */
-	public String getNextDefaultCueName() {
-		return cuesManager.getUnusedCueName();
-	}
-	
+    @Override
+    public int getSize() {
+	return cuesManager.getCues().size();
+    }
+
+    /**
+     * add a cue to the cuesList
+     * 
+     * @param cue
+     *            the cue to add
+     */
+    public void addCue(Cue cue) {
+	cuesManager.addCue(cue);
+	int index = cuesManager.getCues().size() - 1;
+	this.fireIntervalAdded(this, index, index);
+    }
+
+    /**
+     * remove a cue from the cuesList
+     * 
+     * @param cue
+     *            the cue to remove
+     */
+    public void removeCue(Cue cue) {
+	int index = cuesManager.getCues().indexOf(cue);
+	cuesManager.removeCue(cue.getName());
+	this.fireIntervalRemoved(this, index, index);
+    }
+
+    /**
+     * Returns a Cue name according to the state of the model.
+     * 
+     * @return a string that could be used as a cue name.
+     */
+    public String getNextDefaultCueName() {
+	return cuesManager.getUnusedCueName();
+    }
+
 }

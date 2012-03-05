@@ -27,67 +27,73 @@ import net.eliosoft.elios.gui.views.CuesView;
 import net.eliosoft.elios.gui.views.CuesViewHelper;
 import net.eliosoft.elios.server.Cue;
 
-
-
 /**
  * The controller of the cues view.
- *
+ * 
  * @author Jeremie GASTON-RAOUL
  */
 public class CuesController {
 
-	private final RemoteModel remoteModel;
-	private final CuesView cuesView;
+    private final RemoteModel remoteModel;
+    private final CuesView cuesView;
 
-	/**
-	 * The constructor of the LogsController class.
-	 * @param remoteModel the model associated with this Controller
-	 * @param cuesView the view associated with this Controller
-	 */
-	public CuesController(RemoteModel remoteModel, CuesView cuesView) {
-		this.remoteModel = remoteModel;
-		this.cuesView = cuesView;
+    /**
+     * The constructor of the LogsController class.
+     * 
+     * @param remoteModel
+     *            the model associated with this Controller
+     * @param cuesView
+     *            the view associated with this Controller
+     */
+    public CuesController(RemoteModel remoteModel, CuesView cuesView) {
+	this.remoteModel = remoteModel;
+	this.cuesView = cuesView;
 
-		this.initButtonsListeners();
-	}
+	this.initButtonsListeners();
+    }
 
-	private void initButtonsListeners() {
-		this.cuesView.addStoreButtonListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				final String cueName = CuesViewHelper.askForCueName(cuesView.getViewComponent(), remoteModel.getCuesListModel().getNextDefaultCueName());
+    private void initButtonsListeners() {
+	this.cuesView.addStoreButtonListener(new ActionListener() {
 
-				if(cueName != null) {
-					try {
-						remoteModel.storeCue(cueName);						
-					} catch (Exception exception) {
-						CuesViewHelper.printError(cuesView.getViewComponent(), exception, cueName);
-					}
-				}
-			}
-		});
+	    @Override
+	    public void actionPerformed(ActionEvent arg0) {
+		final String cueName = CuesViewHelper.askForCueName(cuesView
+			.getViewComponent(), remoteModel.getCuesListModel()
+			.getNextDefaultCueName());
 
-		this.cuesView.addLoadButtonListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				Cue cue = cuesView.getSelectedCue();
-				if(cue != null){
-					remoteModel.loadCue(cue);
-				}
-			}
-		});
-		
-		this.cuesView.addRemoveButtonListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				Cue cue = cuesView.getSelectedCue();
-				if(cue != null && CuesViewHelper.confirmCueRemove(cuesView.getViewComponent(),cue.getName())){
-					remoteModel.removeCue(cue);
-				}
-			}
-		});
-	}
+		if (cueName != null) {
+		    try {
+			remoteModel.storeCue(cueName);
+		    } catch (Exception exception) {
+			CuesViewHelper.printError(cuesView.getViewComponent(),
+				exception, cueName);
+		    }
+		}
+	    }
+	});
+
+	this.cuesView.addLoadButtonListener(new ActionListener() {
+
+	    @Override
+	    public void actionPerformed(ActionEvent e) {
+		Cue cue = cuesView.getSelectedCue();
+		if (cue != null) {
+		    remoteModel.loadCue(cue);
+		}
+	    }
+	});
+
+	this.cuesView.addRemoveButtonListener(new ActionListener() {
+
+	    @Override
+	    public void actionPerformed(ActionEvent arg0) {
+		Cue cue = cuesView.getSelectedCue();
+		if (cue != null
+			&& CuesViewHelper.confirmCueRemove(
+				cuesView.getViewComponent(), cue.getName())) {
+		    remoteModel.removeCue(cue);
+		}
+	    }
+	});
+    }
 }

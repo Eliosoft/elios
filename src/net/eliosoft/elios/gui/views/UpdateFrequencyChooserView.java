@@ -19,56 +19,57 @@ import net.eliosoft.elios.gui.models.UpdateModel.Frequency;
  */
 public class UpdateFrequencyChooserView implements ViewInterface {
 
-	private final UpdateModel model;
+    private final UpdateModel model;
 
-	/**
-	 * Constructs an {@link UpdateFrequencyChooserView}.
-	 * 
-	 * @param updateModel the underlying {@link UpdateModel}
-	 */
-	public UpdateFrequencyChooserView(UpdateModel updateModel) {
-		this.model = updateModel;
-	}
+    /**
+     * Constructs an {@link UpdateFrequencyChooserView}.
+     * 
+     * @param updateModel
+     *            the underlying {@link UpdateModel}
+     */
+    public UpdateFrequencyChooserView(UpdateModel updateModel) {
+	this.model = updateModel;
+    }
 
-	@Override
-	public JComponent getViewComponent() {
-		final JComboBox freqCbx = new JComboBox(Frequency.values());
+    @Override
+    public JComponent getViewComponent() {
+	final JComboBox freqCbx = new JComboBox(Frequency.values());
 
-		freqCbx.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				model.saveUpdateFrequency((Frequency) freqCbx.getSelectedItem());
-			}
-		});
+	freqCbx.addActionListener(new ActionListener() {
+	    @Override
+	    public void actionPerformed(ActionEvent e) {
+		model.saveUpdateFrequency((Frequency) freqCbx.getSelectedItem());
+	    }
+	});
 
-		freqCbx.setRenderer(new DefaultListCellRenderer() {
+	freqCbx.setRenderer(new DefaultListCellRenderer() {
 
-			/** serial id. **/
-			private static final long serialVersionUID = 1772321132298800996L;
+	    /** serial id. **/
+	    private static final long serialVersionUID = 1772321132298800996L;
 
-			@Override
-			public Component getListCellRendererComponent(JList list,
-					Object value, int index, boolean isSelected,
-					boolean cellHasFocus) {
-				super.getListCellRendererComponent(list, value, index,
-						isSelected, cellHasFocus);
-				Frequency freq = (Frequency) value;
-				setText(Messages.getString("update.freqency." + freq.getKey()));
-				return this;
-			}
-		});
+	    @Override
+	    public Component getListCellRendererComponent(JList list,
+		    Object value, int index, boolean isSelected,
+		    boolean cellHasFocus) {
+		super.getListCellRendererComponent(list, value, index,
+			isSelected, cellHasFocus);
+		Frequency freq = (Frequency) value;
+		setText(Messages.getString("update.freqency." + freq.getKey()));
+		return this;
+	    }
+	});
 
-		freqCbx.setSelectedIndex(model.getFrequency().ordinal());
-		return freqCbx;
-	}
+	freqCbx.setSelectedIndex(model.getFrequency().ordinal());
+	return freqCbx;
+    }
 
-	/**
-	 * {@inheritDoc}
-	 * 
-	 * @see net.eliosoft.elios.gui.views.ViewInterface#getLocalizedTitle()
-	 */
-	@Override
-	public String getLocalizedTitle() {
-		return Messages.getString("updatefreqchooserview.title");
-	}
+    /**
+     * {@inheritDoc}
+     * 
+     * @see net.eliosoft.elios.gui.views.ViewInterface#getLocalizedTitle()
+     */
+    @Override
+    public String getLocalizedTitle() {
+	return Messages.getString("updatefreqchooserview.title");
+    }
 }

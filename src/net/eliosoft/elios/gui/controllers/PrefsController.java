@@ -35,65 +35,75 @@ import net.eliosoft.elios.gui.models.RemoteModel;
 import net.eliosoft.elios.gui.views.Messages;
 import net.eliosoft.elios.gui.views.PrefsView;
 
-
-
 /**
  * The Controller of the prefs view.
- *
+ * 
  * @author Jeremie GASTON-RAOUL
  */
 public class PrefsController {
 
-	private final RemoteModel remoteModel;
-	private final PrefsView prefsView;
-	
-	/**
-	 * The default constructor for the prefs controller.
-	 * @param remoteModel the model associated to the controller
-	 * @param localeModel 
-	 * @param prefsView  the view associated to the controller
-	 */
-	public PrefsController(RemoteModel remoteModel, LocaleComboBoxModel localeModel, PrefsView prefsView) {
-		this.remoteModel = remoteModel;
-		this.prefsView = prefsView;
-		this.initListeners();
-	}
+    private final RemoteModel remoteModel;
+    private final PrefsView prefsView;
 
-	private void initListeners() {
-		this.prefsView.addCancelButtonListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				remoteModel.restoreArtNetServerManagerConfig();
-			}
+    /**
+     * The default constructor for the prefs controller.
+     * 
+     * @param remoteModel
+     *            the model associated to the controller
+     * @param localeModel
+     * @param prefsView
+     *            the view associated to the controller
+     */
+    public PrefsController(RemoteModel remoteModel,
+	    LocaleComboBoxModel localeModel, PrefsView prefsView) {
+	this.remoteModel = remoteModel;
+	this.prefsView = prefsView;
+	this.initListeners();
+    }
+
+    private void initListeners() {
+	this.prefsView.addCancelButtonListener(new ActionListener() {
+	    @Override
+	    public void actionPerformed(ActionEvent e) {
+		remoteModel.restoreArtNetServerManagerConfig();
+	    }
+	});
+
+	this.prefsView.addSaveButtonListener(new ActionListener() {
+	    @Override
+	    public void actionPerformed(ActionEvent e) {
+		try {
+		    remoteModel.applyArtNetServerManagerConfig();
+		} catch (ArtNetException ane) {
+		    JOptionPane.showMessageDialog(
+			    null,
+			    MessageFormat.format(
+				    Messages.getString("error.server.cannotstart.message"),
+				    ane.getMessage()),
+			    Messages.getString("error.server.cannotstart.title"),
+			    JOptionPane.ERROR_MESSAGE);
+		}
+	    }
+	});
+
+	this.prefsView
+		.addEnableHttpServerCheckBoxListener(new ActionListener() {
+		    @Override
+		    public void actionPerformed(ActionEvent e) {
+			remoteModel.setHttpServerEnabled(((JCheckBox) e
+				.getSource()).isSelected());
+		    }
 		});
 
-		this.prefsView.addSaveButtonListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				try {
-					remoteModel.applyArtNetServerManagerConfig();
-				} catch (ArtNetException ane) {
-					JOptionPane.showMessageDialog(null,
-							MessageFormat.format(Messages.getString("error.server.cannotstart.message"), ane.getMessage()),
-							Messages.getString("error.server.cannotstart.title"), JOptionPane.ERROR_MESSAGE);
-				}
-			}
-		});
-		
-		this.prefsView.addEnableHttpServerCheckBoxListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				remoteModel.setHttpServerEnabled(((JCheckBox)e.getSource()).isSelected());
-			}
-		});
-		
-		this.prefsView.addLangComboListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				JComboBox cb = (JComboBox)e.getSource();
-				Locale l = (Locale)cb.getSelectedItem();
-				JOptionPane.showMessageDialog(null, MessageFormat.format(Messages.getString("prefsview.lang.restart"), Messages.getString("ui.lang." + l.getLanguage())));
-			}
-		});
-	}
+	this.prefsView.addLangComboListener(new ActionListener() {
+	    @Override
+	    public void actionPerformed(ActionEvent e) {
+		JComboBox cb = (JComboBox) e.getSource();
+		Locale l = (Locale) cb.getSelectedItem();
+		JOptionPane.showMessageDialog(null, MessageFormat.format(
+			Messages.getString("prefsview.lang.restart"),
+			Messages.getString("ui.lang." + l.getLanguage())));
+	    }
+	});
+    }
 }
