@@ -2,7 +2,7 @@ package net.eliosoft.elios.server;
 
 /**
  * Exception thrown by the server manager when the processed command line has a
- * bad syntax
+ * bad syntax.
  * 
  * @author Jeremie GASTON-RAOUL
  */

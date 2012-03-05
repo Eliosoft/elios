@@ -27,7 +27,7 @@ public class ReleaseInformation {
     private URL releaseNoteUrl;
 
     /**
-     * Constructs a {@link ReleaseInformation} with the given parameters
+     * Constructs a {@link ReleaseInformation} with the given parameters.
      * 
      * @param releaseCode
      *            the release code

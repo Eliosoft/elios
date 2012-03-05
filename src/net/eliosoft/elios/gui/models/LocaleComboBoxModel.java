@@ -2,11 +2,10 @@ package net.eliosoft.elios.gui.models;
 
 import java.util.Locale;
 
-import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 
 /**
- * {@link ComboBoxModel} that wraps available locales for UI translation.
+ * {@link javax.swing.ComboBoxModel} that wraps available locales for UI translation.
  * 
  * @author acollign
  */

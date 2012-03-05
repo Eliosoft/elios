@@ -41,21 +41,21 @@ import artnet4j.packets.ArtDmxPacket;
 import artnet4j.packets.ArtNetPacket;
 
 /**
- * The Manager of the Artnet Server
+ * The Manager of the Artnet Server.
  * 
  * @author Jeremie GASTON-RAOUL
  */
 public class ArtNetServerManager {
 
     /**
-     * The max number of DMX channels
+     * The max number of DMX channels.
      */
     public static final int DMX_CHANNELS_COUNT = 512;
 
     private static ArtNetServerManager instance;
 
     /**
-     * default value for ArtNet port
+     * default value for ArtNet port.
      */
     public static final int DEFAULT_ARTNET_PORT = ArtNetServer.DEFAULT_PORT;
 
@@ -106,7 +106,7 @@ public class ArtNetServerManager {
     }
 
     /**
-     * get the singleton instance of the ArtnetServerManager
+     * get the singleton instance of the ArtnetServerManager.
      * 
      * @return the instance
      */
@@ -118,7 +118,7 @@ public class ArtNetServerManager {
     }
 
     /**
-     * send a Dmx Command containing the value of the Dmx array over the network
+     * send a Dmx Command containing the value of the Dmx array over the network.
      */
     public void sendDmxCommand() {
 	ArtDmxPacket artDmxPacket = new ArtDmxPacket();
@@ -303,7 +303,7 @@ public class ArtNetServerManager {
     }
 
     /**
-     * set the broadcast address
+     * set the broadcast address.
      * 
      * @param broadcastAddress
      */
@@ -315,7 +315,7 @@ public class ArtNetServerManager {
     }
 
     /**
-     * get the server output dmx array for a given subnet and universe
+     * get the server output dmx array for a given subnet and universe.
      * 
      * @param subnet
      *            the subnet to select
@@ -328,7 +328,7 @@ public class ArtNetServerManager {
     }
 
     /**
-     * get the server current output dmx array
+     * get the server current output dmx array.
      * 
      * @return the array
      */
@@ -337,7 +337,7 @@ public class ArtNetServerManager {
     }
 
     /**
-     * set the server output dmx array for a given subnet and universe
+     * set the server output dmx array for a given subnet and universe.
      * 
      * @param subnet
      *            the subnet to select
@@ -352,7 +352,7 @@ public class ArtNetServerManager {
     }
 
     /**
-     * set the server current output dmx array
+     * set the server current output dmx array.
      * 
      * @param dmxArray
      *            the value of the dmx array
@@ -362,7 +362,7 @@ public class ArtNetServerManager {
     }
 
     /**
-     * get the server input dmx array for a given subnet and universe
+     * get the server input dmx array for a given subnet and universe.
      * 
      * @param subnet
      *            the subnet to select
@@ -376,7 +376,7 @@ public class ArtNetServerManager {
 
     /**
      * get the server input dmx array with current server subnet and universe
-     * settings
+     * settings.
      * 
      * @return the array
      */
@@ -385,7 +385,7 @@ public class ArtNetServerManager {
     }
 
     /**
-     * set the in port of the server
+     * set the in port of the server.
      * 
      * @param inPort
      *            the value of the port
@@ -395,7 +395,7 @@ public class ArtNetServerManager {
     }
 
     /**
-     * set the out port of the server
+     * set the out port of the server.
      * 
      * @param outPort
      *            the value of the port
@@ -405,7 +405,7 @@ public class ArtNetServerManager {
     }
 
     /**
-     * set the dmx subnet
+     * set the dmx subnet.
      * 
      * @param subnet
      *            the value of the subnet
@@ -416,7 +416,7 @@ public class ArtNetServerManager {
     }
 
     /**
-     * set the dmx universe
+     * set the dmx universe.
      * 
      * @param universe
      *            the value of the universe
@@ -427,7 +427,7 @@ public class ArtNetServerManager {
     }
 
     /**
-     * Enable or disable the additive mode
+     * Enable or disable the additive mode.
      * 
      * @param additiveModeEnabled
      *            true to enable the additive mode, false to disable

@@ -38,7 +38,7 @@ public class CueAddedEvent {
     }
 
     /**
-     * Returns the name of the new cue
+     * Returns the name of the new cue.
      * 
      * @return the cue name
      */

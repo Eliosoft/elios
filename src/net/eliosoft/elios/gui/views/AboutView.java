@@ -50,7 +50,7 @@ public class AboutView implements ViewInterface {
     }
 
     /**
-     * Returns the about panel
+     * Returns the about panel.
      * 
      * @return the view component
      */

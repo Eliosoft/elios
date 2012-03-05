@@ -89,7 +89,7 @@ public class ToolbarFactory {
     }
 
     /**
-     * Adds the subnet components to the toolbar
+     * Adds the subnet components to the toolbar.
      * 
      * @param toolBar
      *            a {@link JToolBar}

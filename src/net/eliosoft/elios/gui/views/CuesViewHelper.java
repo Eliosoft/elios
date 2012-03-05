@@ -66,7 +66,7 @@ public final class CuesViewHelper {
     }
 
     /**
-     * Prompts a dialog that print an error
+     * Prompts a dialog that print an error.
      * 
      * @param parent
      *            the parent component of the dialog

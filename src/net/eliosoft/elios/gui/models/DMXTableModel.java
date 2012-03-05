@@ -6,7 +6,7 @@ import javax.swing.table.DefaultTableModel;
 import net.eliosoft.elios.server.ArtNetServerManager;
 
 /**
- * This is the model of the DMX input table
+ * This is the model of the DMX input table.
  * 
  * @author Jeremie GASTON-RAOUL
  */
@@ -31,7 +31,7 @@ public class DMXTableModel extends DefaultTableModel {
     }
 
     /**
-     * Default constructor of the class
+     * Default constructor of the class.
      * 
      * @param serverManager
      *            the server manager used by the model
@@ -84,7 +84,7 @@ public class DMXTableModel extends DefaultTableModel {
     }
 
     /**
-     * get the table row headers
+     * get the table row headers.
      * 
      * @return an integer array representing the row headers
      */
@@ -93,7 +93,7 @@ public class DMXTableModel extends DefaultTableModel {
     }
 
     /**
-     * dispose the model before closing the application
+     * dispose the model before closing the application.
      */
     public void dispose() {
 	dmxArrayUpdater.cancel(true);

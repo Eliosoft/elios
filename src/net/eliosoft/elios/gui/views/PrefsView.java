@@ -40,7 +40,6 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
-import javax.swing.event.ListDataListener;
 
 import net.eliosoft.elios.gui.models.LocaleComboBoxModel;
 import net.eliosoft.elios.gui.models.RemoteModel;
@@ -374,7 +373,7 @@ public class PrefsView implements ViewInterface {
     }
 
     /**
-     * Add a {@link ListDataListener} to the lang combobox.
+     * Add a {@link java.awt.event.ActionListener} to the lang combobox.
      * 
      * @param l
      *            the listener to add to the lang combobox

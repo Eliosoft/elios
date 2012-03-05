@@ -41,7 +41,7 @@ public class LogsViewHelper {
 
 	/**
 	 * Update the given label according to the {@link LogRecord} text value
-	 * and states
+	 * and states.
 	 * 
 	 * @param label
 	 *            {@link JLabel} that must be decorated

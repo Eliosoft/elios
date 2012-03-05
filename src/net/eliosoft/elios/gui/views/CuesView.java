@@ -140,7 +140,7 @@ public class CuesView implements ViewInterface {
     }
 
     /**
-     * Returns the cues panel
+     * Returns the cues panel.
      * 
      * @return the view component
      */

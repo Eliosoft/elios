@@ -17,7 +17,7 @@ import net.eliosoft.elios.server.ReleaseInformationRepositoryImpl;
 public class PostInstallProcess {
 
     /**
-     * The logger
+     * The logger.
      */
     private static final Logger LOGGER = Logger
 	    .getLogger(PostInstallProcess.class.getCanonicalName());

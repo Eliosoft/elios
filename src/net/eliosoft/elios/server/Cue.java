@@ -20,7 +20,7 @@
 package net.eliosoft.elios.server;
 
 /**
- * An object representing a DMX universe state
+ * An object representing a DMX universe state.
  * 
  * @author Jeremie GASTON-RAOUL
  * 
@@ -61,7 +61,7 @@ public class Cue {
     }
 
     /**
-     * Sets the name
+     * Sets the name.
      * 
      * @param name
      *            the name to set
@@ -71,7 +71,7 @@ public class Cue {
     }
 
     /**
-     * Return the DMX Array
+     * Return the DMX Array.
      * 
      * @return the dmxArray
      */
@@ -80,7 +80,7 @@ public class Cue {
     }
 
     /**
-     * Sets the DMX Array
+     * Sets the DMX Array.
      * 
      * @param dmxArray
      *            the dmxArray to set

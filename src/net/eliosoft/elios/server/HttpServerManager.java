@@ -33,7 +33,7 @@ import net.eliosoft.elios.server.handler.ResourceHttpHandler;
 import com.sun.net.httpserver.HttpServer;
 
 /**
- * The Manager of the Http Server
+ * The Manager of the Http Server.
  * 
  * @author Jeremie GASTON-RAOUL
  */
@@ -47,7 +47,7 @@ public class HttpServerManager {
     private final CuesHttpHandler cuesHttpHandler = new CuesHttpHandler();
 
     /**
-     * default value for http port
+     * default value for http port.
      */
     public static final int DEFAULT_HTTP_PORT = 8080;
 
@@ -61,7 +61,7 @@ public class HttpServerManager {
     }
 
     /**
-     * get the singleton instance of the HttpServerManager
+     * get the singleton instance of the HttpServerManager.
      * 
      * @return the instance
      */
@@ -96,7 +96,7 @@ public class HttpServerManager {
     }
 
     /**
-     * set the in port of the server
+     * set the in port of the server.
      * 
      * @param inPort
      *            the value of the port

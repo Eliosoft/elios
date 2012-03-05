@@ -7,7 +7,7 @@ import java.util.logging.LogRecord;
 import javax.swing.JLabel;
 
 /**
- * This class represent a custom label for a log record
+ * This class represent a custom label for a log record.
  * 
  * @author Jeremie GASTON-RAOUL
  */
@@ -18,7 +18,7 @@ public class JLogRecordLabel extends JLabel {
     private final LogRecord record;
 
     /**
-     * The default constructor
+     * The default constructor.
      * 
      * @param record
      *            the log record of the label

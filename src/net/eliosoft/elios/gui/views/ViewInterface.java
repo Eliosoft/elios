@@ -22,13 +22,13 @@ package net.eliosoft.elios.gui.views;
 import javax.swing.JComponent;
 
 /**
- * The common interface between the different views of the application
+ * The common interface between the different views of the application.
  * 
  * @author Jeremie GASTON-RAOUL
  */
 public interface ViewInterface {
     /**
-     * get the component containing the view
+     * get the component containing the view.
      * 
      * @return the view component
      */

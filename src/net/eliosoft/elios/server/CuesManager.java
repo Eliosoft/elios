@@ -41,7 +41,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 /**
- * A manager for the cues
+ * A manager for the cues.
  * 
  * @author Jeremie GASTON-RAOUL
  */
@@ -60,7 +60,7 @@ public class CuesManager {
     }
 
     /**
-     * get the singleton instance of the CuesManager
+     * get the singleton instance of the CuesManager.
      * 
      * @return the instance
      */
@@ -72,7 +72,7 @@ public class CuesManager {
     }
 
     /**
-     * add a cue in the manager
+     * add a cue in the manager.
      * 
      * @param cue
      *            the cue to add to the manager
@@ -89,7 +89,7 @@ public class CuesManager {
     }
 
     /**
-     * remove the requested cue
+     * remove the requested cue.
      * 
      * @param name
      *            the name of the cue to remove
@@ -101,7 +101,7 @@ public class CuesManager {
     }
 
     /**
-     * get the cue with the requested name
+     * get the cue with the requested name.
      * 
      * @param name
      * @return the requested cue if found or null if no cue is found
@@ -112,7 +112,7 @@ public class CuesManager {
     }
 
     /**
-     * get all the cues of the manager
+     * get all the cues of the manager.
      * 
      * @return a list containing the cues
      */
@@ -129,7 +129,7 @@ public class CuesManager {
     }
 
     /**
-     * get an unused cue name
+     * get an unused cue name.
      * 
      * @return an unused cue name
      */

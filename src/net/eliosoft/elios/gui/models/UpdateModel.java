@@ -36,7 +36,7 @@ public class UpdateModel {
 	 */
 	MONTHLY(2628000000L, "monthly"),
 	/**
-	 * never perform
+	 * never perform.
 	 */
 	NEVER(-1, "never");
 
@@ -68,7 +68,7 @@ public class UpdateModel {
     }
 
     /**
-     * Key used to save the update frequency value
+     * Key used to save the update frequency value.
      */
     public static final String UPDATE_FREQ_PREFS_KEY = "update.frequency";
 
@@ -176,7 +176,7 @@ public class UpdateModel {
      */
     public interface UpdateListener {
 	/**
-	 * Called when a new {@link Frequency} value has been saved
+	 * Called when a new {@link Frequency} value has been saved.
 	 * 
 	 * @param newValue
 	 *            the new {@link Frequency} value

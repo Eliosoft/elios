@@ -38,7 +38,7 @@ public class CueRemovedEvent {
     }
 
     /**
-     * Returns the name of the removed cue
+     * Returns the name of the removed cue.
      * 
      * @return the cue name
      */

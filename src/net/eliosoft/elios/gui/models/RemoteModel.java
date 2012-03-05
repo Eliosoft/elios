@@ -134,7 +134,7 @@ public class RemoteModel {
     }
 
     /**
-     * Default constructor of the remote model
+     * Default constructor of the remote model.
      * 
      * @param serverManager
      *            the server manager used by the model
@@ -277,7 +277,7 @@ public class RemoteModel {
     }
 
     /**
-     * process the command line and send a Dmx command over the network
+     * process the command line and send a Dmx command over the network.
      * 
      * @throws BadSyntaxException
      *             if the command line to process and send has a bad syntax
@@ -427,7 +427,7 @@ public class RemoteModel {
     }
 
     /**
-     * Gets the model of the broadcast address
+     * Gets the model of the broadcast address.
      * 
      * @return the broadcast address combo model
      */
@@ -436,7 +436,7 @@ public class RemoteModel {
     }
 
     /**
-     * Give the status of the http server enabling
+     * Give the status of the http server enabling.
      * 
      * @return true if http server is enabled, false if disabled
      */
@@ -445,7 +445,7 @@ public class RemoteModel {
     }
 
     /**
-     * Enable or disable the http server
+     * Enable or disable the http server.
      * 
      * @param httpServerEnabled
      *            true to enable the http server, false to disable
@@ -455,7 +455,7 @@ public class RemoteModel {
     }
 
     /**
-     * Give the status of the additive mode enabling
+     * Give the status of the additive mode enabling.
      * 
      * @return true if additive mode is enabled, false if disabled
      */
@@ -464,7 +464,7 @@ public class RemoteModel {
     }
 
     /**
-     * Enable or disable the additive mode
+     * Enable or disable the additive mode.
      * 
      * @param additiveModeEnabled
      *            true to enable the additive mode, false to disable
