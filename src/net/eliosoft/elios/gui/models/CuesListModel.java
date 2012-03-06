@@ -61,7 +61,7 @@ public class CuesListModel extends AbstractListModel {
     }
 
     @Override
-    public Cue getElementAt(int index) {
+    public Cue getElementAt(final int index) {
 	return cuesManager.getCues().get(index);
     }
 

@@ -13,8 +13,14 @@ import javax.swing.JLabel;
  * @author acollign
  * @since Feb 2, 2011
  */
-public class LogsViewHelper {
+public final class LogsViewHelper {
 
+    /**
+     * Ensure that this class will not be instantiate.
+     */
+    private LogsViewHelper() {
+    }
+    
     /** default text for label. **/
     public static final String DEFAULT_TEXT = " ";
 
@@ -37,7 +43,7 @@ public class LogsViewHelper {
      * @author acollign
      * @since Feb 2, 2011
      */
-    public static interface LogLabelDecorator {
+    public interface LogLabelDecorator {
 
 	/**
 	 * Update the given label according to the {@link LogRecord} text value

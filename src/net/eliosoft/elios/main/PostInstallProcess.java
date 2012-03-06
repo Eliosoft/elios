@@ -14,7 +14,7 @@ import net.eliosoft.elios.server.ReleaseInformationRepositoryImpl;
  * @author acollign
  * @since May 12, 2011
  */
-public class PostInstallProcess {
+public final class PostInstallProcess {
 
     /**
      * The logger.
@@ -22,6 +22,12 @@ public class PostInstallProcess {
     private static final Logger LOGGER = Logger
 	    .getLogger(PostInstallProcess.class.getCanonicalName());
 
+    /**
+     * Ensure that this class will not be instantiate.
+     */
+    private PostInstallProcess() {
+    }
+    
     /**
      * Treats the two arguments as a release code and a URL. The release code is
      * the current one and the URL is the root URL of the eliosoft update site.
