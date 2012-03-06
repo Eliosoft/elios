@@ -54,8 +54,8 @@ public class PrefsController {
      * @param prefsView
      *            the view associated to the controller
      */
-    public PrefsController(RemoteModel remoteModel,
-	    LocaleComboBoxModel localeModel, PrefsView prefsView) {
+    public PrefsController(final RemoteModel remoteModel,
+	    final LocaleComboBoxModel localeModel, final PrefsView prefsView) {
 	this.remoteModel = remoteModel;
 	this.prefsView = prefsView;
 	this.initListeners();
@@ -64,14 +64,14 @@ public class PrefsController {
     private void initListeners() {
 	this.prefsView.addCancelButtonListener(new ActionListener() {
 	    @Override
-	    public void actionPerformed(ActionEvent e) {
+	    public void actionPerformed(final ActionEvent e) {
 		remoteModel.restoreArtNetServerManagerConfig();
 	    }
 	});
 
 	this.prefsView.addSaveButtonListener(new ActionListener() {
 	    @Override
-	    public void actionPerformed(ActionEvent e) {
+	    public void actionPerformed(final ActionEvent e) {
 		try {
 		    remoteModel.applyArtNetServerManagerConfig();
 		} catch (ArtNetException ane) {
@@ -89,7 +89,7 @@ public class PrefsController {
 	this.prefsView
 		.addEnableHttpServerCheckBoxListener(new ActionListener() {
 		    @Override
-		    public void actionPerformed(ActionEvent e) {
+		    public void actionPerformed(final ActionEvent e) {
 			remoteModel.setHttpServerEnabled(((JCheckBox) e
 				.getSource()).isSelected());
 		    }
@@ -97,7 +97,7 @@ public class PrefsController {
 
 	this.prefsView.addLangComboListener(new ActionListener() {
 	    @Override
-	    public void actionPerformed(ActionEvent e) {
+	    public void actionPerformed(final ActionEvent e) {
 		JComboBox cb = (JComboBox) e.getSource();
 		Locale l = (Locale) cb.getSelectedItem();
 		JOptionPane.showMessageDialog(null, MessageFormat.format(

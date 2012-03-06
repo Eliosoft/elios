@@ -55,7 +55,7 @@ public class RemoteController {
      * @param remoteView
      *            view that display the remote.
      */
-    public RemoteController(RemoteModel remoteModel, RemoteView remoteView) {
+    public RemoteController(final RemoteModel remoteModel, final RemoteView remoteView) {
 	this.remoteModel = remoteModel;
 	this.remoteView = remoteView;
 
@@ -76,7 +76,7 @@ public class RemoteController {
 	    private static final long serialVersionUID = -4335381990869042671L;
 
 	    @Override
-	    public void actionPerformed(ActionEvent e) {
+	    public void actionPerformed(final ActionEvent e) {
 		if (remoteView.isDelButtonEnabled()) {
 		    remoteModel.delLastCommandLineChar();
 		}
@@ -89,7 +89,7 @@ public class RemoteController {
 	    private static final long serialVersionUID = -1152279417262923317L;
 
 	    @Override
-	    public void actionPerformed(ActionEvent e) {
+	    public void actionPerformed(final ActionEvent e) {
 		if (remoteView.isEnterButtonEnabled()) {
 		    try {
 			remoteModel.sendCommand();
@@ -106,7 +106,7 @@ public class RemoteController {
 	    private static final long serialVersionUID = -8772359436304401320L;
 
 	    @Override
-	    public void actionPerformed(ActionEvent e) {
+	    public void actionPerformed(final ActionEvent e) {
 		if (remoteView.isResetButtonEnabled()) {
 		    remoteModel.resetCommandLine();
 		}
@@ -114,7 +114,7 @@ public class RemoteController {
 	});
     }
 
-    private void initValueKeyStroke(InputMap inputMap, ActionMap actionMap,
+    private void initValueKeyStroke(final InputMap inputMap, final ActionMap actionMap,
 	    final Character c) {
 	inputMap.put(KeyStroke.getKeyStroke(c), c);
 	actionMap.put(c, new AbstractAction() {
@@ -122,7 +122,7 @@ public class RemoteController {
 	    private static final long serialVersionUID = 6382574213528201626L;
 
 	    @Override
-	    public void actionPerformed(ActionEvent e) {
+	    public void actionPerformed(final ActionEvent e) {
 		remoteModel.addToCommandLine(c);
 	    }
 	});
@@ -131,20 +131,20 @@ public class RemoteController {
     private void initButtonsListeners() {
 	this.remoteView.addValueButtonsListener(new ActionListener() {
 	    @Override
-	    public void actionPerformed(ActionEvent e) {
+	    public void actionPerformed(final ActionEvent e) {
 		String buttonText = ((JButton) e.getSource()).getText();
 		remoteModel.addToCommandLine(buttonText.charAt(0));
 	    }
 	});
 	this.remoteView.addDelButtonListener(new ActionListener() {
 	    @Override
-	    public void actionPerformed(ActionEvent e) {
+	    public void actionPerformed(final ActionEvent e) {
 		remoteModel.delLastCommandLineChar();
 	    }
 	});
 	this.remoteView.addEnterButtonListener(new ActionListener() {
 	    @Override
-	    public void actionPerformed(ActionEvent e) {
+	    public void actionPerformed(final ActionEvent e) {
 		try {
 		    remoteModel.sendCommand();
 		} catch (BadSyntaxException exception) {
@@ -154,7 +154,7 @@ public class RemoteController {
 	});
 	this.remoteView.addResetButtonListener(new ActionListener() {
 	    @Override
-	    public void actionPerformed(ActionEvent e) {
+	    public void actionPerformed(final ActionEvent e) {
 		remoteModel.resetCommandLine();
 	    }
 	});

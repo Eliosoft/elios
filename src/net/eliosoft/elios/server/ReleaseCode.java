@@ -34,10 +34,10 @@ public class ReleaseCode implements Comparable<ReleaseCode> {
      * @param code
      *            the code non null string
      */
-    ReleaseCode(String code) {
-	if (code == null)
+    ReleaseCode(final String code) {
+	if (code == null) {
 	    throw new IllegalArgumentException("The code could not be null");
-
+	}
 	if (!VALIDATION_PATTERN.matcher(code).matches()) {
 	    throw new IllegalArgumentException(
 		    "The code must match the given pattern "
@@ -54,7 +54,7 @@ public class ReleaseCode implements Comparable<ReleaseCode> {
      *            the code that identified the release
      * @return a newly create {@link ReleaseCode}
      */
-    public static ReleaseCode create(String code) {
+    public static ReleaseCode create(final String code) {
 	return new ReleaseCode(code);
     }
 
@@ -86,7 +86,7 @@ public class ReleaseCode implements Comparable<ReleaseCode> {
      * @see java.lang.Object#equals(java.lang.Object)
      */
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(final Object obj) {
 	if (this == obj) {
 	    return true;
 	}
@@ -113,7 +113,7 @@ public class ReleaseCode implements Comparable<ReleaseCode> {
      * @see java.lang.Comparable#compareTo(java.lang.Object)
      */
     @Override
-    public int compareTo(ReleaseCode o) {
+    public int compareTo(final ReleaseCode o) {
 	Double d = Double.valueOf(extractCode(this) - extractCode(o));
 	if (d > 0) {
 	    return 1;
@@ -131,7 +131,7 @@ public class ReleaseCode implements Comparable<ReleaseCode> {
      *            a {@link ReleaseCode}
      * @return a {@link Double} representation of the code
      */
-    private Double extractCode(ReleaseCode rc) {
+    private Double extractCode(final ReleaseCode rc) {
 	Matcher matcher = VALIDATION_PATTERN.matcher(rc.code);
 	matcher.matches(); // always true
 	Double value = Double.valueOf(matcher.group(1));
@@ -161,7 +161,7 @@ public class ReleaseCode implements Comparable<ReleaseCode> {
      * @return true if the current release code is older than the given one,
      *         false otherwise
      */
-    public boolean before(ReleaseCode code) {
+    public boolean before(final ReleaseCode code) {
 	if (this.compareTo(code) == -1) {
 	    return true;
 	}
@@ -180,7 +180,7 @@ public class ReleaseCode implements Comparable<ReleaseCode> {
      * @return true if the current release code is newer than the given one,
      *         false otherwise
      */
-    public boolean after(ReleaseCode code) {
+    public boolean after(final ReleaseCode code) {
 	return !code.before(this);
     }
 }

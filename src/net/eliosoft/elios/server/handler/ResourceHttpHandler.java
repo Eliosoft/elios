@@ -17,7 +17,7 @@ public class ResourceHttpHandler implements HttpHandler {
     private static final int MAX_BUFFER_SIZE = 1024 * 512;
 
     @Override
-    public void handle(HttpExchange httpExchange) throws IOException {
+    public void handle(final HttpExchange httpExchange) throws IOException {
 	URI u = httpExchange.getRequestURI();
 	String path = u.getPath();
 
@@ -37,7 +37,7 @@ public class ResourceHttpHandler implements HttpHandler {
 			resourceInputStream.available());
 		OutputStream os = httpExchange.getResponseBody();
 
-		byte buffer[] = new byte[Math.min(
+		byte[] buffer = new byte[Math.min(
 			ResourceHttpHandler.MAX_BUFFER_SIZE,
 			resourceInputStream.available())];
 		int bytesRead = 0;

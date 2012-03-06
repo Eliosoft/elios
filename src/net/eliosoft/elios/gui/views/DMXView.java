@@ -51,7 +51,7 @@ public class DMXView implements ViewInterface {
      * @param tableModel
      *            the DMXTableModel used by the view
      */
-    public DMXView(RemoteModel remoteModel, DMXTableModel tableModel) {
+    public DMXView(final RemoteModel remoteModel, final DMXTableModel tableModel) {
 	this.dmxTableModel = tableModel;
 
 	ButtonGroup inOutRadioGroup = new ButtonGroup();
@@ -72,9 +72,9 @@ public class DMXView implements ViewInterface {
 	    private static final long serialVersionUID = -7628430686172752221L;
 
 	    @Override
-	    public Component getTableCellRendererComponent(JTable table,
-		    Object value, boolean isSelected, boolean hasFocus,
-		    int row, int column) {
+	    public Component getTableCellRendererComponent(final JTable table,
+		    final Object value, final boolean isSelected, final boolean hasFocus,
+		    final int row, final int column) {
 		super.getTableCellRendererComponent(table, value, isSelected,
 			hasFocus, row, column);
 		setHorizontalAlignment(SwingConstants.CENTER);
@@ -114,8 +114,8 @@ public class DMXView implements ViewInterface {
 
 		    @Override
 		    public Component getTableCellRendererComponent(
-			    JTable table, Object value, boolean isSelected,
-			    boolean hasFocus, int row, int column) {
+			    final JTable table, final Object value, final boolean isSelected,
+			    final boolean hasFocus, final int row, final int column) {
 			super.getTableCellRendererComponent(table, value,
 				isSelected, hasFocus, row, column);
 			int nonBlueLevel = 255 - ((Integer) value).intValue() * 4 / 5;
@@ -145,9 +145,9 @@ public class DMXView implements ViewInterface {
 	    private static final long serialVersionUID = -6533501111809246770L;
 
 	    @Override
-	    public Component getListCellRendererComponent(JList list,
-		    Object value, int index, boolean isSelected,
-		    boolean cellHasFocus) {
+	    public Component getListCellRendererComponent(final JList list,
+		    final Object value, final int index, final boolean isSelected,
+		    final boolean cellHasFocus) {
 		Component c = headerCellRenderer.getTableCellRendererComponent(
 			dmxTable, value, isSelected, cellHasFocus, index, -1);
 		return c;
@@ -166,7 +166,7 @@ public class DMXView implements ViewInterface {
      * @param actionListener
      *            the listener to add
      */
-    public void addInOutRadioActionListener(ActionListener actionListener) {
+    public void addInOutRadioActionListener(final ActionListener actionListener) {
 	inRadio.addActionListener(actionListener);
 	outRadio.addActionListener(actionListener);
     }
@@ -177,7 +177,7 @@ public class DMXView implements ViewInterface {
      * @param actionListener
      *            the listener to remove
      */
-    public void removeInOutRadioActionListener(ActionListener actionListener) {
+    public void removeInOutRadioActionListener(final ActionListener actionListener) {
 	inRadio.removeActionListener(actionListener);
 	outRadio.removeActionListener(actionListener);
     }

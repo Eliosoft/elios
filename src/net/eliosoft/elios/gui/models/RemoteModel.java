@@ -111,7 +111,7 @@ public class RemoteModel {
 	private String address;
 
 	/** Private constructor. **/
-	private BroadCastAddress(String address) {
+	private BroadCastAddress(final String address) {
 	    this.address = address;
 	}
 
@@ -143,8 +143,8 @@ public class RemoteModel {
      * @param cuesManager
      *            the cues manager used by the model
      */
-    public RemoteModel(ArtNetServerManager serverManager,
-	    HttpServerManager httpManager, CuesManager cuesManager) {
+    public RemoteModel(final ArtNetServerManager serverManager,
+	    final HttpServerManager httpManager, final CuesManager cuesManager) {
 	this.artNetServerManager = serverManager;
 	this.httpServerManager = httpManager;
 	this.cuesManager = cuesManager;
@@ -177,15 +177,15 @@ public class RemoteModel {
 	this.broadcastAddressComboModel
 		.addListDataListener(new ListDataListener() {
 		    @Override
-		    public void intervalRemoved(ListDataEvent e) {
+		    public void intervalRemoved(final ListDataEvent e) {
 		    }
 
 		    @Override
-		    public void intervalAdded(ListDataEvent e) {
+		    public void intervalAdded(final ListDataEvent e) {
 		    }
 
 		    @Override
-		    public void contentsChanged(ListDataEvent e) {
+		    public void contentsChanged(final ListDataEvent e) {
 			artNetServerManager
 				.setBroadcastAddress(((BroadCastAddress) broadcastAddressComboModel
 					.getSelectedItem()).getAddress());
@@ -194,7 +194,7 @@ public class RemoteModel {
 
 	this.subnetSpinnerModel.addChangeListener(new ChangeListener() {
 	    @Override
-	    public void stateChanged(ChangeEvent e) {
+	    public void stateChanged(final ChangeEvent e) {
 		artNetServerManager.setSubnet((Integer) subnetSpinnerModel
 			.getValue());
 	    }
@@ -202,7 +202,7 @@ public class RemoteModel {
 
 	this.universeSpinnerModel.addChangeListener(new ChangeListener() {
 	    @Override
-	    public void stateChanged(ChangeEvent e) {
+	    public void stateChanged(final ChangeEvent e) {
 		artNetServerManager.setUniverse((Integer) universeSpinnerModel
 			.getValue());
 	    }
@@ -210,7 +210,7 @@ public class RemoteModel {
 
 	this.httpPortSpinnerModel.addChangeListener(new ChangeListener() {
 	    @Override
-	    public void stateChanged(ChangeEvent e) {
+	    public void stateChanged(final ChangeEvent e) {
 		httpServerManager.setInPort((Integer) httpPortSpinnerModel
 			.getValue());
 	    }
@@ -221,18 +221,18 @@ public class RemoteModel {
 
 		    @Override
 		    public void universeValueChanged(
-			    UniverseValueChangedEvent event) {
+			    final UniverseValueChangedEvent event) {
 			universeSpinnerModel.setValue(event.getUniverse());
 		    }
 
 		    @Override
-		    public void subnetValueChanged(SubnetValueChangedEvent event) {
+		    public void subnetValueChanged(final SubnetValueChangedEvent event) {
 			subnetSpinnerModel.setValue(event.getSubnet());
 		    }
 
 		    @Override
 		    public void additiveModeValueChanged(
-			    AdditiveModeValueChangedEvent event) {
+			    final AdditiveModeValueChangedEvent event) {
 			additiveModeEnabled = event.isAdditiveModeEnabled();
 			fireAdditiveModeValueChanged();
 		    }
@@ -245,7 +245,7 @@ public class RemoteModel {
      * @param c
      *            the character added
      */
-    public void addToCommandLine(Character c) {
+    public void addToCommandLine(final Character c) {
 	this.commandLine.append(c);
 	this.fireCommandLineValueChanged();
     }
@@ -450,7 +450,7 @@ public class RemoteModel {
      * @param httpServerEnabled
      *            true to enable the http server, false to disable
      */
-    public void setHttpServerEnabled(boolean httpServerEnabled) {
+    public void setHttpServerEnabled(final boolean httpServerEnabled) {
 	this.httpServerEnabled = httpServerEnabled;
     }
 
@@ -469,7 +469,7 @@ public class RemoteModel {
      * @param additiveModeEnabled
      *            true to enable the additive mode, false to disable
      */
-    public void setAdditiveModeEnabled(boolean additiveModeEnabled) {
+    public void setAdditiveModeEnabled(final boolean additiveModeEnabled) {
 	this.additiveModeEnabled = additiveModeEnabled;
 	artNetServerManager.setAdditiveModeEnabled(this.additiveModeEnabled);
     }
@@ -480,7 +480,7 @@ public class RemoteModel {
      * @param listener
      *            the listener to add
      */
-    public void addRemoteModelChangedListener(RemoteModelListener listener) {
+    public void addRemoteModelChangedListener(final RemoteModelListener listener) {
 	this.remoteModelChangedListeners.add(listener);
     }
 
@@ -490,7 +490,7 @@ public class RemoteModel {
      * @param listener
      *            the listener to remove
      */
-    public void removeRemoteModelChangedListener(RemoteModelListener listener) {
+    public void removeRemoteModelChangedListener(final RemoteModelListener listener) {
 	this.remoteModelChangedListeners.remove(listener);
     }
 
@@ -555,7 +555,7 @@ public class RemoteModel {
      *            the model
      * @return the selected value of the model
      */
-    private int getSelectedIntValue(SpinnerModel model) {
+    private int getSelectedIntValue(final SpinnerModel model) {
 	return (Integer) model.getValue();
     }
 
@@ -565,7 +565,7 @@ public class RemoteModel {
      * @param inPort
      *            the input port
      */
-    public void setInPort(int inPort) {
+    public void setInPort(final int inPort) {
 	inPortSpinnerModel.setValue(inPort);
     }
 
@@ -575,7 +575,7 @@ public class RemoteModel {
      * @param outPort
      *            the output port
      */
-    public void setOutputPort(int outPort) {
+    public void setOutputPort(final int outPort) {
 	outPortSpinnerModel.setValue(outPort);
     }
 
@@ -585,7 +585,7 @@ public class RemoteModel {
      * @param universe
      *            the universe
      */
-    public void setUniverse(int universe) {
+    public void setUniverse(final int universe) {
 	universeSpinnerModel.setValue(universe);
     }
 
@@ -595,7 +595,7 @@ public class RemoteModel {
      * @param subnet
      *            the subnet
      */
-    public void setSubnet(int subnet) {
+    public void setSubnet(final int subnet) {
 	subnetSpinnerModel.setValue(subnet);
     }
 
@@ -605,7 +605,7 @@ public class RemoteModel {
      * @param httpPort
      *            the Http port
      */
-    public void setHttpPort(int httpPort) {
+    public void setHttpPort(final int httpPort) {
 	httpPortSpinnerModel.setValue(httpPort);
     }
 
@@ -615,7 +615,7 @@ public class RemoteModel {
      * @param broadcastAddress
      *            the broadcast address
      */
-    public void setBroadCastAddress(BroadCastAddress broadcastAddress) {
+    public void setBroadCastAddress(final BroadCastAddress broadcastAddress) {
 	broadcastAddressComboModel.setSelectedItem(broadcastAddress);
     }
 
@@ -670,7 +670,7 @@ public class RemoteModel {
      * @param cueName
      *            the name of the cue to store
      */
-    public void storeCue(String cueName) {
+    public void storeCue(final String cueName) {
 	cuesListModel.addCue(new Cue(cueName, artNetServerManager
 		.getCurrentOutputDmxArray()));
     }
@@ -681,8 +681,7 @@ public class RemoteModel {
      * @param cue
      *            the cue to load
      */
-    public void loadCue(Cue cue) {
-	;
+    public void loadCue(final Cue cue) {
 	artNetServerManager.setCurrentOutputDmxArray(cue.getDmxArray());
 	artNetServerManager.sendDmxCommand();
 	logger.info("Cue [" + cue.getName() + "] sent");
@@ -694,7 +693,7 @@ public class RemoteModel {
      * @param cue
      *            the cue to remove
      */
-    public void removeCue(Cue cue) {
+    public void removeCue(final Cue cue) {
 	cuesListModel.removeCue(cue);
     }
 
@@ -707,7 +706,7 @@ public class RemoteModel {
      *             if something goes wrong when persisting
      * @see CuesManager#load(InputStream)
      */
-    public void persist(OutputStream stream) throws IOException {
+    public void persist(final OutputStream stream) throws IOException {
 	cuesManager.persist(stream);
     }
 
@@ -718,7 +717,7 @@ public class RemoteModel {
      *            {@link InputStream} from which the cues must be load
      * @see CuesManager#persist(OutputStream)
      */
-    public void load(InputStream stream) {
+    public void load(final InputStream stream) {
 	cuesManager.load(stream);
     }
 }

@@ -25,7 +25,7 @@ package net.eliosoft.elios.server.events;
  * @author Jeremie GASTON-RAOUL
  */
 public class CueAddedEvent {
-    private String cueName;
+    private final String cueName;
 
     /**
      * Constructor method to instantiate a new event.
@@ -33,7 +33,7 @@ public class CueAddedEvent {
      * @param cueName
      *            the name of the new cue in the cuesList
      */
-    public CueAddedEvent(String cueName) {
+    public CueAddedEvent(final String cueName) {
 	this.cueName = cueName;
     }
 

@@ -50,7 +50,7 @@ public class LogsLineView implements ViewInterface {
      * @param remoteModel
      *            the model associated with this view
      */
-    public LogsLineView(RemoteModel remoteModel) {
+    public LogsLineView(final RemoteModel remoteModel) {
 	this.remoteModel = remoteModel;
 	this.logsLinePanel.setBorder(BorderFactory.createEtchedBorder());
 	this.logLabel = new JLabel(LogsViewHelper.DEFAULT_TEXT);
@@ -63,17 +63,17 @@ public class LogsLineView implements ViewInterface {
 		new ListDataListener() {
 
 		    @Override
-		    public void intervalRemoved(ListDataEvent e) {
+		    public void intervalRemoved(final ListDataEvent e) {
 			updateLabel();
 		    }
 
 		    @Override
-		    public void intervalAdded(ListDataEvent e) {
+		    public void intervalAdded(final ListDataEvent e) {
 			updateLabel();
 		    }
 
 		    @Override
-		    public void contentsChanged(ListDataEvent e) {
+		    public void contentsChanged(final ListDataEvent e) {
 			updateLabel();
 		    }
 		});

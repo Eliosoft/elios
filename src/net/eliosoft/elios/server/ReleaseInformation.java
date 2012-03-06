@@ -38,8 +38,8 @@ public class ReleaseInformation {
      * @param releaseDate
      *            the date of the release
      */
-    public ReleaseInformation(ReleaseCode releaseCode, URL downloadUrl,
-	    URL releaseNoteUrl, Date releaseDate) {
+    public ReleaseInformation(final ReleaseCode releaseCode, final URL downloadUrl,
+	    final URL releaseNoteUrl, final Date releaseDate) {
 	this.releaseCode = releaseCode;
 	this.downloadUrl = downloadUrl;
 	this.releaseTime = releaseDate.getTime();
@@ -68,7 +68,7 @@ public class ReleaseInformation {
      * @param releaseCode
      *            the release code
      */
-    void setReleaseCode(ReleaseCode releaseCode) {
+    void setReleaseCode(final ReleaseCode releaseCode) {
 	this.releaseCode = releaseCode;
     }
 
@@ -80,7 +80,7 @@ public class ReleaseInformation {
      * @throws MalformedURLException
      *             if the given string is not a valid {@link URL}.
      */
-    void setDownloadUrl(String downloadUrl) throws MalformedURLException {
+    void setDownloadUrl(final String downloadUrl) throws MalformedURLException {
 	this.downloadUrl = URI.create(downloadUrl).toURL();
     }
 
@@ -91,11 +91,11 @@ public class ReleaseInformation {
      *            a string representation of the URL of the release note
      * @throws MalformedURLException
      */
-    void setReleaseNoteUrl(String releaseNoteUrl) throws MalformedURLException {
+    void setReleaseNoteUrl(final String releaseNoteUrl) throws MalformedURLException {
 	this.releaseNoteUrl = URI.create(releaseNoteUrl).toURL();
     }
 
-    void setReleaseTime(long releaseTime) {
+    void setReleaseTime(final long releaseTime) {
 	this.releaseTime = releaseTime;
     }
 
@@ -147,7 +147,7 @@ public class ReleaseInformation {
      * @see java.lang.Object#equals(java.lang.Object)
      */
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(final Object obj) {
 	if (this == obj) {
 	    return true;
 	}
@@ -206,7 +206,7 @@ public class ReleaseInformation {
      *            a json string
      * @return a {@link ReleaseInformation} from the json string
      */
-    public static ReleaseInformation fromJSON(String json) {
+    public static ReleaseInformation fromJSON(final String json) {
 	return new Gson().fromJson(json, ReleaseInformation.class);
     }
 }

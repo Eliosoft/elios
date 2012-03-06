@@ -41,19 +41,19 @@ public class CuesListModel extends AbstractListModel {
     /**
      * @param cuesMngr
      */
-    public CuesListModel(CuesManager cuesMngr) {
+    public CuesListModel(final CuesManager cuesMngr) {
 	this.cuesManager = cuesMngr;
 	this.cuesManager
 		.addCuesManagerChangedListener(new CuesManagerListener() {
 
 		    @Override
-		    public void cueRemoved(CueRemovedEvent event) {
+		    public void cueRemoved(final CueRemovedEvent event) {
 			fireContentsChanged(this, 0, cuesManager.getCues()
 				.size());
 		    }
 
 		    @Override
-		    public void cueAdded(CueAddedEvent event) {
+		    public void cueAdded(final CueAddedEvent event) {
 			fireContentsChanged(this, 0, cuesManager.getCues()
 				.size());
 		    }
@@ -76,7 +76,7 @@ public class CuesListModel extends AbstractListModel {
      * @param cue
      *            the cue to add
      */
-    public void addCue(Cue cue) {
+    public void addCue(final Cue cue) {
 	cuesManager.addCue(cue);
 	int index = cuesManager.getCues().size() - 1;
 	this.fireIntervalAdded(this, index, index);
@@ -88,7 +88,7 @@ public class CuesListModel extends AbstractListModel {
      * @param cue
      *            the cue to remove
      */
-    public void removeCue(Cue cue) {
+    public void removeCue(final Cue cue) {
 	int index = cuesManager.getCues().indexOf(cue);
 	cuesManager.removeCue(cue.getName());
 	this.fireIntervalRemoved(this, index, index);

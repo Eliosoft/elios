@@ -34,7 +34,7 @@ public class CommandLineValueChangedEvent {
      * @param command
      *            the new command line value
      */
-    public CommandLineValueChangedEvent(String command) {
+    public CommandLineValueChangedEvent(final String command) {
 	this.command = command;
     }
 

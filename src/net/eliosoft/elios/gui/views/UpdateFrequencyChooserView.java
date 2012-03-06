@@ -27,7 +27,7 @@ public class UpdateFrequencyChooserView implements ViewInterface {
      * @param updateModel
      *            the underlying {@link UpdateModel}
      */
-    public UpdateFrequencyChooserView(UpdateModel updateModel) {
+    public UpdateFrequencyChooserView(final UpdateModel updateModel) {
 	this.model = updateModel;
     }
 
@@ -37,7 +37,7 @@ public class UpdateFrequencyChooserView implements ViewInterface {
 
 	freqCbx.addActionListener(new ActionListener() {
 	    @Override
-	    public void actionPerformed(ActionEvent e) {
+	    public void actionPerformed(final ActionEvent e) {
 		model.saveUpdateFrequency((Frequency) freqCbx.getSelectedItem());
 	    }
 	});
@@ -48,9 +48,9 @@ public class UpdateFrequencyChooserView implements ViewInterface {
 	    private static final long serialVersionUID = 1772321132298800996L;
 
 	    @Override
-	    public Component getListCellRendererComponent(JList list,
-		    Object value, int index, boolean isSelected,
-		    boolean cellHasFocus) {
+	    public Component getListCellRendererComponent(final JList list,
+		    final Object value, final int index, final boolean isSelected,
+		    final boolean cellHasFocus) {
 		super.getListCellRendererComponent(list, value, index,
 			isSelected, cellHasFocus);
 		Frequency freq = (Frequency) value;

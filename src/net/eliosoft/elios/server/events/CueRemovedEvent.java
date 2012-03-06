@@ -33,7 +33,7 @@ public class CueRemovedEvent {
      * @param cueName
      *            the name of the removed cue in the cuesList
      */
-    public CueRemovedEvent(String cueName) {
+    public CueRemovedEvent(final String cueName) {
 	this.cueName = cueName;
     }
 

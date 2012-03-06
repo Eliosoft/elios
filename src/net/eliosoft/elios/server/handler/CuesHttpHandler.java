@@ -33,7 +33,7 @@ public class CuesHttpHandler implements HttpHandler {
 	    .getLogger(CuesHttpHandler.class.getName());
 
     @Override
-    public void handle(HttpExchange httpExchange) throws IOException {
+    public void handle(final HttpExchange httpExchange) throws IOException {
 	if (httpExchange.getRequestMethod().equalsIgnoreCase("GET")) {
 	    try {
 		HashMap<String, String> paramsMap = extractParams(httpExchange
@@ -129,11 +129,11 @@ public class CuesHttpHandler implements HttpHandler {
      * @throws IOException
      * @throws BadSyntaxException
      */
-    private HashMap<String, String> extractPostParams(HttpExchange httpExchange)
+    private HashMap<String, String> extractPostParams(final HttpExchange httpExchange)
 	    throws IOException, BadSyntaxException {
 	InputStream is = httpExchange.getRequestBody();
 
-	byte buffer[] = new byte[CuesHttpHandler.MAX_BUFFER_SIZE];
+	byte[] buffer = new byte[CuesHttpHandler.MAX_BUFFER_SIZE];
 	int bytesRead = 0;
 
 	StringBuilder query = new StringBuilder();
@@ -151,7 +151,7 @@ public class CuesHttpHandler implements HttpHandler {
      * @return
      * @throws BadSyntaxException
      */
-    private HashMap<String, String> extractParams(String query)
+    private HashMap<String, String> extractParams(final String query)
 	    throws BadSyntaxException {
 	String[] paramsList = query.split("&");
 	HashMap<String, String> paramsMap = new HashMap<String, String>();

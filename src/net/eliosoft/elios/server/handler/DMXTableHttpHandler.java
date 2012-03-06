@@ -28,7 +28,7 @@ public class DMXTableHttpHandler implements HttpHandler {
 	    .getLogger(DMXTableHttpHandler.class.getName());
 
     @Override
-    public void handle(HttpExchange httpExchange) throws IOException {
+    public void handle(final HttpExchange httpExchange) throws IOException {
 	if (httpExchange.getRequestMethod().equalsIgnoreCase("GET")) {
 	    byte[] dmxArray = null;
 	    try {

@@ -50,7 +50,7 @@ public class ToolbarFactory {
      * @param state
      *            a {@link ApplicationState}
      */
-    public ToolbarFactory(RemoteModel remoteModel, ApplicationState state) {
+    public ToolbarFactory(final RemoteModel remoteModel, final ApplicationState state) {
 	this.remoteModel = remoteModel;
 	this.state = state;
     }
@@ -117,7 +117,7 @@ public class ToolbarFactory {
 		.getResource("/net/eliosoft/elios/gui/views/process-stop.png")));
 	quit.addActionListener(new ActionListener() {
 	    @Override
-	    public void actionPerformed(ActionEvent arg0) {
+	    public void actionPerformed(final ActionEvent arg0) {
 		state.changeState(State.SHUTTING_DOWN);
 	    }
 	});
@@ -139,7 +139,7 @@ public class ToolbarFactory {
 
 	button.addActionListener(new ActionListener() {
 	    @Override
-	    public void actionPerformed(ActionEvent arg0) {
+	    public void actionPerformed(final ActionEvent arg0) {
 		if (myDevice.getFullScreenWindow() == null) {
 		    turnOnFullScreen(frame, myDevice);
 		    button.setSelected(true);
@@ -169,36 +169,36 @@ public class ToolbarFactory {
 	additiveMode.setSelected(remoteModel.isAdditiveModeEnabled());
 	additiveMode.addActionListener(new ActionListener() {
 	    @Override
-	    public void actionPerformed(ActionEvent arg0) {
+	    public void actionPerformed(final ActionEvent arg0) {
 		remoteModel.setAdditiveModeEnabled(additiveMode.isSelected());
 	    }
 	});
 	remoteModel.addRemoteModelChangedListener(new RemoteModelListener() {
 
 	    @Override
-	    public void httpStopped(HttpStoppedEvent event) {
+	    public void httpStopped(final HttpStoppedEvent event) {
 	    }
 
 	    @Override
-	    public void httpStarted(HttpStartedEvent event) {
+	    public void httpStarted(final HttpStartedEvent event) {
 	    }
 
 	    @Override
 	    public void commandLineValueChanged(
-		    CommandLineValueChangedEvent event) {
+		    final CommandLineValueChangedEvent event) {
 	    }
 
 	    @Override
-	    public void artNetStopped(ArtNetStoppedEvent event) {
+	    public void artNetStopped(final ArtNetStoppedEvent event) {
 	    }
 
 	    @Override
-	    public void artNetStarted(ArtNetStartedEvent event) {
+	    public void artNetStarted(final ArtNetStartedEvent event) {
 	    }
 
 	    @Override
 	    public void additiveModeValueChanged(
-		    AdditiveModeValueChangedEvent event) {
+		    final AdditiveModeValueChangedEvent event) {
 		additiveMode.setSelected(event.isAdditiveModeEnabled());
 	    }
 	});
@@ -227,7 +227,7 @@ public class ToolbarFactory {
 
 	storeButton.addActionListener(new ActionListener() {
 	    @Override
-	    public void actionPerformed(ActionEvent e) {
+	    public void actionPerformed(final ActionEvent e) {
 		final String cueName = CuesViewHelper.askForCueName(frame,
 			remoteModel.getCuesListModel().getNextDefaultCueName());
 
@@ -270,7 +270,7 @@ public class ToolbarFactory {
      * @param device
      *            the {@link GraphicsDevice} on which the frame must be display
      */
-    private void turnOffFullScreen(JFrame frame, GraphicsDevice device) {
+    private void turnOffFullScreen(final JFrame frame, final GraphicsDevice device) {
 	try {
 	    // hide the frame so we can change it.
 	    frame.setVisible(false);
@@ -309,7 +309,7 @@ public class ToolbarFactory {
      * @param device
      *            the {@link GraphicsDevice} on which the frame must be display
      */
-    private void turnOnFullScreen(JFrame frame, GraphicsDevice device) {
+    private void turnOnFullScreen(final JFrame frame, final GraphicsDevice device) {
 	try {
 	    // hide everything
 	    frame.setVisible(false);

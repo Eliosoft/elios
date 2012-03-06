@@ -45,7 +45,7 @@ public class CuesController {
      * @param cuesView
      *            the view associated with this Controller
      */
-    public CuesController(RemoteModel remoteModel, CuesView cuesView) {
+    public CuesController(final RemoteModel remoteModel, final CuesView cuesView) {
 	this.remoteModel = remoteModel;
 	this.cuesView = cuesView;
 
@@ -56,7 +56,7 @@ public class CuesController {
 	this.cuesView.addStoreButtonListener(new ActionListener() {
 
 	    @Override
-	    public void actionPerformed(ActionEvent arg0) {
+	    public void actionPerformed(final ActionEvent arg0) {
 		final String cueName = CuesViewHelper.askForCueName(cuesView
 			.getViewComponent(), remoteModel.getCuesListModel()
 			.getNextDefaultCueName());
@@ -75,7 +75,7 @@ public class CuesController {
 	this.cuesView.addLoadButtonListener(new ActionListener() {
 
 	    @Override
-	    public void actionPerformed(ActionEvent e) {
+	    public void actionPerformed(final ActionEvent e) {
 		Cue cue = cuesView.getSelectedCue();
 		if (cue != null) {
 		    remoteModel.loadCue(cue);
@@ -86,7 +86,7 @@ public class CuesController {
 	this.cuesView.addRemoveButtonListener(new ActionListener() {
 
 	    @Override
-	    public void actionPerformed(ActionEvent arg0) {
+	    public void actionPerformed(final ActionEvent arg0) {
 		Cue cue = cuesView.getSelectedCue();
 		if (cue != null
 			&& CuesViewHelper.confirmCueRemove(

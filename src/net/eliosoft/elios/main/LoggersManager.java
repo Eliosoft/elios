@@ -56,7 +56,7 @@ public class LoggersManager {
      *            the name of the logger to get
      * @return the logger with the corresponding name
      */
-    public Logger getLogger(String loggerName) {
+    public Logger getLogger(final String loggerName) {
 	if (!loggersMap.containsKey(loggerName)) {
 	    this.loggersMap.put(loggerName, Logger.getLogger(loggerName));
 	}

@@ -45,7 +45,7 @@ public class Cue {
      * @param dmxArray
      *            the dmx array of the cue
      */
-    public Cue(String name, byte[] dmxArray) {
+    public Cue(final String name, final byte[] dmxArray) {
 	this.name = name;
 	System.arraycopy(dmxArray, 0, this.dmxArray, 0,
 		ArtNetServerManager.DMX_CHANNELS_COUNT);
@@ -66,7 +66,7 @@ public class Cue {
      * @param name
      *            the name to set
      */
-    public void setName(String name) {
+    public void setName(final String name) {
 	this.name = name;
     }
 
@@ -85,7 +85,7 @@ public class Cue {
      * @param dmxArray
      *            the dmxArray to set
      */
-    void setDmxArray(byte[] dmxArray) {
+    void setDmxArray(final byte[] dmxArray) {
 	System.arraycopy(dmxArray, 0, this.dmxArray, 0,
 		ArtNetServerManager.DMX_CHANNELS_COUNT);
     }

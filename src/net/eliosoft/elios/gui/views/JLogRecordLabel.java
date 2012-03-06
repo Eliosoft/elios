@@ -23,7 +23,7 @@ public class JLogRecordLabel extends JLabel {
      * @param record
      *            the log record of the label
      */
-    public JLogRecordLabel(LogRecord record) {
+    public JLogRecordLabel(final LogRecord record) {
 	super("[" + record.getLevel().getName() + "] " + record.getMessage());
 	this.record = record;
 	if (this.record.getLevel().equals(Level.SEVERE)) {

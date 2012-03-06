@@ -168,7 +168,7 @@ public class ArtNetServerManager {
      * @throws BadSyntaxException
      *             thrown when the command line has a bad syntax
      */
-    public void processCommandLine(String commandLine)
+    public void processCommandLine(final String commandLine)
 	    throws BadSyntaxException {
 	String[] commands = commandLine.split(";");
 	HashMap<Integer, Byte> valuesToPush = new HashMap<Integer, Byte>();
@@ -243,7 +243,7 @@ public class ArtNetServerManager {
 
     }
 
-    private static void checkChannelNumber(int channel)
+    private static void checkChannelNumber(final int channel)
 	    throws BadSyntaxException {
 	if (channel < MIN_CHANNEL_NUMBER || channel > MAX_CHANNEL_NUMBER) {
 	    throw new BadSyntaxException();
@@ -255,7 +255,7 @@ public class ArtNetServerManager {
     }
 
     private void pushValuesInCurrentOutputDmxArray(
-	    HashMap<Integer, Byte> valuesMap) {
+	    final HashMap<Integer, Byte> valuesMap) {
 	if (!additiveModeEnabled) {
 	    resetCurrentOutputDmxArray();
 	}
@@ -267,7 +267,7 @@ public class ArtNetServerManager {
     private void initArtNetReceiver() {
 	this.artnetServer.addListener(new ArtNetServerListener() {
 	    @Override
-	    public void artNetPacketReceived(ArtNetPacket artNetPacket) {
+	    public void artNetPacketReceived(final ArtNetPacket artNetPacket) {
 		switch (artNetPacket.getType()) {
 		case ART_OUTPUT:
 		    ArtDmxPacket artDmxPacket = (ArtDmxPacket) artNetPacket;
@@ -284,19 +284,19 @@ public class ArtNetServerManager {
 	    }
 
 	    @Override
-	    public void artNetServerStopped(ArtNetServer artNetServer) {
+	    public void artNetServerStopped(final ArtNetServer artNetServer) {
 	    }
 
 	    @Override
-	    public void artNetServerStarted(ArtNetServer artNetServer) {
+	    public void artNetServerStarted(final ArtNetServer artNetServer) {
 	    }
 
 	    @Override
-	    public void artNetPacketUnicasted(ArtNetPacket artNetPacket) {
+	    public void artNetPacketUnicasted(final ArtNetPacket artNetPacket) {
 	    }
 
 	    @Override
-	    public void artNetPacketBroadcasted(ArtNetPacket artNetPacket) {
+	    public void artNetPacketBroadcasted(final ArtNetPacket artNetPacket) {
 	    }
 	});
 
@@ -307,7 +307,7 @@ public class ArtNetServerManager {
      * 
      * @param broadcastAddress
      */
-    public void setBroadcastAddress(String broadcastAddress) {
+    public void setBroadcastAddress(final String broadcastAddress) {
 	this.broadcastAddress = broadcastAddress;
 	if (this.artnetServer != null) {
 	    this.artnetServer.setBroadcastAddress(broadcastAddress);
@@ -323,7 +323,7 @@ public class ArtNetServerManager {
      *            the universe to select
      * @return the array
      */
-    public byte[] getOutputDmxArray(int subnet, int universe) {
+    public byte[] getOutputDmxArray(final int subnet, final int universe) {
 	return outputDmxArrays[subnet][universe];
     }
 
@@ -346,7 +346,7 @@ public class ArtNetServerManager {
      * @param dmxArray
      *            the value of the dmx array
      */
-    public void setOutputDmxArray(int subnet, int universe, byte[] dmxArray) {
+    public void setOutputDmxArray(final int subnet, final int universe, final byte[] dmxArray) {
 	System.arraycopy(dmxArray, 0, outputDmxArrays[subnet][universe], 0,
 		DMX_CHANNELS_COUNT);
     }
@@ -357,7 +357,7 @@ public class ArtNetServerManager {
      * @param dmxArray
      *            the value of the dmx array
      */
-    public void setCurrentOutputDmxArray(byte[] dmxArray) {
+    public void setCurrentOutputDmxArray(final byte[] dmxArray) {
 	setOutputDmxArray(this.serverSubnet, this.serverUniverse, dmxArray);
     }
 
@@ -370,7 +370,7 @@ public class ArtNetServerManager {
      *            the universe to select
      * @return the array
      */
-    public byte[] getInputDmxArray(int subnet, int universe) {
+    public byte[] getInputDmxArray(final int subnet, final int universe) {
 	return inputDmxArrays[subnet][universe];
     }
 
@@ -390,7 +390,7 @@ public class ArtNetServerManager {
      * @param inPort
      *            the value of the port
      */
-    public void setInPort(int inPort) {
+    public void setInPort(final int inPort) {
 	this.inPort = inPort;
     }
 
@@ -400,7 +400,7 @@ public class ArtNetServerManager {
      * @param outPort
      *            the value of the port
      */
-    public void setOutPort(int outPort) {
+    public void setOutPort(final int outPort) {
 	this.outPort = outPort;
     }
 
@@ -410,7 +410,7 @@ public class ArtNetServerManager {
      * @param subnet
      *            the value of the subnet
      */
-    public void setSubnet(int subnet) {
+    public void setSubnet(final int subnet) {
 	this.serverSubnet = subnet;
 	fireSubnetValueChanged();
     }
@@ -421,7 +421,7 @@ public class ArtNetServerManager {
      * @param universe
      *            the value of the universe
      */
-    public void setUniverse(int universe) {
+    public void setUniverse(final int universe) {
 	this.serverUniverse = universe;
 	fireUniverseValueChanged();
     }
@@ -432,7 +432,7 @@ public class ArtNetServerManager {
      * @param additiveModeEnabled
      *            true to enable the additive mode, false to disable
      */
-    public void setAdditiveModeEnabled(boolean additiveModeEnabled) {
+    public void setAdditiveModeEnabled(final boolean additiveModeEnabled) {
 	this.additiveModeEnabled = additiveModeEnabled;
 	fireAdditiveModeValueChanged();
     }
@@ -489,7 +489,7 @@ public class ArtNetServerManager {
      *            the listener to add
      */
     public void addArtNetServerManagerChangedListener(
-	    ArtNetServerManagerListener listener) {
+	    final ArtNetServerManagerListener listener) {
 	this.artnetServerManagerChangedListeners.add(listener);
     }
 
@@ -500,7 +500,7 @@ public class ArtNetServerManager {
      *            the listener to remove
      */
     public void removeArtNetServerManagerChangedListener(
-	    ArtNetServerManagerListener listener) {
+	    final ArtNetServerManagerListener listener) {
 	this.artnetServerManagerChangedListeners.remove(listener);
     }
 

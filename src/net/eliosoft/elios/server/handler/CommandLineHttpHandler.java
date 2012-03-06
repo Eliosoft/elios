@@ -28,11 +28,11 @@ public class CommandLineHttpHandler implements HttpHandler {
 	    .getLogger(CommandLineHttpHandler.class.getName());
 
     @Override
-    public void handle(HttpExchange httpExchange) throws IOException {
+    public void handle(final HttpExchange httpExchange) throws IOException {
 	if (httpExchange.getRequestMethod().equalsIgnoreCase("POST")) {
 	    InputStream is = httpExchange.getRequestBody();
 
-	    byte buffer[] = new byte[CommandLineHttpHandler.MAX_BUFFER_SIZE];
+	    byte[] buffer = new byte[CommandLineHttpHandler.MAX_BUFFER_SIZE];
 	    int bytesRead = 0;
 
 	    StringBuilder commandLine = new StringBuilder();

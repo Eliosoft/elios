@@ -85,8 +85,8 @@ public class PrefsView implements ViewInterface {
      * @param updateModel
      *            the associated {@link UpdateModel}
      */
-    public PrefsView(RemoteModel remoteModel, LocaleComboBoxModel localeModel,
-	    UpdateModel updateModel) {
+    public PrefsView(final RemoteModel remoteModel, final LocaleComboBoxModel localeModel,
+	    final UpdateModel updateModel) {
 	this.remoteModel = remoteModel;
 	this.localeModel = localeModel;
 	this.updateModel = updateModel;
@@ -220,9 +220,9 @@ public class PrefsView implements ViewInterface {
 	    private static final long serialVersionUID = -8372082223569889802L;
 
 	    @Override
-	    public Component getListCellRendererComponent(JList list,
-		    Object value, int index, boolean isSelected,
-		    boolean cellHasFocus) {
+	    public Component getListCellRendererComponent(final JList list,
+		    final Object value, final int index, final boolean isSelected,
+		    final boolean cellHasFocus) {
 
 		super.getListCellRendererComponent(list, value, index,
 			isSelected, cellHasFocus);
@@ -316,7 +316,7 @@ public class PrefsView implements ViewInterface {
      * @param actionListener
      *            the listener to add to the button
      */
-    public void addCancelButtonListener(ActionListener actionListener) {
+    public void addCancelButtonListener(final ActionListener actionListener) {
 	this.cancelButton.addActionListener(actionListener);
     }
 
@@ -326,7 +326,7 @@ public class PrefsView implements ViewInterface {
      * @param actionListener
      *            the listener to remove to the button
      */
-    public void removeStartArtNetButtonListener(ActionListener actionListener) {
+    public void removeStartArtNetButtonListener(final ActionListener actionListener) {
 	this.cancelButton.removeActionListener(actionListener);
     }
 
@@ -336,7 +336,7 @@ public class PrefsView implements ViewInterface {
      * @param actionListener
      *            the listener to add to the button
      */
-    public void addSaveButtonListener(ActionListener actionListener) {
+    public void addSaveButtonListener(final ActionListener actionListener) {
 	this.saveButton.addActionListener(actionListener);
     }
 
@@ -346,7 +346,7 @@ public class PrefsView implements ViewInterface {
      * @param actionListener
      *            the listener to remove to the button
      */
-    public void removeStopArtNetButtonListener(ActionListener actionListener) {
+    public void removeStopArtNetButtonListener(final ActionListener actionListener) {
 	this.saveButton.removeActionListener(actionListener);
     }
 
@@ -357,7 +357,7 @@ public class PrefsView implements ViewInterface {
      *            the listener to add to the checkbox
      */
     public void addEnableHttpServerCheckBoxListener(
-	    ActionListener actionListener) {
+	    final ActionListener actionListener) {
 	this.enableHttpServerCheckBox.addActionListener(actionListener);
     }
 
@@ -368,7 +368,7 @@ public class PrefsView implements ViewInterface {
      *            the listener to remove to the checkbox
      */
     public void removeEnableHttpServerCheckBoxListener(
-	    ActionListener actionListener) {
+	    final ActionListener actionListener) {
 	this.enableHttpServerCheckBox.removeActionListener(actionListener);
     }
 
@@ -378,7 +378,7 @@ public class PrefsView implements ViewInterface {
      * @param l
      *            the listener to add to the lang combobox
      */
-    public void addLangComboListener(ActionListener l) {
+    public void addLangComboListener(final ActionListener l) {
 	this.langComboBox.addActionListener(l);
     }
 

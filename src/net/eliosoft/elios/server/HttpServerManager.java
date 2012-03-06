@@ -101,7 +101,7 @@ public class HttpServerManager {
      * @param inPort
      *            the value of the port
      */
-    public void setInPort(int inPort) {
+    public void setInPort(final int inPort) {
 	this.inPort = inPort;
     }
 

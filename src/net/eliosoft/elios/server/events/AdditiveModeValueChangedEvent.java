@@ -33,7 +33,7 @@ public class AdditiveModeValueChangedEvent {
      * @param additiveModeEnabled
      *            the new additive mode status value
      */
-    public AdditiveModeValueChangedEvent(boolean additiveModeEnabled) {
+    public AdditiveModeValueChangedEvent(final boolean additiveModeEnabled) {
 	this.additiveModeEnabled = additiveModeEnabled;
     }
 

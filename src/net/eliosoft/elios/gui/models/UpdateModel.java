@@ -43,7 +43,7 @@ public class UpdateModel {
 	private long value;
 	private String key;
 
-	private Frequency(long value, String key) {
+	private Frequency(final long value, final String key) {
 	    this.value = value;
 	    this.key = key;
 	}
@@ -89,13 +89,13 @@ public class UpdateModel {
      *            a {@link Preferences} used to fetch and store update frequency
      *            configuration
      */
-    public UpdateModel(Preferences prefs) {
+    public UpdateModel(final Preferences prefs) {
 	this.prefs = prefs;
 	this.listeners = new ArrayList<UpdateModel.UpdateListener>();
 
 	this.prefs.addPreferenceChangeListener(new PreferenceChangeListener() {
 	    @Override
-	    public void preferenceChange(PreferenceChangeEvent evt) {
+	    public void preferenceChange(final PreferenceChangeEvent evt) {
 		if (UPDATE_FREQ_PREFS_KEY.equals(evt.getKey())
 			&& evt.getNewValue() != null) {
 
@@ -122,7 +122,7 @@ public class UpdateModel {
      * @param freq
      *            frequency to save
      */
-    public void saveUpdateFrequency(Frequency freq) {
+    public void saveUpdateFrequency(final Frequency freq) {
 	prefs.put(UPDATE_FREQ_PREFS_KEY, freq.name());
     }
 
@@ -160,11 +160,11 @@ public class UpdateModel {
      * @param l
      *            an {@link UpdateListener}
      */
-    public void addUpdateListener(UpdateListener l) {
+    public void addUpdateListener(final UpdateListener l) {
 	listeners.add(l);
     }
 
-    private void fireUpdateFrequencySaved(Frequency newValue) {
+    private void fireUpdateFrequencySaved(final Frequency newValue) {
 	for (UpdateListener l : listeners)
 	    l.updateFrequencySaved(newValue);
     }

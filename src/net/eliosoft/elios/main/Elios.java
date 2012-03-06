@@ -97,7 +97,7 @@ public final class Elios {
     /**
      * Icons array for the Elios application.
      */
-    private static final Image[] icons = new Image[] {
+    private static final Image[] ICONS = new Image[] {
 	    new ImageIcon(
 		    Elios.class
 			    .getResource("/net/eliosoft/elios/gui/views/elios_e_24x24.png"))
@@ -128,7 +128,7 @@ public final class Elios {
      * @param args
      *            command-line argument. Currently unused !
      */
-    public static void main(String[] args) {
+    public static void main(final String[] args) {
 
 	try {
 	    UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -182,12 +182,12 @@ public final class Elios {
 	    }
 
 	    final JFrame frame = new JFrame(Messages.getString("ui.title"));
-	    frame.setIconImages(Arrays.<Image> asList(icons));
+	    frame.setIconImages(Arrays.<Image> asList(ICONS));
 	    final JTabbedPane tabbedPane = new JTabbedPane();
 	    Container contentPane = frame.getContentPane();
 	    contentPane.setLayout(new BorderLayout());
 	    frame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-	    frame.setIconImages(Arrays.asList(icons));
+	    frame.setIconImages(Arrays.asList(ICONS));
 
 	    contentPane.add(
 		    new ToolbarFactory(remoteModel, state).create(frame),
@@ -205,7 +205,7 @@ public final class Elios {
 
 	    tabbedPane.addChangeListener(new ChangeListener() {
 		@Override
-		public void stateChanged(ChangeEvent e) {
+		public void stateChanged(final ChangeEvent e) {
 		    tabbedPane.getSelectedComponent().requestFocusInWindow();
 		}
 	    });
@@ -214,7 +214,7 @@ public final class Elios {
 	    state.addListener(new ApplicationState.Listener() {
 
 		@Override
-		public void stateChanged(State oldState, State newState) {
+		public void stateChanged(final State oldState, final State newState) {
 		    try {
 			if (State.SHUTTING_DOWN == newState) {
 			    LOGGER.info("Application is shutting down");
@@ -232,7 +232,7 @@ public final class Elios {
 
 	    frame.addWindowListener(new WindowAdapter() {
 		@Override
-		public void windowClosing(WindowEvent e) {
+		public void windowClosing(final WindowEvent e) {
 		    state.changeState(State.SHUTTING_DOWN);
 		}
 	    });
@@ -348,7 +348,7 @@ public final class Elios {
      *            <code>Preferences</code> used to retrieve the configuration
      * @return a configured <code>RemoteModel</code>
      */
-    public static RemoteModel createRemoteModel(Preferences prefs) {
+    public static RemoteModel createRemoteModel(final Preferences prefs) {
 	RemoteModel model = new RemoteModel(ArtNetServerManager.getInstance(),
 		HttpServerManager.getInstance(), CuesManager.getInstance());
 	model.setSubnet(prefs.getInt("server.subnet", 0));
@@ -387,7 +387,7 @@ public final class Elios {
      * @param prefs
      *            the <code>Preferences</code> used to persist
      */
-    public static void persistRemoteModel(RemoteModel model, Preferences prefs) {
+    public static void persistRemoteModel(final RemoteModel model, final Preferences prefs) {
 	prefs.putInt("server.subnet", model.getSubnet());
 	prefs.putInt("server.universe", model.getUniverse());
 	prefs.put("server.broadcast.address", model.getBroadCastAddress()
@@ -425,7 +425,7 @@ public final class Elios {
      * @param v
      *            the {@link ViewInterface} to add
      */
-    private static void addViewToTab(JTabbedPane pane, ViewInterface v) {
+    private static void addViewToTab(final JTabbedPane pane, final ViewInterface v) {
 	pane.addTab(v.getLocalizedTitle(), v.getViewComponent());
     }
 }

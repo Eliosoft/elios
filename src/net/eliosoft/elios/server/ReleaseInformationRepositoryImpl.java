@@ -45,7 +45,7 @@ public class ReleaseInformationRepositoryImpl implements
      * @param prefs
      *            a {@link Preferences} instance
      */
-    public ReleaseInformationRepositoryImpl(Preferences prefs) {
+    public ReleaseInformationRepositoryImpl(final Preferences prefs) {
 	String rootUrlStr = prefs.get(RELEASEINFO_ROOT_URL, null);
 	if (rootUrlStr == null) {
 	    throw new IllegalStateException(
@@ -87,7 +87,7 @@ public class ReleaseInformationRepositoryImpl implements
      * @see net.eliosoft.elios.server.ReleaseInformationRepository#getByReleaseCode(net.eliosoft.elios.server.ReleaseCode)
      */
     @Override
-    public ReleaseInformation getByReleaseCode(ReleaseCode releaseCode) {
+    public ReleaseInformation getByReleaseCode(final ReleaseCode releaseCode) {
 	try {
 	    return checkout(buildURI(releaseCode));
 	} catch (MalformedURLException e) {
@@ -97,7 +97,7 @@ public class ReleaseInformationRepositoryImpl implements
 	}
     }
 
-    private ReleaseInformation checkout(URI uri) throws MalformedURLException,
+    private ReleaseInformation checkout(final URI uri) throws MalformedURLException,
 	    IOException {
 	InputStream stream = null;
 	try {
@@ -122,7 +122,7 @@ public class ReleaseInformationRepositoryImpl implements
 	}
     }
 
-    private InputStream streamOfUri(URI uri) throws IOException,
+    private InputStream streamOfUri(final URI uri) throws IOException,
 	    MalformedURLException {
 	InputStream stream;
 	final URLConnection cn = uri.toURL().openConnection();
@@ -131,7 +131,7 @@ public class ReleaseInformationRepositoryImpl implements
 	return stream;
     }
 
-    private URI buildURI(ReleaseCode code) {
+    private URI buildURI(final ReleaseCode code) {
 	return URI.create(MessageFormat.format(URL_PATTERN, rootUrl,
 		code.getCode()));
     }

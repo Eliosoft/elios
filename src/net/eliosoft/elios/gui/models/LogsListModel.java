@@ -59,7 +59,7 @@ public class LogsListModel extends AbstractListModel {
 	logger.addHandler(new Handler() {
 
 	    @Override
-	    public void publish(LogRecord record) {
+	    public void publish(final LogRecord record) {
 		addLogRecord(record);
 	    }
 
@@ -81,7 +81,7 @@ public class LogsListModel extends AbstractListModel {
      * @param logRecord
      *            the log record to add
      */
-    private void addLogRecord(LogRecord logRecord) {
+    private void addLogRecord(final LogRecord logRecord) {
 	logs.add(logRecord);
 	this.fireIntervalAdded(this, logs.size() - 1, logs.size() - 1);
     }
@@ -101,7 +101,7 @@ public class LogsListModel extends AbstractListModel {
      * {@inheritDoc}
      */
     @Override
-    public Object getElementAt(int index) {
+    public Object getElementAt(final int index) {
 	return logs.get(index);
     }
 

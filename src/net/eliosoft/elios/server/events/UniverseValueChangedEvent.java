@@ -33,7 +33,7 @@ public class UniverseValueChangedEvent {
      * @param universe
      *            the new universe value
      */
-    public UniverseValueChangedEvent(int universe) {
+    public UniverseValueChangedEvent(final int universe) {
 	this.universe = universe;
     }
 

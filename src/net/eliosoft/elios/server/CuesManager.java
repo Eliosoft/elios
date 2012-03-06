@@ -77,7 +77,7 @@ public class CuesManager {
      * @param cue
      *            the cue to add to the manager
      */
-    public void addCue(Cue cue) {
+    public void addCue(final Cue cue) {
 	if (cuesMap.containsKey(cue.getName())) {
 	    throw new IllegalArgumentException(
 		    "a cue with this name is already set");
@@ -94,7 +94,7 @@ public class CuesManager {
      * @param name
      *            the name of the cue to remove
      */
-    public void removeCue(String name) {
+    public void removeCue(final String name) {
 	logger.info("Cue [" + name + "] removed");
 	cuesMap.remove(name);
 	this.fireCueRemoved(name);
@@ -106,7 +106,7 @@ public class CuesManager {
      * @param name
      * @return the requested cue if found or null if no cue is found
      */
-    public Cue getCue(String name) {
+    public Cue getCue(final String name) {
 	logger.info("Cue [" + name + "] loaded");
 	return cuesMap.get(name);
     }
@@ -121,7 +121,7 @@ public class CuesManager {
 	Collections.sort(cuesList, new Comparator<Cue>() {
 
 	    @Override
-	    public int compare(Cue c1, Cue c2) {
+	    public int compare(final Cue c1, final Cue c2) {
 		return c1.getName().compareTo(c2.getName());
 	    }
 	});
@@ -150,7 +150,7 @@ public class CuesManager {
      * @param listener
      *            the listener to add
      */
-    public void addCuesManagerChangedListener(CuesManagerListener listener) {
+    public void addCuesManagerChangedListener(final CuesManagerListener listener) {
 	this.cuesManagerChangedListeners.add(listener);
     }
 
@@ -160,18 +160,18 @@ public class CuesManager {
      * @param listener
      *            the listener to remove
      */
-    public void removeCuesManagerChangedListener(CuesManagerListener listener) {
+    public void removeCuesManagerChangedListener(final CuesManagerListener listener) {
 	this.cuesManagerChangedListeners.remove(listener);
     }
 
-    private void fireCueAdded(String name) {
+    private void fireCueAdded(final String name) {
 	for (CuesManagerListener listener : this.cuesManagerChangedListeners) {
 	    CueAddedEvent e = new CueAddedEvent(name);
 	    listener.cueAdded(e);
 	}
     }
 
-    private void fireCueRemoved(String name) {
+    private void fireCueRemoved(final String name) {
 	for (CuesManagerListener listener : this.cuesManagerChangedListeners) {
 	    CueRemovedEvent e = new CueRemovedEvent(name);
 	    listener.cueRemoved(e);
@@ -187,7 +187,7 @@ public class CuesManager {
      *             if something goes wrong when persisting
      * @see CuesManager#load(InputStream)
      */
-    public void persist(OutputStream stream) throws IOException {
+    public void persist(final OutputStream stream) throws IOException {
 	stream.write(new Gson().toJson(cuesMap).getBytes());
     }
 
@@ -198,7 +198,7 @@ public class CuesManager {
      *            {@link InputStream} from which the cues must be load
      * @see CuesManager#persist(OutputStream)
      */
-    public void load(InputStream stream) {
+    public void load(final InputStream stream) {
 	cuesMap = new Gson().fromJson(new InputStreamReader(stream),
 		new TypeToken<Map<String, Cue>>() {
 		}.getType());

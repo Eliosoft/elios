@@ -57,7 +57,7 @@ public final class Messages {
      *            string that identified a localized text
      * @return the localized text or !key! is the resource is not found
      */
-    public static String getString(String key) {
+    public static String getString(final String key) {
 	try {
 	    return RESOURCE_BUNDLE.getString(key);
 	} catch (MissingResourceException e) {
@@ -75,7 +75,7 @@ public final class Messages {
      * @throws MissingResourceException
      *             if the resource is not found
      */
-    private static String internalGetString(String key)
+    private static String internalGetString(final String key)
 	    throws MissingResourceException {
 	return RESOURCE_BUNDLE.getString(key);
     }
@@ -92,7 +92,7 @@ public final class Messages {
      * @return the populated localized text, returns !key! (key is the argument)
      *         otherwise.
      */
-    public static String getString(String key, Object... objects) {
+    public static String getString(final String key, final Object... objects) {
 	try {
 	    return new MessageFormat(internalGetString(key)).format(objects);
 	} catch (MissingResourceException e) {
@@ -107,7 +107,7 @@ public final class Messages {
      *            a string
      * @return the given string between "!"
      */
-    private static String fallbackTranslation(String key) {
+    private static String fallbackTranslation(final String key) {
 	LOGGER.warning("missing i18n key [" + key + "]");
 	return '!' + key + '!';
     }

@@ -30,7 +30,7 @@ public final class CuesViewHelper {
      * @return true if confirmed, false in not
      */
     public static boolean confirmCueRemove(final Component parent,
-	    String cueName) {
+	    final String cueName) {
 	int option = JOptionPane.showConfirmDialog(parent, MessageFormat
 		.format(Messages.getString("cuesview.confirmremovemessage"),
 			cueName), null, JOptionPane.OK_CANCEL_OPTION,
@@ -54,7 +54,7 @@ public final class CuesViewHelper {
      * @return the cue name or null if the dialog has been closed or cancelled
      */
     public static String askForCueName(final Component parent,
-	    String defaultName) {
+	    final String defaultName) {
 	String cueName = "";
 	while (cueName != null && "".equals(cueName.trim())) {
 	    // ask for a cue name as long as the String is empty
@@ -75,8 +75,8 @@ public final class CuesViewHelper {
      * @param cueName
      *            the name of the concerned cue
      */
-    public static void printError(final Component parent, Exception exception,
-	    String cueName) {
+    public static void printError(final Component parent, final Exception exception,
+	    final String cueName) {
 	String message;
 	if (exception instanceof IllegalArgumentException) {
 	    message = MessageFormat.format(

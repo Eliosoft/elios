@@ -36,7 +36,7 @@ public class DMXTableModel extends DefaultTableModel {
      * @param serverManager
      *            the server manager used by the model
      */
-    public DMXTableModel(ArtNetServerManager serverManager) {
+    public DMXTableModel(final ArtNetServerManager serverManager) {
 	this.artNetServerManager = serverManager;
 	dmxArrayUpdater = new SwingWorker<Void, byte[]>() {
 
@@ -59,7 +59,7 @@ public class DMXTableModel extends DefaultTableModel {
     }
 
     @Override
-    public String getColumnName(int column) {
+    public String getColumnName(final int column) {
 	return Integer.toString(column + 1);
     }
 
@@ -69,7 +69,7 @@ public class DMXTableModel extends DefaultTableModel {
     }
 
     @Override
-    public Integer getValueAt(int row, int column) {
+    public Integer getValueAt(final int row, final int column) {
 	int index = column + row * COLUMN_COUNT;
 	int intValue = inputEnabled ? ((Byte) artNetServerManager
 		.getCurrentInputDmxArray()[index]).intValue()
@@ -79,7 +79,7 @@ public class DMXTableModel extends DefaultTableModel {
     }
 
     @Override
-    public Class<?> getColumnClass(int columnIndex) {
+    public Class<?> getColumnClass(final int columnIndex) {
 	return Integer.class;
     }
 
@@ -114,7 +114,7 @@ public class DMXTableModel extends DefaultTableModel {
      * @param inputEnabled
      *            the status of input enabling
      */
-    public void setInputEnabled(boolean inputEnabled) {
+    public void setInputEnabled(final boolean inputEnabled) {
 	this.inputEnabled = inputEnabled;
     }
 

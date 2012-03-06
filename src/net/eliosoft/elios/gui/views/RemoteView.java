@@ -75,7 +75,7 @@ public class RemoteView implements ViewInterface {
 		.addRemoteModelChangedListener(new RemoteModelListener() {
 		    @Override
 		    public void commandLineValueChanged(
-			    CommandLineValueChangedEvent event) {
+			    final CommandLineValueChangedEvent event) {
 			commandLineTextField.setText(event.getCommand());
 			if (event.getCommand().isEmpty()) {
 			    delButton.setEnabled(false);
@@ -87,26 +87,26 @@ public class RemoteView implements ViewInterface {
 		    }
 
 		    @Override
-		    public void artNetStarted(ArtNetStartedEvent event) {
+		    public void artNetStarted(final ArtNetStartedEvent event) {
 			enterButton.setEnabled(true);
 		    }
 
 		    @Override
-		    public void artNetStopped(ArtNetStoppedEvent event) {
+		    public void artNetStopped(final ArtNetStoppedEvent event) {
 			enterButton.setEnabled(false);
 		    }
 
 		    @Override
-		    public void httpStarted(HttpStartedEvent event) {
+		    public void httpStarted(final HttpStartedEvent event) {
 		    }
 
 		    @Override
-		    public void httpStopped(HttpStoppedEvent event) {
+		    public void httpStopped(final HttpStoppedEvent event) {
 		    }
 
 		    @Override
 		    public void additiveModeValueChanged(
-			    AdditiveModeValueChangedEvent event) {
+			    final AdditiveModeValueChangedEvent event) {
 		    }
 		});
 
@@ -163,7 +163,7 @@ public class RemoteView implements ViewInterface {
      * @param value
      *            the text to set
      */
-    public void setCommandLineFieldValue(String value) {
+    public void setCommandLineFieldValue(final String value) {
 	this.commandLineTextField.setText(value);
     }
 
@@ -173,7 +173,7 @@ public class RemoteView implements ViewInterface {
      * @param listener
      *            the listener to add
      */
-    public void addRemotePanelKeyListener(KeyListener listener) {
+    public void addRemotePanelKeyListener(final KeyListener listener) {
 	this.remotePanel.addKeyListener(listener);
     }
 
@@ -183,7 +183,7 @@ public class RemoteView implements ViewInterface {
      * @param listener
      *            the listener to remove
      */
-    public void removeRemotePanelKeyListener(KeyListener listener) {
+    public void removeRemotePanelKeyListener(final KeyListener listener) {
 	this.remotePanel.removeKeyListener(listener);
     }
 
@@ -193,7 +193,7 @@ public class RemoteView implements ViewInterface {
      * @param listener
      *            the listener to add
      */
-    public void addValueButtonsListener(ActionListener listener) {
+    public void addValueButtonsListener(final ActionListener listener) {
 	for (JButton button : valueButtonsList) {
 	    button.addActionListener(listener);
 	}
@@ -205,7 +205,7 @@ public class RemoteView implements ViewInterface {
      * @param listener
      *            the listener to remove
      */
-    public void removeValueButtonsListener(ActionListener listener) {
+    public void removeValueButtonsListener(final ActionListener listener) {
 	for (JButton button : valueButtonsList) {
 	    button.removeActionListener(listener);
 	}
@@ -217,7 +217,7 @@ public class RemoteView implements ViewInterface {
      * @param actionListener
      *            the listener to add
      */
-    public void addDelButtonListener(ActionListener actionListener) {
+    public void addDelButtonListener(final ActionListener actionListener) {
 	this.delButton.addActionListener(actionListener);
     }
 
@@ -227,7 +227,7 @@ public class RemoteView implements ViewInterface {
      * @param actionListener
      *            the listener to remove
      */
-    public void removeDelButtonListener(ActionListener actionListener) {
+    public void removeDelButtonListener(final ActionListener actionListener) {
 	this.delButton.removeActionListener(actionListener);
     }
 
@@ -237,7 +237,7 @@ public class RemoteView implements ViewInterface {
      * @param actionListener
      *            the listener to add
      */
-    public void addEnterButtonListener(ActionListener actionListener) {
+    public void addEnterButtonListener(final ActionListener actionListener) {
 	this.enterButton.addActionListener(actionListener);
     }
 
@@ -247,7 +247,7 @@ public class RemoteView implements ViewInterface {
      * @param actionListener
      *            the listener to remove
      */
-    public void removeEnterButtonListener(ActionListener actionListener) {
+    public void removeEnterButtonListener(final ActionListener actionListener) {
 	this.enterButton.removeActionListener(actionListener);
     }
 
@@ -257,7 +257,7 @@ public class RemoteView implements ViewInterface {
      * @param actionListener
      *            the listener to add
      */
-    public void addResetButtonListener(ActionListener actionListener) {
+    public void addResetButtonListener(final ActionListener actionListener) {
 	this.resetButton.addActionListener(actionListener);
     }
 
@@ -267,7 +267,7 @@ public class RemoteView implements ViewInterface {
      * @param actionListener
      *            the listener to remove
      */
-    public void removeResetButtonListener(ActionListener actionListener) {
+    public void removeResetButtonListener(final ActionListener actionListener) {
 	this.resetButton.removeActionListener(actionListener);
     }
 
@@ -325,15 +325,15 @@ public class RemoteView implements ViewInterface {
 	return this.valuesList;
     }
 
-    private void addValueButton(final Character c, int gridY, int gridWidth,
-	    boolean enabled) {
+    private void addValueButton(final Character c, final int gridY, final int gridWidth,
+	    final boolean enabled) {
 	JButton button = addButton(c.toString(), gridY, gridWidth, enabled);
 	valuesList.add(c);
 	valueButtonsList.add(button);
     }
 
-    private JButton addButton(String text, int gridY, int gridWidth,
-	    boolean enabled) {
+    private JButton addButton(final String text, final int gridY, final int gridWidth,
+	    final boolean enabled) {
 	JButton button = new JButton(text);
 	button.setEnabled(enabled);
 	button.setFocusable(false);

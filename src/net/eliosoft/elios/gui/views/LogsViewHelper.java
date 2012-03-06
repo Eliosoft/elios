@@ -26,7 +26,7 @@ public class LogsViewHelper {
      * @return a decorated {@link JLabel} that displays the {@link LogRecord}
      *         information
      */
-    public static JLabel createLogsLabel(LogRecord record) {
+    public static JLabel createLogsLabel(final LogRecord record) {
 	return LOG_DECORATOR.update(new JLabel(), record);
     }
 
@@ -57,7 +57,7 @@ public class LogsViewHelper {
      */
     public static final LogLabelDecorator LOG_DECORATOR = new LogLabelDecorator() {
 	@Override
-	public JLabel update(JLabel label, LogRecord record) {
+	public JLabel update(final JLabel label, final LogRecord record) {
 	    if (record == null) {
 		label.setText(DEFAULT_TEXT);
 		return label;

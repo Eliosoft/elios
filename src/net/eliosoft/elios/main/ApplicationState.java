@@ -54,7 +54,7 @@ public class ApplicationState {
      * @param newState
      *            the new {@link State}.
      */
-    void changeState(State newState) {
+    void changeState(final State newState) {
 	State oldState = state;
 	this.state = newState;
 
@@ -69,7 +69,7 @@ public class ApplicationState {
      * @param newState
      *            the new {@link State}
      */
-    private void fireStateChanged(State oldState, State newState) {
+    private void fireStateChanged(final State oldState, final State newState) {
 	for (Listener l : listeners) {
 	    l.stateChanged(oldState, newState);
 	}
@@ -81,7 +81,7 @@ public class ApplicationState {
      * @param l
      *            a {@link Listener}
      */
-    void addListener(Listener l) {
+    void addListener(final Listener l) {
 	this.listeners.add(l);
     }
 }

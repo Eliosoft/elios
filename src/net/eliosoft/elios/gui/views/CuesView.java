@@ -68,7 +68,7 @@ public class CuesView implements ViewInterface {
 
 	cuesList.addMouseListener(new MouseAdapter() {
 	    @Override
-	    public void mouseClicked(MouseEvent e) {
+	    public void mouseClicked(final MouseEvent e) {
 		if (e.getClickCount() == 2) {
 		    int index = cuesList.locationToIndex(e.getPoint());
 		    remoteModel.loadCue(remoteModel.getCuesListModel()
@@ -87,9 +87,9 @@ public class CuesView implements ViewInterface {
 	    private static final long serialVersionUID = -3018960552174916077L;
 
 	    @Override
-	    public Component getListCellRendererComponent(JList list,
-		    Object value, int index, boolean isSelected,
-		    boolean cellHasFocus) {
+	    public Component getListCellRendererComponent(final JList list,
+		    final Object value, final int index, final boolean isSelected,
+		    final boolean cellHasFocus) {
 		super.getListCellRendererComponent(list, value, index,
 			isSelected, cellHasFocus);
 		Cue cue = (Cue) value;
@@ -101,7 +101,7 @@ public class CuesView implements ViewInterface {
 	cuesList.addListSelectionListener(new ListSelectionListener() {
 
 	    @Override
-	    public void valueChanged(ListSelectionEvent e) {
+	    public void valueChanged(final ListSelectionEvent e) {
 		if (getSelectedCue() == null) {
 		    loadButton.setEnabled(false);
 		    removeButton.setEnabled(false);
@@ -155,7 +155,7 @@ public class CuesView implements ViewInterface {
      * @param listener
      *            the listener to add
      */
-    public void addStoreButtonListener(ActionListener listener) {
+    public void addStoreButtonListener(final ActionListener listener) {
 	this.storeButton.addActionListener(listener);
     }
 
@@ -165,7 +165,7 @@ public class CuesView implements ViewInterface {
      * @param listener
      *            the listener to remove
      */
-    public void removeStoreButtonListener(ActionListener listener) {
+    public void removeStoreButtonListener(final ActionListener listener) {
 	this.storeButton.removeActionListener(listener);
     }
 
@@ -175,7 +175,7 @@ public class CuesView implements ViewInterface {
      * @param listener
      *            the listener to add
      */
-    public void addLoadButtonListener(ActionListener listener) {
+    public void addLoadButtonListener(final ActionListener listener) {
 	this.loadButton.addActionListener(listener);
     }
 
@@ -185,7 +185,7 @@ public class CuesView implements ViewInterface {
      * @param listener
      *            the listener to remove
      */
-    public void removeLoadButtonListener(ActionListener listener) {
+    public void removeLoadButtonListener(final ActionListener listener) {
 	this.loadButton.removeActionListener(listener);
     }
 
@@ -195,7 +195,7 @@ public class CuesView implements ViewInterface {
      * @param listener
      *            the listener to add
      */
-    public void addRemoveButtonListener(ActionListener listener) {
+    public void addRemoveButtonListener(final ActionListener listener) {
 	this.removeButton.addActionListener(listener);
     }
 
@@ -205,7 +205,7 @@ public class CuesView implements ViewInterface {
      * @param listener
      *            the listener to remove
      */
-    public void removeRemoveButtonListener(ActionListener listener) {
+    public void removeRemoveButtonListener(final ActionListener listener) {
 	this.removeButton.removeActionListener(listener);
     }
 

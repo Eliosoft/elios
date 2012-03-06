@@ -43,7 +43,7 @@ public class DMXController {
      * @param dmxView
      *            the view associated with this Controller
      */
-    public DMXController(DMXTableModel dmxTableModel, DMXView dmxView) {
+    public DMXController(final DMXTableModel dmxTableModel, final DMXView dmxView) {
 	this.dmxTableModel = dmxTableModel;
 	this.dmxView = dmxView;
 
@@ -54,7 +54,7 @@ public class DMXController {
 	this.dmxView.addInOutRadioActionListener(new ActionListener() {
 
 	    @Override
-	    public void actionPerformed(ActionEvent actionEvent) {
+	    public void actionPerformed(final ActionEvent actionEvent) {
 		dmxTableModel.setInputEnabled(actionEvent.getActionCommand()
 			.equals("input"));
 	    }

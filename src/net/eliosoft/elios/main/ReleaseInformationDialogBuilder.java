@@ -82,8 +82,8 @@ public class ReleaseInformationDialogBuilder {
      * @param uSupport
      *            the {@link UpdateModel} instance
      */
-    public ReleaseInformationDialogBuilder(Frame parent,
-	    ReleaseInformationRepository repository, UpdateModel uSupport) {
+    public ReleaseInformationDialogBuilder(final Frame parent,
+	    final ReleaseInformationRepository repository, final UpdateModel uSupport) {
 
 	if (repository == null) {
 	    throw new IllegalArgumentException(
@@ -103,7 +103,7 @@ public class ReleaseInformationDialogBuilder {
      *            the {@link ReleaseCode} of the release to display
      * @return the built dialog
      */
-    private JDialog build(ReleaseCode code) {
+    private JDialog build(final ReleaseCode code) {
 
 	// TODO loading must be done in a swing worker
 	final ReleaseInformation ri = repository.getLatest();
@@ -169,7 +169,7 @@ public class ReleaseInformationDialogBuilder {
 
 	closeBtn.addActionListener(new ActionListener() {
 	    @Override
-	    public void actionPerformed(ActionEvent e) {
+	    public void actionPerformed(final ActionEvent e) {
 		dialog.dispose();
 		uSupport.markAsChecked();
 	    }
@@ -188,7 +188,7 @@ public class ReleaseInformationDialogBuilder {
 
 	    openInBrowser.addActionListener(new ActionListener() {
 		@Override
-		public void actionPerformed(ActionEvent e) {
+		public void actionPerformed(final ActionEvent e) {
 		    try {
 			desktop.browse(ri.getDownloadUrl().toURI());
 		    } catch (IOException e1) {
@@ -236,7 +236,7 @@ public class ReleaseInformationDialogBuilder {
      * @return a {@link Builder} implementation that allow you to finally build
      *         the {@link JDialog}.
      */
-    public Builder<JDialog> forReleaseCode(String code) {
+    public Builder<JDialog> forReleaseCode(final String code) {
 	return forReleaseCode(ReleaseCode.create(code));
     }
 
@@ -250,7 +250,7 @@ public class ReleaseInformationDialogBuilder {
      * @return a {@link Builder} implementation that allow you to finally build
      *         the {@link JDialog}.
      */
-    public Builder<JDialog> forReleaseCode(ReleaseCode code) {
+    public Builder<JDialog> forReleaseCode(final ReleaseCode code) {
 	this.releaseCode = code;
 	return new Builder<JDialog>() {
 	    @Override

@@ -29,7 +29,7 @@ public class PostInstallProcess {
      * @param args
      *            a string array with a release code and a URL
      */
-    public static void main(String[] args) {
+    public static void main(final String[] args) {
 
 	if (args.length != 2) {
 	    LOGGER.severe("A release code and an url must be given in argument");

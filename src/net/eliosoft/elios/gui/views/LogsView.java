@@ -63,7 +63,7 @@ public class LogsView implements ViewInterface {
      * @param remoteModel
      *            the RemoteModel used by the view
      */
-    public LogsView(RemoteModel remoteModel) {
+    public LogsView(final RemoteModel remoteModel) {
 	this.remoteModel = remoteModel;
 
 	this.logsPanel.setLayout(this.layout);
@@ -81,19 +81,19 @@ public class LogsView implements ViewInterface {
 	    }
 
 	    @Override
-	    public void intervalRemoved(ListDataEvent e) {
+	    public void intervalRemoved(final ListDataEvent e) {
 	    }
 
 	    @Override
-	    public void contentsChanged(ListDataEvent e) {
+	    public void contentsChanged(final ListDataEvent e) {
 	    }
 	});
 	this.logsList.setCellRenderer(new ListCellRenderer() {
 
 	    @Override
-	    public Component getListCellRendererComponent(JList list,
-		    Object value, int index, boolean isSelected,
-		    boolean cellHasFocus) {
+	    public Component getListCellRendererComponent(final JList list,
+		    final Object value, final int index, final boolean isSelected,
+		    final boolean cellHasFocus) {
 		return LogsViewHelper.createLogsLabel((LogRecord) value);
 	    }
 	});
@@ -136,7 +136,7 @@ public class LogsView implements ViewInterface {
      * @param listener
      *            the listener to add
      */
-    public void addClearLogsButtonListener(ActionListener listener) {
+    public void addClearLogsButtonListener(final ActionListener listener) {
 	this.clearLogsButton.addActionListener(listener);
     }
 
@@ -146,7 +146,7 @@ public class LogsView implements ViewInterface {
      * @param listener
      *            the listener to remove
      */
-    public void removeClearLogsButtonListener(ActionListener listener) {
+    public void removeClearLogsButtonListener(final ActionListener listener) {
 	this.clearLogsButton.removeActionListener(listener);
     }
 

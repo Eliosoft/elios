@@ -29,11 +29,11 @@ public class ParamsHttpHandler implements HttpHandler {
 	    .getLogger(ParamsHttpHandler.class.getName());
 
     @Override
-    public void handle(HttpExchange httpExchange) throws IOException {
+    public void handle(final HttpExchange httpExchange) throws IOException {
 	if (httpExchange.getRequestMethod().equalsIgnoreCase("POST")) {
 	    InputStream is = httpExchange.getRequestBody();
 
-	    byte buffer[] = new byte[ParamsHttpHandler.MAX_BUFFER_SIZE];
+	    byte[] buffer = new byte[ParamsHttpHandler.MAX_BUFFER_SIZE];
 	    int bytesRead = 0;
 
 	    StringBuilder paramsLine = new StringBuilder();

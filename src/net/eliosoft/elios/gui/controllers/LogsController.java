@@ -43,7 +43,7 @@ public class LogsController {
      * @param logsView
      *            the view associated with this Controller
      */
-    public LogsController(RemoteModel remoteModel, LogsView logsView) {
+    public LogsController(final RemoteModel remoteModel, final LogsView logsView) {
 	this.remoteModel = remoteModel;
 	this.logsView = logsView;
 
@@ -53,7 +53,7 @@ public class LogsController {
     private void initButtonsListeners() {
 	this.logsView.addClearLogsButtonListener(new ActionListener() {
 	    @Override
-	    public void actionPerformed(ActionEvent e) {
+	    public void actionPerformed(final ActionEvent e) {
 		remoteModel.getLogsListModel().clearLogsList();
 	    }
 	});
