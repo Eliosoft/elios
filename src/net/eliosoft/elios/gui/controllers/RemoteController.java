@@ -55,7 +55,8 @@ public class RemoteController {
      * @param remoteView
      *            view that display the remote.
      */
-    public RemoteController(final RemoteModel remoteModel, final RemoteView remoteView) {
+    public RemoteController(final RemoteModel remoteModel,
+	    final RemoteView remoteView) {
 	this.remoteModel = remoteModel;
 	this.remoteView = remoteView;
 
@@ -114,8 +115,8 @@ public class RemoteController {
 	});
     }
 
-    private void initValueKeyStroke(final InputMap inputMap, final ActionMap actionMap,
-	    final Character c) {
+    private void initValueKeyStroke(final InputMap inputMap,
+	    final ActionMap actionMap, final Character c) {
 	inputMap.put(KeyStroke.getKeyStroke(c), c);
 	actionMap.put(c, new AbstractAction() {
 

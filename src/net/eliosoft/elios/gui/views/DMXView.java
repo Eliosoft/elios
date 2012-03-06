@@ -73,8 +73,8 @@ public class DMXView implements ViewInterface {
 
 	    @Override
 	    public Component getTableCellRendererComponent(final JTable table,
-		    final Object value, final boolean isSelected, final boolean hasFocus,
-		    final int row, final int column) {
+		    final Object value, final boolean isSelected,
+		    final boolean hasFocus, final int row, final int column) {
 		super.getTableCellRendererComponent(table, value, isSelected,
 			hasFocus, row, column);
 		setHorizontalAlignment(SwingConstants.CENTER);
@@ -114,8 +114,9 @@ public class DMXView implements ViewInterface {
 
 		    @Override
 		    public Component getTableCellRendererComponent(
-			    final JTable table, final Object value, final boolean isSelected,
-			    final boolean hasFocus, final int row, final int column) {
+			    final JTable table, final Object value,
+			    final boolean isSelected, final boolean hasFocus,
+			    final int row, final int column) {
 			super.getTableCellRendererComponent(table, value,
 				isSelected, hasFocus, row, column);
 			int nonBlueLevel = 255 - ((Integer) value).intValue() * 4 / 5;
@@ -146,8 +147,8 @@ public class DMXView implements ViewInterface {
 
 	    @Override
 	    public Component getListCellRendererComponent(final JList list,
-		    final Object value, final int index, final boolean isSelected,
-		    final boolean cellHasFocus) {
+		    final Object value, final int index,
+		    final boolean isSelected, final boolean cellHasFocus) {
 		Component c = headerCellRenderer.getTableCellRendererComponent(
 			dmxTable, value, isSelected, cellHasFocus, index, -1);
 		return c;
@@ -177,7 +178,8 @@ public class DMXView implements ViewInterface {
      * @param actionListener
      *            the listener to remove
      */
-    public void removeInOutRadioActionListener(final ActionListener actionListener) {
+    public void removeInOutRadioActionListener(
+	    final ActionListener actionListener) {
 	inRadio.removeActionListener(actionListener);
 	outRadio.removeActionListener(actionListener);
     }

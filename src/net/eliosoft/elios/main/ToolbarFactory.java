@@ -50,7 +50,8 @@ public class ToolbarFactory {
      * @param state
      *            a {@link ApplicationState}
      */
-    public ToolbarFactory(final RemoteModel remoteModel, final ApplicationState state) {
+    public ToolbarFactory(final RemoteModel remoteModel,
+	    final ApplicationState state) {
 	this.remoteModel = remoteModel;
 	this.state = state;
     }
@@ -270,7 +271,8 @@ public class ToolbarFactory {
      * @param device
      *            the {@link GraphicsDevice} on which the frame must be display
      */
-    private void turnOffFullScreen(final JFrame frame, final GraphicsDevice device) {
+    private void turnOffFullScreen(final JFrame frame,
+	    final GraphicsDevice device) {
 	try {
 	    // hide the frame so we can change it.
 	    frame.setVisible(false);
@@ -309,7 +311,8 @@ public class ToolbarFactory {
      * @param device
      *            the {@link GraphicsDevice} on which the frame must be display
      */
-    private void turnOnFullScreen(final JFrame frame, final GraphicsDevice device) {
+    private void turnOnFullScreen(final JFrame frame,
+	    final GraphicsDevice device) {
 	try {
 	    // hide everything
 	    frame.setVisible(false);

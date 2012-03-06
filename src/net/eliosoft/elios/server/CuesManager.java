@@ -160,7 +160,8 @@ public class CuesManager {
      * @param listener
      *            the listener to remove
      */
-    public void removeCuesManagerChangedListener(final CuesManagerListener listener) {
+    public void removeCuesManagerChangedListener(
+	    final CuesManagerListener listener) {
 	this.cuesManagerChangedListeners.remove(listener);
     }
 

@@ -118,7 +118,8 @@ public class ArtNetServerManager {
     }
 
     /**
-     * send a Dmx Command containing the value of the Dmx array over the network.
+     * send a Dmx Command containing the value of the Dmx array over the
+     * network.
      */
     public void sendDmxCommand() {
 	ArtDmxPacket artDmxPacket = new ArtDmxPacket();
@@ -346,7 +347,8 @@ public class ArtNetServerManager {
      * @param dmxArray
      *            the value of the dmx array
      */
-    public void setOutputDmxArray(final int subnet, final int universe, final byte[] dmxArray) {
+    public void setOutputDmxArray(final int subnet, final int universe,
+	    final byte[] dmxArray) {
 	System.arraycopy(dmxArray, 0, outputDmxArrays[subnet][universe], 0,
 		DMX_CHANNELS_COUNT);
     }

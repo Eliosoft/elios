@@ -214,7 +214,8 @@ public final class Elios {
 	    state.addListener(new ApplicationState.Listener() {
 
 		@Override
-		public void stateChanged(final State oldState, final State newState) {
+		public void stateChanged(final State oldState,
+			final State newState) {
 		    try {
 			if (State.SHUTTING_DOWN == newState) {
 			    LOGGER.info("Application is shutting down");
@@ -387,7 +388,8 @@ public final class Elios {
      * @param prefs
      *            the <code>Preferences</code> used to persist
      */
-    public static void persistRemoteModel(final RemoteModel model, final Preferences prefs) {
+    public static void persistRemoteModel(final RemoteModel model,
+	    final Preferences prefs) {
 	prefs.putInt("server.subnet", model.getSubnet());
 	prefs.putInt("server.universe", model.getUniverse());
 	prefs.put("server.broadcast.address", model.getBroadCastAddress()
@@ -425,7 +427,8 @@ public final class Elios {
      * @param v
      *            the {@link ViewInterface} to add
      */
-    private static void addViewToTab(final JTabbedPane pane, final ViewInterface v) {
+    private static void addViewToTab(final JTabbedPane pane,
+	    final ViewInterface v) {
 	pane.addTab(v.getLocalizedTitle(), v.getViewComponent());
     }
 }

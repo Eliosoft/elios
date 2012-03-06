@@ -97,8 +97,8 @@ public class ReleaseInformationRepositoryImpl implements
 	}
     }
 
-    private ReleaseInformation checkout(final URI uri) throws MalformedURLException,
-	    IOException {
+    private ReleaseInformation checkout(final URI uri)
+	    throws MalformedURLException, IOException {
 	InputStream stream = null;
 	try {
 	    stream = streamOfUri(uri);

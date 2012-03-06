@@ -325,15 +325,15 @@ public class RemoteView implements ViewInterface {
 	return this.valuesList;
     }
 
-    private void addValueButton(final Character c, final int gridY, final int gridWidth,
-	    final boolean enabled) {
+    private void addValueButton(final Character c, final int gridY,
+	    final int gridWidth, final boolean enabled) {
 	JButton button = addButton(c.toString(), gridY, gridWidth, enabled);
 	valuesList.add(c);
 	valueButtonsList.add(button);
     }
 
-    private JButton addButton(final String text, final int gridY, final int gridWidth,
-	    final boolean enabled) {
+    private JButton addButton(final String text, final int gridY,
+	    final int gridWidth, final boolean enabled) {
 	JButton button = new JButton(text);
 	button.setEnabled(enabled);
 	button.setFocusable(false);

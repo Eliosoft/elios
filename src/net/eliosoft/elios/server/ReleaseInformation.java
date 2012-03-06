@@ -38,8 +38,9 @@ public class ReleaseInformation {
      * @param releaseDate
      *            the date of the release
      */
-    public ReleaseInformation(final ReleaseCode releaseCode, final URL downloadUrl,
-	    final URL releaseNoteUrl, final Date releaseDate) {
+    public ReleaseInformation(final ReleaseCode releaseCode,
+	    final URL downloadUrl, final URL releaseNoteUrl,
+	    final Date releaseDate) {
 	this.releaseCode = releaseCode;
 	this.downloadUrl = downloadUrl;
 	this.releaseTime = releaseDate.getTime();
@@ -91,7 +92,8 @@ public class ReleaseInformation {
      *            a string representation of the URL of the release note
      * @throws MalformedURLException
      */
-    void setReleaseNoteUrl(final String releaseNoteUrl) throws MalformedURLException {
+    void setReleaseNoteUrl(final String releaseNoteUrl)
+	    throws MalformedURLException {
 	this.releaseNoteUrl = URI.create(releaseNoteUrl).toURL();
     }
 

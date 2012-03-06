@@ -83,7 +83,8 @@ public class ReleaseInformationDialogBuilder {
      *            the {@link UpdateModel} instance
      */
     public ReleaseInformationDialogBuilder(final Frame parent,
-	    final ReleaseInformationRepository repository, final UpdateModel uSupport) {
+	    final ReleaseInformationRepository repository,
+	    final UpdateModel uSupport) {
 
 	if (repository == null) {
 	    throw new IllegalArgumentException(

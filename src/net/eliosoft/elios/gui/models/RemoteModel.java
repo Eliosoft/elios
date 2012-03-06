@@ -226,7 +226,8 @@ public class RemoteModel {
 		    }
 
 		    @Override
-		    public void subnetValueChanged(final SubnetValueChangedEvent event) {
+		    public void subnetValueChanged(
+			    final SubnetValueChangedEvent event) {
 			subnetSpinnerModel.setValue(event.getSubnet());
 		    }
 
@@ -490,7 +491,8 @@ public class RemoteModel {
      * @param listener
      *            the listener to remove
      */
-    public void removeRemoteModelChangedListener(final RemoteModelListener listener) {
+    public void removeRemoteModelChangedListener(
+	    final RemoteModelListener listener) {
 	this.remoteModelChangedListeners.remove(listener);
     }
 

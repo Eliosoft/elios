@@ -5,7 +5,8 @@ import java.util.Locale;
 import javax.swing.DefaultComboBoxModel;
 
 /**
- * {@link javax.swing.ComboBoxModel} that wraps available locales for UI translation.
+ * {@link javax.swing.ComboBoxModel} that wraps available locales for UI
+ * translation.
  * 
  * @author acollign
  */

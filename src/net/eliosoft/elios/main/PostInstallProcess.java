@@ -27,7 +27,7 @@ public final class PostInstallProcess {
      */
     private PostInstallProcess() {
     }
-    
+
     /**
      * Treats the two arguments as a release code and a URL. The release code is
      * the current one and the URL is the root URL of the eliosoft update site.

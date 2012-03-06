@@ -129,8 +129,9 @@ public class CuesHttpHandler implements HttpHandler {
      * @throws IOException
      * @throws BadSyntaxException
      */
-    private HashMap<String, String> extractPostParams(final HttpExchange httpExchange)
-	    throws IOException, BadSyntaxException {
+    private HashMap<String, String> extractPostParams(
+	    final HttpExchange httpExchange) throws IOException,
+	    BadSyntaxException {
 	InputStream is = httpExchange.getRequestBody();
 
 	byte[] buffer = new byte[CuesHttpHandler.MAX_BUFFER_SIZE];

@@ -43,7 +43,8 @@ public class DMXController {
      * @param dmxView
      *            the view associated with this Controller
      */
-    public DMXController(final DMXTableModel dmxTableModel, final DMXView dmxView) {
+    public DMXController(final DMXTableModel dmxTableModel,
+	    final DMXView dmxView) {
 	this.dmxTableModel = dmxTableModel;
 	this.dmxView = dmxView;
 

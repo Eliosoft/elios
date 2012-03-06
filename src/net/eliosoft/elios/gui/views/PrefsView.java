@@ -85,8 +85,8 @@ public class PrefsView implements ViewInterface {
      * @param updateModel
      *            the associated {@link UpdateModel}
      */
-    public PrefsView(final RemoteModel remoteModel, final LocaleComboBoxModel localeModel,
-	    final UpdateModel updateModel) {
+    public PrefsView(final RemoteModel remoteModel,
+	    final LocaleComboBoxModel localeModel, final UpdateModel updateModel) {
 	this.remoteModel = remoteModel;
 	this.localeModel = localeModel;
 	this.updateModel = updateModel;
@@ -221,8 +221,8 @@ public class PrefsView implements ViewInterface {
 
 	    @Override
 	    public Component getListCellRendererComponent(final JList list,
-		    final Object value, final int index, final boolean isSelected,
-		    final boolean cellHasFocus) {
+		    final Object value, final int index,
+		    final boolean isSelected, final boolean cellHasFocus) {
 
 		super.getListCellRendererComponent(list, value, index,
 			isSelected, cellHasFocus);
@@ -326,7 +326,8 @@ public class PrefsView implements ViewInterface {
      * @param actionListener
      *            the listener to remove to the button
      */
-    public void removeStartArtNetButtonListener(final ActionListener actionListener) {
+    public void removeStartArtNetButtonListener(
+	    final ActionListener actionListener) {
 	this.cancelButton.removeActionListener(actionListener);
     }
 
@@ -346,7 +347,8 @@ public class PrefsView implements ViewInterface {
      * @param actionListener
      *            the listener to remove to the button
      */
-    public void removeStopArtNetButtonListener(final ActionListener actionListener) {
+    public void removeStopArtNetButtonListener(
+	    final ActionListener actionListener) {
 	this.saveButton.removeActionListener(actionListener);
     }
 

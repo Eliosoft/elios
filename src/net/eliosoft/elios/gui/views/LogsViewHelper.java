@@ -20,7 +20,7 @@ public final class LogsViewHelper {
      */
     private LogsViewHelper() {
     }
-    
+
     /** default text for label. **/
     public static final String DEFAULT_TEXT = " ";
 

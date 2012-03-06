@@ -92,8 +92,8 @@ public class LogsView implements ViewInterface {
 
 	    @Override
 	    public Component getListCellRendererComponent(final JList list,
-		    final Object value, final int index, final boolean isSelected,
-		    final boolean cellHasFocus) {
+		    final Object value, final int index,
+		    final boolean isSelected, final boolean cellHasFocus) {
 		return LogsViewHelper.createLogsLabel((LogRecord) value);
 	    }
 	});

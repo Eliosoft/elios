@@ -75,8 +75,8 @@ public final class CuesViewHelper {
      * @param cueName
      *            the name of the concerned cue
      */
-    public static void printError(final Component parent, final Exception exception,
-	    final String cueName) {
+    public static void printError(final Component parent,
+	    final Exception exception, final String cueName) {
 	String message;
 	if (exception instanceof IllegalArgumentException) {
 	    message = MessageFormat.format(
