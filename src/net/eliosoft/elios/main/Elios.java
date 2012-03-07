@@ -80,6 +80,16 @@ import artnet4j.ArtNetException;
  */
 public final class Elios {
 
+    /**
+     * The version that we set has installed.
+     */
+    private static final String ALREADY_INSTALLED_VERSION = "0.2";
+
+    /**
+     * URL of the Eliosoft update site.
+     */
+    private static final String UPDATE_URL = "http://update.eliosoft.net/";
+
     /** Folder in which data are stored. **/
     private static final String ELIOS_DATA_FOLDER = System
 	    .getProperty("user.home") + File.separator + ".elios";
@@ -299,8 +309,8 @@ public final class Elios {
 		    // install,
 		    // here we consider that the user is still using the first
 		    // public release.
-		    PostInstallProcess.main(new String[] { "0.1",
-			    "http://update.eliosoft.net/" });
+		    PostInstallProcess.main(new String[] { ALREADY_INSTALLED_VERSION,
+			    UPDATE_URL });
 		}
 	    }
 	}.start();
