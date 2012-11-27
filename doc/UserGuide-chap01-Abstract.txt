@@ -29,7 +29,7 @@ Licence and Source code
 -----------------------
 
 Elios is a free software released under the GPL License v3. A copy of this 
-licence is available on the root folder of the application.
+license is available on the root folder of the application.
 
 The source code is freely available on our repository hosted by [github.com](http://github.com) :
 [http://repo.eliosoft.net](http://repo.eliosoft.net)

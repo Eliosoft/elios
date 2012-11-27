@@ -2,8 +2,8 @@ Elios Interface
 ===============
 
 There is 4 parts in Elios interface : toolbar, tabs, panel and log line.
-The toolbar make an easiest access to common functions.
-In the tabs part, you can choose between the differents panels (*Remote*, 
+The toolbar offers an easiest access to common functions.
+In the tabs part, you can choose between the different panels (*Remote*, 
 *Cues*, *DMX Table*, *Prefs*, *Logs* and *About*).
 In the panel part, you access the panel linked to the selected tab.
 In the Log line, you can read the last status log of the application.
@@ -74,7 +74,7 @@ to full ("1/5-4+10/12+7" will set circuits 1,2,3,5,7,10,11,12 at
 a 100% level).
 
 To run a command line, hit the *Enter* button. If you want to delete all 
-the last char, hit *Del* and if you prefer to remove everything on 
+the last char, hit *Del* or if you prefer to remove everything on 
 the line, hit *Reset*.
 
 The commands are sent on the Subnet and Universe selected in the toolbar.
@@ -87,13 +87,13 @@ Cues
 The Cues panel allows you to save and load states of the DMX array.
 
 To store a cue, click on the *Store* button, then enter an unused name 
-in the popup that appears and click *Ok*.
+in the dialog that appears and click *Ok*.
 
 To load a cue, select a cue in the list and click on the *Load* button, 
 or just double-click on the cue in the list.
 
 To delete a cue, select a cue in the list, click on the *Delete* button,
-and confirm your choice in the popup that appears.
+and confirm your choice in the dialog that appears.
 
 DMX Table
 ---------
@@ -133,15 +133,15 @@ something else than 6454 if you don't know what you are doing**) ;
 * *Enable Http Server* : with the http server enabled, you can access 
 Elios via your favorite web browser on any device device connected on 
 the same network (just type http://2.0.0.1:8080 on your browser where 
-2.0.0.1 is the ip of the computer running Elios and 8080 the Http port 
+2.0.0.1 is the IP of the computer running Elios and 8080 the HTTP port 
 that has been set in the prefs panel) ;
 
-* *Http port* : the port on which Elios http server is listening (default 
+* *Http port* : the port on which Elios HTTP server is listening (default 
 to 8080) ;
 
 * *Cancel / Save buttons* : these buttons are used to save or cancel 
-preferencies changes (when you save new preferencies, ArtNet server and
-Http server are restarted) ;
+preferences changes (when you save new preferences, ArtNet server and
+HTTP server are restarted) ;
 
 Logs
 ----

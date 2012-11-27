@@ -18,10 +18,10 @@ family, Linux and Mac OS.
 After downloading the installer, you can launch it by double clicking on the setup file
 or by the command line.
 
-### Choose your langage
+### Choose your language
 
 Elios is available in English and French. You have to choose one of them. Note that
-the langage you choose will be used for the installer only. You will have to set 
+the language you choose will be used for the installer only. You will have to set 
 the language on Elios too.
 
 ![Language Selection](resources/install/Install-01-Language_Selection.png "Language Selection")
@@ -29,7 +29,7 @@ the language on Elios too.
 ### Introduction
 
 Nothing special about this first step. If you read this user guide, you already know everything about
-elios and its authors.
+Elios and its authors.
 
 ![Introduction](resources/install/Install-02-Introduction.png "Introduction")
 
@@ -41,8 +41,8 @@ Feel free to read this informational step too.
 
 ### Licence
 
-Elios is released under the GNU Public Licence version 3. You have to accept the licence to
-instal Elios. We advise you to read the licence before installing Elios.
+Elios is released under the GNU Public Licence version 3. You have to accept the license to
+install Elios. We advise you to read the license before installing Elios.
 
 ![Licence](resources/install/Install-04-Licence.png "Licence")
 
@@ -76,7 +76,7 @@ A few seconds later, you will see a filled progress bar.
 
 ### Setup shortcuts
 
-Before using Elios, you are invite to choose wher you want that the installer copy shortcuts.
+Before using Elios, you are invite to choose where you want that the installer copy shortcuts.
 
 ![Setup shortcuts](resources/install/Install-08-Setup_Shortcuts.png "Setup shortcuts")
 
