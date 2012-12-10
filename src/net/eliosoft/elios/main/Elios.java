@@ -105,6 +105,14 @@ public final class Elios {
 	    .getLogger(Elios.class.getName());
 
     /**
+     * "High res" icon.
+     */
+    private static final Image HIGH_RES_ICON_IMAGE = new ImageIcon(
+		    Elios.class
+		    .getResource("/net/eliosoft/elios/gui/views/elios_e_64x64.png"))
+	    .getImage();
+
+    /**
      * Icons array for the Elios application.
      */
     private static final Image[] ICONS = new Image[] {
@@ -120,10 +128,7 @@ public final class Elios {
 		    Elios.class
 			    .getResource("/net/eliosoft/elios/gui/views/elios_e_48x48.png"))
 		    .getImage(),
-	    new ImageIcon(
-		    Elios.class
-			    .getResource("/net/eliosoft/elios/gui/views/elios_e_64x64.png"))
-		    .getImage() };
+		    HIGH_RES_ICON_IMAGE};
 
     /**
      * Do nothing more than ensure that no object can be construct.
@@ -193,6 +198,7 @@ public final class Elios {
 
 	    final JFrame frame = new JFrame(Messages.getString("ui.title"));
 	    frame.setIconImages(Arrays.<Image> asList(ICONS));
+	    DockIcon.set(HIGH_RES_ICON_IMAGE);
 	    final JTabbedPane tabbedPane = new JTabbedPane();
 	    Container contentPane = frame.getContentPane();
 	    contentPane.setLayout(new BorderLayout());
