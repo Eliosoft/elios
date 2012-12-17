@@ -96,11 +96,13 @@ public class DockIcon {
     private static boolean debugging = false;
 
     private static void init() {
-        if (initialized)
+        if (initialized) {
             return;
+        }
         try {
-            if (isMac == false)
+            if (isMac == false) {
                 return;
+            }
 
             Throwable error1 = null;
             try {
@@ -116,8 +118,9 @@ public class DockIcon {
                         .invoke(theApplication, new Object[] {});
 
                 working = true;
-                if (debugging)
+                if (debugging) {
                     System.out.println("Using Application.setDockImage()");
+                }
                 return;
             } catch (Throwable t) {
                 error1 = t;
@@ -148,9 +151,10 @@ public class DockIcon {
                     }
                 });
                 working = true;
-                if (debugging)
+                if (debugging) {
                     System.out
                             .println("Using NSApplication.setApplicationIconImage()");
+                }
             } catch (Throwable t) {
                 // do nothing
             }
@@ -173,8 +177,9 @@ public class DockIcon {
 
     private static void handleError(Throwable t) {
         // you may want to deal with this differently?
-        if (debugging)
+        if (debugging) {
             t.printStackTrace();
+        }
     }
 
     /**
@@ -187,13 +192,15 @@ public class DockIcon {
      */
     public static synchronized boolean set(Image icons) {
         init();
-        if (working == false)
+        if (working == false) {
             return false;
+        }
 
         if (setDockIconImage != null && theApplication != null) {
             Image image = icons;
-            if (icons == null)
+            if (icons == null) {
                 image = (Image) defaultImage;
+            }
             try {
                 setDockIconImage.invoke(theApplication, new Object[] { image });
                 return true;

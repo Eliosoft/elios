@@ -195,10 +195,11 @@ public class ArtNetServerManager {
                     }
                     for (int j = Math.min(chan1, chan2); j <= Math.max(chan1,
                             chan2); j++) {
-                        if (except)
+                        if (except) {
                             channels.remove(j);
-                        else
+                        } else {
                             channels.add(j);
+                        }
                     }
                 }
 
