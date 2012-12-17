@@ -34,7 +34,7 @@ public class CueAddedEvent {
      *            the name of the new cue in the cuesList
      */
     public CueAddedEvent(final String cueName) {
-	this.cueName = cueName;
+        this.cueName = cueName;
     }
 
     /**
@@ -43,7 +43,7 @@ public class CueAddedEvent {
      * @return the cue name
      */
     public String getCueName() {
-	return cueName;
+        return cueName;
     }
 
 }

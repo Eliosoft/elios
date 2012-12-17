@@ -22,47 +22,47 @@ public class CommandLineHttpHandler implements HttpHandler {
 
     private static final int MAX_BUFFER_SIZE = 1024 * 512;
     private final ArtNetServerManager artNetServerManager = ArtNetServerManager
-	    .getInstance();
+            .getInstance();
 
     private final transient Logger logger = LoggersManager.getInstance()
-	    .getLogger(CommandLineHttpHandler.class.getName());
+            .getLogger(CommandLineHttpHandler.class.getName());
 
     @Override
     public void handle(final HttpExchange httpExchange) throws IOException {
-	if (httpExchange.getRequestMethod().equalsIgnoreCase("POST")) {
-	    InputStream is = httpExchange.getRequestBody();
+        if (httpExchange.getRequestMethod().equalsIgnoreCase("POST")) {
+            InputStream is = httpExchange.getRequestBody();
 
-	    byte[] buffer = new byte[CommandLineHttpHandler.MAX_BUFFER_SIZE];
-	    int bytesRead = 0;
+            byte[] buffer = new byte[CommandLineHttpHandler.MAX_BUFFER_SIZE];
+            int bytesRead = 0;
 
-	    StringBuilder commandLine = new StringBuilder();
+            StringBuilder commandLine = new StringBuilder();
 
-	    while ((bytesRead = is.read(buffer)) != -1) {
-		commandLine.append(new String(buffer, 0, bytesRead));
-	    }
-	    is.close();
+            while ((bytesRead = is.read(buffer)) != -1) {
+                commandLine.append(new String(buffer, 0, bytesRead));
+            }
+            is.close();
 
-	    try {
-		artNetServerManager.processCommandLine(commandLine.toString());
-		artNetServerManager.sendDmxCommand();
-	    } catch (BadSyntaxException e) {
-		logger.severe("Bad syntax in Command Line");
-		String badRequest = "400 : Bad request !!!";
-		httpExchange.sendResponseHeaders(400, badRequest.length());
-		httpExchange.getResponseBody().write(badRequest.getBytes());
-		httpExchange.getResponseBody().close();
-	    }
+            try {
+                artNetServerManager.processCommandLine(commandLine.toString());
+                artNetServerManager.sendDmxCommand();
+            } catch (BadSyntaxException e) {
+                logger.severe("Bad syntax in Command Line");
+                String badRequest = "400 : Bad request !!!";
+                httpExchange.sendResponseHeaders(400, badRequest.length());
+                httpExchange.getResponseBody().write(badRequest.getBytes());
+                httpExchange.getResponseBody().close();
+            }
 
-	    String responseOk = "200 : OK !";
-	    httpExchange.sendResponseHeaders(200, responseOk.length());
-	    httpExchange.getResponseBody().write(responseOk.getBytes());
-	    httpExchange.getResponseBody().close();
-	} else {
-	    String badMethod = "405 : Method not allowed !!!";
-	    httpExchange.sendResponseHeaders(405, badMethod.length());
-	    httpExchange.getResponseBody().write(badMethod.getBytes());
-	    httpExchange.getResponseBody().close();
-	}
+            String responseOk = "200 : OK !";
+            httpExchange.sendResponseHeaders(200, responseOk.length());
+            httpExchange.getResponseBody().write(responseOk.getBytes());
+            httpExchange.getResponseBody().close();
+        } else {
+            String badMethod = "405 : Method not allowed !!!";
+            httpExchange.sendResponseHeaders(405, badMethod.length());
+            httpExchange.getResponseBody().write(badMethod.getBytes());
+            httpExchange.getResponseBody().close();
+        }
     }
 
 }

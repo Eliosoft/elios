@@ -40,13 +40,13 @@ public class AboutView implements ViewInterface {
      * The constructor of the class.
      */
     public AboutView() {
-	JLabel icon = new JLabel(new ImageIcon(getClass().getResource(
-		"/net/eliosoft/elios/gui/views/elios_256x138.png")));
-	JLabel titleLabel = new JLabel(Messages.getString("aboutview.info"),
-		SwingConstants.CENTER);
-	aboutPanel.setLayout(new GridLayout(2, 1));
-	aboutPanel.add(icon);
-	aboutPanel.add(titleLabel);
+        JLabel icon = new JLabel(new ImageIcon(getClass().getResource(
+                "/net/eliosoft/elios/gui/views/elios_256x138.png")));
+        JLabel titleLabel = new JLabel(Messages.getString("aboutview.info"),
+                SwingConstants.CENTER);
+        aboutPanel.setLayout(new GridLayout(2, 1));
+        aboutPanel.add(icon);
+        aboutPanel.add(titleLabel);
     }
 
     /**
@@ -56,7 +56,7 @@ public class AboutView implements ViewInterface {
      */
     @Override
     public JComponent getViewComponent() {
-	return this.aboutPanel;
+        return this.aboutPanel;
     }
 
     /**
@@ -64,7 +64,7 @@ public class AboutView implements ViewInterface {
      */
     @Override
     public String getLocalizedTitle() {
-	return Messages.getString("aboutview.title");
+        return Messages.getString("aboutview.title");
     }
 
 }

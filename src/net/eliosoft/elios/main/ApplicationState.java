@@ -16,7 +16,7 @@ public class ApplicationState {
      * @author acollign
      */
     enum State {
-	RUNNING, SHUTTING_DOWN
+        RUNNING, SHUTTING_DOWN
     }
 
     /**
@@ -26,15 +26,15 @@ public class ApplicationState {
      */
     public interface Listener {
 
-	/**
-	 * Call when the internal state of the {@link ApplicationState} change.
-	 * 
-	 * @param oldState
-	 *            the old state
-	 * @param newState
-	 *            the new state
-	 */
-	void stateChanged(State oldState, State newState);
+        /**
+         * Call when the internal state of the {@link ApplicationState} change.
+         * 
+         * @param oldState
+         *            the old state
+         * @param newState
+         *            the new state
+         */
+        void stateChanged(State oldState, State newState);
     }
 
     /**
@@ -55,10 +55,10 @@ public class ApplicationState {
      *            the new {@link State}.
      */
     void changeState(final State newState) {
-	State oldState = state;
-	this.state = newState;
+        State oldState = state;
+        this.state = newState;
 
-	fireStateChanged(oldState, newState);
+        fireStateChanged(oldState, newState);
     }
 
     /**
@@ -70,9 +70,9 @@ public class ApplicationState {
      *            the new {@link State}
      */
     private void fireStateChanged(final State oldState, final State newState) {
-	for (Listener l : listeners) {
-	    l.stateChanged(oldState, newState);
-	}
+        for (Listener l : listeners) {
+            l.stateChanged(oldState, newState);
+        }
     }
 
     /**
@@ -82,6 +82,6 @@ public class ApplicationState {
      *            a {@link Listener}
      */
     void addListener(final Listener l) {
-	this.listeners.add(l);
+        this.listeners.add(l);
     }
 }

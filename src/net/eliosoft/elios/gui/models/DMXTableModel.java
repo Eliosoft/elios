@@ -24,10 +24,10 @@ public class DMXTableModel extends DefaultTableModel {
     private boolean inputEnabled = false;
 
     static {
-	ROW_HEADERS = new Integer[ROW_COUNT];
-	for (int i = 0; i < ROW_COUNT; i++) {
-	    ROW_HEADERS[i] = i * COLUMN_COUNT;
-	}
+        ROW_HEADERS = new Integer[ROW_COUNT];
+        for (int i = 0; i < ROW_COUNT; i++) {
+            ROW_HEADERS[i] = i * COLUMN_COUNT;
+        }
     }
 
     /**
@@ -37,50 +37,50 @@ public class DMXTableModel extends DefaultTableModel {
      *            the server manager used by the model
      */
     public DMXTableModel(final ArtNetServerManager serverManager) {
-	this.artNetServerManager = serverManager;
-	dmxArrayUpdater = new SwingWorker<Void, byte[]>() {
+        this.artNetServerManager = serverManager;
+        dmxArrayUpdater = new SwingWorker<Void, byte[]>() {
 
-	    @Override
-	    protected Void doInBackground() throws Exception {
-		while (true) {
-		    fireTableDataChanged();
-		    Thread.sleep(40);
-		}
-	    }
+            @Override
+            protected Void doInBackground() throws Exception {
+                while (true) {
+                    fireTableDataChanged();
+                    Thread.sleep(40);
+                }
+            }
 
-	};
+        };
 
-	dmxArrayUpdater.execute();
+        dmxArrayUpdater.execute();
     }
 
     @Override
     public int getColumnCount() {
-	return COLUMN_COUNT;
+        return COLUMN_COUNT;
     }
 
     @Override
     public String getColumnName(final int column) {
-	return Integer.toString(column + 1);
+        return Integer.toString(column + 1);
     }
 
     @Override
     public int getRowCount() {
-	return ROW_COUNT;
+        return ROW_COUNT;
     }
 
     @Override
     public Integer getValueAt(final int row, final int column) {
-	int index = column + row * COLUMN_COUNT;
-	int intValue = inputEnabled ? ((Byte) artNetServerManager
-		.getCurrentInputDmxArray()[index]).intValue()
-		: ((Byte) artNetServerManager.getCurrentOutputDmxArray()[index])
-			.intValue();
-	return intValue < 0 ? intValue + 256 : intValue;
+        int index = column + row * COLUMN_COUNT;
+        int intValue = inputEnabled ? ((Byte) artNetServerManager
+                .getCurrentInputDmxArray()[index]).intValue()
+                : ((Byte) artNetServerManager.getCurrentOutputDmxArray()[index])
+                        .intValue();
+        return intValue < 0 ? intValue + 256 : intValue;
     }
 
     @Override
     public Class<?> getColumnClass(final int columnIndex) {
-	return Integer.class;
+        return Integer.class;
     }
 
     /**
@@ -89,14 +89,14 @@ public class DMXTableModel extends DefaultTableModel {
      * @return an integer array representing the row headers
      */
     public Integer[] getRowHeaders() {
-	return ROW_HEADERS;
+        return ROW_HEADERS;
     }
 
     /**
      * dispose the model before closing the application.
      */
     public void dispose() {
-	dmxArrayUpdater.cancel(true);
+        dmxArrayUpdater.cancel(true);
     }
 
     /**
@@ -105,7 +105,7 @@ public class DMXTableModel extends DefaultTableModel {
      * @return true if input is enabled, false if output is enabled
      */
     public boolean isInputEnabled() {
-	return inputEnabled;
+        return inputEnabled;
     }
 
     /**
@@ -115,7 +115,7 @@ public class DMXTableModel extends DefaultTableModel {
      *            the status of input enabling
      */
     public void setInputEnabled(final boolean inputEnabled) {
-	this.inputEnabled = inputEnabled;
+        this.inputEnabled = inputEnabled;
     }
 
 }

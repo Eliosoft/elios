@@ -51,32 +51,32 @@ public class LogsLineView implements ViewInterface {
      *            the model associated with this view
      */
     public LogsLineView(final RemoteModel remoteModel) {
-	this.remoteModel = remoteModel;
-	this.logsLinePanel.setBorder(BorderFactory.createEtchedBorder());
-	this.logLabel = new JLabel(LogsViewHelper.DEFAULT_TEXT);
-	this.logsLinePanel.add(logLabel);
-	this.initRemoteModelListener();
+        this.remoteModel = remoteModel;
+        this.logsLinePanel.setBorder(BorderFactory.createEtchedBorder());
+        this.logLabel = new JLabel(LogsViewHelper.DEFAULT_TEXT);
+        this.logsLinePanel.add(logLabel);
+        this.initRemoteModelListener();
     }
 
     private void initRemoteModelListener() {
-	this.remoteModel.getLogsListModel().addListDataListener(
-		new ListDataListener() {
+        this.remoteModel.getLogsListModel().addListDataListener(
+                new ListDataListener() {
 
-		    @Override
-		    public void intervalRemoved(final ListDataEvent e) {
-			updateLabel();
-		    }
+                    @Override
+                    public void intervalRemoved(final ListDataEvent e) {
+                        updateLabel();
+                    }
 
-		    @Override
-		    public void intervalAdded(final ListDataEvent e) {
-			updateLabel();
-		    }
+                    @Override
+                    public void intervalAdded(final ListDataEvent e) {
+                        updateLabel();
+                    }
 
-		    @Override
-		    public void contentsChanged(final ListDataEvent e) {
-			updateLabel();
-		    }
-		});
+                    @Override
+                    public void contentsChanged(final ListDataEvent e) {
+                        updateLabel();
+                    }
+                });
 
     }
 
@@ -87,21 +87,21 @@ public class LogsLineView implements ViewInterface {
      */
     @Override
     public JComponent getViewComponent() {
-	return this.logsLinePanel;
+        return this.logsLinePanel;
     }
 
     /**
      * Update the label according to the current LogRecord.
      */
     private void updateLabel() {
-	if (remoteModel.getLogsListModel().getSize() > 0) {
-	    final LogRecord logRecord = (LogRecord) remoteModel
-		    .getLogsListModel().getElementAt(
-			    remoteModel.getLogsListModel().getSize() - 1);
-	    LogsViewHelper.LOG_DECORATOR.update(logLabel, logRecord);
-	} else {
-	    logLabel.setText(LogsViewHelper.DEFAULT_TEXT);
-	}
+        if (remoteModel.getLogsListModel().getSize() > 0) {
+            final LogRecord logRecord = (LogRecord) remoteModel
+                    .getLogsListModel().getElementAt(
+                            remoteModel.getLogsListModel().getSize() - 1);
+            LogsViewHelper.LOG_DECORATOR.update(logLabel, logRecord);
+        } else {
+            logLabel.setText(LogsViewHelper.DEFAULT_TEXT);
+        }
     }
 
     /**
@@ -109,6 +109,6 @@ public class LogsLineView implements ViewInterface {
      */
     @Override
     public String getLocalizedTitle() {
-	return Messages.getString("logsview.title");
+        return Messages.getString("logsview.title");
     }
 }

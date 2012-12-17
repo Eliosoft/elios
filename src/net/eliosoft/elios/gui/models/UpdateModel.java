@@ -19,52 +19,52 @@ public class UpdateModel {
      * @author acollign
      */
     public enum Frequency {
-	/**
-	 * perform on every start up.
-	 */
-	ALWAYS(-1, "always"),
-	/**
-	 * perform once a day.
-	 */
-	DAILY(86400000, "daily"),
-	/**
-	 * perform once a week.
-	 */
-	WEEKLY(604800000, "weekly"),
-	/**
-	 * perform once a month.
-	 */
-	MONTHLY(2628000000L, "monthly"),
-	/**
-	 * never perform.
-	 */
-	NEVER(-1, "never");
+        /**
+         * perform on every start up.
+         */
+        ALWAYS(-1, "always"),
+        /**
+         * perform once a day.
+         */
+        DAILY(86400000, "daily"),
+        /**
+         * perform once a week.
+         */
+        WEEKLY(604800000, "weekly"),
+        /**
+         * perform once a month.
+         */
+        MONTHLY(2628000000L, "monthly"),
+        /**
+         * never perform.
+         */
+        NEVER(-1, "never");
 
-	private long value;
-	private String key;
+        private long value;
+        private String key;
 
-	private Frequency(final long value, final String key) {
-	    this.value = value;
-	    this.key = key;
-	}
+        private Frequency(final long value, final String key) {
+            this.value = value;
+            this.key = key;
+        }
 
-	/**
-	 * Returns the key.
-	 * 
-	 * @return the key
-	 */
-	public String getKey() {
-	    return key;
-	}
+        /**
+         * Returns the key.
+         * 
+         * @return the key
+         */
+        public String getKey() {
+            return key;
+        }
 
-	/**
-	 * Returns the value.
-	 * 
-	 * @return the value
-	 */
-	public long getValue() {
-	    return value;
-	}
+        /**
+         * Returns the value.
+         * 
+         * @return the value
+         */
+        public long getValue() {
+            return value;
+        }
     }
 
     /**
@@ -90,20 +90,20 @@ public class UpdateModel {
      *            configuration
      */
     public UpdateModel(final Preferences prefs) {
-	this.prefs = prefs;
-	this.listeners = new ArrayList<UpdateModel.UpdateListener>();
+        this.prefs = prefs;
+        this.listeners = new ArrayList<UpdateModel.UpdateListener>();
 
-	this.prefs.addPreferenceChangeListener(new PreferenceChangeListener() {
-	    @Override
-	    public void preferenceChange(final PreferenceChangeEvent evt) {
-		if (UPDATE_FREQ_PREFS_KEY.equals(evt.getKey())
-			&& evt.getNewValue() != null) {
+        this.prefs.addPreferenceChangeListener(new PreferenceChangeListener() {
+            @Override
+            public void preferenceChange(final PreferenceChangeEvent evt) {
+                if (UPDATE_FREQ_PREFS_KEY.equals(evt.getKey())
+                        && evt.getNewValue() != null) {
 
-		    fireUpdateFrequencySaved(Frequency.valueOf(evt
-			    .getNewValue()));
-		}
-	    }
-	});
+                    fireUpdateFrequencySaved(Frequency.valueOf(evt
+                            .getNewValue()));
+                }
+            }
+        });
     }
 
     /**
@@ -112,8 +112,8 @@ public class UpdateModel {
      * @return the current frequency
      */
     public Frequency getFrequency() {
-	return Frequency.valueOf(prefs.get(UPDATE_FREQ_PREFS_KEY,
-		Frequency.ALWAYS.name()));
+        return Frequency.valueOf(prefs.get(UPDATE_FREQ_PREFS_KEY,
+                Frequency.ALWAYS.name()));
     }
 
     /**
@@ -123,14 +123,14 @@ public class UpdateModel {
      *            frequency to save
      */
     public void saveUpdateFrequency(final Frequency freq) {
-	prefs.put(UPDATE_FREQ_PREFS_KEY, freq.name());
+        prefs.put(UPDATE_FREQ_PREFS_KEY, freq.name());
     }
 
     /**
      * Marks the version as checked.
      */
     public void markAsChecked() {
-	prefs.putLong(UPDATE_LATEST_CHECK_PREFS_KEY, new Date().getTime());
+        prefs.putLong(UPDATE_LATEST_CHECK_PREFS_KEY, new Date().getTime());
     }
 
     /**
@@ -141,17 +141,17 @@ public class UpdateModel {
      *         frequency, false otherwise
      */
     public boolean updateIsNecessary() {
-	Frequency frequency = getFrequency();
-	if (frequency == Frequency.ALWAYS) {
-	    return true;
-	}
-	if (frequency == Frequency.NEVER) {
-	    return false;
-	}
-	long latest = prefs.getLong(UpdateModel.UPDATE_LATEST_CHECK_PREFS_KEY,
-		Frequency.DAILY.getValue());
+        Frequency frequency = getFrequency();
+        if (frequency == Frequency.ALWAYS) {
+            return true;
+        }
+        if (frequency == Frequency.NEVER) {
+            return false;
+        }
+        long latest = prefs.getLong(UpdateModel.UPDATE_LATEST_CHECK_PREFS_KEY,
+                Frequency.DAILY.getValue());
 
-	return new Date(latest + frequency.value).before(new Date());
+        return new Date(latest + frequency.value).before(new Date());
     }
 
     /**
@@ -161,12 +161,12 @@ public class UpdateModel {
      *            an {@link UpdateListener}
      */
     public void addUpdateListener(final UpdateListener l) {
-	listeners.add(l);
+        listeners.add(l);
     }
 
     private void fireUpdateFrequencySaved(final Frequency newValue) {
-	for (UpdateListener l : listeners)
-	    l.updateFrequencySaved(newValue);
+        for (UpdateListener l : listeners)
+            l.updateFrequencySaved(newValue);
     }
 
     /**
@@ -175,12 +175,12 @@ public class UpdateModel {
      * @author acollign
      */
     public interface UpdateListener {
-	/**
-	 * Called when a new {@link Frequency} value has been saved.
-	 * 
-	 * @param newValue
-	 *            the new {@link Frequency} value
-	 */
-	void updateFrequencySaved(Frequency newValue);
+        /**
+         * Called when a new {@link Frequency} value has been saved.
+         * 
+         * @param newValue
+         *            the new {@link Frequency} value
+         */
+        void updateFrequencySaved(Frequency newValue);
     }
 }

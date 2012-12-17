@@ -34,7 +34,7 @@ public class AdditiveModeValueChangedEvent {
      *            the new additive mode status value
      */
     public AdditiveModeValueChangedEvent(final boolean additiveModeEnabled) {
-	this.additiveModeEnabled = additiveModeEnabled;
+        this.additiveModeEnabled = additiveModeEnabled;
     }
 
     /**
@@ -43,6 +43,6 @@ public class AdditiveModeValueChangedEvent {
      * @return the new additive mode status value
      */
     public boolean isAdditiveModeEnabled() {
-	return additiveModeEnabled;
+        return additiveModeEnabled;
     }
 }

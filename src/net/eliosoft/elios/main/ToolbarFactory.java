@@ -51,9 +51,9 @@ public class ToolbarFactory {
      *            a {@link ApplicationState}
      */
     public ToolbarFactory(final RemoteModel remoteModel,
-	    final ApplicationState state) {
-	this.remoteModel = remoteModel;
-	this.state = state;
+            final ApplicationState state) {
+        this.remoteModel = remoteModel;
+        this.state = state;
     }
 
     /**
@@ -65,28 +65,28 @@ public class ToolbarFactory {
      * @return a {@link JToolBar} mapped to the given {@link JFrame}
      */
     public JToolBar create(final JFrame frame) {
-	final JToolBar toolBar = new JToolBar();
+        final JToolBar toolBar = new JToolBar();
 
-	addAdditiveMode(toolBar);
-	toolBar.addSeparator();
+        addAdditiveMode(toolBar);
+        toolBar.addSeparator();
 
-	addSubnet(toolBar);
-	toolBar.add(Box.createHorizontalStrut(3));
+        addSubnet(toolBar);
+        toolBar.add(Box.createHorizontalStrut(3));
 
-	addUniverse(toolBar);
-	toolBar.addSeparator();
+        addUniverse(toolBar);
+        toolBar.addSeparator();
 
-	addSaveCue(frame, toolBar, remoteModel);
-	toolBar.addSeparator();
+        addSaveCue(frame, toolBar, remoteModel);
+        toolBar.addSeparator();
 
-	addFullScreen(frame, toolBar);
+        addFullScreen(frame, toolBar);
 
-	toolBar.addSeparator();
-	toolBar.add(Box.createHorizontalGlue());
+        toolBar.addSeparator();
+        toolBar.add(Box.createHorizontalGlue());
 
-	addQuit(frame, toolBar);
+        addQuit(frame, toolBar);
 
-	return toolBar;
+        return toolBar;
     }
 
     /**
@@ -96,12 +96,12 @@ public class ToolbarFactory {
      *            a {@link JToolBar}
      */
     private void addSubnet(final JToolBar toolBar) {
-	JLabel subnetLabel = new JLabel(Messages.getString("prefsview.subnet")); //$NON-NLS-1$
-	toolBar.add(subnetLabel);
+        JLabel subnetLabel = new JLabel(Messages.getString("prefsview.subnet")); //$NON-NLS-1$
+        toolBar.add(subnetLabel);
 
-	JSpinner subnetSpinner = new JSpinner(
-		remoteModel.getSubnetSpinnerModel());
-	toolBar.add(subnetSpinner);
+        JSpinner subnetSpinner = new JSpinner(
+                remoteModel.getSubnetSpinnerModel());
+        toolBar.add(subnetSpinner);
     }
 
     /**
@@ -112,45 +112,45 @@ public class ToolbarFactory {
      */
 
     private void addQuit(final JFrame frame, final JToolBar toolBar) {
-	final JButton quit = new JButton();
-	quit.setToolTipText("Quit");
-	quit.setIcon(new ImageIcon(Elios.class
-		.getResource("/net/eliosoft/elios/gui/views/process-stop.png")));
-	quit.addActionListener(new ActionListener() {
-	    @Override
-	    public void actionPerformed(final ActionEvent arg0) {
-		state.changeState(State.SHUTTING_DOWN);
-	    }
-	});
-	toolBar.add(quit);
+        final JButton quit = new JButton();
+        quit.setToolTipText("Quit");
+        quit.setIcon(new ImageIcon(Elios.class
+                .getResource("/net/eliosoft/elios/gui/views/process-stop.png")));
+        quit.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(final ActionEvent arg0) {
+                state.changeState(State.SHUTTING_DOWN);
+            }
+        });
+        toolBar.add(quit);
     }
 
     private void addFullScreen(final JFrame frame, final JToolBar toolBar) {
-	final JToggleButton button = new JToggleButton();
-	button.setToolTipText(Messages.getString("main.fullscreen")); //$NON-NLS-1$
-	button.setIcon(new ImageIcon(
-		Elios.class
-			.getResource("/net/eliosoft/elios/gui/views/view-fullscreen.png")));
+        final JToggleButton button = new JToggleButton();
+        button.setToolTipText(Messages.getString("main.fullscreen")); //$NON-NLS-1$
+        button.setIcon(new ImageIcon(
+                Elios.class
+                        .getResource("/net/eliosoft/elios/gui/views/view-fullscreen.png")));
 
-	final GraphicsDevice myDevice = GraphicsEnvironment
-		.getLocalGraphicsEnvironment().getDefaultScreenDevice();
+        final GraphicsDevice myDevice = GraphicsEnvironment
+                .getLocalGraphicsEnvironment().getDefaultScreenDevice();
 
-	// take care of disable the button is full screen mode is not supported
-	button.setEnabled(myDevice.isFullScreenSupported());
+        // take care of disable the button is full screen mode is not supported
+        button.setEnabled(myDevice.isFullScreenSupported());
 
-	button.addActionListener(new ActionListener() {
-	    @Override
-	    public void actionPerformed(final ActionEvent arg0) {
-		if (myDevice.getFullScreenWindow() == null) {
-		    turnOnFullScreen(frame, myDevice);
-		    button.setSelected(true);
-		} else {
-		    turnOffFullScreen(frame, myDevice);
-		    button.setSelected(false);
-		}
-	    }
-	});
-	toolBar.add(button);
+        button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(final ActionEvent arg0) {
+                if (myDevice.getFullScreenWindow() == null) {
+                    turnOnFullScreen(frame, myDevice);
+                    button.setSelected(true);
+                } else {
+                    turnOffFullScreen(frame, myDevice);
+                    button.setSelected(false);
+                }
+            }
+        });
+        toolBar.add(button);
     }
 
     /**
@@ -160,50 +160,50 @@ public class ToolbarFactory {
      *            a {@link JToolBar}
      */
     private void addAdditiveMode(final JToolBar toolBar) {
-	final JToggleButton additiveMode = new JToggleButton();
-	additiveMode.setToolTipText(Messages
-		.getString("prefsview.additivemode"));
-	additiveMode
-		.setIcon(new ImageIcon(
-			Elios.class
-				.getResource("/net/eliosoft/elios/gui/views/additive-mode.png")));
-	additiveMode.setSelected(remoteModel.isAdditiveModeEnabled());
-	additiveMode.addActionListener(new ActionListener() {
-	    @Override
-	    public void actionPerformed(final ActionEvent arg0) {
-		remoteModel.setAdditiveModeEnabled(additiveMode.isSelected());
-	    }
-	});
-	remoteModel.addRemoteModelChangedListener(new RemoteModelListener() {
+        final JToggleButton additiveMode = new JToggleButton();
+        additiveMode.setToolTipText(Messages
+                .getString("prefsview.additivemode"));
+        additiveMode
+                .setIcon(new ImageIcon(
+                        Elios.class
+                                .getResource("/net/eliosoft/elios/gui/views/additive-mode.png")));
+        additiveMode.setSelected(remoteModel.isAdditiveModeEnabled());
+        additiveMode.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(final ActionEvent arg0) {
+                remoteModel.setAdditiveModeEnabled(additiveMode.isSelected());
+            }
+        });
+        remoteModel.addRemoteModelChangedListener(new RemoteModelListener() {
 
-	    @Override
-	    public void httpStopped(final HttpStoppedEvent event) {
-	    }
+            @Override
+            public void httpStopped(final HttpStoppedEvent event) {
+            }
 
-	    @Override
-	    public void httpStarted(final HttpStartedEvent event) {
-	    }
+            @Override
+            public void httpStarted(final HttpStartedEvent event) {
+            }
 
-	    @Override
-	    public void commandLineValueChanged(
-		    final CommandLineValueChangedEvent event) {
-	    }
+            @Override
+            public void commandLineValueChanged(
+                    final CommandLineValueChangedEvent event) {
+            }
 
-	    @Override
-	    public void artNetStopped(final ArtNetStoppedEvent event) {
-	    }
+            @Override
+            public void artNetStopped(final ArtNetStoppedEvent event) {
+            }
 
-	    @Override
-	    public void artNetStarted(final ArtNetStartedEvent event) {
-	    }
+            @Override
+            public void artNetStarted(final ArtNetStartedEvent event) {
+            }
 
-	    @Override
-	    public void additiveModeValueChanged(
-		    final AdditiveModeValueChangedEvent event) {
-		additiveMode.setSelected(event.isAdditiveModeEnabled());
-	    }
-	});
-	toolBar.add(additiveMode);
+            @Override
+            public void additiveModeValueChanged(
+                    final AdditiveModeValueChangedEvent event) {
+                additiveMode.setSelected(event.isAdditiveModeEnabled());
+            }
+        });
+        toolBar.add(additiveMode);
     }
 
     /**
@@ -217,32 +217,32 @@ public class ToolbarFactory {
      *            the {@link RemoteModel} used to store the cue
      */
     private void addSaveCue(final JFrame frame, final JToolBar toolBar,
-	    final RemoteModel remoteModel) {
-	JButton storeButton = new JButton();
-	storeButton
-		.setIcon(new ImageIcon(
-			Elios.class
-				.getResource("/net/eliosoft/elios/gui/views/document-save-as.png")));
+            final RemoteModel remoteModel) {
+        JButton storeButton = new JButton();
+        storeButton
+                .setIcon(new ImageIcon(
+                        Elios.class
+                                .getResource("/net/eliosoft/elios/gui/views/document-save-as.png")));
 
-	storeButton.setToolTipText(Messages.getString("cuesview.storebutton"));
+        storeButton.setToolTipText(Messages.getString("cuesview.storebutton"));
 
-	storeButton.addActionListener(new ActionListener() {
-	    @Override
-	    public void actionPerformed(final ActionEvent e) {
-		final String cueName = CuesViewHelper.askForCueName(frame,
-			remoteModel.getCuesListModel().getNextDefaultCueName());
+        storeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(final ActionEvent e) {
+                final String cueName = CuesViewHelper.askForCueName(frame,
+                        remoteModel.getCuesListModel().getNextDefaultCueName());
 
-		if (cueName != null) {
-		    try {
-			remoteModel.storeCue(cueName);
-		    } catch (Exception exception) {
-			CuesViewHelper.printError(frame, exception, cueName);
-		    }
-		}
-	    }
-	});
+                if (cueName != null) {
+                    try {
+                        remoteModel.storeCue(cueName);
+                    } catch (Exception exception) {
+                        CuesViewHelper.printError(frame, exception, cueName);
+                    }
+                }
+            }
+        });
 
-	toolBar.add(storeButton);
+        toolBar.add(storeButton);
     }
 
     /**
@@ -252,14 +252,14 @@ public class ToolbarFactory {
      *            a {@link JToolBar}
      */
     private void addUniverse(final JToolBar toolBar) {
-	JLabel universeLabel = new JLabel(
-		Messages.getString("prefsview.universe")); //$NON-NLS-1$
-	toolBar.add(universeLabel);
-	toolBar.add(Box.createHorizontalStrut(3));
+        JLabel universeLabel = new JLabel(
+                Messages.getString("prefsview.universe")); //$NON-NLS-1$
+        toolBar.add(universeLabel);
+        toolBar.add(Box.createHorizontalStrut(3));
 
-	JSpinner universeSpinner = new JSpinner(
-		remoteModel.getUniverseSpinnerModel());
-	toolBar.add(universeSpinner);
+        JSpinner universeSpinner = new JSpinner(
+                remoteModel.getUniverseSpinnerModel());
+        toolBar.add(universeSpinner);
     }
 
     /**
@@ -272,33 +272,33 @@ public class ToolbarFactory {
      *            the {@link GraphicsDevice} on which the frame must be display
      */
     private void turnOffFullScreen(final JFrame frame,
-	    final GraphicsDevice device) {
-	try {
-	    // hide the frame so we can change it.
-	    frame.setVisible(false);
+            final GraphicsDevice device) {
+        try {
+            // hide the frame so we can change it.
+            frame.setVisible(false);
 
-	    // remove the frame from being displayable.
-	    frame.dispose();
+            // remove the frame from being displayable.
+            frame.dispose();
 
-	    // put the borders back on the frame.
-	    frame.setUndecorated(false);
+            // put the borders back on the frame.
+            frame.setUndecorated(false);
 
-	    // needed to unset this window as the fullscreen window.
-	    device.setFullScreenWindow(null);
+            // needed to unset this window as the fullscreen window.
+            device.setFullScreenWindow(null);
 
-	    // reset the display mode to what it was before
-	    // we changed it.
-	    frame.setVisible(true);
-	} catch (Exception e) { // ugly catch
-	    JOptionPane.showMessageDialog(frame, MessageFormat.format(
-		    Messages.getString("error.fullscreen.off.message"),
-		    e.getMessage()), Messages
-		    .getString("error.fullscreen.title"),
-		    JOptionPane.ERROR_MESSAGE);
-	} finally {
-	    // show the frame
-	    frame.setVisible(true);
-	}
+            // reset the display mode to what it was before
+            // we changed it.
+            frame.setVisible(true);
+        } catch (Exception e) { // ugly catch
+            JOptionPane.showMessageDialog(frame, MessageFormat.format(
+                    Messages.getString("error.fullscreen.off.message"),
+                    e.getMessage()), Messages
+                    .getString("error.fullscreen.title"),
+                    JOptionPane.ERROR_MESSAGE);
+        } finally {
+            // show the frame
+            frame.setVisible(true);
+        }
 
     }
 
@@ -312,29 +312,29 @@ public class ToolbarFactory {
      *            the {@link GraphicsDevice} on which the frame must be display
      */
     private void turnOnFullScreen(final JFrame frame,
-	    final GraphicsDevice device) {
-	try {
-	    // hide everything
-	    frame.setVisible(false);
+            final GraphicsDevice device) {
+        try {
+            // hide everything
+            frame.setVisible(false);
 
-	    // remove the frame from being displayable.
-	    frame.dispose();
+            // remove the frame from being displayable.
+            frame.dispose();
 
-	    // remove borders around the frame
-	    frame.setUndecorated(true);
+            // remove borders around the frame
+            frame.setUndecorated(true);
 
-	    // make the window fullscreen.
-	    device.setFullScreenWindow(frame);
-	} catch (Exception e) { // ugly catch
-	    JOptionPane.showMessageDialog(frame, MessageFormat.format(
-		    Messages.getString("error.fullscreen.on.message"),
-		    e.getMessage()), Messages
-		    .getString("error.fullscreen.title"),
-		    JOptionPane.ERROR_MESSAGE);
-	} finally {
-	    // show the frame
-	    frame.setVisible(true);
-	}
+            // make the window fullscreen.
+            device.setFullScreenWindow(frame);
+        } catch (Exception e) { // ugly catch
+            JOptionPane.showMessageDialog(frame, MessageFormat.format(
+                    Messages.getString("error.fullscreen.on.message"),
+                    e.getMessage()), Messages
+                    .getString("error.fullscreen.title"),
+                    JOptionPane.ERROR_MESSAGE);
+        } finally {
+            // show the frame
+            frame.setVisible(true);
+        }
     }
 
 }

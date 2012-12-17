@@ -64,60 +64,60 @@ public class LogsView implements ViewInterface {
      *            the RemoteModel used by the view
      */
     public LogsView(final RemoteModel remoteModel) {
-	this.remoteModel = remoteModel;
+        this.remoteModel = remoteModel;
 
-	this.logsPanel.setLayout(this.layout);
+        this.logsPanel.setLayout(this.layout);
 
-	this.logsList = new JList(this.remoteModel.getLogsListModel());
-	this.logsList.getModel().addListDataListener(new ListDataListener() {
-	    @Override
-	    public void intervalAdded(final ListDataEvent e) {
-		SwingUtilities.invokeLater(new Runnable() {
-		    @Override
-		    public void run() {
-			logsList.ensureIndexIsVisible(e.getIndex0());
-		    }
-		});
-	    }
+        this.logsList = new JList(this.remoteModel.getLogsListModel());
+        this.logsList.getModel().addListDataListener(new ListDataListener() {
+            @Override
+            public void intervalAdded(final ListDataEvent e) {
+                SwingUtilities.invokeLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        logsList.ensureIndexIsVisible(e.getIndex0());
+                    }
+                });
+            }
 
-	    @Override
-	    public void intervalRemoved(final ListDataEvent e) {
-	    }
+            @Override
+            public void intervalRemoved(final ListDataEvent e) {
+            }
 
-	    @Override
-	    public void contentsChanged(final ListDataEvent e) {
-	    }
-	});
-	this.logsList.setCellRenderer(new ListCellRenderer() {
+            @Override
+            public void contentsChanged(final ListDataEvent e) {
+            }
+        });
+        this.logsList.setCellRenderer(new ListCellRenderer() {
 
-	    @Override
-	    public Component getListCellRendererComponent(final JList list,
-		    final Object value, final int index,
-		    final boolean isSelected, final boolean cellHasFocus) {
-		return LogsViewHelper.createLogsLabel((LogRecord) value);
-	    }
-	});
+            @Override
+            public Component getListCellRendererComponent(final JList list,
+                    final Object value, final int index,
+                    final boolean isSelected, final boolean cellHasFocus) {
+                return LogsViewHelper.createLogsLabel((LogRecord) value);
+            }
+        });
 
-	JScrollPane scrollPane = new JScrollPane(logsList);
-	scrollPane.setMinimumSize(new Dimension(200, 100));
-	scrollPane
-		.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-	this.constraints.fill = GridBagConstraints.BOTH;
-	this.constraints.gridy = 0;
-	this.constraints.weightx = 1;
-	this.constraints.weighty = 1;
-	this.logsPanel.add(scrollPane, this.constraints);
+        JScrollPane scrollPane = new JScrollPane(logsList);
+        scrollPane.setMinimumSize(new Dimension(200, 100));
+        scrollPane
+                .setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+        this.constraints.fill = GridBagConstraints.BOTH;
+        this.constraints.gridy = 0;
+        this.constraints.weightx = 1;
+        this.constraints.weighty = 1;
+        this.logsPanel.add(scrollPane, this.constraints);
 
-	this.clearLogsButton = new JButton(
-		Messages.getString("logsview.clear"),
-		new ImageIcon(
-			Elios.class
-				.getResource("/net/eliosoft/elios/gui/views/edit-clear.png"))); //$NON-NLS-1$
-	this.constraints.fill = GridBagConstraints.NONE;
-	this.constraints.gridy = 1;
-	this.constraints.weightx = 0;
-	this.constraints.weighty = 0;
-	logsPanel.add(this.clearLogsButton, this.constraints);
+        this.clearLogsButton = new JButton(
+                Messages.getString("logsview.clear"),
+                new ImageIcon(
+                        Elios.class
+                                .getResource("/net/eliosoft/elios/gui/views/edit-clear.png"))); //$NON-NLS-1$
+        this.constraints.fill = GridBagConstraints.NONE;
+        this.constraints.gridy = 1;
+        this.constraints.weightx = 0;
+        this.constraints.weighty = 0;
+        logsPanel.add(this.clearLogsButton, this.constraints);
     }
 
     /**
@@ -127,7 +127,7 @@ public class LogsView implements ViewInterface {
      */
     @Override
     public JComponent getViewComponent() {
-	return this.logsPanel;
+        return this.logsPanel;
     }
 
     /**
@@ -137,7 +137,7 @@ public class LogsView implements ViewInterface {
      *            the listener to add
      */
     public void addClearLogsButtonListener(final ActionListener listener) {
-	this.clearLogsButton.addActionListener(listener);
+        this.clearLogsButton.addActionListener(listener);
     }
 
     /**
@@ -147,7 +147,7 @@ public class LogsView implements ViewInterface {
      *            the listener to remove
      */
     public void removeClearLogsButtonListener(final ActionListener listener) {
-	this.clearLogsButton.removeActionListener(listener);
+        this.clearLogsButton.removeActionListener(listener);
     }
 
     /**
@@ -155,6 +155,6 @@ public class LogsView implements ViewInterface {
      */
     @Override
     public String getLocalizedTitle() {
-	return Messages.getString("logsview.title");
+        return Messages.getString("logsview.title");
     }
 }

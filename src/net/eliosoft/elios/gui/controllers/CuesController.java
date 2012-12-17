@@ -46,54 +46,54 @@ public class CuesController {
      *            the view associated with this Controller
      */
     public CuesController(final RemoteModel remoteModel, final CuesView cuesView) {
-	this.remoteModel = remoteModel;
-	this.cuesView = cuesView;
+        this.remoteModel = remoteModel;
+        this.cuesView = cuesView;
 
-	this.initButtonsListeners();
+        this.initButtonsListeners();
     }
 
     private void initButtonsListeners() {
-	this.cuesView.addStoreButtonListener(new ActionListener() {
+        this.cuesView.addStoreButtonListener(new ActionListener() {
 
-	    @Override
-	    public void actionPerformed(final ActionEvent arg0) {
-		final String cueName = CuesViewHelper.askForCueName(cuesView
-			.getViewComponent(), remoteModel.getCuesListModel()
-			.getNextDefaultCueName());
+            @Override
+            public void actionPerformed(final ActionEvent arg0) {
+                final String cueName = CuesViewHelper.askForCueName(cuesView
+                        .getViewComponent(), remoteModel.getCuesListModel()
+                        .getNextDefaultCueName());
 
-		if (cueName != null) {
-		    try {
-			remoteModel.storeCue(cueName);
-		    } catch (Exception exception) {
-			CuesViewHelper.printError(cuesView.getViewComponent(),
-				exception, cueName);
-		    }
-		}
-	    }
-	});
+                if (cueName != null) {
+                    try {
+                        remoteModel.storeCue(cueName);
+                    } catch (Exception exception) {
+                        CuesViewHelper.printError(cuesView.getViewComponent(),
+                                exception, cueName);
+                    }
+                }
+            }
+        });
 
-	this.cuesView.addLoadButtonListener(new ActionListener() {
+        this.cuesView.addLoadButtonListener(new ActionListener() {
 
-	    @Override
-	    public void actionPerformed(final ActionEvent e) {
-		Cue cue = cuesView.getSelectedCue();
-		if (cue != null) {
-		    remoteModel.loadCue(cue);
-		}
-	    }
-	});
+            @Override
+            public void actionPerformed(final ActionEvent e) {
+                Cue cue = cuesView.getSelectedCue();
+                if (cue != null) {
+                    remoteModel.loadCue(cue);
+                }
+            }
+        });
 
-	this.cuesView.addRemoveButtonListener(new ActionListener() {
+        this.cuesView.addRemoveButtonListener(new ActionListener() {
 
-	    @Override
-	    public void actionPerformed(final ActionEvent arg0) {
-		Cue cue = cuesView.getSelectedCue();
-		if (cue != null
-			&& CuesViewHelper.confirmCueRemove(
-				cuesView.getViewComponent(), cue.getName())) {
-		    remoteModel.removeCue(cue);
-		}
-	    }
-	});
+            @Override
+            public void actionPerformed(final ActionEvent arg0) {
+                Cue cue = cuesView.getSelectedCue();
+                if (cue != null
+                        && CuesViewHelper.confirmCueRemove(
+                                cuesView.getViewComponent(), cue.getName())) {
+                    remoteModel.removeCue(cue);
+                }
+            }
+        });
     }
 }

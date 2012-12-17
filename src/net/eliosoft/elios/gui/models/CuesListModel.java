@@ -42,32 +42,32 @@ public class CuesListModel extends AbstractListModel {
      * @param cuesMngr
      */
     public CuesListModel(final CuesManager cuesMngr) {
-	this.cuesManager = cuesMngr;
-	this.cuesManager
-		.addCuesManagerChangedListener(new CuesManagerListener() {
+        this.cuesManager = cuesMngr;
+        this.cuesManager
+                .addCuesManagerChangedListener(new CuesManagerListener() {
 
-		    @Override
-		    public void cueRemoved(final CueRemovedEvent event) {
-			fireContentsChanged(this, 0, cuesManager.getCues()
-				.size());
-		    }
+                    @Override
+                    public void cueRemoved(final CueRemovedEvent event) {
+                        fireContentsChanged(this, 0, cuesManager.getCues()
+                                .size());
+                    }
 
-		    @Override
-		    public void cueAdded(final CueAddedEvent event) {
-			fireContentsChanged(this, 0, cuesManager.getCues()
-				.size());
-		    }
-		});
+                    @Override
+                    public void cueAdded(final CueAddedEvent event) {
+                        fireContentsChanged(this, 0, cuesManager.getCues()
+                                .size());
+                    }
+                });
     }
 
     @Override
     public Cue getElementAt(final int index) {
-	return cuesManager.getCues().get(index);
+        return cuesManager.getCues().get(index);
     }
 
     @Override
     public int getSize() {
-	return cuesManager.getCues().size();
+        return cuesManager.getCues().size();
     }
 
     /**
@@ -77,9 +77,9 @@ public class CuesListModel extends AbstractListModel {
      *            the cue to add
      */
     public void addCue(final Cue cue) {
-	cuesManager.addCue(cue);
-	int index = cuesManager.getCues().size() - 1;
-	this.fireIntervalAdded(this, index, index);
+        cuesManager.addCue(cue);
+        int index = cuesManager.getCues().size() - 1;
+        this.fireIntervalAdded(this, index, index);
     }
 
     /**
@@ -89,9 +89,9 @@ public class CuesListModel extends AbstractListModel {
      *            the cue to remove
      */
     public void removeCue(final Cue cue) {
-	int index = cuesManager.getCues().indexOf(cue);
-	cuesManager.removeCue(cue.getName());
-	this.fireIntervalRemoved(this, index, index);
+        int index = cuesManager.getCues().indexOf(cue);
+        cuesManager.removeCue(cue.getName());
+        this.fireIntervalRemoved(this, index, index);
     }
 
     /**
@@ -100,7 +100,7 @@ public class CuesListModel extends AbstractListModel {
      * @return a string that could be used as a cue name.
      */
     public String getNextDefaultCueName() {
-	return cuesManager.getUnusedCueName();
+        return cuesManager.getUnusedCueName();
     }
 
 }

@@ -36,17 +36,17 @@ public final class Messages {
     private static final String BUNDLE_NAME = "net.eliosoft.elios.gui.views.messages"; //$NON-NLS-1$
 
     private static final Logger LOGGER = LoggersManager.getInstance()
-	    .getLogger(Messages.class.getCanonicalName());
+            .getLogger(Messages.class.getCanonicalName());
 
     /** bundle instance. **/
     private static final ResourceBundle RESOURCE_BUNDLE = ResourceBundle
-	    .getBundle(BUNDLE_NAME);
+            .getBundle(BUNDLE_NAME);
 
     /**
      * Ensure that no object can be create.
      */
     private Messages() {
-	// nothing
+        // nothing
     }
 
     /**
@@ -58,11 +58,11 @@ public final class Messages {
      * @return the localized text or !key! is the resource is not found
      */
     public static String getString(final String key) {
-	try {
-	    return RESOURCE_BUNDLE.getString(key);
-	} catch (MissingResourceException e) {
-	    return fallbackTranslation(key);
-	}
+        try {
+            return RESOURCE_BUNDLE.getString(key);
+        } catch (MissingResourceException e) {
+            return fallbackTranslation(key);
+        }
     }
 
     /**
@@ -76,8 +76,8 @@ public final class Messages {
      *             if the resource is not found
      */
     private static String internalGetString(final String key)
-	    throws MissingResourceException {
-	return RESOURCE_BUNDLE.getString(key);
+            throws MissingResourceException {
+        return RESOURCE_BUNDLE.getString(key);
     }
 
     /**
@@ -93,11 +93,11 @@ public final class Messages {
      *         otherwise.
      */
     public static String getString(final String key, final Object... objects) {
-	try {
-	    return new MessageFormat(internalGetString(key)).format(objects);
-	} catch (MissingResourceException e) {
-	    return fallbackTranslation(key);
-	}
+        try {
+            return new MessageFormat(internalGetString(key)).format(objects);
+        } catch (MissingResourceException e) {
+            return fallbackTranslation(key);
+        }
     }
 
     /**
@@ -108,7 +108,7 @@ public final class Messages {
      * @return the given string between "!"
      */
     private static String fallbackTranslation(final String key) {
-	LOGGER.warning("missing i18n key [" + key + "]");
-	return '!' + key + '!';
+        LOGGER.warning("missing i18n key [" + key + "]");
+        return '!' + key + '!';
     }
 }

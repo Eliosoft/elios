@@ -34,7 +34,7 @@ public class UniverseValueChangedEvent {
      *            the new universe value
      */
     public UniverseValueChangedEvent(final int universe) {
-	this.universe = universe;
+        this.universe = universe;
     }
 
     /**
@@ -43,6 +43,6 @@ public class UniverseValueChangedEvent {
      * @return the new universe value
      */
     public int getUniverse() {
-	return universe;
+        return universe;
     }
 }

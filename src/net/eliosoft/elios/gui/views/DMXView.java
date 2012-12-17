@@ -37,9 +37,9 @@ public class DMXView implements ViewInterface {
     private final DMXTableModel dmxTableModel;
     private final JPanel dmxPanel = new JPanel(new BorderLayout());
     private final int cellWidth = dmxPanel.getFontMetrics(dmxPanel.getFont())
-	    .stringWidth("255") * 2;
+            .stringWidth("255") * 2;
     private final int cellHeight = dmxPanel.getFontMetrics(dmxPanel.getFont())
-	    .getHeight() * 2;
+            .getHeight() * 2;
     private final JRadioButton inRadio;
     private final JRadioButton outRadio;
 
@@ -52,113 +52,113 @@ public class DMXView implements ViewInterface {
      *            the DMXTableModel used by the view
      */
     public DMXView(final RemoteModel remoteModel, final DMXTableModel tableModel) {
-	this.dmxTableModel = tableModel;
+        this.dmxTableModel = tableModel;
 
-	ButtonGroup inOutRadioGroup = new ButtonGroup();
-	JPanel inOutRadioPanel = new JPanel();
-	inRadio = new JRadioButton(Messages.getString("dmxview.inputradio"),
-		false);
-	inRadio.setActionCommand("input");
-	outRadio = new JRadioButton(Messages.getString("dmxview.outputradio"),
-		true);
-	outRadio.setActionCommand("output");
-	inOutRadioGroup.add(inRadio);
-	inOutRadioGroup.add(outRadio);
-	inOutRadioPanel.add(inRadio);
-	inOutRadioPanel.add(outRadio);
-	this.dmxPanel.add(inOutRadioPanel, BorderLayout.NORTH);
+        ButtonGroup inOutRadioGroup = new ButtonGroup();
+        JPanel inOutRadioPanel = new JPanel();
+        inRadio = new JRadioButton(Messages.getString("dmxview.inputradio"),
+                false);
+        inRadio.setActionCommand("input");
+        outRadio = new JRadioButton(Messages.getString("dmxview.outputradio"),
+                true);
+        outRadio.setActionCommand("output");
+        inOutRadioGroup.add(inRadio);
+        inOutRadioGroup.add(outRadio);
+        inOutRadioPanel.add(inRadio);
+        inOutRadioPanel.add(outRadio);
+        this.dmxPanel.add(inOutRadioPanel, BorderLayout.NORTH);
 
-	final TableCellRenderer headerCellRenderer = new DefaultTableCellRenderer() {
-	    private static final long serialVersionUID = -7628430686172752221L;
+        final TableCellRenderer headerCellRenderer = new DefaultTableCellRenderer() {
+            private static final long serialVersionUID = -7628430686172752221L;
 
-	    @Override
-	    public Component getTableCellRendererComponent(final JTable table,
-		    final Object value, final boolean isSelected,
-		    final boolean hasFocus, final int row, final int column) {
-		super.getTableCellRendererComponent(table, value, isSelected,
-			hasFocus, row, column);
-		setHorizontalAlignment(SwingConstants.CENTER);
-		setFont(getFont().deriveFont(getFont().getStyle() ^ Font.BOLD));
-		if ((row == 0 && column == -1) || (row == -1 && column == 0)) {
-		    setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1,
-			    Color.LIGHT_GRAY));
-		} else if (row == -1) {
-		    setBorder(BorderFactory.createMatteBorder(1, 0, 1, 1,
-			    Color.LIGHT_GRAY));
-		} else if (column == -1) {
-		    setBorder(BorderFactory.createMatteBorder(0, 1, 1, 1,
-			    Color.LIGHT_GRAY));
-		}
+            @Override
+            public Component getTableCellRendererComponent(final JTable table,
+                    final Object value, final boolean isSelected,
+                    final boolean hasFocus, final int row, final int column) {
+                super.getTableCellRendererComponent(table, value, isSelected,
+                        hasFocus, row, column);
+                setHorizontalAlignment(SwingConstants.CENTER);
+                setFont(getFont().deriveFont(getFont().getStyle() ^ Font.BOLD));
+                if ((row == 0 && column == -1) || (row == -1 && column == 0)) {
+                    setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1,
+                            Color.LIGHT_GRAY));
+                } else if (row == -1) {
+                    setBorder(BorderFactory.createMatteBorder(1, 0, 1, 1,
+                            Color.LIGHT_GRAY));
+                } else if (column == -1) {
+                    setBorder(BorderFactory.createMatteBorder(0, 1, 1, 1,
+                            Color.LIGHT_GRAY));
+                }
 
-		setBackground(new Color(230, 230, 230));
-		return this;
-	    }
-	};
+                setBackground(new Color(230, 230, 230));
+                return this;
+            }
+        };
 
-	final JTable dmxTable = new JTable(this.dmxTableModel);
-	dmxTable.setEnabled(false);
-	dmxTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-	dmxTable.getTableHeader().setReorderingAllowed(false);
-	dmxTable.getTableHeader().setResizingAllowed(false);
-	dmxTable.setGridColor(Color.LIGHT_GRAY);
-	dmxTable.getTableHeader().setPreferredSize(
-		new Dimension(dmxTableModel.getColumnCount() * cellWidth,
-			cellHeight));
-	dmxTable.setRowHeight(cellHeight);
+        final JTable dmxTable = new JTable(this.dmxTableModel);
+        dmxTable.setEnabled(false);
+        dmxTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        dmxTable.getTableHeader().setReorderingAllowed(false);
+        dmxTable.getTableHeader().setResizingAllowed(false);
+        dmxTable.setGridColor(Color.LIGHT_GRAY);
+        dmxTable.getTableHeader().setPreferredSize(
+                new Dimension(dmxTableModel.getColumnCount() * cellWidth,
+                        cellHeight));
+        dmxTable.setRowHeight(cellHeight);
 
-	dmxTable.getTableHeader().setDefaultRenderer(headerCellRenderer);
+        dmxTable.getTableHeader().setDefaultRenderer(headerCellRenderer);
 
-	dmxTable.setDefaultRenderer(Integer.class,
-		new DefaultTableCellRenderer() {
-		    private static final long serialVersionUID = 8556900685268227709L;
+        dmxTable.setDefaultRenderer(Integer.class,
+                new DefaultTableCellRenderer() {
+                    private static final long serialVersionUID = 8556900685268227709L;
 
-		    @Override
-		    public Component getTableCellRendererComponent(
-			    final JTable table, final Object value,
-			    final boolean isSelected, final boolean hasFocus,
-			    final int row, final int column) {
-			super.getTableCellRendererComponent(table, value,
-				isSelected, hasFocus, row, column);
-			int nonBlueLevel = 255 - ((Integer) value).intValue() * 4 / 5;
-			setBackground(new Color(nonBlueLevel, nonBlueLevel, 255));
-			int channel = row * table.getColumnCount() + column + 1;
-			int percentValue = (int) Math.ceil(((Integer) value)
-				.intValue() * 100 / 255.0);
-			setToolTipText(MessageFormat.format(
-				Messages.getString("dmxview.tooltipmessage"),
-				channel, value, percentValue));
-			setHorizontalAlignment(SwingConstants.CENTER);
-			return this;
-		    }
-		});
+                    @Override
+                    public Component getTableCellRendererComponent(
+                            final JTable table, final Object value,
+                            final boolean isSelected, final boolean hasFocus,
+                            final int row, final int column) {
+                        super.getTableCellRendererComponent(table, value,
+                                isSelected, hasFocus, row, column);
+                        int nonBlueLevel = 255 - ((Integer) value).intValue() * 4 / 5;
+                        setBackground(new Color(nonBlueLevel, nonBlueLevel, 255));
+                        int channel = row * table.getColumnCount() + column + 1;
+                        int percentValue = (int) Math.ceil(((Integer) value)
+                                .intValue() * 100 / 255.0);
+                        setToolTipText(MessageFormat.format(
+                                Messages.getString("dmxview.tooltipmessage"),
+                                channel, value, percentValue));
+                        setHorizontalAlignment(SwingConstants.CENTER);
+                        return this;
+                    }
+                });
 
-	Enumeration<TableColumn> columns = dmxTable.getColumnModel()
-		.getColumns();
-	while (columns.hasMoreElements()) {
-	    TableColumn column = columns.nextElement();
-	    column.setPreferredWidth(cellWidth);
-	}
+        Enumeration<TableColumn> columns = dmxTable.getColumnModel()
+                .getColumns();
+        while (columns.hasMoreElements()) {
+            TableColumn column = columns.nextElement();
+            column.setPreferredWidth(cellWidth);
+        }
 
-	JList dmxTableRowHeader = new JList(this.dmxTableModel.getRowHeaders());
-	dmxTableRowHeader.setFixedCellHeight(cellHeight);
-	dmxTableRowHeader.setFixedCellWidth(cellWidth);
-	dmxTableRowHeader.setCellRenderer(new DefaultListCellRenderer() {
-	    private static final long serialVersionUID = -6533501111809246770L;
+        JList dmxTableRowHeader = new JList(this.dmxTableModel.getRowHeaders());
+        dmxTableRowHeader.setFixedCellHeight(cellHeight);
+        dmxTableRowHeader.setFixedCellWidth(cellWidth);
+        dmxTableRowHeader.setCellRenderer(new DefaultListCellRenderer() {
+            private static final long serialVersionUID = -6533501111809246770L;
 
-	    @Override
-	    public Component getListCellRendererComponent(final JList list,
-		    final Object value, final int index,
-		    final boolean isSelected, final boolean cellHasFocus) {
-		Component c = headerCellRenderer.getTableCellRendererComponent(
-			dmxTable, value, isSelected, cellHasFocus, index, -1);
-		return c;
-	    }
-	});
+            @Override
+            public Component getListCellRendererComponent(final JList list,
+                    final Object value, final int index,
+                    final boolean isSelected, final boolean cellHasFocus) {
+                Component c = headerCellRenderer.getTableCellRendererComponent(
+                        dmxTable, value, isSelected, cellHasFocus, index, -1);
+                return c;
+            }
+        });
 
-	JScrollPane scrollPane = new JScrollPane(dmxTable);
-	scrollPane.setRowHeaderView(dmxTableRowHeader);
-	scrollPane.setPreferredSize(new Dimension(200, 200));
-	this.dmxPanel.add(scrollPane, BorderLayout.CENTER);
+        JScrollPane scrollPane = new JScrollPane(dmxTable);
+        scrollPane.setRowHeaderView(dmxTableRowHeader);
+        scrollPane.setPreferredSize(new Dimension(200, 200));
+        this.dmxPanel.add(scrollPane, BorderLayout.CENTER);
     }
 
     /**
@@ -168,8 +168,8 @@ public class DMXView implements ViewInterface {
      *            the listener to add
      */
     public void addInOutRadioActionListener(final ActionListener actionListener) {
-	inRadio.addActionListener(actionListener);
-	outRadio.addActionListener(actionListener);
+        inRadio.addActionListener(actionListener);
+        outRadio.addActionListener(actionListener);
     }
 
     /**
@@ -179,9 +179,9 @@ public class DMXView implements ViewInterface {
      *            the listener to remove
      */
     public void removeInOutRadioActionListener(
-	    final ActionListener actionListener) {
-	inRadio.removeActionListener(actionListener);
-	outRadio.removeActionListener(actionListener);
+            final ActionListener actionListener) {
+        inRadio.removeActionListener(actionListener);
+        outRadio.removeActionListener(actionListener);
     }
 
     /**
@@ -189,7 +189,7 @@ public class DMXView implements ViewInterface {
      */
     @Override
     public String getLocalizedTitle() {
-	return Messages.getString("dmxview.title");
+        return Messages.getString("dmxview.title");
     }
 
     /**
@@ -199,6 +199,6 @@ public class DMXView implements ViewInterface {
      */
     @Override
     public JComponent getViewComponent() {
-	return this.dmxPanel;
+        return this.dmxPanel;
     }
 }

@@ -34,7 +34,7 @@ public class Cue {
      * deserialization.
      */
     Cue() {
-	// nothing to do here.
+        // nothing to do here.
     }
 
     /**
@@ -46,9 +46,9 @@ public class Cue {
      *            the dmx array of the cue
      */
     public Cue(final String name, final byte[] dmxArray) {
-	this.name = name;
-	System.arraycopy(dmxArray, 0, this.dmxArray, 0,
-		ArtNetServerManager.DMX_CHANNELS_COUNT);
+        this.name = name;
+        System.arraycopy(dmxArray, 0, this.dmxArray, 0,
+                ArtNetServerManager.DMX_CHANNELS_COUNT);
     }
 
     /**
@@ -57,7 +57,7 @@ public class Cue {
      * @return the name
      */
     public String getName() {
-	return name;
+        return name;
     }
 
     /**
@@ -67,7 +67,7 @@ public class Cue {
      *            the name to set
      */
     public void setName(final String name) {
-	this.name = name;
+        this.name = name;
     }
 
     /**
@@ -76,7 +76,7 @@ public class Cue {
      * @return the dmxArray
      */
     public byte[] getDmxArray() {
-	return dmxArray;
+        return dmxArray;
     }
 
     /**
@@ -86,8 +86,8 @@ public class Cue {
      *            the dmxArray to set
      */
     void setDmxArray(final byte[] dmxArray) {
-	System.arraycopy(dmxArray, 0, this.dmxArray, 0,
-		ArtNetServerManager.DMX_CHANNELS_COUNT);
+        System.arraycopy(dmxArray, 0, this.dmxArray, 0,
+                ArtNetServerManager.DMX_CHANNELS_COUNT);
     }
 
 }

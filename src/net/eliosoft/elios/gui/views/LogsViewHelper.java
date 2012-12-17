@@ -33,7 +33,7 @@ public final class LogsViewHelper {
      *         information
      */
     public static JLabel createLogsLabel(final LogRecord record) {
-	return LOG_DECORATOR.update(new JLabel(), record);
+        return LOG_DECORATOR.update(new JLabel(), record);
     }
 
     /**
@@ -45,40 +45,40 @@ public final class LogsViewHelper {
      */
     public interface LogLabelDecorator {
 
-	/**
-	 * Update the given label according to the {@link LogRecord} text value
-	 * and states.
-	 * 
-	 * @param label
-	 *            {@link JLabel} that must be decorated
-	 * @param record
-	 *            {@link LogRecord} that contains information to display
-	 * @return the given label
-	 */
-	JLabel update(JLabel label, LogRecord record);
+        /**
+         * Update the given label according to the {@link LogRecord} text value
+         * and states.
+         * 
+         * @param label
+         *            {@link JLabel} that must be decorated
+         * @param record
+         *            {@link LogRecord} that contains information to display
+         * @return the given label
+         */
+        JLabel update(JLabel label, LogRecord record);
     }
 
     /**
      * Default log decorator.
      */
     public static final LogLabelDecorator LOG_DECORATOR = new LogLabelDecorator() {
-	@Override
-	public JLabel update(final JLabel label, final LogRecord record) {
-	    if (record == null) {
-		label.setText(DEFAULT_TEXT);
-		return label;
-	    }
+        @Override
+        public JLabel update(final JLabel label, final LogRecord record) {
+            if (record == null) {
+                label.setText(DEFAULT_TEXT);
+                return label;
+            }
 
-	    label.setText("[" + record.getLevel().getName() + "] "
-		    + record.getMessage());
+            label.setText("[" + record.getLevel().getName() + "] "
+                    + record.getMessage());
 
-	    if (record.getLevel().equals(Level.SEVERE)) {
-		label.setForeground(Color.RED);
-	    } else {
-		label.setForeground(Color.BLACK);
-	    }
+            if (record.getLevel().equals(Level.SEVERE)) {
+                label.setForeground(Color.RED);
+            } else {
+                label.setForeground(Color.BLACK);
+            }
 
-	    return label;
-	}
+            return label;
+        }
     };
 }

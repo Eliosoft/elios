@@ -50,12 +50,12 @@ public class ReleaseInformationDialogBuilder {
      */
     public interface Builder<T> {
 
-	/**
-	 * Build an instance of T.
-	 * 
-	 * @return an instance of T
-	 */
-	T build();
+        /**
+         * Build an instance of T.
+         * 
+         * @return an instance of T
+         */
+        T build();
     }
 
     /** parent {@link Frame}. **/
@@ -83,17 +83,17 @@ public class ReleaseInformationDialogBuilder {
      *            the {@link UpdateModel} instance
      */
     public ReleaseInformationDialogBuilder(final Frame parent,
-	    final ReleaseInformationRepository repository,
-	    final UpdateModel uSupport) {
+            final ReleaseInformationRepository repository,
+            final UpdateModel uSupport) {
 
-	if (repository == null) {
-	    throw new IllegalArgumentException(
-		    "The ReleaseInformationRepository could not be null");
-	}
+        if (repository == null) {
+            throw new IllegalArgumentException(
+                    "The ReleaseInformationRepository could not be null");
+        }
 
-	this.parent = parent;
-	this.repository = repository;
-	this.uSupport = uSupport;
+        this.parent = parent;
+        this.repository = repository;
+        this.uSupport = uSupport;
     }
 
     /**
@@ -106,125 +106,125 @@ public class ReleaseInformationDialogBuilder {
      */
     private JDialog build(final ReleaseCode code) {
 
-	// TODO loading must be done in a swing worker
-	final ReleaseInformation ri = repository.getLatest();
+        // TODO loading must be done in a swing worker
+        final ReleaseInformation ri = repository.getLatest();
 
-	final JDialog dialog = new JDialog(parent,
-		Messages.getString("updatedialog.title"));
-	dialog.setSize(360, 360);
+        final JDialog dialog = new JDialog(parent,
+                Messages.getString("updatedialog.title"));
+        dialog.setSize(360, 360);
 
-	JPanel panel = new JPanel();
-	panel.setLayout(new BorderLayout());
-	dialog.add(panel);
+        JPanel panel = new JPanel();
+        panel.setLayout(new BorderLayout());
+        dialog.add(panel);
 
-	Box box = createRevisionPanel(ri);
-	panel.add(box, BorderLayout.NORTH);
+        Box box = createRevisionPanel(ri);
+        panel.add(box, BorderLayout.NORTH);
 
-	JComponent comp = createReleaseNoteAndUpdatePane(ri);
+        JComponent comp = createReleaseNoteAndUpdatePane(ri);
 
-	panel.add(comp, BorderLayout.CENTER);
+        panel.add(comp, BorderLayout.CENTER);
 
-	Box buttonBox = createButtonPanel(ri, dialog);
-	panel.add(buttonBox, BorderLayout.SOUTH);
+        Box buttonBox = createButtonPanel(ri, dialog);
+        panel.add(buttonBox, BorderLayout.SOUTH);
 
-	return dialog;
+        return dialog;
     }
 
     private JComponent createReleaseNoteAndUpdatePane(
-	    final ReleaseInformation ri) {
+            final ReleaseInformation ri) {
 
-	JPanel panel = new JPanel();
-	panel.setLayout(new BorderLayout());
+        JPanel panel = new JPanel();
+        panel.setLayout(new BorderLayout());
 
-	URL url = ri.getReleaseNoteUrl();
-	JEditorPane view = new JEditorPane();
-	JScrollPane editorScrollPane = new JScrollPane(view);
-	try {
-	    view.setPage(url);
-	} catch (IOException e) {
-	    view.setText(Messages.getString("updatedialog.error.network", url));
-	}
-	panel.add(editorScrollPane, BorderLayout.CENTER);
+        URL url = ri.getReleaseNoteUrl();
+        JEditorPane view = new JEditorPane();
+        JScrollPane editorScrollPane = new JScrollPane(view);
+        try {
+            view.setPage(url);
+        } catch (IOException e) {
+            view.setText(Messages.getString("updatedialog.error.network", url));
+        }
+        panel.add(editorScrollPane, BorderLayout.CENTER);
 
-	Box uBox = Box.createHorizontalBox();
-	UpdateFrequencyChooserView updateFrequencyChooserView = new UpdateFrequencyChooserView(
-		uSupport);
-	uBox.add(new JLabel(updateFrequencyChooserView.getLocalizedTitle()));
+        Box uBox = Box.createHorizontalBox();
+        UpdateFrequencyChooserView updateFrequencyChooserView = new UpdateFrequencyChooserView(
+                uSupport);
+        uBox.add(new JLabel(updateFrequencyChooserView.getLocalizedTitle()));
 
-	JComponent updateComponent = updateFrequencyChooserView
-		.getViewComponent();
-	uBox.add(updateComponent);
+        JComponent updateComponent = updateFrequencyChooserView
+                .getViewComponent();
+        uBox.add(updateComponent);
 
-	panel.add(uBox, BorderLayout.SOUTH);
-	return panel;
+        panel.add(uBox, BorderLayout.SOUTH);
+        return panel;
     }
 
     private Box createButtonPanel(final ReleaseInformation ri,
-	    final JDialog dialog) {
-	Box buttonBox = Box.createHorizontalBox();
-	buttonBox.add(Box.createHorizontalGlue());
-	JButton closeBtn = new JButton(Messages.getString("updatedialog.close"));
+            final JDialog dialog) {
+        Box buttonBox = Box.createHorizontalBox();
+        buttonBox.add(Box.createHorizontalGlue());
+        JButton closeBtn = new JButton(Messages.getString("updatedialog.close"));
 
-	closeBtn.setIcon(new ImageIcon(Elios.class
-		.getResource("/net/eliosoft/elios/gui/views/dialog-close.png")));
+        closeBtn.setIcon(new ImageIcon(Elios.class
+                .getResource("/net/eliosoft/elios/gui/views/dialog-close.png")));
 
-	closeBtn.addActionListener(new ActionListener() {
-	    @Override
-	    public void actionPerformed(final ActionEvent e) {
-		dialog.dispose();
-		uSupport.markAsChecked();
-	    }
-	});
-	buttonBox.add(closeBtn);
+        closeBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(final ActionEvent e) {
+                dialog.dispose();
+                uSupport.markAsChecked();
+            }
+        });
+        buttonBox.add(closeBtn);
 
-	if (Desktop.isDesktopSupported()) {
-	    final Desktop desktop = Desktop.getDesktop();
-	    JButton openInBrowser = new JButton(
-		    Messages.getString("updatedialog.openwebbrowser"));
+        if (Desktop.isDesktopSupported()) {
+            final Desktop desktop = Desktop.getDesktop();
+            JButton openInBrowser = new JButton(
+                    Messages.getString("updatedialog.openwebbrowser"));
 
-	    openInBrowser
-		    .setIcon(new ImageIcon(
-			    Elios.class
-				    .getResource("/net/eliosoft/elios/gui/views/internet-web-browser.png")));
+            openInBrowser
+                    .setIcon(new ImageIcon(
+                            Elios.class
+                                    .getResource("/net/eliosoft/elios/gui/views/internet-web-browser.png")));
 
-	    openInBrowser.addActionListener(new ActionListener() {
-		@Override
-		public void actionPerformed(final ActionEvent e) {
-		    try {
-			desktop.browse(ri.getDownloadUrl().toURI());
-		    } catch (IOException e1) {
-			JOptionPane.showMessageDialog(
-				dialog,
-				Messages.getString(
-					"updatedialog.error.cannotopenbrowser.message",
-					e1.getLocalizedMessage()),
-				Messages.getString("updatedialog.error.cannotopenbrowser.title"),
-				JOptionPane.ERROR_MESSAGE);
-			dialog.dispose();
-		    } catch (URISyntaxException e1) {
-			throw new AssertionError(e1.getMessage());
-		    }
-		}
-	    });
-	    buttonBox.add(openInBrowser);
-	} else {
-	    buttonBox.add(Box.createGlue());
-	}
-	return buttonBox;
+            openInBrowser.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(final ActionEvent e) {
+                    try {
+                        desktop.browse(ri.getDownloadUrl().toURI());
+                    } catch (IOException e1) {
+                        JOptionPane.showMessageDialog(
+                                dialog,
+                                Messages.getString(
+                                        "updatedialog.error.cannotopenbrowser.message",
+                                        e1.getLocalizedMessage()),
+                                Messages.getString("updatedialog.error.cannotopenbrowser.title"),
+                                JOptionPane.ERROR_MESSAGE);
+                        dialog.dispose();
+                    } catch (URISyntaxException e1) {
+                        throw new AssertionError(e1.getMessage());
+                    }
+                }
+            });
+            buttonBox.add(openInBrowser);
+        } else {
+            buttonBox.add(Box.createGlue());
+        }
+        return buttonBox;
     }
 
     private Box createRevisionPanel(final ReleaseInformation ri) {
-	JLabel currentReleaseLbl = new JLabel(Messages.getString(
-		"updatedialog.release.current", repository
-			.getInstalledReleaseCode().getCode()));
-	JLabel newReleaseLbl = new JLabel(Messages.getString(
-		"updatedialog.release.new", ri.getReleaseCode().getCode(),
-		new SimpleDateFormat().format(new Date(ri.getReleaseTime()))));
-	Box box = Box.createVerticalBox();
+        JLabel currentReleaseLbl = new JLabel(Messages.getString(
+                "updatedialog.release.current", repository
+                        .getInstalledReleaseCode().getCode()));
+        JLabel newReleaseLbl = new JLabel(Messages.getString(
+                "updatedialog.release.new", ri.getReleaseCode().getCode(),
+                new SimpleDateFormat().format(new Date(ri.getReleaseTime()))));
+        Box box = Box.createVerticalBox();
 
-	box.add(currentReleaseLbl);
-	box.add(newReleaseLbl);
-	return box;
+        box.add(currentReleaseLbl);
+        box.add(newReleaseLbl);
+        return box;
     }
 
     /**
@@ -238,7 +238,7 @@ public class ReleaseInformationDialogBuilder {
      *         the {@link JDialog}.
      */
     public Builder<JDialog> forReleaseCode(final String code) {
-	return forReleaseCode(ReleaseCode.create(code));
+        return forReleaseCode(ReleaseCode.create(code));
     }
 
     /**
@@ -252,12 +252,12 @@ public class ReleaseInformationDialogBuilder {
      *         the {@link JDialog}.
      */
     public Builder<JDialog> forReleaseCode(final ReleaseCode code) {
-	this.releaseCode = code;
-	return new Builder<JDialog>() {
-	    @Override
-	    public JDialog build() {
-		return ReleaseInformationDialogBuilder.this.build(releaseCode);
-	    }
-	};
+        this.releaseCode = code;
+        return new Builder<JDialog>() {
+            @Override
+            public JDialog build() {
+                return ReleaseInformationDialogBuilder.this.build(releaseCode);
+            }
+        };
     }
 }

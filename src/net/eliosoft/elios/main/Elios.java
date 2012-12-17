@@ -92,49 +92,48 @@ public final class Elios {
 
     /** Folder in which data are stored. **/
     private static final String ELIOS_DATA_FOLDER = System
-	    .getProperty("user.home") + File.separator + ".elios";
+            .getProperty("user.home") + File.separator + ".elios";
 
     /** Filename of the file used for cues list persistence. **/
     private static final String CUESLIST_FILENAME = ELIOS_DATA_FOLDER
-	    + File.separator + "elios.cues";
+            + File.separator + "elios.cues";
 
     /**
      * The logger.
      */
     private static final Logger LOGGER = LoggersManager.getInstance()
-	    .getLogger(Elios.class.getName());
+            .getLogger(Elios.class.getName());
 
     /**
      * "High res" icon.
      */
     private static final Image HIGH_RES_ICON_IMAGE = new ImageIcon(
-		    Elios.class
-		    .getResource("/net/eliosoft/elios/gui/views/elios_e_64x64.png"))
-	    .getImage();
+            Elios.class
+                    .getResource("/net/eliosoft/elios/gui/views/elios_e_64x64.png"))
+            .getImage();
 
     /**
      * Icons array for the Elios application.
      */
     private static final Image[] ICONS = new Image[] {
-	    new ImageIcon(
-		    Elios.class
-			    .getResource("/net/eliosoft/elios/gui/views/elios_e_24x24.png"))
-		    .getImage(),
-	    new ImageIcon(
-		    Elios.class
-			    .getResource("/net/eliosoft/elios/gui/views/elios_e_32x32.png"))
-		    .getImage(),
-	    new ImageIcon(
-		    Elios.class
-			    .getResource("/net/eliosoft/elios/gui/views/elios_e_48x48.png"))
-		    .getImage(),
-		    HIGH_RES_ICON_IMAGE};
+            new ImageIcon(
+                    Elios.class
+                            .getResource("/net/eliosoft/elios/gui/views/elios_e_24x24.png"))
+                    .getImage(),
+            new ImageIcon(
+                    Elios.class
+                            .getResource("/net/eliosoft/elios/gui/views/elios_e_32x32.png"))
+                    .getImage(),
+            new ImageIcon(
+                    Elios.class
+                            .getResource("/net/eliosoft/elios/gui/views/elios_e_48x48.png"))
+                    .getImage(), HIGH_RES_ICON_IMAGE };
 
     /**
      * Do nothing more than ensure that no object can be construct.
      */
     private Elios() {
-	// nothing
+        // nothing
     }
 
     /**
@@ -145,132 +144,132 @@ public final class Elios {
      */
     public static void main(final String[] args) {
 
-	try {
-	    UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-	} catch (Exception e1) {
-	    LOGGER.info("Can not load system look and feel");
-	}
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (Exception e1) {
+            LOGGER.info("Can not load system look and feel");
+        }
 
-	final Preferences prefs = Preferences.userNodeForPackage(Elios.class);
+        final Preferences prefs = Preferences.userNodeForPackage(Elios.class);
 
-	Locale locale = loadLocale(prefs);
+        Locale locale = loadLocale(prefs);
 
-	try {
-	    final ApplicationState state = new ApplicationState();
+        try {
+            final ApplicationState state = new ApplicationState();
 
-	    final RemoteModel remoteModel = createRemoteModel(prefs);
+            final RemoteModel remoteModel = createRemoteModel(prefs);
 
-	    final RemoteView remoteView = new RemoteView(remoteModel);
+            final RemoteView remoteView = new RemoteView(remoteModel);
 
-	    UpdateModel uModel = new UpdateModel(prefs);
-	    // used to make relation between view and model
-	    new RemoteController(remoteModel, remoteView);
+            UpdateModel uModel = new UpdateModel(prefs);
+            // used to make relation between view and model
+            new RemoteController(remoteModel, remoteView);
 
-	    final LocaleComboBoxModel localeModel = new LocaleComboBoxModel();
-	    localeModel.setSelectedItem(locale);
-	    PrefsView prefsView = new PrefsView(remoteModel, localeModel,
-		    uModel);
-	    // used to make relation between view and model
-	    new PrefsController(remoteModel, localeModel, prefsView);
+            final LocaleComboBoxModel localeModel = new LocaleComboBoxModel();
+            localeModel.setSelectedItem(locale);
+            PrefsView prefsView = new PrefsView(remoteModel, localeModel,
+                    uModel);
+            // used to make relation between view and model
+            new PrefsController(remoteModel, localeModel, prefsView);
 
-	    LogsView logsView = new LogsView(remoteModel);
-	    // used to make relation between view and model
-	    new LogsController(remoteModel, logsView);
+            LogsView logsView = new LogsView(remoteModel);
+            // used to make relation between view and model
+            new LogsController(remoteModel, logsView);
 
-	    final ArtNetServerManager artNetServerManager = ArtNetServerManager
-		    .getInstance();
-	    final DMXTableModel dmxTableModel = new DMXTableModel(
-		    artNetServerManager);
-	    DMXView dmxView = new DMXView(remoteModel, dmxTableModel);
-	    // used to make relation between view and model
-	    new DMXController(dmxTableModel, dmxView);
+            final ArtNetServerManager artNetServerManager = ArtNetServerManager
+                    .getInstance();
+            final DMXTableModel dmxTableModel = new DMXTableModel(
+                    artNetServerManager);
+            DMXView dmxView = new DMXView(remoteModel, dmxTableModel);
+            // used to make relation between view and model
+            new DMXController(dmxTableModel, dmxView);
 
-	    CuesView cuesView = new CuesView(remoteModel);
-	    // used to make relation between view and model
-	    new CuesController(remoteModel, cuesView);
+            CuesView cuesView = new CuesView(remoteModel);
+            // used to make relation between view and model
+            new CuesController(remoteModel, cuesView);
 
-	    LogsLineView logsLineView = new LogsLineView(remoteModel);
-	    AboutView aboutView = new AboutView();
+            LogsLineView logsLineView = new LogsLineView(remoteModel);
+            AboutView aboutView = new AboutView();
 
-	    for (Logger l : LoggersManager.getInstance().getLoggersList()) {
-		remoteModel.getLogsListModel().addLogger(l);
-	    }
+            for (Logger l : LoggersManager.getInstance().getLoggersList()) {
+                remoteModel.getLogsListModel().addLogger(l);
+            }
 
-	    final JFrame frame = new JFrame(Messages.getString("ui.title"));
-	    frame.setIconImages(Arrays.<Image> asList(ICONS));
-	    DockIcon.set(HIGH_RES_ICON_IMAGE);
-	    final JTabbedPane tabbedPane = new JTabbedPane();
-	    Container contentPane = frame.getContentPane();
-	    contentPane.setLayout(new BorderLayout());
-	    frame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-	    frame.setIconImages(Arrays.asList(ICONS));
+            final JFrame frame = new JFrame(Messages.getString("ui.title"));
+            frame.setIconImages(Arrays.<Image> asList(ICONS));
+            DockIcon.set(HIGH_RES_ICON_IMAGE);
+            final JTabbedPane tabbedPane = new JTabbedPane();
+            Container contentPane = frame.getContentPane();
+            contentPane.setLayout(new BorderLayout());
+            frame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+            frame.setIconImages(Arrays.asList(ICONS));
 
-	    contentPane.add(
-		    new ToolbarFactory(remoteModel, state).create(frame),
-		    BorderLayout.NORTH);
+            contentPane.add(
+                    new ToolbarFactory(remoteModel, state).create(frame),
+                    BorderLayout.NORTH);
 
-	    contentPane.add(tabbedPane, BorderLayout.CENTER);
-	    contentPane
-		    .add(logsLineView.getViewComponent(), BorderLayout.SOUTH);
-	    addViewToTab(tabbedPane, remoteView);
-	    addViewToTab(tabbedPane, cuesView);
-	    addViewToTab(tabbedPane, dmxView);
-	    addViewToTab(tabbedPane, prefsView);
-	    addViewToTab(tabbedPane, logsView);
-	    addViewToTab(tabbedPane, aboutView);
+            contentPane.add(tabbedPane, BorderLayout.CENTER);
+            contentPane
+                    .add(logsLineView.getViewComponent(), BorderLayout.SOUTH);
+            addViewToTab(tabbedPane, remoteView);
+            addViewToTab(tabbedPane, cuesView);
+            addViewToTab(tabbedPane, dmxView);
+            addViewToTab(tabbedPane, prefsView);
+            addViewToTab(tabbedPane, logsView);
+            addViewToTab(tabbedPane, aboutView);
 
-	    tabbedPane.addChangeListener(new ChangeListener() {
-		@Override
-		public void stateChanged(final ChangeEvent e) {
-		    tabbedPane.getSelectedComponent().requestFocusInWindow();
-		}
-	    });
-	    tabbedPane.setSelectedIndex(0);
+            tabbedPane.addChangeListener(new ChangeListener() {
+                @Override
+                public void stateChanged(final ChangeEvent e) {
+                    tabbedPane.getSelectedComponent().requestFocusInWindow();
+                }
+            });
+            tabbedPane.setSelectedIndex(0);
 
-	    state.addListener(new ApplicationState.Listener() {
+            state.addListener(new ApplicationState.Listener() {
 
-		@Override
-		public void stateChanged(final State oldState,
-			final State newState) {
-		    try {
-			if (State.SHUTTING_DOWN == newState) {
-			    LOGGER.info("Application is shutting down");
-			    persistRemoteModel(remoteModel, prefs);
-			    persistLocale(prefs, localeModel);
-			    dmxTableModel.dispose();
-			    artNetServerManager.stopArtNet();
-			    HttpServerManager.getInstance().stopHttp();
-			}
-		    } finally {
-			System.exit(0);
-		    }
-		}
-	    });
+                @Override
+                public void stateChanged(final State oldState,
+                        final State newState) {
+                    try {
+                        if (State.SHUTTING_DOWN == newState) {
+                            LOGGER.info("Application is shutting down");
+                            persistRemoteModel(remoteModel, prefs);
+                            persistLocale(prefs, localeModel);
+                            dmxTableModel.dispose();
+                            artNetServerManager.stopArtNet();
+                            HttpServerManager.getInstance().stopHttp();
+                        }
+                    } finally {
+                        System.exit(0);
+                    }
+                }
+            });
 
-	    frame.addWindowListener(new WindowAdapter() {
-		@Override
-		public void windowClosing(final WindowEvent e) {
-		    state.changeState(State.SHUTTING_DOWN);
-		}
-	    });
+            frame.addWindowListener(new WindowAdapter() {
+                @Override
+                public void windowClosing(final WindowEvent e) {
+                    state.changeState(State.SHUTTING_DOWN);
+                }
+            });
 
-	    frame.pack();
-	    frame.setVisible(true);
+            frame.pack();
+            frame.setVisible(true);
 
-	    checkForUpdate(prefs, uModel, frame);
+            checkForUpdate(prefs, uModel, frame);
 
-	    tabbedPane.getSelectedComponent().requestFocusInWindow();
+            tabbedPane.getSelectedComponent().requestFocusInWindow();
 
-	    // last call because we want to be sure that every listeners are
-	    // registered
-	    remoteModel.applyArtNetServerManagerConfig();
-	} catch (ArtNetException e1) {
-	    JOptionPane.showMessageDialog(null, MessageFormat.format(
-		    Messages.getString("error.server.cannotstart.message"),
-		    e1.getMessage()), Messages
-		    .getString("error.server.cannotstart.title"),
-		    JOptionPane.ERROR_MESSAGE);
-	}
+            // last call because we want to be sure that every listeners are
+            // registered
+            remoteModel.applyArtNetServerManagerConfig();
+        } catch (ArtNetException e1) {
+            JOptionPane.showMessageDialog(null, MessageFormat.format(
+                    Messages.getString("error.server.cannotstart.message"),
+                    e1.getMessage()), Messages
+                    .getString("error.server.cannotstart.title"),
+                    JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     /**
@@ -284,42 +283,42 @@ public final class Elios {
      *            the Elios frame
      */
     private static void checkForUpdate(final Preferences prefs,
-	    final UpdateModel uModel, final JFrame frame) {
+            final UpdateModel uModel, final JFrame frame) {
 
-	new Thread() {
+        new Thread() {
 
-	    @Override
-	    public void run() {
-		try {
-		    ReleaseInformationRepository riRepo = new ReleaseInformationRepositoryImpl(
-			    prefs);
-		    ReleaseInformationDialogBuilder ridBuilder = new ReleaseInformationDialogBuilder(
-			    frame, riRepo, uModel);
-		    if (uModel.updateIsNecessary()) {
-			LOGGER.fine("Check for update");
-			ReleaseInformation ri = riRepo.getLatest();
-			if (ri != null) { // null if data could not be fetch
-			    ReleaseCode currentRelease = riRepo
-				    .getInstalledReleaseCode();
-			    if (currentRelease.before(ri.getReleaseCode())) {
-				ridBuilder.forReleaseCode(ri.getReleaseCode())
-					.build().setVisible(true);
-			    }
-			} else {
-			    LOGGER.fine("No release information found");
-			}
-		    }
-		} catch (IllegalStateException ise) {
-		    LOGGER.info("Error during update process, launch the post install process to fix context.");
-		    // TODO post install process must be done during the
-		    // install,
-		    // here we consider that the user is still using the first
-		    // public release.
-		    PostInstallProcess.main(new String[] { ALREADY_INSTALLED_VERSION,
-			    UPDATE_URL });
-		}
-	    }
-	}.start();
+            @Override
+            public void run() {
+                try {
+                    ReleaseInformationRepository riRepo = new ReleaseInformationRepositoryImpl(
+                            prefs);
+                    ReleaseInformationDialogBuilder ridBuilder = new ReleaseInformationDialogBuilder(
+                            frame, riRepo, uModel);
+                    if (uModel.updateIsNecessary()) {
+                        LOGGER.fine("Check for update");
+                        ReleaseInformation ri = riRepo.getLatest();
+                        if (ri != null) { // null if data could not be fetch
+                            ReleaseCode currentRelease = riRepo
+                                    .getInstalledReleaseCode();
+                            if (currentRelease.before(ri.getReleaseCode())) {
+                                ridBuilder.forReleaseCode(ri.getReleaseCode())
+                                        .build().setVisible(true);
+                            }
+                        } else {
+                            LOGGER.fine("No release information found");
+                        }
+                    }
+                } catch (IllegalStateException ise) {
+                    LOGGER.info("Error during update process, launch the post install process to fix context.");
+                    // TODO post install process must be done during the
+                    // install,
+                    // here we consider that the user is still using the first
+                    // public release.
+                    PostInstallProcess.main(new String[] {
+                            ALREADY_INSTALLED_VERSION, UPDATE_URL });
+                }
+            }
+        }.start();
     }
 
     /**
@@ -334,10 +333,10 @@ public final class Elios {
      *         <code>Locale.getDefault()</code>
      */
     private static Locale loadLocale(final Preferences prefs) {
-	String lang = prefs.get("ui.lang", Locale.getDefault().getLanguage());
-	Locale locale = new Locale(lang);
-	Locale.setDefault(locale);
-	return locale;
+        String lang = prefs.get("ui.lang", Locale.getDefault().getLanguage());
+        Locale locale = new Locale(lang);
+        Locale.setDefault(locale);
+        return locale;
     }
 
     /**
@@ -350,9 +349,9 @@ public final class Elios {
      *            configured {@link Locale}
      */
     private static void persistLocale(final Preferences prefs,
-	    final LocaleComboBoxModel localeModel) {
-	Locale l = (Locale) localeModel.getSelectedItem();
-	prefs.put("ui.lang", l.getLanguage());
+            final LocaleComboBoxModel localeModel) {
+        Locale l = (Locale) localeModel.getSelectedItem();
+        prefs.put("ui.lang", l.getLanguage());
     }
 
     /**
@@ -366,34 +365,34 @@ public final class Elios {
      * @return a configured <code>RemoteModel</code>
      */
     public static RemoteModel createRemoteModel(final Preferences prefs) {
-	RemoteModel model = new RemoteModel(ArtNetServerManager.getInstance(),
-		HttpServerManager.getInstance(), CuesManager.getInstance());
-	model.setSubnet(prefs.getInt("server.subnet", 0));
-	model.setUniverse(prefs.getInt("server.universe", 0));
-	model.setBroadCastAddress(Enum.valueOf(
-		BroadCastAddress.class,
-		prefs.get("server.broadcast.address",
-			BroadCastAddress.PRIMARY.name())));
+        RemoteModel model = new RemoteModel(ArtNetServerManager.getInstance(),
+                HttpServerManager.getInstance(), CuesManager.getInstance());
+        model.setSubnet(prefs.getInt("server.subnet", 0));
+        model.setUniverse(prefs.getInt("server.universe", 0));
+        model.setBroadCastAddress(Enum.valueOf(
+                BroadCastAddress.class,
+                prefs.get("server.broadcast.address",
+                        BroadCastAddress.PRIMARY.name())));
 
-	model.setInPort(prefs.getInt("server.inport",
-		ArtNetServerManager.DEFAULT_ARTNET_PORT));
-	model.setOutputPort(prefs.getInt("server.outport",
-		ArtNetServerManager.DEFAULT_ARTNET_PORT));
+        model.setInPort(prefs.getInt("server.inport",
+                ArtNetServerManager.DEFAULT_ARTNET_PORT));
+        model.setOutputPort(prefs.getInt("server.outport",
+                ArtNetServerManager.DEFAULT_ARTNET_PORT));
 
-	model.setHttpServerEnabled(prefs.getBoolean("server.httpserver.enable",
-		false));
-	model.setAdditiveModeEnabled(prefs.getBoolean(
-		"server.additivemode.enable", false));
-	model.setHttpPort(prefs.getInt("server.httpserver.port",
-		HttpServerManager.DEFAULT_HTTP_PORT));
+        model.setHttpServerEnabled(prefs.getBoolean("server.httpserver.enable",
+                false));
+        model.setAdditiveModeEnabled(prefs.getBoolean(
+                "server.additivemode.enable", false));
+        model.setHttpPort(prefs.getInt("server.httpserver.port",
+                HttpServerManager.DEFAULT_HTTP_PORT));
 
-	try {
-	    model.load(new FileInputStream(CUESLIST_FILENAME));
-	} catch (IOException e) {
-	    LOGGER.warning("Can not load cues " + e.getMessage());
-	}
+        try {
+            model.load(new FileInputStream(CUESLIST_FILENAME));
+        } catch (IOException e) {
+            LOGGER.warning("Can not load cues " + e.getMessage());
+        }
 
-	return model;
+        return model;
     }
 
     /**
@@ -405,31 +404,31 @@ public final class Elios {
      *            the <code>Preferences</code> used to persist
      */
     public static void persistRemoteModel(final RemoteModel model,
-	    final Preferences prefs) {
-	prefs.putInt("server.subnet", model.getSubnet());
-	prefs.putInt("server.universe", model.getUniverse());
-	prefs.put("server.broadcast.address", model.getBroadCastAddress()
-		.name());
+            final Preferences prefs) {
+        prefs.putInt("server.subnet", model.getSubnet());
+        prefs.putInt("server.universe", model.getUniverse());
+        prefs.put("server.broadcast.address", model.getBroadCastAddress()
+                .name());
 
-	prefs.putInt("server.inport", model.getInPort());
-	prefs.putInt("server.outport", model.getOutPort());
+        prefs.putInt("server.inport", model.getInPort());
+        prefs.putInt("server.outport", model.getOutPort());
 
-	prefs.putBoolean("server.httpserver.enable",
-		model.isHttpServerEnabled());
-	prefs.putBoolean("server.additivemode.enable",
-		model.isAdditiveModeEnabled());
-	prefs.putInt("server.httpserver.port", model.getHttpPort());
+        prefs.putBoolean("server.httpserver.enable",
+                model.isHttpServerEnabled());
+        prefs.putBoolean("server.additivemode.enable",
+                model.isAdditiveModeEnabled());
+        prefs.putInt("server.httpserver.port", model.getHttpPort());
 
-	try {
-	    File dir = new File(ELIOS_DATA_FOLDER);
-	    if (!dir.isDirectory()) { // create root folder if needed
-		dir.mkdir();
-	    }
+        try {
+            File dir = new File(ELIOS_DATA_FOLDER);
+            if (!dir.isDirectory()) { // create root folder if needed
+                dir.mkdir();
+            }
 
-	    model.persist(new FileOutputStream(CUESLIST_FILENAME));
-	} catch (IOException e) {
-	    LOGGER.warning("Can not persist current cues : " + e.getMessage());
-	}
+            model.persist(new FileOutputStream(CUESLIST_FILENAME));
+        } catch (IOException e) {
+            LOGGER.warning("Can not persist current cues : " + e.getMessage());
+        }
 
     }
 
@@ -444,7 +443,7 @@ public final class Elios {
      *            the {@link ViewInterface} to add
      */
     private static void addViewToTab(final JTabbedPane pane,
-	    final ViewInterface v) {
-	pane.addTab(v.getLocalizedTitle(), v.getViewComponent());
+            final ViewInterface v) {
+        pane.addTab(v.getLocalizedTitle(), v.getViewComponent());
     }
 }

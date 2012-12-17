@@ -34,7 +34,7 @@ public class SubnetValueChangedEvent {
      *            the new subnet value
      */
     public SubnetValueChangedEvent(final int subnet) {
-	this.subnet = subnet;
+        this.subnet = subnet;
     }
 
     /**
@@ -43,6 +43,6 @@ public class SubnetValueChangedEvent {
      * @return the new subnet value
      */
     public int getSubnet() {
-	return subnet;
+        return subnet;
     }
 }

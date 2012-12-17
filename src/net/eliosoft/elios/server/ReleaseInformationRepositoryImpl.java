@@ -15,7 +15,7 @@ import java.util.prefs.Preferences;
  * @author acollign
  */
 public class ReleaseInformationRepositoryImpl implements
-	ReleaseInformationRepository {
+        ReleaseInformationRepository {
 
     private static final int FETCH_TIMEOUT = 5000;
 
@@ -46,13 +46,13 @@ public class ReleaseInformationRepositoryImpl implements
      *            a {@link Preferences} instance
      */
     public ReleaseInformationRepositoryImpl(final Preferences prefs) {
-	String rootUrlStr = prefs.get(RELEASEINFO_ROOT_URL, null);
-	if (rootUrlStr == null) {
-	    throw new IllegalStateException(
-		    "Unable to retrieve the URL of the release information url");
-	}
-	rootUrl = URI.create(rootUrlStr);
-	this.prefs = prefs;
+        String rootUrlStr = prefs.get(RELEASEINFO_ROOT_URL, null);
+        if (rootUrlStr == null) {
+            throw new IllegalStateException(
+                    "Unable to retrieve the URL of the release information url");
+        }
+        rootUrl = URI.create(rootUrlStr);
+        this.prefs = prefs;
     }
 
     /**
@@ -62,7 +62,7 @@ public class ReleaseInformationRepositoryImpl implements
      */
     @Override
     public ReleaseInformation getInstalled() {
-	return getByReleaseCode(getInstalledReleaseCode());
+        return getByReleaseCode(getInstalledReleaseCode());
     }
 
     /**
@@ -72,13 +72,13 @@ public class ReleaseInformationRepositoryImpl implements
      */
     @Override
     public ReleaseInformation getLatest() {
-	try {
-	    return checkout(buildLatestURI());
-	} catch (MalformedURLException e) {
-	    return null;
-	} catch (IOException e) {
-	    return null;
-	}
+        try {
+            return checkout(buildLatestURI());
+        } catch (MalformedURLException e) {
+            return null;
+        } catch (IOException e) {
+            return null;
+        }
     }
 
     /**
@@ -88,56 +88,56 @@ public class ReleaseInformationRepositoryImpl implements
      */
     @Override
     public ReleaseInformation getByReleaseCode(final ReleaseCode releaseCode) {
-	try {
-	    return checkout(buildURI(releaseCode));
-	} catch (MalformedURLException e) {
-	    return null;
-	} catch (IOException e) {
-	    return null;
-	}
+        try {
+            return checkout(buildURI(releaseCode));
+        } catch (MalformedURLException e) {
+            return null;
+        } catch (IOException e) {
+            return null;
+        }
     }
 
     private ReleaseInformation checkout(final URI uri)
-	    throws MalformedURLException, IOException {
-	InputStream stream = null;
-	try {
-	    stream = streamOfUri(uri);
+            throws MalformedURLException, IOException {
+        InputStream stream = null;
+        try {
+            stream = streamOfUri(uri);
 
-	    StringBuilder sb = new StringBuilder();
-	    byte[] buf = new byte[4096];
+            StringBuilder sb = new StringBuilder();
+            byte[] buf = new byte[4096];
 
-	    for (;;) {
-		int i = stream.read(buf);
-		if (i == -1) {
-		    break;
-		}
-		sb.append(new String(buf, 0, i, Charset.forName("UTF-8")));
-	    }
+            for (;;) {
+                int i = stream.read(buf);
+                if (i == -1) {
+                    break;
+                }
+                sb.append(new String(buf, 0, i, Charset.forName("UTF-8")));
+            }
 
-	    return ReleaseInformation.fromJSON(sb.toString());
-	} finally {
-	    if (stream != null) {
-		stream.close();
-	    }
-	}
+            return ReleaseInformation.fromJSON(sb.toString());
+        } finally {
+            if (stream != null) {
+                stream.close();
+            }
+        }
     }
 
     private InputStream streamOfUri(final URI uri) throws IOException,
-	    MalformedURLException {
-	InputStream stream;
-	final URLConnection cn = uri.toURL().openConnection();
-	cn.setConnectTimeout(FETCH_TIMEOUT);
-	stream = cn.getInputStream();
-	return stream;
+            MalformedURLException {
+        InputStream stream;
+        final URLConnection cn = uri.toURL().openConnection();
+        cn.setConnectTimeout(FETCH_TIMEOUT);
+        stream = cn.getInputStream();
+        return stream;
     }
 
     private URI buildURI(final ReleaseCode code) {
-	return URI.create(MessageFormat.format(URL_PATTERN, rootUrl,
-		code.getCode()));
+        return URI.create(MessageFormat.format(URL_PATTERN, rootUrl,
+                code.getCode()));
     }
 
     private URI buildLatestURI() {
-	return URI.create(MessageFormat.format(URL_PATTERN, rootUrl, "latest"));
+        return URI.create(MessageFormat.format(URL_PATTERN, rootUrl, "latest"));
     }
 
     /**
@@ -147,7 +147,7 @@ public class ReleaseInformationRepositoryImpl implements
      */
     @Override
     public ReleaseCode getInstalledReleaseCode() {
-	return ReleaseCode.create(prefs.get(RELEASEINFO_CURENT_RELEASE_CODE,
-		null));
+        return ReleaseCode.create(prefs.get(RELEASEINFO_CURENT_RELEASE_CODE,
+                null));
     }
 }

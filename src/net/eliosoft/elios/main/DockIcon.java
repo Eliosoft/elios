@@ -77,130 +77,130 @@ import java.net.URL;
  */
 @SuppressWarnings("unused")
 public class DockIcon {
-	private static boolean isMac = (System.getProperty("os.name").toLowerCase()
-			.indexOf("mac") != -1);
+    private static boolean isMac = (System.getProperty("os.name").toLowerCase()
+            .indexOf("mac") != -1);
 
-	/** These relate to the Mac OS 10.5+ model: */
-	private static Object theApplication;
-	private static Method setDockIconImage;
-	private static Object defaultImage;
+    /** These relate to the Mac OS 10.5+ model: */
+    private static Object theApplication;
+    private static Method setDockIconImage;
+    private static Object defaultImage;
 
-	/** These relate to the pre Mac OS 10.5 approach: */
-	private static Constructor<?> NSImageURLConstructor;
-	private static Object theNSApplication;
-	private static Object defaultNSImage;
-	private static Method setApplicationIconImageMethod;
+    /** These relate to the pre Mac OS 10.5 approach: */
+    private static Constructor<?> NSImageURLConstructor;
+    private static Object theNSApplication;
+    private static Object defaultNSImage;
+    private static Method setApplicationIconImageMethod;
 
-	private static boolean initialized = false;
-	private static boolean working = false;
-	private static boolean debugging = false;
+    private static boolean initialized = false;
+    private static boolean working = false;
+    private static boolean debugging = false;
 
-	private static void init() {
-		if (initialized)
-			return;
-		try {
-			if (isMac == false)
-				return;
+    private static void init() {
+        if (initialized)
+            return;
+        try {
+            if (isMac == false)
+                return;
 
-			Throwable error1 = null;
-			try {
-				Class<?> appClass = Class.forName("com.apple.eawt.Application");
-				theApplication = appClass.getMethod("getApplication",
-						new Class[] {}).invoke(null, new Object[] {});
-				setDockIconImage = appClass.getMethod("setDockIconImage",
-						new Class[] { Image.class });
+            Throwable error1 = null;
+            try {
+                Class<?> appClass = Class.forName("com.apple.eawt.Application");
+                theApplication = appClass.getMethod("getApplication",
+                        new Class[] {}).invoke(null, new Object[] {});
+                setDockIconImage = appClass.getMethod("setDockIconImage",
+                        new Class[] { Image.class });
 
-				Method getMethod = appClass.getMethod("getDockIconImage",
-						new Class[] {});
-				defaultImage = getMethod
-						.invoke(theApplication, new Object[] {});
+                Method getMethod = appClass.getMethod("getDockIconImage",
+                        new Class[] {});
+                defaultImage = getMethod
+                        .invoke(theApplication, new Object[] {});
 
-				working = true;
-				if (debugging)
-					System.out.println("Using Application.setDockImage()");
-				return;
-			} catch (Throwable t) {
-				error1 = t;
-			}
-			try {
-				Class<?> NSImageClass = Class
-						.forName("com.apple.cocoa.application.NSImage");
-				NSImageURLConstructor = NSImageClass
-						.getConstructor(new Class[] { URL.class });
-				Class<?> NSApplicationClass = Class
-						.forName("com.apple.cocoa.application.NSApplication");
-				Method sharedMethod = NSApplicationClass.getMethod(
-						"sharedApplication", new Class[0]);
-				theNSApplication = sharedMethod.invoke(null, new Object[0]);
-				setApplicationIconImageMethod = NSApplicationClass
-						.getMethod("setApplicationIconImage",
-								new Class[] { NSImageClass });
+                working = true;
+                if (debugging)
+                    System.out.println("Using Application.setDockImage()");
+                return;
+            } catch (Throwable t) {
+                error1 = t;
+            }
+            try {
+                Class<?> NSImageClass = Class
+                        .forName("com.apple.cocoa.application.NSImage");
+                NSImageURLConstructor = NSImageClass
+                        .getConstructor(new Class[] { URL.class });
+                Class<?> NSApplicationClass = Class
+                        .forName("com.apple.cocoa.application.NSApplication");
+                Method sharedMethod = NSApplicationClass.getMethod(
+                        "sharedApplication", new Class[0]);
+                theNSApplication = sharedMethod.invoke(null, new Object[0]);
+                setApplicationIconImageMethod = NSApplicationClass
+                        .getMethod("setApplicationIconImage",
+                                new Class[] { NSImageClass });
 
-				Method currentAppImage = NSApplicationClass.getMethod(
-						"applicationIconImage", new Class[0]);
-				defaultNSImage = currentAppImage.invoke(theNSApplication,
-						(Object[]) null);
+                Method currentAppImage = NSApplicationClass.getMethod(
+                        "applicationIconImage", new Class[0]);
+                defaultNSImage = currentAppImage.invoke(theNSApplication,
+                        (Object[]) null);
 
-				Runtime.getRuntime().addShutdownHook(new Thread() {
-					@Override
-					public void run() {
-						set(null);
-					}
-				});
-				working = true;
-				if (debugging)
-					System.out
-							.println("Using NSApplication.setApplicationIconImage()");
-			} catch (Throwable t) {
-				// do nothing
-			}
+                Runtime.getRuntime().addShutdownHook(new Thread() {
+                    @Override
+                    public void run() {
+                        set(null);
+                    }
+                });
+                working = true;
+                if (debugging)
+                    System.out
+                            .println("Using NSApplication.setApplicationIconImage()");
+            } catch (Throwable t) {
+                // do nothing
+            }
 
-			if (!working) {
-				handleError(error1);
-			}
-		} finally {
-			initialized = true;
-		}
-	}
+            if (!working) {
+                handleError(error1);
+            }
+        } finally {
+            initialized = true;
+        }
+    }
 
-	/**
-	 * @return <code>true</code> if this class can modify the dock icon.
-	 */
-	public static boolean isActive() {
-		init();
-		return working;
-	}
+    /**
+     * @return <code>true</code> if this class can modify the dock icon.
+     */
+    public static boolean isActive() {
+        init();
+        return working;
+    }
 
-	private static void handleError(Throwable t) {
-		// you may want to deal with this differently?
-		if (debugging)
-			t.printStackTrace();
-	}
+    private static void handleError(Throwable t) {
+        // you may want to deal with this differently?
+        if (debugging)
+            t.printStackTrace();
+    }
 
-	/**
-	 * This tries to reassign the icon of this application in the dock.
-	 * 
-	 * @param icons
-	 *            the image to set the dock icon to. If this is null, then the
-	 *            default icon is restored.
-	 * @return <code>true</code> if it appears this call worked.
-	 */
-	public static synchronized boolean set(Image icons) {
-		init();
-		if (working == false)
-			return false;
+    /**
+     * This tries to reassign the icon of this application in the dock.
+     * 
+     * @param icons
+     *            the image to set the dock icon to. If this is null, then the
+     *            default icon is restored.
+     * @return <code>true</code> if it appears this call worked.
+     */
+    public static synchronized boolean set(Image icons) {
+        init();
+        if (working == false)
+            return false;
 
-		if (setDockIconImage != null && theApplication != null) {
-			Image image = icons;
-			if (icons == null)
-				image = (Image) defaultImage;
-			try {
-				setDockIconImage.invoke(theApplication, new Object[] { image });
-				return true;
-			} catch (Throwable t) {
-				handleError(t);
-			}
-		}
-		return false;
-	}
+        if (setDockIconImage != null && theApplication != null) {
+            Image image = icons;
+            if (icons == null)
+                image = (Image) defaultImage;
+            try {
+                setDockIconImage.invoke(theApplication, new Object[] { image });
+                return true;
+            } catch (Throwable t) {
+                handleError(t);
+            }
+        }
+        return false;
+    }
 }

@@ -55,55 +55,55 @@ public class PrefsController {
      *            the view associated to the controller
      */
     public PrefsController(final RemoteModel remoteModel,
-	    final LocaleComboBoxModel localeModel, final PrefsView prefsView) {
-	this.remoteModel = remoteModel;
-	this.prefsView = prefsView;
-	this.initListeners();
+            final LocaleComboBoxModel localeModel, final PrefsView prefsView) {
+        this.remoteModel = remoteModel;
+        this.prefsView = prefsView;
+        this.initListeners();
     }
 
     private void initListeners() {
-	this.prefsView.addCancelButtonListener(new ActionListener() {
-	    @Override
-	    public void actionPerformed(final ActionEvent e) {
-		remoteModel.restoreArtNetServerManagerConfig();
-	    }
-	});
+        this.prefsView.addCancelButtonListener(new ActionListener() {
+            @Override
+            public void actionPerformed(final ActionEvent e) {
+                remoteModel.restoreArtNetServerManagerConfig();
+            }
+        });
 
-	this.prefsView.addSaveButtonListener(new ActionListener() {
-	    @Override
-	    public void actionPerformed(final ActionEvent e) {
-		try {
-		    remoteModel.applyArtNetServerManagerConfig();
-		} catch (ArtNetException ane) {
-		    JOptionPane.showMessageDialog(
-			    null,
-			    MessageFormat.format(
-				    Messages.getString("error.server.cannotstart.message"),
-				    ane.getMessage()),
-			    Messages.getString("error.server.cannotstart.title"),
-			    JOptionPane.ERROR_MESSAGE);
-		}
-	    }
-	});
+        this.prefsView.addSaveButtonListener(new ActionListener() {
+            @Override
+            public void actionPerformed(final ActionEvent e) {
+                try {
+                    remoteModel.applyArtNetServerManagerConfig();
+                } catch (ArtNetException ane) {
+                    JOptionPane.showMessageDialog(
+                            null,
+                            MessageFormat.format(
+                                    Messages.getString("error.server.cannotstart.message"),
+                                    ane.getMessage()),
+                            Messages.getString("error.server.cannotstart.title"),
+                            JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
 
-	this.prefsView
-		.addEnableHttpServerCheckBoxListener(new ActionListener() {
-		    @Override
-		    public void actionPerformed(final ActionEvent e) {
-			remoteModel.setHttpServerEnabled(((JCheckBox) e
-				.getSource()).isSelected());
-		    }
-		});
+        this.prefsView
+                .addEnableHttpServerCheckBoxListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(final ActionEvent e) {
+                        remoteModel.setHttpServerEnabled(((JCheckBox) e
+                                .getSource()).isSelected());
+                    }
+                });
 
-	this.prefsView.addLangComboListener(new ActionListener() {
-	    @Override
-	    public void actionPerformed(final ActionEvent e) {
-		JComboBox cb = (JComboBox) e.getSource();
-		Locale l = (Locale) cb.getSelectedItem();
-		JOptionPane.showMessageDialog(null, MessageFormat.format(
-			Messages.getString("prefsview.lang.restart"),
-			Messages.getString("ui.lang." + l.getLanguage())));
-	    }
-	});
+        this.prefsView.addLangComboListener(new ActionListener() {
+            @Override
+            public void actionPerformed(final ActionEvent e) {
+                JComboBox cb = (JComboBox) e.getSource();
+                Locale l = (Locale) cb.getSelectedItem();
+                JOptionPane.showMessageDialog(null, MessageFormat.format(
+                        Messages.getString("prefsview.lang.restart"),
+                        Messages.getString("ui.lang." + l.getLanguage())));
+            }
+        });
     }
 }

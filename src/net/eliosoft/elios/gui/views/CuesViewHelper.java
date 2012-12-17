@@ -17,7 +17,7 @@ public final class CuesViewHelper {
      * Helper class can not be instantiate.
      */
     private CuesViewHelper() {
-	// nothing
+        // nothing
     }
 
     /**
@@ -30,15 +30,15 @@ public final class CuesViewHelper {
      * @return true if confirmed, false in not
      */
     public static boolean confirmCueRemove(final Component parent,
-	    final String cueName) {
-	int option = JOptionPane.showConfirmDialog(parent, MessageFormat
-		.format(Messages.getString("cuesview.confirmremovemessage"),
-			cueName), null, JOptionPane.OK_CANCEL_OPTION,
-		JOptionPane.WARNING_MESSAGE);
-	if (option == 0) {
-	    return true;
-	}
-	return false;
+            final String cueName) {
+        int option = JOptionPane.showConfirmDialog(parent, MessageFormat
+                .format(Messages.getString("cuesview.confirmremovemessage"),
+                        cueName), null, JOptionPane.OK_CANCEL_OPTION,
+                JOptionPane.WARNING_MESSAGE);
+        if (option == 0) {
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -54,15 +54,15 @@ public final class CuesViewHelper {
      * @return the cue name or null if the dialog has been closed or cancelled
      */
     public static String askForCueName(final Component parent,
-	    final String defaultName) {
-	String cueName = "";
-	while (cueName != null && "".equals(cueName.trim())) {
-	    // ask for a cue name as long as the String is empty
-	    cueName = (String) JOptionPane.showInputDialog(parent,
-		    Messages.getString("cuesview.getnamemessage"), null,
-		    JOptionPane.PLAIN_MESSAGE, null, null, defaultName);
-	}
-	return cueName;
+            final String defaultName) {
+        String cueName = "";
+        while (cueName != null && "".equals(cueName.trim())) {
+            // ask for a cue name as long as the String is empty
+            cueName = (String) JOptionPane.showInputDialog(parent,
+                    Messages.getString("cuesview.getnamemessage"), null,
+                    JOptionPane.PLAIN_MESSAGE, null, null, defaultName);
+        }
+        return cueName;
     }
 
     /**
@@ -76,16 +76,16 @@ public final class CuesViewHelper {
      *            the name of the concerned cue
      */
     public static void printError(final Component parent,
-	    final Exception exception, final String cueName) {
-	String message;
-	if (exception instanceof IllegalArgumentException) {
-	    message = MessageFormat.format(
-		    Messages.getString("cuesview.cuenamealreadyusedmessage"),
-		    cueName);
-	} else {
-	    message = exception.getLocalizedMessage();
-	}
-	JOptionPane.showMessageDialog(parent, message, null,
-		JOptionPane.ERROR_MESSAGE);
+            final Exception exception, final String cueName) {
+        String message;
+        if (exception instanceof IllegalArgumentException) {
+            message = MessageFormat.format(
+                    Messages.getString("cuesview.cuenamealreadyusedmessage"),
+                    cueName);
+        } else {
+            message = exception.getLocalizedMessage();
+        }
+        JOptionPane.showMessageDialog(parent, message, null,
+                JOptionPane.ERROR_MESSAGE);
     }
 }

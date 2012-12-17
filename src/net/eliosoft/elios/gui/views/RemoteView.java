@@ -70,80 +70,80 @@ public class RemoteView implements ViewInterface {
      *            the model associated to the view
      */
     public RemoteView(final RemoteModel remoteModel) {
-	this.remoteModel = remoteModel;
-	this.remoteModel
-		.addRemoteModelChangedListener(new RemoteModelListener() {
-		    @Override
-		    public void commandLineValueChanged(
-			    final CommandLineValueChangedEvent event) {
-			commandLineTextField.setText(event.getCommand());
-			if (event.getCommand().isEmpty()) {
-			    delButton.setEnabled(false);
-			    resetButton.setEnabled(false);
-			} else {
-			    delButton.setEnabled(true);
-			    resetButton.setEnabled(true);
-			}
-		    }
+        this.remoteModel = remoteModel;
+        this.remoteModel
+                .addRemoteModelChangedListener(new RemoteModelListener() {
+                    @Override
+                    public void commandLineValueChanged(
+                            final CommandLineValueChangedEvent event) {
+                        commandLineTextField.setText(event.getCommand());
+                        if (event.getCommand().isEmpty()) {
+                            delButton.setEnabled(false);
+                            resetButton.setEnabled(false);
+                        } else {
+                            delButton.setEnabled(true);
+                            resetButton.setEnabled(true);
+                        }
+                    }
 
-		    @Override
-		    public void artNetStarted(final ArtNetStartedEvent event) {
-			enterButton.setEnabled(true);
-		    }
+                    @Override
+                    public void artNetStarted(final ArtNetStartedEvent event) {
+                        enterButton.setEnabled(true);
+                    }
 
-		    @Override
-		    public void artNetStopped(final ArtNetStoppedEvent event) {
-			enterButton.setEnabled(false);
-		    }
+                    @Override
+                    public void artNetStopped(final ArtNetStoppedEvent event) {
+                        enterButton.setEnabled(false);
+                    }
 
-		    @Override
-		    public void httpStarted(final HttpStartedEvent event) {
-		    }
+                    @Override
+                    public void httpStarted(final HttpStartedEvent event) {
+                    }
 
-		    @Override
-		    public void httpStopped(final HttpStoppedEvent event) {
-		    }
+                    @Override
+                    public void httpStopped(final HttpStoppedEvent event) {
+                    }
 
-		    @Override
-		    public void additiveModeValueChanged(
-			    final AdditiveModeValueChangedEvent event) {
-		    }
-		});
+                    @Override
+                    public void additiveModeValueChanged(
+                            final AdditiveModeValueChangedEvent event) {
+                    }
+                });
 
-	this.remotePanel.setLayout(layout);
+        this.remotePanel.setLayout(layout);
 
-	this.commandLineTextField.setEditable(false);
-	this.commandLineTextField.setFocusable(false);
-	this.constraints.fill = GridBagConstraints.BOTH;
-	this.constraints.weightx = 1;
-	this.constraints.weighty = 1;
-	this.constraints.gridy = 0;
-	this.constraints.gridwidth = 4;
-	this.remotePanel.add(this.commandLineTextField, this.constraints);
+        this.commandLineTextField.setEditable(false);
+        this.commandLineTextField.setFocusable(false);
+        this.constraints.fill = GridBagConstraints.BOTH;
+        this.constraints.weightx = 1;
+        this.constraints.weighty = 1;
+        this.constraints.gridy = 0;
+        this.constraints.gridwidth = 4;
+        this.remotePanel.add(this.commandLineTextField, this.constraints);
 
-	this.addValueButton('1', 1, 1, true);
-	this.addValueButton('2', 1, 1, true);
-	this.addValueButton('3', 1, 1, true);
-	this.addValueButton('+', 1, 1, true);
-	this.addValueButton('4', 2, 1, true);
-	this.addValueButton('5', 2, 1, true);
-	this.addValueButton('6', 2, 1, true);
-	this.addValueButton('-', 2, 1, true);
-	this.addValueButton('7', 3, 1, true);
-	this.addValueButton('8', 3, 1, true);
-	this.addValueButton('9', 3, 1, true);
-	this.addValueButton('/', 3, 1, true);
-	this.addValueButton(';', 4, 1, true);
-	this.addValueButton('0', 4, 1, true);
-	this.addValueButton('@', 4, 1, true);
-	this.addValueButton('F', 4, 1, true);
-	this.delButton = this.addButton(
-		Messages.getString("remoteview.delete"), 5, 1, false); //$NON-NLS-1$
-	this.enterButton = this.addButton(
-		Messages.getString("remoteview.enter"), 5, 1, false); //$NON-NLS-1$
-	this.resetButton = this.addButton(
-		Messages.getString("remoteview.reset"), 5, 1, false); //$NON-NLS-1$
-	this.addValueButton('D', 5, 1, true);
+        this.addValueButton('1', 1, 1, true);
+        this.addValueButton('2', 1, 1, true);
+        this.addValueButton('3', 1, 1, true);
+        this.addValueButton('+', 1, 1, true);
+        this.addValueButton('4', 2, 1, true);
+        this.addValueButton('5', 2, 1, true);
+        this.addValueButton('6', 2, 1, true);
+        this.addValueButton('-', 2, 1, true);
+        this.addValueButton('7', 3, 1, true);
+        this.addValueButton('8', 3, 1, true);
+        this.addValueButton('9', 3, 1, true);
+        this.addValueButton('/', 3, 1, true);
+        this.addValueButton(';', 4, 1, true);
+        this.addValueButton('0', 4, 1, true);
+        this.addValueButton('@', 4, 1, true);
+        this.addValueButton('F', 4, 1, true);
+        this.delButton = this.addButton(
+                Messages.getString("remoteview.delete"), 5, 1, false); //$NON-NLS-1$
+        this.enterButton = this.addButton(
+                Messages.getString("remoteview.enter"), 5, 1, false); //$NON-NLS-1$
+        this.resetButton = this.addButton(
+                Messages.getString("remoteview.reset"), 5, 1, false); //$NON-NLS-1$
+        this.addValueButton('D', 5, 1, true);
     }
 
     /**
@@ -154,7 +154,7 @@ public class RemoteView implements ViewInterface {
 
     @Override
     public JComponent getViewComponent() {
-	return this.remotePanel;
+        return this.remotePanel;
     }
 
     /**
@@ -164,7 +164,7 @@ public class RemoteView implements ViewInterface {
      *            the text to set
      */
     public void setCommandLineFieldValue(final String value) {
-	this.commandLineTextField.setText(value);
+        this.commandLineTextField.setText(value);
     }
 
     /**
@@ -174,7 +174,7 @@ public class RemoteView implements ViewInterface {
      *            the listener to add
      */
     public void addRemotePanelKeyListener(final KeyListener listener) {
-	this.remotePanel.addKeyListener(listener);
+        this.remotePanel.addKeyListener(listener);
     }
 
     /**
@@ -184,7 +184,7 @@ public class RemoteView implements ViewInterface {
      *            the listener to remove
      */
     public void removeRemotePanelKeyListener(final KeyListener listener) {
-	this.remotePanel.removeKeyListener(listener);
+        this.remotePanel.removeKeyListener(listener);
     }
 
     /**
@@ -194,9 +194,9 @@ public class RemoteView implements ViewInterface {
      *            the listener to add
      */
     public void addValueButtonsListener(final ActionListener listener) {
-	for (JButton button : valueButtonsList) {
-	    button.addActionListener(listener);
-	}
+        for (JButton button : valueButtonsList) {
+            button.addActionListener(listener);
+        }
     }
 
     /**
@@ -206,9 +206,9 @@ public class RemoteView implements ViewInterface {
      *            the listener to remove
      */
     public void removeValueButtonsListener(final ActionListener listener) {
-	for (JButton button : valueButtonsList) {
-	    button.removeActionListener(listener);
-	}
+        for (JButton button : valueButtonsList) {
+            button.removeActionListener(listener);
+        }
     }
 
     /**
@@ -218,7 +218,7 @@ public class RemoteView implements ViewInterface {
      *            the listener to add
      */
     public void addDelButtonListener(final ActionListener actionListener) {
-	this.delButton.addActionListener(actionListener);
+        this.delButton.addActionListener(actionListener);
     }
 
     /**
@@ -228,7 +228,7 @@ public class RemoteView implements ViewInterface {
      *            the listener to remove
      */
     public void removeDelButtonListener(final ActionListener actionListener) {
-	this.delButton.removeActionListener(actionListener);
+        this.delButton.removeActionListener(actionListener);
     }
 
     /**
@@ -238,7 +238,7 @@ public class RemoteView implements ViewInterface {
      *            the listener to add
      */
     public void addEnterButtonListener(final ActionListener actionListener) {
-	this.enterButton.addActionListener(actionListener);
+        this.enterButton.addActionListener(actionListener);
     }
 
     /**
@@ -248,7 +248,7 @@ public class RemoteView implements ViewInterface {
      *            the listener to remove
      */
     public void removeEnterButtonListener(final ActionListener actionListener) {
-	this.enterButton.removeActionListener(actionListener);
+        this.enterButton.removeActionListener(actionListener);
     }
 
     /**
@@ -258,7 +258,7 @@ public class RemoteView implements ViewInterface {
      *            the listener to add
      */
     public void addResetButtonListener(final ActionListener actionListener) {
-	this.resetButton.addActionListener(actionListener);
+        this.resetButton.addActionListener(actionListener);
     }
 
     /**
@@ -268,7 +268,7 @@ public class RemoteView implements ViewInterface {
      *            the listener to remove
      */
     public void removeResetButtonListener(final ActionListener actionListener) {
-	this.resetButton.removeActionListener(actionListener);
+        this.resetButton.removeActionListener(actionListener);
     }
 
     /**
@@ -277,7 +277,7 @@ public class RemoteView implements ViewInterface {
      * @return the input map
      */
     public InputMap getRemotePanelInputMap() {
-	return this.remotePanel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+        return this.remotePanel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
     }
 
     /**
@@ -286,7 +286,7 @@ public class RemoteView implements ViewInterface {
      * @return the action map
      */
     public ActionMap getRemotePanelActionMap() {
-	return this.remotePanel.getActionMap();
+        return this.remotePanel.getActionMap();
     }
 
     /**
@@ -295,7 +295,7 @@ public class RemoteView implements ViewInterface {
      * @return true if it enabled or false it is disabled
      */
     public boolean isEnterButtonEnabled() {
-	return this.enterButton.isEnabled();
+        return this.enterButton.isEnabled();
     }
 
     /**
@@ -304,7 +304,7 @@ public class RemoteView implements ViewInterface {
      * @return true if it enabled or false it is disabled
      */
     public boolean isResetButtonEnabled() {
-	return this.resetButton.isEnabled();
+        return this.resetButton.isEnabled();
     }
 
     /**
@@ -313,7 +313,7 @@ public class RemoteView implements ViewInterface {
      * @return true if it enabled or false it is disabled
      */
     public boolean isDelButtonEnabled() {
-	return this.delButton.isEnabled();
+        return this.delButton.isEnabled();
     }
 
     /**
@@ -322,27 +322,27 @@ public class RemoteView implements ViewInterface {
      * @return the values list
      */
     public List<Character> getValuesList() {
-	return this.valuesList;
+        return this.valuesList;
     }
 
     private void addValueButton(final Character c, final int gridY,
-	    final int gridWidth, final boolean enabled) {
-	JButton button = addButton(c.toString(), gridY, gridWidth, enabled);
-	valuesList.add(c);
-	valueButtonsList.add(button);
+            final int gridWidth, final boolean enabled) {
+        JButton button = addButton(c.toString(), gridY, gridWidth, enabled);
+        valuesList.add(c);
+        valueButtonsList.add(button);
     }
 
     private JButton addButton(final String text, final int gridY,
-	    final int gridWidth, final boolean enabled) {
-	JButton button = new JButton(text);
-	button.setEnabled(enabled);
-	button.setFocusable(false);
+            final int gridWidth, final boolean enabled) {
+        JButton button = new JButton(text);
+        button.setEnabled(enabled);
+        button.setFocusable(false);
 
-	this.constraints.gridy = gridY;
-	this.constraints.gridwidth = gridWidth;
+        this.constraints.gridy = gridY;
+        this.constraints.gridwidth = gridWidth;
 
-	remotePanel.add(button, constraints);
-	return button;
+        remotePanel.add(button, constraints);
+        return button;
     }
 
     /**
@@ -350,6 +350,6 @@ public class RemoteView implements ViewInterface {
      */
     @Override
     public String getLocalizedTitle() {
-	return Messages.getString("remoteview.title");
+        return Messages.getString("remoteview.title");
     }
 }

@@ -39,19 +39,19 @@ public class ReleaseInformation {
      *            the date of the release
      */
     public ReleaseInformation(final ReleaseCode releaseCode,
-	    final URL downloadUrl, final URL releaseNoteUrl,
-	    final Date releaseDate) {
-	this.releaseCode = releaseCode;
-	this.downloadUrl = downloadUrl;
-	this.releaseTime = releaseDate.getTime();
-	this.releaseNoteUrl = releaseNoteUrl;
+            final URL downloadUrl, final URL releaseNoteUrl,
+            final Date releaseDate) {
+        this.releaseCode = releaseCode;
+        this.downloadUrl = downloadUrl;
+        this.releaseTime = releaseDate.getTime();
+        this.releaseNoteUrl = releaseNoteUrl;
     }
 
     /**
      * Package constructor for builder pattern.
      */
     ReleaseInformation() {
-	// nothing
+        // nothing
     }
 
     /**
@@ -60,7 +60,7 @@ public class ReleaseInformation {
      * @return the release code
      */
     public ReleaseCode getReleaseCode() {
-	return releaseCode;
+        return releaseCode;
     }
 
     /**
@@ -70,7 +70,7 @@ public class ReleaseInformation {
      *            the release code
      */
     void setReleaseCode(final ReleaseCode releaseCode) {
-	this.releaseCode = releaseCode;
+        this.releaseCode = releaseCode;
     }
 
     /**
@@ -82,7 +82,7 @@ public class ReleaseInformation {
      *             if the given string is not a valid {@link URL}.
      */
     void setDownloadUrl(final String downloadUrl) throws MalformedURLException {
-	this.downloadUrl = URI.create(downloadUrl).toURL();
+        this.downloadUrl = URI.create(downloadUrl).toURL();
     }
 
     /**
@@ -93,12 +93,12 @@ public class ReleaseInformation {
      * @throws MalformedURLException
      */
     void setReleaseNoteUrl(final String releaseNoteUrl)
-	    throws MalformedURLException {
-	this.releaseNoteUrl = URI.create(releaseNoteUrl).toURL();
+            throws MalformedURLException {
+        this.releaseNoteUrl = URI.create(releaseNoteUrl).toURL();
     }
 
     void setReleaseTime(final long releaseTime) {
-	this.releaseTime = releaseTime;
+        this.releaseTime = releaseTime;
     }
 
     /**
@@ -107,7 +107,7 @@ public class ReleaseInformation {
      * @return the release time
      */
     public long getReleaseTime() {
-	return releaseTime;
+        return releaseTime;
     }
 
     /**
@@ -116,7 +116,7 @@ public class ReleaseInformation {
      * @return the {@link URL} of the download page
      */
     public URL getDownloadUrl() {
-	return downloadUrl;
+        return downloadUrl;
     }
 
     /**
@@ -125,7 +125,7 @@ public class ReleaseInformation {
      * @return the {@link URL} of the release note
      */
     public URL getReleaseNoteUrl() {
-	return releaseNoteUrl;
+        return releaseNoteUrl;
     }
 
     /**
@@ -133,16 +133,16 @@ public class ReleaseInformation {
      */
     @Override
     public int hashCode() {
-	final int prime = 31;
-	int result = 1;
-	result = prime * result
-		+ ((downloadUrl == null) ? 0 : downloadUrl.hashCode());
-	result = prime * result
-		+ ((releaseCode == null) ? 0 : releaseCode.hashCode());
-	result = prime * result
-		+ ((releaseNoteUrl == null) ? 0 : releaseNoteUrl.hashCode());
-	result = prime * result + (int) (releaseTime ^ (releaseTime >>> 32));
-	return result;
+        final int prime = 31;
+        int result = 1;
+        result = prime * result
+                + ((downloadUrl == null) ? 0 : downloadUrl.hashCode());
+        result = prime * result
+                + ((releaseCode == null) ? 0 : releaseCode.hashCode());
+        result = prime * result
+                + ((releaseNoteUrl == null) ? 0 : releaseNoteUrl.hashCode());
+        result = prime * result + (int) (releaseTime ^ (releaseTime >>> 32));
+        return result;
     }
 
     /**
@@ -150,41 +150,41 @@ public class ReleaseInformation {
      */
     @Override
     public boolean equals(final Object obj) {
-	if (this == obj) {
-	    return true;
-	}
-	if (obj == null) {
-	    return false;
-	}
-	if (getClass() != obj.getClass()) {
-	    return false;
-	}
-	ReleaseInformation other = (ReleaseInformation) obj;
-	if (downloadUrl == null) {
-	    if (other.downloadUrl != null) {
-		return false;
-	    }
-	} else if (!downloadUrl.equals(other.downloadUrl)) {
-	    return false;
-	}
-	if (releaseCode == null) {
-	    if (other.releaseCode != null) {
-		return false;
-	    }
-	} else if (!releaseCode.equals(other.releaseCode)) {
-	    return false;
-	}
-	if (releaseNoteUrl == null) {
-	    if (other.releaseNoteUrl != null) {
-		return false;
-	    }
-	} else if (!releaseNoteUrl.equals(other.releaseNoteUrl)) {
-	    return false;
-	}
-	if (releaseTime != other.releaseTime) {
-	    return false;
-	}
-	return true;
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        ReleaseInformation other = (ReleaseInformation) obj;
+        if (downloadUrl == null) {
+            if (other.downloadUrl != null) {
+                return false;
+            }
+        } else if (!downloadUrl.equals(other.downloadUrl)) {
+            return false;
+        }
+        if (releaseCode == null) {
+            if (other.releaseCode != null) {
+                return false;
+            }
+        } else if (!releaseCode.equals(other.releaseCode)) {
+            return false;
+        }
+        if (releaseNoteUrl == null) {
+            if (other.releaseNoteUrl != null) {
+                return false;
+            }
+        } else if (!releaseNoteUrl.equals(other.releaseNoteUrl)) {
+            return false;
+        }
+        if (releaseTime != other.releaseTime) {
+            return false;
+        }
+        return true;
     }
 
     /**
@@ -194,11 +194,11 @@ public class ReleaseInformation {
      */
     @Override
     public String toString() {
-	StringBuilder sb = new StringBuilder(getClass().getSimpleName());
-	sb.append('[').append("releaseNoteUrl:").append(releaseNoteUrl)
-		.append(", releaseNoteDate:").append(releaseTime)
-		.append(", downloadUrl:").append(downloadUrl).append(']');
-	return sb.toString();
+        StringBuilder sb = new StringBuilder(getClass().getSimpleName());
+        sb.append('[').append("releaseNoteUrl:").append(releaseNoteUrl)
+                .append(", releaseNoteDate:").append(releaseTime)
+                .append(", downloadUrl:").append(downloadUrl).append(']');
+        return sb.toString();
     }
 
     /**
@@ -209,6 +209,6 @@ public class ReleaseInformation {
      * @return a {@link ReleaseInformation} from the json string
      */
     public static ReleaseInformation fromJSON(final String json) {
-	return new Gson().fromJson(json, ReleaseInformation.class);
+        return new Gson().fromJson(json, ReleaseInformation.class);
     }
 }

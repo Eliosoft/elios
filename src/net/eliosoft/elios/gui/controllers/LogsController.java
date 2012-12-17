@@ -44,18 +44,18 @@ public class LogsController {
      *            the view associated with this Controller
      */
     public LogsController(final RemoteModel remoteModel, final LogsView logsView) {
-	this.remoteModel = remoteModel;
-	this.logsView = logsView;
+        this.remoteModel = remoteModel;
+        this.logsView = logsView;
 
-	this.initButtonsListeners();
+        this.initButtonsListeners();
     }
 
     private void initButtonsListeners() {
-	this.logsView.addClearLogsButtonListener(new ActionListener() {
-	    @Override
-	    public void actionPerformed(final ActionEvent e) {
-		remoteModel.getLogsListModel().clearLogsList();
-	    }
-	});
+        this.logsView.addClearLogsButtonListener(new ActionListener() {
+            @Override
+            public void actionPerformed(final ActionEvent e) {
+                remoteModel.getLogsListModel().clearLogsList();
+            }
+        });
     }
 }

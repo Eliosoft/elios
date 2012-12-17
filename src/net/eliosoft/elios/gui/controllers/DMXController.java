@@ -44,21 +44,21 @@ public class DMXController {
      *            the view associated with this Controller
      */
     public DMXController(final DMXTableModel dmxTableModel,
-	    final DMXView dmxView) {
-	this.dmxTableModel = dmxTableModel;
-	this.dmxView = dmxView;
+            final DMXView dmxView) {
+        this.dmxTableModel = dmxTableModel;
+        this.dmxView = dmxView;
 
-	this.initListeners();
+        this.initListeners();
     }
 
     private void initListeners() {
-	this.dmxView.addInOutRadioActionListener(new ActionListener() {
+        this.dmxView.addInOutRadioActionListener(new ActionListener() {
 
-	    @Override
-	    public void actionPerformed(final ActionEvent actionEvent) {
-		dmxTableModel.setInputEnabled(actionEvent.getActionCommand()
-			.equals("input"));
-	    }
-	});
+            @Override
+            public void actionPerformed(final ActionEvent actionEvent) {
+                dmxTableModel.setInputEnabled(actionEvent.getActionCommand()
+                        .equals("input"));
+            }
+        });
     }
 }

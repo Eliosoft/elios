@@ -20,7 +20,7 @@ public final class PostInstallProcess {
      * The logger.
      */
     private static final Logger LOGGER = Logger
-	    .getLogger(PostInstallProcess.class.getCanonicalName());
+            .getLogger(PostInstallProcess.class.getCanonicalName());
 
     /**
      * Ensure that this class will not be instantiate.
@@ -37,37 +37,37 @@ public final class PostInstallProcess {
      */
     public static void main(final String[] args) {
 
-	if (args.length != 2) {
-	    LOGGER.severe("A release code and an url must be given in argument");
-	}
+        if (args.length != 2) {
+            LOGGER.severe("A release code and an url must be given in argument");
+        }
 
-	ReleaseCode code = null;
+        ReleaseCode code = null;
 
-	try {
-	    code = ReleaseCode.create(args[0]);
-	} catch (IllegalArgumentException iae) {
-	    LOGGER.severe("The release code is not well formed, see "
-		    + iae.getMessage());
-	}
-	URI rootUrl = null;
-	try {
-	    rootUrl = URI.create(args[1]);
-	} catch (IllegalArgumentException iae) {
-	    LOGGER.severe("The url is not well formed, see " + iae.getMessage());
-	}
+        try {
+            code = ReleaseCode.create(args[0]);
+        } catch (IllegalArgumentException iae) {
+            LOGGER.severe("The release code is not well formed, see "
+                    + iae.getMessage());
+        }
+        URI rootUrl = null;
+        try {
+            rootUrl = URI.create(args[1]);
+        } catch (IllegalArgumentException iae) {
+            LOGGER.severe("The url is not well formed, see " + iae.getMessage());
+        }
 
-	LOGGER.info("Registering update information");
-	Preferences prefs = Preferences.userNodeForPackage(Elios.class);
-	prefs.put(
-		ReleaseInformationRepositoryImpl.RELEASEINFO_CURENT_RELEASE_CODE,
-		code.getCode());
-	prefs.put(ReleaseInformationRepositoryImpl.RELEASEINFO_ROOT_URL,
-		rootUrl.toString());
-	try {
-	    prefs.flush();
-	    LOGGER.info("End of post processing");
-	} catch (BackingStoreException e) {
-	    LOGGER.severe(e.getMessage());
-	}
+        LOGGER.info("Registering update information");
+        Preferences prefs = Preferences.userNodeForPackage(Elios.class);
+        prefs.put(
+                ReleaseInformationRepositoryImpl.RELEASEINFO_CURENT_RELEASE_CODE,
+                code.getCode());
+        prefs.put(ReleaseInformationRepositoryImpl.RELEASEINFO_ROOT_URL,
+                rootUrl.toString());
+        try {
+            prefs.flush();
+            LOGGER.info("End of post processing");
+        } catch (BackingStoreException e) {
+            LOGGER.severe(e.getMessage());
+        }
     }
 }

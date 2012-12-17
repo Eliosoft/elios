@@ -55,7 +55,7 @@ public class HttpServerManager {
     private int inPort = HttpServerManager.DEFAULT_HTTP_PORT;
 
     private final transient Logger logger = LoggersManager.getInstance()
-	    .getLogger(HttpServerManager.class.getName());
+            .getLogger(HttpServerManager.class.getName());
 
     private HttpServerManager() {
     }
@@ -66,10 +66,10 @@ public class HttpServerManager {
      * @return the instance
      */
     public static HttpServerManager getInstance() {
-	if (HttpServerManager.instance == null) {
-	    HttpServerManager.instance = new HttpServerManager();
-	}
-	return HttpServerManager.instance;
+        if (HttpServerManager.instance == null) {
+            HttpServerManager.instance = new HttpServerManager();
+        }
+        return HttpServerManager.instance;
     }
 
     /**
@@ -79,20 +79,20 @@ public class HttpServerManager {
      *             if the server is unable to start
      */
     public void startHttp() throws IOException {
-	this.initHttpServer();
-	this.httpServer.start();
-	logger.info("Http Started");
+        this.initHttpServer();
+        this.httpServer.start();
+        logger.info("Http Started");
     }
 
     /**
      * Stops the Http Server.
      */
     public void stopHttp() {
-	if (this.httpServer != null) {
-	    this.httpServer.stop(0);
-	    this.httpServer = null;
-	    logger.info("Http Stopped");
-	}
+        if (this.httpServer != null) {
+            this.httpServer.stop(0);
+            this.httpServer = null;
+            logger.info("Http Stopped");
+        }
     }
 
     /**
@@ -102,19 +102,19 @@ public class HttpServerManager {
      *            the value of the port
      */
     public void setInPort(final int inPort) {
-	this.inPort = inPort;
+        this.inPort = inPort;
     }
 
     private void initHttpServer() throws IOException {
-	this.httpServer = HttpServer.create(new InetSocketAddress(this.inPort),
-		0);
-	this.httpServer.createContext("/", this.resourceHttpHandler);
-	this.httpServer.createContext("/data/commandLine",
-		this.commanLineHttpHandler);
-	this.httpServer.createContext("/data/params", this.paramsHttpHandler);
-	this.httpServer.createContext("/data/dmxTable",
-		this.dmxTableHttpHandler);
-	this.httpServer.createContext("/data/cues", this.cuesHttpHandler);
+        this.httpServer = HttpServer.create(new InetSocketAddress(this.inPort),
+                0);
+        this.httpServer.createContext("/", this.resourceHttpHandler);
+        this.httpServer.createContext("/data/commandLine",
+                this.commanLineHttpHandler);
+        this.httpServer.createContext("/data/params", this.paramsHttpHandler);
+        this.httpServer.createContext("/data/dmxTable",
+                this.dmxTableHttpHandler);
+        this.httpServer.createContext("/data/cues", this.cuesHttpHandler);
     }
 
 }

@@ -24,11 +24,11 @@ public class JLogRecordLabel extends JLabel {
      *            the log record of the label
      */
     public JLogRecordLabel(final LogRecord record) {
-	super("[" + record.getLevel().getName() + "] " + record.getMessage());
-	this.record = record;
-	if (this.record.getLevel().equals(Level.SEVERE)) {
-	    this.setForeground(Color.RED);
-	}
+        super("[" + record.getLevel().getName() + "] " + record.getMessage());
+        this.record = record;
+        if (this.record.getLevel().equals(Level.SEVERE)) {
+            this.setForeground(Color.RED);
+        }
     }
 
 }

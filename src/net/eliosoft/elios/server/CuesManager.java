@@ -48,7 +48,7 @@ import com.google.gson.reflect.TypeToken;
 public class CuesManager {
 
     private final Logger logger = LoggersManager.getInstance().getLogger(
-	    CuesManager.class.getCanonicalName());
+            CuesManager.class.getCanonicalName());
 
     private Map<String, Cue> cuesMap = new HashMap<String, Cue>();
 
@@ -65,10 +65,10 @@ public class CuesManager {
      * @return the instance
      */
     public static CuesManager getInstance() {
-	if (instance == null) {
-	    instance = new CuesManager();
-	}
-	return instance;
+        if (instance == null) {
+            instance = new CuesManager();
+        }
+        return instance;
     }
 
     /**
@@ -78,14 +78,14 @@ public class CuesManager {
      *            the cue to add to the manager
      */
     public void addCue(final Cue cue) {
-	if (cuesMap.containsKey(cue.getName())) {
-	    throw new IllegalArgumentException(
-		    "a cue with this name is already set");
-	} else {
-	    logger.info("Cue [" + cue.getName() + "] added");
-	    cuesMap.put(cue.getName(), cue);
-	    fireCueAdded(cue.getName());
-	}
+        if (cuesMap.containsKey(cue.getName())) {
+            throw new IllegalArgumentException(
+                    "a cue with this name is already set");
+        } else {
+            logger.info("Cue [" + cue.getName() + "] added");
+            cuesMap.put(cue.getName(), cue);
+            fireCueAdded(cue.getName());
+        }
     }
 
     /**
@@ -95,9 +95,9 @@ public class CuesManager {
      *            the name of the cue to remove
      */
     public void removeCue(final String name) {
-	logger.info("Cue [" + name + "] removed");
-	cuesMap.remove(name);
-	this.fireCueRemoved(name);
+        logger.info("Cue [" + name + "] removed");
+        cuesMap.remove(name);
+        this.fireCueRemoved(name);
     }
 
     /**
@@ -107,8 +107,8 @@ public class CuesManager {
      * @return the requested cue if found or null if no cue is found
      */
     public Cue getCue(final String name) {
-	logger.info("Cue [" + name + "] loaded");
-	return cuesMap.get(name);
+        logger.info("Cue [" + name + "] loaded");
+        return cuesMap.get(name);
     }
 
     /**
@@ -117,15 +117,15 @@ public class CuesManager {
      * @return a list containing the cues
      */
     public List<Cue> getCues() {
-	ArrayList<Cue> cuesList = new ArrayList<Cue>(cuesMap.values());
-	Collections.sort(cuesList, new Comparator<Cue>() {
+        ArrayList<Cue> cuesList = new ArrayList<Cue>(cuesMap.values());
+        Collections.sort(cuesList, new Comparator<Cue>() {
 
-	    @Override
-	    public int compare(final Cue c1, final Cue c2) {
-		return c1.getName().compareTo(c2.getName());
-	    }
-	});
-	return cuesList;
+            @Override
+            public int compare(final Cue c1, final Cue c2) {
+                return c1.getName().compareTo(c2.getName());
+            }
+        });
+        return cuesList;
     }
 
     /**
@@ -134,14 +134,14 @@ public class CuesManager {
      * @return an unused cue name
      */
     public String getUnusedCueName() {
-	int cueNumber = cuesMap.values().size();
-	DecimalFormat decimalFormat = new DecimalFormat("000");
-	String cueName;
-	do {
-	    cueName = "Cue#" + decimalFormat.format(cueNumber);
-	    cueNumber++;
-	} while (cuesMap.containsKey(cueName));
-	return cueName;
+        int cueNumber = cuesMap.values().size();
+        DecimalFormat decimalFormat = new DecimalFormat("000");
+        String cueName;
+        do {
+            cueName = "Cue#" + decimalFormat.format(cueNumber);
+            cueNumber++;
+        } while (cuesMap.containsKey(cueName));
+        return cueName;
     }
 
     /**
@@ -151,7 +151,7 @@ public class CuesManager {
      *            the listener to add
      */
     public void addCuesManagerChangedListener(final CuesManagerListener listener) {
-	this.cuesManagerChangedListeners.add(listener);
+        this.cuesManagerChangedListeners.add(listener);
     }
 
     /**
@@ -161,22 +161,22 @@ public class CuesManager {
      *            the listener to remove
      */
     public void removeCuesManagerChangedListener(
-	    final CuesManagerListener listener) {
-	this.cuesManagerChangedListeners.remove(listener);
+            final CuesManagerListener listener) {
+        this.cuesManagerChangedListeners.remove(listener);
     }
 
     private void fireCueAdded(final String name) {
-	for (CuesManagerListener listener : this.cuesManagerChangedListeners) {
-	    CueAddedEvent e = new CueAddedEvent(name);
-	    listener.cueAdded(e);
-	}
+        for (CuesManagerListener listener : this.cuesManagerChangedListeners) {
+            CueAddedEvent e = new CueAddedEvent(name);
+            listener.cueAdded(e);
+        }
     }
 
     private void fireCueRemoved(final String name) {
-	for (CuesManagerListener listener : this.cuesManagerChangedListeners) {
-	    CueRemovedEvent e = new CueRemovedEvent(name);
-	    listener.cueRemoved(e);
-	}
+        for (CuesManagerListener listener : this.cuesManagerChangedListeners) {
+            CueRemovedEvent e = new CueRemovedEvent(name);
+            listener.cueRemoved(e);
+        }
     }
 
     /**
@@ -189,7 +189,7 @@ public class CuesManager {
      * @see CuesManager#load(InputStream)
      */
     public void persist(final OutputStream stream) throws IOException {
-	stream.write(new Gson().toJson(cuesMap).getBytes());
+        stream.write(new Gson().toJson(cuesMap).getBytes());
     }
 
     /**
@@ -200,8 +200,8 @@ public class CuesManager {
      * @see CuesManager#persist(OutputStream)
      */
     public void load(final InputStream stream) {
-	cuesMap = new Gson().fromJson(new InputStreamReader(stream),
-		new TypeToken<Map<String, Cue>>() {
-		}.getType());
+        cuesMap = new Gson().fromJson(new InputStreamReader(stream),
+                new TypeToken<Map<String, Cue>>() {
+                }.getType());
     }
 }

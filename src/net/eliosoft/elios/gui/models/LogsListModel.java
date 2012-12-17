@@ -46,7 +46,7 @@ public class LogsListModel extends AbstractListModel {
      * 
      */
     public LogsListModel() {
-	logs = new ArrayList<LogRecord>();
+        logs = new ArrayList<LogRecord>();
     }
 
     /**
@@ -56,23 +56,23 @@ public class LogsListModel extends AbstractListModel {
      *            {@code java.util.Logger} to wrap
      */
     public void addLogger(final Logger logger) {
-	logger.addHandler(new Handler() {
+        logger.addHandler(new Handler() {
 
-	    @Override
-	    public void publish(final LogRecord record) {
-		addLogRecord(record);
-	    }
+            @Override
+            public void publish(final LogRecord record) {
+                addLogRecord(record);
+            }
 
-	    @Override
-	    public void flush() {
-		// nothing
-	    }
+            @Override
+            public void flush() {
+                // nothing
+            }
 
-	    @Override
-	    public void close() {
-		logger.info(logger.getName() + " is closing");
-	    }
-	});
+            @Override
+            public void close() {
+                logger.info(logger.getName() + " is closing");
+            }
+        });
     }
 
     /**
@@ -82,19 +82,19 @@ public class LogsListModel extends AbstractListModel {
      *            the log record to add
      */
     private void addLogRecord(final LogRecord logRecord) {
-	logs.add(logRecord);
-	this.fireIntervalAdded(this, logs.size() - 1, logs.size() - 1);
+        logs.add(logRecord);
+        this.fireIntervalAdded(this, logs.size() - 1, logs.size() - 1);
     }
 
     /**
      * Removes all log records of the list.
      */
     public void clearLogsList() {
-	int lastSize = logs.size();
-	if (lastSize > 0) {
-	    logs.clear();
-	    this.fireIntervalRemoved(this, 0, lastSize - 1);
-	}
+        int lastSize = logs.size();
+        if (lastSize > 0) {
+            logs.clear();
+            this.fireIntervalRemoved(this, 0, lastSize - 1);
+        }
     }
 
     /**
@@ -102,7 +102,7 @@ public class LogsListModel extends AbstractListModel {
      */
     @Override
     public Object getElementAt(final int index) {
-	return logs.get(index);
+        return logs.get(index);
     }
 
     /**
@@ -110,6 +110,6 @@ public class LogsListModel extends AbstractListModel {
      */
     @Override
     public int getSize() {
-	return logs.size();
+        return logs.size();
     }
 }

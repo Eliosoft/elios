@@ -43,10 +43,10 @@ public class LoggersManager {
      * @return the instance
      */
     public static LoggersManager getInstance() {
-	if (LoggersManager.instance == null) {
-	    LoggersManager.instance = new LoggersManager();
-	}
-	return LoggersManager.instance;
+        if (LoggersManager.instance == null) {
+            LoggersManager.instance = new LoggersManager();
+        }
+        return LoggersManager.instance;
     }
 
     /**
@@ -57,10 +57,10 @@ public class LoggersManager {
      * @return the logger with the corresponding name
      */
     public Logger getLogger(final String loggerName) {
-	if (!loggersMap.containsKey(loggerName)) {
-	    this.loggersMap.put(loggerName, Logger.getLogger(loggerName));
-	}
-	return this.loggersMap.get(loggerName);
+        if (!loggersMap.containsKey(loggerName)) {
+            this.loggersMap.put(loggerName, Logger.getLogger(loggerName));
+        }
+        return this.loggersMap.get(loggerName);
     }
 
     /**
@@ -69,6 +69,6 @@ public class LoggersManager {
      * @return a list containing all the loggers
      */
     public List<Logger> getLoggersList() {
-	return new ArrayList<Logger>(this.loggersMap.values());
+        return new ArrayList<Logger>(this.loggersMap.values());
     }
 }

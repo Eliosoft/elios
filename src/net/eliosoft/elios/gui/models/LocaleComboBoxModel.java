@@ -27,7 +27,7 @@ public class LocaleComboBoxModel extends DefaultComboBoxModel {
      */
     @Override
     public Locale getElementAt(final int index) {
-	return locales[index];
+        return locales[index];
     }
 
     /**
@@ -35,7 +35,7 @@ public class LocaleComboBoxModel extends DefaultComboBoxModel {
      */
     @Override
     public int getSize() {
-	return locales.length;
+        return locales.length;
     }
 
     /**
@@ -43,6 +43,6 @@ public class LocaleComboBoxModel extends DefaultComboBoxModel {
      */
     @Override
     public void setSelectedItem(final Object anObject) {
-	super.setSelectedItem(anObject);
+        super.setSelectedItem(anObject);
     }
 }

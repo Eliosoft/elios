@@ -86,113 +86,113 @@ public class PrefsView implements ViewInterface {
      *            the associated {@link UpdateModel}
      */
     public PrefsView(final RemoteModel remoteModel,
-	    final LocaleComboBoxModel localeModel, final UpdateModel updateModel) {
-	this.remoteModel = remoteModel;
-	this.localeModel = localeModel;
-	this.updateModel = updateModel;
+            final LocaleComboBoxModel localeModel, final UpdateModel updateModel) {
+        this.remoteModel = remoteModel;
+        this.localeModel = localeModel;
+        this.updateModel = updateModel;
 
-	prefsPanel = new JPanel();
-	prefsPanel.setLayout(new BorderLayout());
+        prefsPanel = new JPanel();
+        prefsPanel.setLayout(new BorderLayout());
 
-	JPanel globalPane = new JPanel(new GridLayout(4, 0));
+        JPanel globalPane = new JPanel(new GridLayout(4, 0));
 
-	// general panel
-	globalPane.add(createGeneralPane());
+        // general panel
+        globalPane.add(createGeneralPane());
 
-	// artnet panel
-	globalPane.add(createArtNetServerPane());
+        // artnet panel
+        globalPane.add(createArtNetServerPane());
 
-	// http server panel
-	globalPane.add(createHttpServerPane());
+        // http server panel
+        globalPane.add(createHttpServerPane());
 
-	// add a glue to have a so beautiful fullscreen layout
-	globalPane.add(Box.createVerticalGlue());
+        // add a glue to have a so beautiful fullscreen layout
+        globalPane.add(Box.createVerticalGlue());
 
-	prefsPanel.add(globalPane, BorderLayout.NORTH);
+        prefsPanel.add(globalPane, BorderLayout.NORTH);
 
-	// button panel
-	prefsPanel.add(createButtonPane(), BorderLayout.SOUTH);
+        // button panel
+        prefsPanel.add(createButtonPane(), BorderLayout.SOUTH);
     }
 
     private Component createButtonPane() {
 
-	JPanel buttonPanel = new JPanel();
+        JPanel buttonPanel = new JPanel();
 
-	buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.X_AXIS));
+        buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.X_AXIS));
 
-	buttonPanel.add(Box.createGlue());
+        buttonPanel.add(Box.createGlue());
 
-	// cancel / save
-	this.cancelButton = new JButton(Messages.getString("prefsview.cancel")); //$NON-NLS-1$
-	this.cancelButton.setIcon(new ImageIcon(Elios.class
-		.getResource("/net/eliosoft/elios/gui/views/edit-undo.png")));
-	buttonPanel.add(this.cancelButton);
+        // cancel / save
+        this.cancelButton = new JButton(Messages.getString("prefsview.cancel")); //$NON-NLS-1$
+        this.cancelButton.setIcon(new ImageIcon(Elios.class
+                .getResource("/net/eliosoft/elios/gui/views/edit-undo.png")));
+        buttonPanel.add(this.cancelButton);
 
-	buttonPanel.add(Box.createHorizontalStrut(5));
+        buttonPanel.add(Box.createHorizontalStrut(5));
 
-	this.saveButton = new JButton(Messages.getString("prefsview.save")); //$NON-NLS-1$
-	buttonPanel.add(this.saveButton);
-	this.saveButton
-		.setIcon(new ImageIcon(
-			Elios.class
-				.getResource("/net/eliosoft/elios/gui/views/document-save.png")));
+        this.saveButton = new JButton(Messages.getString("prefsview.save")); //$NON-NLS-1$
+        buttonPanel.add(this.saveButton);
+        this.saveButton
+                .setIcon(new ImageIcon(
+                        Elios.class
+                                .getResource("/net/eliosoft/elios/gui/views/document-save.png")));
 
-	return buttonPanel;
+        return buttonPanel;
     }
 
     private JPanel createArtNetServerPane() {
-	JPanel serverPrefPanel = new JPanel();
-	serverPrefPanel.setName(Messages.getString("prefsview.artnetserver")); //$NON-NLS-1$
-	serverPrefPanel.setLayout(new GridBagLayout());
-	serverPrefPanel.setBorder(BorderFactory.createTitledBorder(Messages
-		.getString("prefsview.artnetserver"))); //$NON-NLS-1$
-	GridBagConstraints constraints = new GridBagConstraints();
-	constraints.fill = GridBagConstraints.HORIZONTAL;
-	constraints.anchor = GridBagConstraints.WEST;
-	constraints.weightx = 1;
+        JPanel serverPrefPanel = new JPanel();
+        serverPrefPanel.setName(Messages.getString("prefsview.artnetserver")); //$NON-NLS-1$
+        serverPrefPanel.setLayout(new GridBagLayout());
+        serverPrefPanel.setBorder(BorderFactory.createTitledBorder(Messages
+                .getString("prefsview.artnetserver"))); //$NON-NLS-1$
+        GridBagConstraints constraints = new GridBagConstraints();
+        constraints.fill = GridBagConstraints.HORIZONTAL;
+        constraints.anchor = GridBagConstraints.WEST;
+        constraints.weightx = 1;
 
-	// broadcast
-	constraints.gridx = 0;
-	constraints.gridy = 0;
-	JLabel broadcastAddressLabel = new JLabel(
-		Messages.getString("prefsview.broadcastaddress")); //$NON-NLS-1$
-	serverPrefPanel.add(broadcastAddressLabel, constraints);
-	broadcastAddressLabel.setLabelFor(this.broadcastAddressCombo);
+        // broadcast
+        constraints.gridx = 0;
+        constraints.gridy = 0;
+        JLabel broadcastAddressLabel = new JLabel(
+                Messages.getString("prefsview.broadcastaddress")); //$NON-NLS-1$
+        serverPrefPanel.add(broadcastAddressLabel, constraints);
+        broadcastAddressLabel.setLabelFor(this.broadcastAddressCombo);
 
-	constraints.gridx = 1;
-	constraints.gridy = 0;
-	this.broadcastAddressCombo = new JComboBox(
-		this.remoteModel.getBroadcastAddressComboModel());
-	serverPrefPanel.add(this.broadcastAddressCombo, constraints);
+        constraints.gridx = 1;
+        constraints.gridy = 0;
+        this.broadcastAddressCombo = new JComboBox(
+                this.remoteModel.getBroadcastAddressComboModel());
+        serverPrefPanel.add(this.broadcastAddressCombo, constraints);
 
-	// in port
-	constraints.gridx = 0;
-	constraints.gridy = 1;
-	JLabel inPortLabel = new JLabel(Messages.getString("prefsview.port.in")); //$NON-NLS-1$
-	serverPrefPanel.add(inPortLabel, constraints);
+        // in port
+        constraints.gridx = 0;
+        constraints.gridy = 1;
+        JLabel inPortLabel = new JLabel(Messages.getString("prefsview.port.in")); //$NON-NLS-1$
+        serverPrefPanel.add(inPortLabel, constraints);
 
-	constraints.gridx = 1;
-	constraints.gridy = 1;
-	this.inPortSpinner = new JSpinner(
-		this.remoteModel.getInPortSpinnerModel());
-	inPortLabel.setLabelFor(this.inPortSpinner);
-	serverPrefPanel.add(this.inPortSpinner, constraints);
+        constraints.gridx = 1;
+        constraints.gridy = 1;
+        this.inPortSpinner = new JSpinner(
+                this.remoteModel.getInPortSpinnerModel());
+        inPortLabel.setLabelFor(this.inPortSpinner);
+        serverPrefPanel.add(this.inPortSpinner, constraints);
 
-	// out port
-	constraints.gridx = 0;
-	constraints.gridy = 2;
-	JLabel outPortLabel = new JLabel(
-		Messages.getString("prefsview.port.out")); //$NON-NLS-1$
-	serverPrefPanel.add(outPortLabel, constraints);
+        // out port
+        constraints.gridx = 0;
+        constraints.gridy = 2;
+        JLabel outPortLabel = new JLabel(
+                Messages.getString("prefsview.port.out")); //$NON-NLS-1$
+        serverPrefPanel.add(outPortLabel, constraints);
 
-	constraints.gridx = 1;
-	constraints.gridy = 2;
-	this.outPortSpinner = new JSpinner(
-		this.remoteModel.getOutPortSpinnerModel());
-	outPortLabel.setLabelFor(this.outPortSpinner);
-	serverPrefPanel.add(this.outPortSpinner, constraints);
+        constraints.gridx = 1;
+        constraints.gridy = 2;
+        this.outPortSpinner = new JSpinner(
+                this.remoteModel.getOutPortSpinnerModel());
+        outPortLabel.setLabelFor(this.outPortSpinner);
+        serverPrefPanel.add(this.outPortSpinner, constraints);
 
-	return serverPrefPanel;
+        return serverPrefPanel;
     }
 
     /**
@@ -201,64 +201,64 @@ public class PrefsView implements ViewInterface {
      * @return a panel containing input elements to set general preferences
      */
     private JPanel createGeneralPane() {
-	final JPanel generalPrefsPanel = new JPanel();
-	generalPrefsPanel.setBorder(BorderFactory.createTitledBorder(Messages
-		.getString("prefsview.general"))); //$NON-NLS-1$
-	generalPrefsPanel.setLayout(new GridBagLayout());
-	GridBagConstraints constraints = new GridBagConstraints();
+        final JPanel generalPrefsPanel = new JPanel();
+        generalPrefsPanel.setBorder(BorderFactory.createTitledBorder(Messages
+                .getString("prefsview.general"))); //$NON-NLS-1$
+        generalPrefsPanel.setLayout(new GridBagLayout());
+        GridBagConstraints constraints = new GridBagConstraints();
 
-	constraints.fill = GridBagConstraints.HORIZONTAL;
-	constraints.anchor = GridBagConstraints.WEST;
-	constraints.weightx = 1;
+        constraints.fill = GridBagConstraints.HORIZONTAL;
+        constraints.anchor = GridBagConstraints.WEST;
+        constraints.weightx = 1;
 
-	this.langComboBox = new JComboBox(localeModel);
+        this.langComboBox = new JComboBox(localeModel);
 
-	langComboBox.setRenderer(new DefaultListCellRenderer() {
-	    /**
-	     * serial UID.
-	     */
-	    private static final long serialVersionUID = -8372082223569889802L;
+        langComboBox.setRenderer(new DefaultListCellRenderer() {
+            /**
+             * serial UID.
+             */
+            private static final long serialVersionUID = -8372082223569889802L;
 
-	    @Override
-	    public Component getListCellRendererComponent(final JList list,
-		    final Object value, final int index,
-		    final boolean isSelected, final boolean cellHasFocus) {
+            @Override
+            public Component getListCellRendererComponent(final JList list,
+                    final Object value, final int index,
+                    final boolean isSelected, final boolean cellHasFocus) {
 
-		super.getListCellRendererComponent(list, value, index,
-			isSelected, cellHasFocus);
-		setText(Messages
-			.getString("ui.lang." + ((Locale) value).getLanguage())); //$NON-NLS-1$
-		return this;
-	    }
-	});
+                super.getListCellRendererComponent(list, value, index,
+                        isSelected, cellHasFocus);
+                setText(Messages
+                        .getString("ui.lang." + ((Locale) value).getLanguage())); //$NON-NLS-1$
+                return this;
+            }
+        });
 
-	// lang chooser
-	constraints.gridx = 0;
-	constraints.gridy = 0;
-	JLabel langComboLabel = new JLabel(Messages.getString("prefsview.lang")); //$NON-NLS-1$
-	generalPrefsPanel.add(langComboLabel, constraints);
+        // lang chooser
+        constraints.gridx = 0;
+        constraints.gridy = 0;
+        JLabel langComboLabel = new JLabel(Messages.getString("prefsview.lang")); //$NON-NLS-1$
+        generalPrefsPanel.add(langComboLabel, constraints);
 
-	constraints.gridx = 1;
-	constraints.gridy = 0;
-	langComboLabel.setLabelFor(this.langComboBox);
-	generalPrefsPanel.add(this.langComboBox, constraints);
+        constraints.gridx = 1;
+        constraints.gridy = 0;
+        langComboLabel.setLabelFor(this.langComboBox);
+        generalPrefsPanel.add(this.langComboBox, constraints);
 
-	// update chooser
-	UpdateFrequencyChooserView view = new UpdateFrequencyChooserView(
-		updateModel);
-	JComponent viewComponent = view.getViewComponent();
+        // update chooser
+        UpdateFrequencyChooserView view = new UpdateFrequencyChooserView(
+                updateModel);
+        JComponent viewComponent = view.getViewComponent();
 
-	constraints.gridx = 0;
-	constraints.gridy = 1;
-	JLabel updateViewLabel = new JLabel(view.getLocalizedTitle());
-	generalPrefsPanel.add(updateViewLabel, constraints);
-	langComboLabel.setLabelFor(viewComponent);
-	constraints.gridx = 1;
-	constraints.gridy = 1;
+        constraints.gridx = 0;
+        constraints.gridy = 1;
+        JLabel updateViewLabel = new JLabel(view.getLocalizedTitle());
+        generalPrefsPanel.add(updateViewLabel, constraints);
+        langComboLabel.setLabelFor(viewComponent);
+        constraints.gridx = 1;
+        constraints.gridy = 1;
 
-	generalPrefsPanel.add(viewComponent, constraints);
+        generalPrefsPanel.add(viewComponent, constraints);
 
-	return generalPrefsPanel;
+        return generalPrefsPanel;
     }
 
     /**
@@ -267,37 +267,37 @@ public class PrefsView implements ViewInterface {
      * @return a panel containing input elements to set http server preferences
      */
     private JPanel createHttpServerPane() {
-	final JPanel httpServerPrefsPanel = new JPanel();
-	httpServerPrefsPanel.setBorder(BorderFactory
-		.createTitledBorder("HTTP Server"));
-	httpServerPrefsPanel.setLayout(new GridBagLayout());
+        final JPanel httpServerPrefsPanel = new JPanel();
+        httpServerPrefsPanel.setBorder(BorderFactory
+                .createTitledBorder("HTTP Server"));
+        httpServerPrefsPanel.setLayout(new GridBagLayout());
 
-	GridBagConstraints constraints = new GridBagConstraints();
-	constraints.fill = GridBagConstraints.HORIZONTAL;
-	constraints.anchor = GridBagConstraints.WEST;
-	constraints.weightx = 1;
+        GridBagConstraints constraints = new GridBagConstraints();
+        constraints.fill = GridBagConstraints.HORIZONTAL;
+        constraints.anchor = GridBagConstraints.WEST;
+        constraints.weightx = 1;
 
-	// http server started
-	constraints.gridx = 0;
-	constraints.gridy = 0;
-	this.enableHttpServerCheckBox = new JCheckBox(
-		Messages.getString("prefsview.httpserver"), this.remoteModel.isHttpServerEnabled()); //$NON-NLS-1$
-	httpServerPrefsPanel.add(this.enableHttpServerCheckBox, constraints);
+        // http server started
+        constraints.gridx = 0;
+        constraints.gridy = 0;
+        this.enableHttpServerCheckBox = new JCheckBox(
+                Messages.getString("prefsview.httpserver"), this.remoteModel.isHttpServerEnabled()); //$NON-NLS-1$
+        httpServerPrefsPanel.add(this.enableHttpServerCheckBox, constraints);
 
-	// http port
-	constraints.gridx = 0;
-	constraints.gridy = 1;
-	JLabel httpPortLabel = new JLabel(
-		Messages.getString("prefsview.port.http")); //$NON-NLS-1$
-	httpServerPrefsPanel.add(httpPortLabel, constraints);
+        // http port
+        constraints.gridx = 0;
+        constraints.gridy = 1;
+        JLabel httpPortLabel = new JLabel(
+                Messages.getString("prefsview.port.http")); //$NON-NLS-1$
+        httpServerPrefsPanel.add(httpPortLabel, constraints);
 
-	constraints.gridx = 1;
-	constraints.gridy = 1;
-	this.httpPortSpinner = new JSpinner(
-		this.remoteModel.getHttpPortSpinnerModel());
-	httpServerPrefsPanel.add(this.httpPortSpinner, constraints);
+        constraints.gridx = 1;
+        constraints.gridy = 1;
+        this.httpPortSpinner = new JSpinner(
+                this.remoteModel.getHttpPortSpinnerModel());
+        httpServerPrefsPanel.add(this.httpPortSpinner, constraints);
 
-	return httpServerPrefsPanel;
+        return httpServerPrefsPanel;
     }
 
     /**
@@ -307,7 +307,7 @@ public class PrefsView implements ViewInterface {
      */
     @Override
     public JComponent getViewComponent() {
-	return this.prefsPanel;
+        return this.prefsPanel;
     }
 
     /**
@@ -317,7 +317,7 @@ public class PrefsView implements ViewInterface {
      *            the listener to add to the button
      */
     public void addCancelButtonListener(final ActionListener actionListener) {
-	this.cancelButton.addActionListener(actionListener);
+        this.cancelButton.addActionListener(actionListener);
     }
 
     /**
@@ -327,8 +327,8 @@ public class PrefsView implements ViewInterface {
      *            the listener to remove to the button
      */
     public void removeStartArtNetButtonListener(
-	    final ActionListener actionListener) {
-	this.cancelButton.removeActionListener(actionListener);
+            final ActionListener actionListener) {
+        this.cancelButton.removeActionListener(actionListener);
     }
 
     /**
@@ -338,7 +338,7 @@ public class PrefsView implements ViewInterface {
      *            the listener to add to the button
      */
     public void addSaveButtonListener(final ActionListener actionListener) {
-	this.saveButton.addActionListener(actionListener);
+        this.saveButton.addActionListener(actionListener);
     }
 
     /**
@@ -348,8 +348,8 @@ public class PrefsView implements ViewInterface {
      *            the listener to remove to the button
      */
     public void removeStopArtNetButtonListener(
-	    final ActionListener actionListener) {
-	this.saveButton.removeActionListener(actionListener);
+            final ActionListener actionListener) {
+        this.saveButton.removeActionListener(actionListener);
     }
 
     /**
@@ -359,8 +359,8 @@ public class PrefsView implements ViewInterface {
      *            the listener to add to the checkbox
      */
     public void addEnableHttpServerCheckBoxListener(
-	    final ActionListener actionListener) {
-	this.enableHttpServerCheckBox.addActionListener(actionListener);
+            final ActionListener actionListener) {
+        this.enableHttpServerCheckBox.addActionListener(actionListener);
     }
 
     /**
@@ -370,8 +370,8 @@ public class PrefsView implements ViewInterface {
      *            the listener to remove to the checkbox
      */
     public void removeEnableHttpServerCheckBoxListener(
-	    final ActionListener actionListener) {
-	this.enableHttpServerCheckBox.removeActionListener(actionListener);
+            final ActionListener actionListener) {
+        this.enableHttpServerCheckBox.removeActionListener(actionListener);
     }
 
     /**
@@ -381,7 +381,7 @@ public class PrefsView implements ViewInterface {
      *            the listener to add to the lang combobox
      */
     public void addLangComboListener(final ActionListener l) {
-	this.langComboBox.addActionListener(l);
+        this.langComboBox.addActionListener(l);
     }
 
     /**
@@ -389,6 +389,6 @@ public class PrefsView implements ViewInterface {
      */
     @Override
     public String getLocalizedTitle() {
-	return Messages.getString("prefsview.title"); //$NON-NLS-1$
+        return Messages.getString("prefsview.title"); //$NON-NLS-1$
     }
 }

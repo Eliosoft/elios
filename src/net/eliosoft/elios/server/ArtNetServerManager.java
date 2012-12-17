@@ -69,11 +69,11 @@ public class ArtNetServerManager {
     private boolean additiveModeEnabled = false;
 
     private static final Pattern COMMANDLINE_PATTERN = Pattern
-	    .compile(
-		    "^(((\\d{1,3})(/(\\d{1,3}))?)([\\+\\-]((\\d{1,3})(/(\\d{1,3}))?))*)(@(F|(D?)(\\d{1,3}))){0,1}$",
-		    Pattern.CASE_INSENSITIVE);
+            .compile(
+                    "^(((\\d{1,3})(/(\\d{1,3}))?)([\\+\\-]((\\d{1,3})(/(\\d{1,3}))?))*)(@(F|(D?)(\\d{1,3}))){0,1}$",
+                    Pattern.CASE_INSENSITIVE);
     private static final Pattern CHANNEL_PATTERN = Pattern.compile(
-	    "([\\+\\-]?)(\\d{1,3})(/(\\d{1,3}))?", Pattern.CASE_INSENSITIVE);
+            "([\\+\\-]?)(\\d{1,3})(/(\\d{1,3}))?", Pattern.CASE_INSENSITIVE);
 
     private static final int COMMAND_LINE_PATTERN_CHANNEL_GROUP = 1;
     private static final int COMMAND_LINE_PATTERN_AT_LEVEL_GROUP = 11;
@@ -98,7 +98,7 @@ public class ArtNetServerManager {
     private byte[][][] inputDmxArrays = new byte[SUBNET_COUNT][UNIVERSE_COUNT][DMX_CHANNELS_COUNT];
 
     private final transient Logger logger = LoggersManager.getInstance()
-	    .getLogger(ArtNetServerManager.class.getName());
+            .getLogger(ArtNetServerManager.class.getName());
 
     private List<ArtNetServerManagerListener> artnetServerManagerChangedListeners = new ArrayList<ArtNetServerManagerListener>();
 
@@ -111,10 +111,10 @@ public class ArtNetServerManager {
      * @return the instance
      */
     public static ArtNetServerManager getInstance() {
-	if (ArtNetServerManager.instance == null) {
-	    ArtNetServerManager.instance = new ArtNetServerManager();
-	}
-	return ArtNetServerManager.instance;
+        if (ArtNetServerManager.instance == null) {
+            ArtNetServerManager.instance = new ArtNetServerManager();
+        }
+        return ArtNetServerManager.instance;
     }
 
     /**
@@ -122,14 +122,14 @@ public class ArtNetServerManager {
      * network.
      */
     public void sendDmxCommand() {
-	ArtDmxPacket artDmxPacket = new ArtDmxPacket();
-	artDmxPacket.setUniverse(this.serverSubnet, this.serverUniverse);
-	artDmxPacket.setSequenceID(this.sequenceId % 255);
-	artDmxPacket.setDMX(getCurrentOutputDmxArray(), DMX_CHANNELS_COUNT);
-	this.artnetServer.broadcastPacket(artDmxPacket);
-	logger.info("broadcast DMX packet sent");
+        ArtDmxPacket artDmxPacket = new ArtDmxPacket();
+        artDmxPacket.setUniverse(this.serverSubnet, this.serverUniverse);
+        artDmxPacket.setSequenceID(this.sequenceId % 255);
+        artDmxPacket.setDMX(getCurrentOutputDmxArray(), DMX_CHANNELS_COUNT);
+        this.artnetServer.broadcastPacket(artDmxPacket);
+        logger.info("broadcast DMX packet sent");
 
-	this.sequenceId++;
+        this.sequenceId++;
     }
 
     /**
@@ -141,24 +141,24 @@ public class ArtNetServerManager {
      *             if there is a problem with the server socket
      */
     public void startArtNet() throws SocketException, ArtNetException {
-	this.artnetServer = new ArtNetServer(this.inPort, this.outPort);
-	this.artnetServer.setBroadcastAddress(this.broadcastAddress);
-	this.artnetServer.start();
-	initArtNetReceiver();
+        this.artnetServer = new ArtNetServer(this.inPort, this.outPort);
+        this.artnetServer.setBroadcastAddress(this.broadcastAddress);
+        this.artnetServer.start();
+        initArtNetReceiver();
 
-	logger.info("ArtNet Started (in:" + this.inPort + ", out:"
-		+ this.outPort + ")");
+        logger.info("ArtNet Started (in:" + this.inPort + ", out:"
+                + this.outPort + ")");
     }
 
     /**
      * Stops the ArtNet Server.
      */
     public void stopArtNet() {
-	if (this.artnetServer != null) {
-	    this.artnetServer.stop();
-	    this.artnetServer = null;
-	    logger.info("ArtNet Stopped");
-	}
+        if (this.artnetServer != null) {
+            this.artnetServer.stop();
+            this.artnetServer = null;
+            logger.info("ArtNet Stopped");
+        }
     }
 
     /**
@@ -170,136 +170,136 @@ public class ArtNetServerManager {
      *             thrown when the command line has a bad syntax
      */
     public void processCommandLine(final String commandLine)
-	    throws BadSyntaxException {
-	String[] commands = commandLine.split(";");
-	HashMap<Integer, Byte> valuesToPush = new HashMap<Integer, Byte>();
+            throws BadSyntaxException {
+        String[] commands = commandLine.split(";");
+        HashMap<Integer, Byte> valuesToPush = new HashMap<Integer, Byte>();
 
-	for (String command : commands) {
-	    Matcher commandLineMatcher = COMMANDLINE_PATTERN.matcher(command);
-	    if (commandLineMatcher.find()) {
-		Matcher channelMatcher = CHANNEL_PATTERN
-			.matcher(commandLineMatcher
-				.group(COMMAND_LINE_PATTERN_CHANNEL_GROUP));
-		HashSet<Integer> channels = new HashSet<Integer>();
-		while (channelMatcher.find()) {
-		    boolean except = (channelMatcher.group(
-			    CHANNEL_PATTERN_EXCEPT_GROUP).compareTo("-") == 0);
-		    int chan1 = Integer.parseInt(channelMatcher
-			    .group(CHANNEL_PATTERN_CHAN1_GROUP));
-		    checkChannelNumber(chan1);
-		    int chan2 = chan1;
-		    if (channelMatcher.group(CHANNEL_PATTERN_CHAN2_GROUP) != null) {
-			chan2 = Integer.parseInt(channelMatcher
-				.group(CHANNEL_PATTERN_CHAN2_GROUP));
-			checkChannelNumber(chan2);
-		    }
-		    for (int j = Math.min(chan1, chan2); j <= Math.max(chan1,
-			    chan2); j++) {
-			if (except)
-			    channels.remove(j);
-			else
-			    channels.add(j);
-		    }
-		}
+        for (String command : commands) {
+            Matcher commandLineMatcher = COMMANDLINE_PATTERN.matcher(command);
+            if (commandLineMatcher.find()) {
+                Matcher channelMatcher = CHANNEL_PATTERN
+                        .matcher(commandLineMatcher
+                                .group(COMMAND_LINE_PATTERN_CHANNEL_GROUP));
+                HashSet<Integer> channels = new HashSet<Integer>();
+                while (channelMatcher.find()) {
+                    boolean except = (channelMatcher.group(
+                            CHANNEL_PATTERN_EXCEPT_GROUP).compareTo("-") == 0);
+                    int chan1 = Integer.parseInt(channelMatcher
+                            .group(CHANNEL_PATTERN_CHAN1_GROUP));
+                    checkChannelNumber(chan1);
+                    int chan2 = chan1;
+                    if (channelMatcher.group(CHANNEL_PATTERN_CHAN2_GROUP) != null) {
+                        chan2 = Integer.parseInt(channelMatcher
+                                .group(CHANNEL_PATTERN_CHAN2_GROUP));
+                        checkChannelNumber(chan2);
+                    }
+                    for (int j = Math.min(chan1, chan2); j <= Math.max(chan1,
+                            chan2); j++) {
+                        if (except)
+                            channels.remove(j);
+                        else
+                            channels.add(j);
+                    }
+                }
 
-		boolean hasLevel = !(commandLineMatcher
-			.group(COMMAND_LINE_PATTERN_AT_LEVEL_GROUP) == null || commandLineMatcher
-			.group(COMMAND_LINE_PATTERN_AT_LEVEL_GROUP).isEmpty());
-		boolean percent = false;
-		int value = MAX_DMX_VALUE;
+                boolean hasLevel = !(commandLineMatcher
+                        .group(COMMAND_LINE_PATTERN_AT_LEVEL_GROUP) == null || commandLineMatcher
+                        .group(COMMAND_LINE_PATTERN_AT_LEVEL_GROUP).isEmpty());
+                boolean percent = false;
+                int value = MAX_DMX_VALUE;
 
-		if (hasLevel) {
-		    percent = (commandLineMatcher
-			    .group(COMMAND_LINE_PATTERN_PERCENT_GROUP) == null || commandLineMatcher
-			    .group(COMMAND_LINE_PATTERN_PERCENT_GROUP)
-			    .isEmpty());
-		    value = (commandLineMatcher
-			    .group(COMMAND_LINE_PATTERN_LEVEL_GROUP)
-			    .toUpperCase().compareTo("F") == 0) ? MAX_PERCENT_VALUE
-			    : Integer
-				    .parseInt(commandLineMatcher
-					    .group(COMMAND_LINE_PATTERN_LEVEL_VALUE_GROUP));
-		}
+                if (hasLevel) {
+                    percent = (commandLineMatcher
+                            .group(COMMAND_LINE_PATTERN_PERCENT_GROUP) == null || commandLineMatcher
+                            .group(COMMAND_LINE_PATTERN_PERCENT_GROUP)
+                            .isEmpty());
+                    value = (commandLineMatcher
+                            .group(COMMAND_LINE_PATTERN_LEVEL_GROUP)
+                            .toUpperCase().compareTo("F") == 0) ? MAX_PERCENT_VALUE
+                            : Integer
+                                    .parseInt(commandLineMatcher
+                                            .group(COMMAND_LINE_PATTERN_LEVEL_VALUE_GROUP));
+                }
 
-		if ((percent && value > MAX_PERCENT_VALUE)
-			|| value > MAX_DMX_VALUE) {
-		    throw new BadSyntaxException();
-		}
+                if ((percent && value > MAX_PERCENT_VALUE)
+                        || value > MAX_DMX_VALUE) {
+                    throw new BadSyntaxException();
+                }
 
-		// adding values to HashMap of values to push
+                // adding values to HashMap of values to push
 
-		byte dmxValue = (byte) value;
-		if (percent) {
-		    dmxValue = (byte) (value / 100.0 * 255);
-		}
-		for (int channel : channels) {
-		    valuesToPush.put(channel - 1, dmxValue);
-		}
-	    } else {
-		throw new BadSyntaxException();
-	    }
-	}
-	pushValuesInCurrentOutputDmxArray(valuesToPush);
-	logger.info("Command line parsed : " + commandLine);
+                byte dmxValue = (byte) value;
+                if (percent) {
+                    dmxValue = (byte) (value / 100.0 * 255);
+                }
+                for (int channel : channels) {
+                    valuesToPush.put(channel - 1, dmxValue);
+                }
+            } else {
+                throw new BadSyntaxException();
+            }
+        }
+        pushValuesInCurrentOutputDmxArray(valuesToPush);
+        logger.info("Command line parsed : " + commandLine);
 
     }
 
     private static void checkChannelNumber(final int channel)
-	    throws BadSyntaxException {
-	if (channel < MIN_CHANNEL_NUMBER || channel > MAX_CHANNEL_NUMBER) {
-	    throw new BadSyntaxException();
-	}
+            throws BadSyntaxException {
+        if (channel < MIN_CHANNEL_NUMBER || channel > MAX_CHANNEL_NUMBER) {
+            throw new BadSyntaxException();
+        }
     }
 
     private void resetCurrentOutputDmxArray() {
-	setCurrentOutputDmxArray(new byte[DMX_CHANNELS_COUNT]);
+        setCurrentOutputDmxArray(new byte[DMX_CHANNELS_COUNT]);
     }
 
     private void pushValuesInCurrentOutputDmxArray(
-	    final HashMap<Integer, Byte> valuesMap) {
-	if (!additiveModeEnabled) {
-	    resetCurrentOutputDmxArray();
-	}
-	for (Entry<Integer, Byte> value : valuesMap.entrySet()) {
-	    getCurrentOutputDmxArray()[value.getKey()] = value.getValue();
-	}
+            final HashMap<Integer, Byte> valuesMap) {
+        if (!additiveModeEnabled) {
+            resetCurrentOutputDmxArray();
+        }
+        for (Entry<Integer, Byte> value : valuesMap.entrySet()) {
+            getCurrentOutputDmxArray()[value.getKey()] = value.getValue();
+        }
     }
 
     private void initArtNetReceiver() {
-	this.artnetServer.addListener(new ArtNetServerListener() {
-	    @Override
-	    public void artNetPacketReceived(final ArtNetPacket artNetPacket) {
-		switch (artNetPacket.getType()) {
-		case ART_OUTPUT:
-		    ArtDmxPacket artDmxPacket = (ArtDmxPacket) artNetPacket;
-		    int subnet = artDmxPacket.getSubnetID();
-		    int universe = artDmxPacket.getUniverseID();
-		    System.arraycopy(artDmxPacket.getDmxData(), 0,
-			    inputDmxArrays[subnet][universe], 0,
-			    artDmxPacket.getNumChannels());
-		    break;
+        this.artnetServer.addListener(new ArtNetServerListener() {
+            @Override
+            public void artNetPacketReceived(final ArtNetPacket artNetPacket) {
+                switch (artNetPacket.getType()) {
+                case ART_OUTPUT:
+                    ArtDmxPacket artDmxPacket = (ArtDmxPacket) artNetPacket;
+                    int subnet = artDmxPacket.getSubnetID();
+                    int universe = artDmxPacket.getUniverseID();
+                    System.arraycopy(artDmxPacket.getDmxData(), 0,
+                            inputDmxArrays[subnet][universe], 0,
+                            artDmxPacket.getNumChannels());
+                    break;
 
-		default:
-		    break;
-		}
-	    }
+                default:
+                    break;
+                }
+            }
 
-	    @Override
-	    public void artNetServerStopped(final ArtNetServer artNetServer) {
-	    }
+            @Override
+            public void artNetServerStopped(final ArtNetServer artNetServer) {
+            }
 
-	    @Override
-	    public void artNetServerStarted(final ArtNetServer artNetServer) {
-	    }
+            @Override
+            public void artNetServerStarted(final ArtNetServer artNetServer) {
+            }
 
-	    @Override
-	    public void artNetPacketUnicasted(final ArtNetPacket artNetPacket) {
-	    }
+            @Override
+            public void artNetPacketUnicasted(final ArtNetPacket artNetPacket) {
+            }
 
-	    @Override
-	    public void artNetPacketBroadcasted(final ArtNetPacket artNetPacket) {
-	    }
-	});
+            @Override
+            public void artNetPacketBroadcasted(final ArtNetPacket artNetPacket) {
+            }
+        });
 
     }
 
@@ -309,10 +309,10 @@ public class ArtNetServerManager {
      * @param broadcastAddress
      */
     public void setBroadcastAddress(final String broadcastAddress) {
-	this.broadcastAddress = broadcastAddress;
-	if (this.artnetServer != null) {
-	    this.artnetServer.setBroadcastAddress(broadcastAddress);
-	}
+        this.broadcastAddress = broadcastAddress;
+        if (this.artnetServer != null) {
+            this.artnetServer.setBroadcastAddress(broadcastAddress);
+        }
     }
 
     /**
@@ -325,7 +325,7 @@ public class ArtNetServerManager {
      * @return the array
      */
     public byte[] getOutputDmxArray(final int subnet, final int universe) {
-	return outputDmxArrays[subnet][universe];
+        return outputDmxArrays[subnet][universe];
     }
 
     /**
@@ -334,7 +334,7 @@ public class ArtNetServerManager {
      * @return the array
      */
     public byte[] getCurrentOutputDmxArray() {
-	return getOutputDmxArray(this.serverSubnet, this.serverUniverse);
+        return getOutputDmxArray(this.serverSubnet, this.serverUniverse);
     }
 
     /**
@@ -348,9 +348,9 @@ public class ArtNetServerManager {
      *            the value of the dmx array
      */
     public void setOutputDmxArray(final int subnet, final int universe,
-	    final byte[] dmxArray) {
-	System.arraycopy(dmxArray, 0, outputDmxArrays[subnet][universe], 0,
-		DMX_CHANNELS_COUNT);
+            final byte[] dmxArray) {
+        System.arraycopy(dmxArray, 0, outputDmxArrays[subnet][universe], 0,
+                DMX_CHANNELS_COUNT);
     }
 
     /**
@@ -360,7 +360,7 @@ public class ArtNetServerManager {
      *            the value of the dmx array
      */
     public void setCurrentOutputDmxArray(final byte[] dmxArray) {
-	setOutputDmxArray(this.serverSubnet, this.serverUniverse, dmxArray);
+        setOutputDmxArray(this.serverSubnet, this.serverUniverse, dmxArray);
     }
 
     /**
@@ -373,7 +373,7 @@ public class ArtNetServerManager {
      * @return the array
      */
     public byte[] getInputDmxArray(final int subnet, final int universe) {
-	return inputDmxArrays[subnet][universe];
+        return inputDmxArrays[subnet][universe];
     }
 
     /**
@@ -383,7 +383,7 @@ public class ArtNetServerManager {
      * @return the array
      */
     public byte[] getCurrentInputDmxArray() {
-	return getInputDmxArray(this.serverSubnet, this.serverUniverse);
+        return getInputDmxArray(this.serverSubnet, this.serverUniverse);
     }
 
     /**
@@ -393,7 +393,7 @@ public class ArtNetServerManager {
      *            the value of the port
      */
     public void setInPort(final int inPort) {
-	this.inPort = inPort;
+        this.inPort = inPort;
     }
 
     /**
@@ -403,7 +403,7 @@ public class ArtNetServerManager {
      *            the value of the port
      */
     public void setOutPort(final int outPort) {
-	this.outPort = outPort;
+        this.outPort = outPort;
     }
 
     /**
@@ -413,8 +413,8 @@ public class ArtNetServerManager {
      *            the value of the subnet
      */
     public void setSubnet(final int subnet) {
-	this.serverSubnet = subnet;
-	fireSubnetValueChanged();
+        this.serverSubnet = subnet;
+        fireSubnetValueChanged();
     }
 
     /**
@@ -424,8 +424,8 @@ public class ArtNetServerManager {
      *            the value of the universe
      */
     public void setUniverse(final int universe) {
-	this.serverUniverse = universe;
-	fireUniverseValueChanged();
+        this.serverUniverse = universe;
+        fireUniverseValueChanged();
     }
 
     /**
@@ -435,8 +435,8 @@ public class ArtNetServerManager {
      *            true to enable the additive mode, false to disable
      */
     public void setAdditiveModeEnabled(final boolean additiveModeEnabled) {
-	this.additiveModeEnabled = additiveModeEnabled;
-	fireAdditiveModeValueChanged();
+        this.additiveModeEnabled = additiveModeEnabled;
+        fireAdditiveModeValueChanged();
     }
 
     /**
@@ -445,7 +445,7 @@ public class ArtNetServerManager {
      * @return the in port
      */
     public int getInPort() {
-	return this.inPort;
+        return this.inPort;
     }
 
     /**
@@ -454,7 +454,7 @@ public class ArtNetServerManager {
      * @return the out port
      */
     public int getOutPort() {
-	return this.outPort;
+        return this.outPort;
     }
 
     /**
@@ -463,7 +463,7 @@ public class ArtNetServerManager {
      * @return the dmx subnet
      */
     public int getSubnet() {
-	return this.serverSubnet;
+        return this.serverSubnet;
     }
 
     /**
@@ -472,7 +472,7 @@ public class ArtNetServerManager {
      * @return the dmx universe
      */
     public int getUniverse() {
-	return this.serverUniverse;
+        return this.serverUniverse;
     }
 
     /**
@@ -481,7 +481,7 @@ public class ArtNetServerManager {
      * @return the status of additive mode
      */
     public boolean isAdditiveModeEnabled() {
-	return this.additiveModeEnabled;
+        return this.additiveModeEnabled;
     }
 
     /**
@@ -491,8 +491,8 @@ public class ArtNetServerManager {
      *            the listener to add
      */
     public void addArtNetServerManagerChangedListener(
-	    final ArtNetServerManagerListener listener) {
-	this.artnetServerManagerChangedListeners.add(listener);
+            final ArtNetServerManagerListener listener) {
+        this.artnetServerManagerChangedListeners.add(listener);
     }
 
     /**
@@ -502,31 +502,31 @@ public class ArtNetServerManager {
      *            the listener to remove
      */
     public void removeArtNetServerManagerChangedListener(
-	    final ArtNetServerManagerListener listener) {
-	this.artnetServerManagerChangedListeners.remove(listener);
+            final ArtNetServerManagerListener listener) {
+        this.artnetServerManagerChangedListeners.remove(listener);
     }
 
     private void fireSubnetValueChanged() {
-	for (ArtNetServerManagerListener listener : this.artnetServerManagerChangedListeners) {
-	    SubnetValueChangedEvent e = new SubnetValueChangedEvent(
-		    this.serverSubnet);
-	    listener.subnetValueChanged(e);
-	}
+        for (ArtNetServerManagerListener listener : this.artnetServerManagerChangedListeners) {
+            SubnetValueChangedEvent e = new SubnetValueChangedEvent(
+                    this.serverSubnet);
+            listener.subnetValueChanged(e);
+        }
     }
 
     private void fireUniverseValueChanged() {
-	for (ArtNetServerManagerListener listener : this.artnetServerManagerChangedListeners) {
-	    UniverseValueChangedEvent e = new UniverseValueChangedEvent(
-		    this.serverUniverse);
-	    listener.universeValueChanged(e);
-	}
+        for (ArtNetServerManagerListener listener : this.artnetServerManagerChangedListeners) {
+            UniverseValueChangedEvent e = new UniverseValueChangedEvent(
+                    this.serverUniverse);
+            listener.universeValueChanged(e);
+        }
     }
 
     private void fireAdditiveModeValueChanged() {
-	for (ArtNetServerManagerListener listener : this.artnetServerManagerChangedListeners) {
-	    AdditiveModeValueChangedEvent e = new AdditiveModeValueChangedEvent(
-		    this.additiveModeEnabled);
-	    listener.additiveModeValueChanged(e);
-	}
+        for (ArtNetServerManagerListener listener : this.artnetServerManagerChangedListeners) {
+            AdditiveModeValueChangedEvent e = new AdditiveModeValueChangedEvent(
+                    this.additiveModeEnabled);
+            listener.additiveModeValueChanged(e);
+        }
     }
 }
