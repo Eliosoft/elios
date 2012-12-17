@@ -83,7 +83,7 @@ public final class Elios {
     /**
      * The version that we set has installed.
      */
-    private static final String ALREADY_INSTALLED_VERSION = "0.2";
+    private static final String ALREADY_INSTALLED_VERSION = "0.3-dev";
 
     /**
      * URL of the Eliosoft update site.
