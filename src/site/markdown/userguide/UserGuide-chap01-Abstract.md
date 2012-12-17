@@ -1,0 +1,30 @@
+Abstract
+========
+
+Elios is a free GUI which allows you to send DMX values to ArtNet nodes.
+Its goal is to help lighting technicians during installation and focus.
+
+It is developed in Java, so it is compatible with Windows, Linux and Mac OS.
+
+You can find more information about this software on our website : [http://www.eliosoft.net](http://www.eliosoft.net)
+
+More about the authors
+----------------------
+
+* Jeremie GASTON-RAOUL [jeremie.gastonraoul@free.fr](mailto:jeremie.gastonraoul@free.fr)
+* Alexandre COLLIGNON [alexandre@collign.net](mailto:alexandre@collign.net)
+
+Special Thanks
+--------------
+Special thanks to Christoph GUILLERMET, Nicolas MOREAU and Anne-Laure SALAUN for their precious help on the development of Elios.
+
+
+Licence and Source code
+-----------------------
+
+Elios is a free software released under the GPL License v3. A copy of this 
+license is available on the root folder of the application.
+
+The source code is freely available on our repository hosted by [github.com](http://github.com) :
+[http://repo.eliosoft.net](http://repo.eliosoft.net)
+
