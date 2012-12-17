@@ -48,7 +48,7 @@ import net.eliosoft.elios.main.Elios;
 
 /**
  * The view of application preferences.
- * 
+ *
  * @author Jeremie GASTON-RAOUL
  */
 public class PrefsView implements ViewInterface {
@@ -77,7 +77,7 @@ public class PrefsView implements ViewInterface {
 
     /**
      * The Constructor of the view.
-     * 
+     *
      * @param remoteModel
      *            the model associated to the view
      * @param localeModel
@@ -197,7 +197,7 @@ public class PrefsView implements ViewInterface {
 
     /**
      * Creates a panel for the general preferences.
-     * 
+     *
      * @return a panel containing input elements to set general preferences
      */
     private JPanel createGeneralPane() {
@@ -263,7 +263,7 @@ public class PrefsView implements ViewInterface {
 
     /**
      * Creates a panel for the http server preferences.
-     * 
+     *
      * @return a panel containing input elements to set http server preferences
      */
     private JPanel createHttpServerPane() {
@@ -302,7 +302,7 @@ public class PrefsView implements ViewInterface {
 
     /**
      * Returns the preferences panel component.
-     * 
+     *
      * @return the panel Component
      */
     @Override
@@ -312,7 +312,7 @@ public class PrefsView implements ViewInterface {
 
     /**
      * Adds an Action Listener to the Start ArtNet Button.
-     * 
+     *
      * @param actionListener
      *            the listener to add to the button
      */
@@ -322,7 +322,7 @@ public class PrefsView implements ViewInterface {
 
     /**
      * Removes an Action Listener to the Start ArtNet Button.
-     * 
+     *
      * @param actionListener
      *            the listener to remove to the button
      */
@@ -333,7 +333,7 @@ public class PrefsView implements ViewInterface {
 
     /**
      * Adds an Action Listener to the Stop ArtNet Button.
-     * 
+     *
      * @param actionListener
      *            the listener to add to the button
      */
@@ -343,7 +343,7 @@ public class PrefsView implements ViewInterface {
 
     /**
      * Removes an Action Listener to the Stop ArtNet Button.
-     * 
+     *
      * @param actionListener
      *            the listener to remove to the button
      */
@@ -354,7 +354,7 @@ public class PrefsView implements ViewInterface {
 
     /**
      * Add an Action Listener to the Enable Http server checkbox.
-     * 
+     *
      * @param actionListener
      *            the listener to add to the checkbox
      */
@@ -365,7 +365,7 @@ public class PrefsView implements ViewInterface {
 
     /**
      * Removes an Action Listener to the Enable Http server checkbox.
-     * 
+     *
      * @param actionListener
      *            the listener to remove to the checkbox
      */
@@ -376,7 +376,7 @@ public class PrefsView implements ViewInterface {
 
     /**
      * Add a {@link java.awt.event.ActionListener} to the lang combobox.
-     * 
+     *
      * @param l
      *            the listener to add to the lang combobox
      */

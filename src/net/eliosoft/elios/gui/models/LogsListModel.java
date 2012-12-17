@@ -29,7 +29,7 @@ import javax.swing.AbstractListModel;
 
 /**
  * A {@code ListModel} that wrap one or more {@code java.util.Logger}.
- * 
+ *
  * @author Jeremie GASTON-RAOUL
  * @author Alexandre COLLIGNON
  */
@@ -43,7 +43,7 @@ public class LogsListModel extends AbstractListModel {
     /**
      * Constructs a {@code LogsListModel} that wraps the
      * {@code java.util.Logger} given in argument.
-     * 
+     *
      */
     public LogsListModel() {
         logs = new ArrayList<LogRecord>();
@@ -51,7 +51,7 @@ public class LogsListModel extends AbstractListModel {
 
     /**
      * Adds a {@code java.util.Logger} to wrap.
-     * 
+     *
      * @param logger
      *            {@code java.util.Logger} to wrap
      */
@@ -77,7 +77,7 @@ public class LogsListModel extends AbstractListModel {
 
     /**
      * Adds a log record in the list.
-     * 
+     *
      * @param logRecord
      *            the log record to add
      */

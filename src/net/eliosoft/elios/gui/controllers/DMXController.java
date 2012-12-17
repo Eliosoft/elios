@@ -27,7 +27,7 @@ import net.eliosoft.elios.gui.views.DMXView;
 
 /**
  * The controller of the cues view.
- * 
+ *
  * @author Jeremie GASTON-RAOUL
  */
 public class DMXController {
@@ -37,7 +37,7 @@ public class DMXController {
 
     /**
      * The constructor of the DMXController class.
-     * 
+     *
      * @param dmxTableModel
      *            the dmx table model associated with this Controller
      * @param dmxView

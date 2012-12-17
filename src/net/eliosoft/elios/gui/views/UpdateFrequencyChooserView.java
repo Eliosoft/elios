@@ -14,7 +14,7 @@ import net.eliosoft.elios.gui.models.UpdateModel.Frequency;
 
 /**
  * A view that allow the user to choose the frequency of the update check.
- * 
+ *
  * @author acollign
  */
 public class UpdateFrequencyChooserView implements ViewInterface {
@@ -23,7 +23,7 @@ public class UpdateFrequencyChooserView implements ViewInterface {
 
     /**
      * Constructs an {@link UpdateFrequencyChooserView}.
-     * 
+     *
      * @param updateModel
      *            the underlying {@link UpdateModel}
      */
@@ -65,7 +65,7 @@ public class UpdateFrequencyChooserView implements ViewInterface {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see net.eliosoft.elios.gui.views.ViewInterface#getLocalizedTitle()
      */
     @Override

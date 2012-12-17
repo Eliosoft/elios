@@ -8,14 +8,14 @@ import java.util.prefs.Preferences;
 
 /**
  * A model that manage update frequency.
- * 
+ *
  * @author acollign
  */
 public class UpdateModel {
 
     /**
      * Update frequency.
-     * 
+     *
      * @author acollign
      */
     public enum Frequency {
@@ -50,7 +50,7 @@ public class UpdateModel {
 
         /**
          * Returns the key.
-         * 
+         *
          * @return the key
          */
         public String getKey() {
@@ -59,7 +59,7 @@ public class UpdateModel {
 
         /**
          * Returns the value.
-         * 
+         *
          * @return the value
          */
         public long getValue() {
@@ -84,7 +84,7 @@ public class UpdateModel {
     /**
      * Constructs an {@link UpdateModel} on top of the given {@link Preferences}
      * instance.
-     * 
+     *
      * @param prefs
      *            a {@link Preferences} used to fetch and store update frequency
      *            configuration
@@ -108,7 +108,7 @@ public class UpdateModel {
 
     /**
      * Returns the current frequency.
-     * 
+     *
      * @return the current frequency
      */
     public Frequency getFrequency() {
@@ -118,7 +118,7 @@ public class UpdateModel {
 
     /**
      * Save the frequency.
-     * 
+     *
      * @param freq
      *            frequency to save
      */
@@ -136,7 +136,7 @@ public class UpdateModel {
     /**
      * Returns true if the update info must be updated according to the
      * frequency, false otherwise.
-     * 
+     *
      * @return true if the update info must be updated according to the
      *         frequency, false otherwise
      */
@@ -156,7 +156,7 @@ public class UpdateModel {
 
     /**
      * Adds an {@link UpdateListener}.
-     * 
+     *
      * @param l
      *            an {@link UpdateListener}
      */
@@ -171,13 +171,13 @@ public class UpdateModel {
 
     /**
      * A listener of update frequency change.
-     * 
+     *
      * @author acollign
      */
     public interface UpdateListener {
         /**
          * Called when a new {@link Frequency} value has been saved.
-         * 
+         *
          * @param newValue
          *            the new {@link Frequency} value
          */

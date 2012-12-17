@@ -7,7 +7,7 @@ import javax.swing.DefaultComboBoxModel;
 /**
  * {@link javax.swing.ComboBoxModel} that wraps available locales for UI
  * translation.
- * 
+ *
  * @author acollign
  */
 public class LocaleComboBoxModel extends DefaultComboBoxModel {

@@ -11,7 +11,7 @@ import java.util.prefs.Preferences;
 
 /**
  * A {@link ReleaseInformationRepository} implementation.
- * 
+ *
  * @author acollign
  */
 public class ReleaseInformationRepositoryImpl implements
@@ -41,7 +41,7 @@ public class ReleaseInformationRepositoryImpl implements
     /**
      * Constructs a {@link ReleaseInformationRepositoryImpl} according to the
      * configuration stored in the {@link Preferences}.
-     * 
+     *
      * @param prefs
      *            a {@link Preferences} instance
      */
@@ -57,7 +57,7 @@ public class ReleaseInformationRepositoryImpl implements
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see net.eliosoft.elios.server.ReleaseInformationRepository#getInstalled()
      */
     @Override
@@ -67,7 +67,7 @@ public class ReleaseInformationRepositoryImpl implements
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see net.eliosoft.elios.server.ReleaseInformationRepository#getLatest()
      */
     @Override
@@ -83,7 +83,7 @@ public class ReleaseInformationRepositoryImpl implements
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see net.eliosoft.elios.server.ReleaseInformationRepository#getByReleaseCode(net.eliosoft.elios.server.ReleaseCode)
      */
     @Override
@@ -142,7 +142,7 @@ public class ReleaseInformationRepositoryImpl implements
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see net.eliosoft.elios.server.ReleaseInformationRepository#getInstalledReleaseCode()
      */
     @Override

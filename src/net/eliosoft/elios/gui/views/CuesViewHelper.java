@@ -7,7 +7,7 @@ import javax.swing.JOptionPane;
 
 /**
  * This class provides some useful static method for Cue views.
- * 
+ *
  * @author acollign
  * @since Feb 3, 2011
  */
@@ -22,7 +22,7 @@ public final class CuesViewHelper {
 
     /**
      * Ask user for confirmation before to delete a cue.
-     * 
+     *
      * @param parent
      *            the parent component of the dialog
      * @param cueName
@@ -46,7 +46,7 @@ public final class CuesViewHelper {
      * empty string after trim. The null value is possible if the user cancels
      * the operation or closes the dialog The input is filled with the default
      * name given in argument.
-     * 
+     *
      * @param parent
      *            the parent component of the dialog
      * @param defaultName
@@ -67,7 +67,7 @@ public final class CuesViewHelper {
 
     /**
      * Prompts a dialog that print an error.
-     * 
+     *
      * @param parent
      *            the parent component of the dialog
      * @param exception

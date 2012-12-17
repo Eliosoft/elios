@@ -34,7 +34,7 @@ import com.sun.net.httpserver.HttpServer;
 
 /**
  * The Manager of the Http Server.
- * 
+ *
  * @author Jeremie GASTON-RAOUL
  */
 public class HttpServerManager {
@@ -62,7 +62,7 @@ public class HttpServerManager {
 
     /**
      * get the singleton instance of the HttpServerManager.
-     * 
+     *
      * @return the instance
      */
     public static HttpServerManager getInstance() {
@@ -74,7 +74,7 @@ public class HttpServerManager {
 
     /**
      * Starts the Http Server.
-     * 
+     *
      * @throws IOException
      *             if the server is unable to start
      */
@@ -97,7 +97,7 @@ public class HttpServerManager {
 
     /**
      * set the in port of the server.
-     * 
+     *
      * @param inPort
      *            the value of the port
      */

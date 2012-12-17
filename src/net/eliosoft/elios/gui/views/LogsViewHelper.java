@@ -9,7 +9,7 @@ import javax.swing.JLabel;
 /**
  * Helper class for building and decorate components which display log
  * information.
- * 
+ *
  * @author acollign
  * @since Feb 2, 2011
  */
@@ -26,7 +26,7 @@ public final class LogsViewHelper {
 
     /**
      * Creates a {@link JLabel} that displays {@link LogRecord} information.
-     * 
+     *
      * @param record
      *            the {@link LogRecord} to display
      * @return a decorated {@link JLabel} that displays the {@link LogRecord}
@@ -39,7 +39,7 @@ public final class LogsViewHelper {
     /**
      * A {@link LogLabelDecorator} aims to update a {@link JLabel} according to
      * a {@link LogRecord}.
-     * 
+     *
      * @author acollign
      * @since Feb 2, 2011
      */
@@ -48,7 +48,7 @@ public final class LogsViewHelper {
         /**
          * Update the given label according to the {@link LogRecord} text value
          * and states.
-         * 
+         *
          * @param label
          *            {@link JLabel} that must be decorated
          * @param record

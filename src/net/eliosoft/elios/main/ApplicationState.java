@@ -5,14 +5,14 @@ import java.util.ArrayList;
 /**
  * This class represents the current state of the application. The default state
  * is ApplicationState.State.RUNNING.
- * 
+ *
  * @author acollign
  */
 public class ApplicationState {
 
     /**
      * The available state.
-     * 
+     *
      * @author acollign
      */
     enum State {
@@ -21,14 +21,14 @@ public class ApplicationState {
 
     /**
      * Listener that could be registered to the {@link ApplicationState}.
-     * 
+     *
      * @author acollign
      */
     public interface Listener {
 
         /**
          * Call when the internal state of the {@link ApplicationState} change.
-         * 
+         *
          * @param oldState
          *            the old state
          * @param newState
@@ -50,7 +50,7 @@ public class ApplicationState {
     /**
      * Changes the current {@link State}. Listeners are fired that the state has
      * changed.
-     * 
+     *
      * @param newState
      *            the new {@link State}.
      */
@@ -63,7 +63,7 @@ public class ApplicationState {
 
     /**
      * Fires the change event to all {@link Listener}.
-     * 
+     *
      * @param oldState
      *            the old {@link State}
      * @param newState
@@ -77,7 +77,7 @@ public class ApplicationState {
 
     /**
      * Registers a {@link Listener}.
-     * 
+     *
      * @param l
      *            a {@link Listener}
      */

@@ -29,7 +29,7 @@ import javax.swing.SwingConstants;
 
 /**
  * The view of the About. This view displays the About of the project.
- * 
+ *
  * @author Jeremie GASTON-RAOUL
  */
 public class AboutView implements ViewInterface {
@@ -51,7 +51,7 @@ public class AboutView implements ViewInterface {
 
     /**
      * Returns the about panel.
-     * 
+     *
      * @return the view component
      */
     @Override

@@ -26,7 +26,7 @@ import java.util.logging.Logger;
 
 /**
  * The Manager of the Application Loggers.
- * 
+ *
  * @author Jeremie GASTON-RAOUL
  */
 public class LoggersManager {
@@ -39,7 +39,7 @@ public class LoggersManager {
 
     /**
      * get the singleton instance of the LoggersManager.
-     * 
+     *
      * @return the instance
      */
     public static LoggersManager getInstance() {
@@ -51,7 +51,7 @@ public class LoggersManager {
 
     /**
      * gets the logger with the given name.
-     * 
+     *
      * @param loggerName
      *            the name of the logger to get
      * @return the logger with the corresponding name
@@ -65,7 +65,7 @@ public class LoggersManager {
 
     /**
      * get all the loggers of the application.
-     * 
+     *
      * @return a list containing all the loggers
      */
     public List<Logger> getLoggersList() {

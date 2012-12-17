@@ -21,7 +21,7 @@ package net.eliosoft.elios.server.events;
 
 /**
  * Event fired when universe value has changed.
- * 
+ *
  * @author Jeremie GASTON-RAOUL
  */
 public class UniverseValueChangedEvent {
@@ -29,7 +29,7 @@ public class UniverseValueChangedEvent {
 
     /**
      * Constructor method to instantiate a new event.
-     * 
+     *
      * @param universe
      *            the new universe value
      */
@@ -39,7 +39,7 @@ public class UniverseValueChangedEvent {
 
     /**
      * Returns the universe value of the event.
-     * 
+     *
      * @return the new universe value
      */
     public int getUniverse() {

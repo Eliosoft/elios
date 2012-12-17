@@ -8,7 +8,7 @@ import javax.swing.JLabel;
 
 /**
  * This class represent a custom label for a log record.
- * 
+ *
  * @author Jeremie GASTON-RAOUL
  */
 public class JLogRecordLabel extends JLabel {
@@ -19,7 +19,7 @@ public class JLogRecordLabel extends JLabel {
 
     /**
      * The default constructor.
-     * 
+     *
      * @param record
      *            the log record of the label
      */

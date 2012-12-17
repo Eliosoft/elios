@@ -36,7 +36,7 @@ import net.eliosoft.elios.server.BadSyntaxException;
 
 /**
  * The controller of the remote view.
- * 
+ *
  * @author Jeremie GASTON-RAOUL
  */
 public class RemoteController {
@@ -49,7 +49,7 @@ public class RemoteController {
 
     /**
      * The default constructor for the remote controller.
-     * 
+     *
      * @param remoteModel
      *            model that contains the state of the remote.
      * @param remoteView

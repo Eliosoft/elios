@@ -9,7 +9,7 @@ import com.google.gson.Gson;
 
 /**
  * Update information value object.
- * 
+ *
  * @author E362200
  */
 public class ReleaseInformation {
@@ -28,7 +28,7 @@ public class ReleaseInformation {
 
     /**
      * Constructs a {@link ReleaseInformation} with the given parameters.
-     * 
+     *
      * @param releaseCode
      *            the release code
      * @param downloadUrl
@@ -56,7 +56,7 @@ public class ReleaseInformation {
 
     /**
      * Returns the release code.
-     * 
+     *
      * @return the release code
      */
     public ReleaseCode getReleaseCode() {
@@ -65,7 +65,7 @@ public class ReleaseInformation {
 
     /**
      * Sets the release code.
-     * 
+     *
      * @param releaseCode
      *            the release code
      */
@@ -75,7 +75,7 @@ public class ReleaseInformation {
 
     /**
      * Sets the {@link URL} of the download page.
-     * 
+     *
      * @param downloadUrl
      *            a string representation of the URL
      * @throws MalformedURLException
@@ -87,7 +87,7 @@ public class ReleaseInformation {
 
     /**
      * Sets the {@link URL} of the release note page.
-     * 
+     *
      * @param releaseNoteUrl
      *            a string representation of the URL of the release note
      * @throws MalformedURLException
@@ -103,7 +103,7 @@ public class ReleaseInformation {
 
     /**
      * Returns the release time.
-     * 
+     *
      * @return the release time
      */
     public long getReleaseTime() {
@@ -112,7 +112,7 @@ public class ReleaseInformation {
 
     /**
      * Returns an {@link URL} that points to the download page.
-     * 
+     *
      * @return the {@link URL} of the download page
      */
     public URL getDownloadUrl() {
@@ -121,7 +121,7 @@ public class ReleaseInformation {
 
     /**
      * Returns the {@link URL} that points to the release note.
-     * 
+     *
      * @return the {@link URL} of the release note
      */
     public URL getReleaseNoteUrl() {
@@ -189,7 +189,7 @@ public class ReleaseInformation {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see java.lang.Object#toString()
      */
     @Override
@@ -203,7 +203,7 @@ public class ReleaseInformation {
 
     /**
      * Returns a {@link ReleaseInformation} from the json string.
-     * 
+     *
      * @param json
      *            a json string
      * @return a {@link ReleaseInformation} from the json string

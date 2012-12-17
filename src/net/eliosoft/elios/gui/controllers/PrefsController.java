@@ -37,7 +37,7 @@ import net.eliosoft.elios.gui.views.PrefsView;
 
 /**
  * The Controller of the prefs view.
- * 
+ *
  * @author Jeremie GASTON-RAOUL
  */
 public class PrefsController {
@@ -47,7 +47,7 @@ public class PrefsController {
 
     /**
      * The default constructor for the prefs controller.
-     * 
+     *
      * @param remoteModel
      *            the model associated to the controller
      * @param localeModel

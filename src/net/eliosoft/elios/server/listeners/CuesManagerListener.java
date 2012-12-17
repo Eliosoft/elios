@@ -25,13 +25,13 @@ import net.eliosoft.elios.server.events.CueRemovedEvent;
 /**
  * This interface describes the methods that must be implemented by classes
  * which want to be a listener of the Cues manager.
- * 
+ *
  * @author Jeremie GASTON-RAOUL
  */
 public interface CuesManagerListener {
     /**
      * This method is called when a cue has been added to the cuesList.
-     * 
+     *
      * @param event
      *            the event corresponding to the add of a cue
      */
@@ -39,7 +39,7 @@ public interface CuesManagerListener {
 
     /**
      * This method is called when a cue has been removed from the list.
-     * 
+     *
      * @param event
      *            the event corresponding to the remove of a cue
      */

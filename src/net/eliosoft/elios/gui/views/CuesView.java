@@ -43,7 +43,7 @@ import net.eliosoft.elios.server.Cue;
 
 /**
  * The view of the Cues. This view displays and manages the cues.
- * 
+ *
  * @author Jeremie GASTON-RAOUL
  */
 public class CuesView implements ViewInterface {
@@ -58,7 +58,7 @@ public class CuesView implements ViewInterface {
 
     /**
      * The constructor of the class.
-     * 
+     *
      * @param remoteModel
      *            the model associated to the view
      */
@@ -141,7 +141,7 @@ public class CuesView implements ViewInterface {
 
     /**
      * Returns the cues panel.
-     * 
+     *
      * @return the view component
      */
     @Override
@@ -151,7 +151,7 @@ public class CuesView implements ViewInterface {
 
     /**
      * Adds an action listener to the store button.
-     * 
+     *
      * @param listener
      *            the listener to add
      */
@@ -161,7 +161,7 @@ public class CuesView implements ViewInterface {
 
     /**
      * Removes an action listener to the store button.
-     * 
+     *
      * @param listener
      *            the listener to remove
      */
@@ -171,7 +171,7 @@ public class CuesView implements ViewInterface {
 
     /**
      * Adds an action listener to the load button.
-     * 
+     *
      * @param listener
      *            the listener to add
      */
@@ -181,7 +181,7 @@ public class CuesView implements ViewInterface {
 
     /**
      * Removes an action listener to the load button.
-     * 
+     *
      * @param listener
      *            the listener to remove
      */
@@ -191,7 +191,7 @@ public class CuesView implements ViewInterface {
 
     /**
      * Adds an action listener to the remove button.
-     * 
+     *
      * @param listener
      *            the listener to add
      */
@@ -201,7 +201,7 @@ public class CuesView implements ViewInterface {
 
     /**
      * Removes an action listener to the remove button.
-     * 
+     *
      * @param listener
      *            the listener to remove
      */
@@ -211,7 +211,7 @@ public class CuesView implements ViewInterface {
 
     /**
      * Gets the selected cue.
-     * 
+     *
      * @return the selected cue
      */
     public Cue getSelectedCue() {

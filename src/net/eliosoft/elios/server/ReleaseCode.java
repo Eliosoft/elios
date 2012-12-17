@@ -6,7 +6,7 @@ import java.util.regex.Pattern;
 /**
  * This class represents a release code. The valid code matches the
  * {@link net.eliosoft.elios.server.ReleaseCode#VALIDATION_PATTERN} pattern.
- * 
+ *
  * @author E362200
  */
 public class ReleaseCode implements Comparable<ReleaseCode> {
@@ -30,7 +30,7 @@ public class ReleaseCode implements Comparable<ReleaseCode> {
 
     /**
      * Constructs a {@link ReleaseCode} with the given code.
-     * 
+     *
      * @param code
      *            the code non null string
      */
@@ -49,7 +49,7 @@ public class ReleaseCode implements Comparable<ReleaseCode> {
 
     /**
      * Creates a fresh new {@link ReleaseCode}.
-     * 
+     *
      * @param code
      *            the code that identified the release
      * @return a newly create {@link ReleaseCode}
@@ -60,7 +60,7 @@ public class ReleaseCode implements Comparable<ReleaseCode> {
 
     /**
      * Returns the code.
-     * 
+     *
      * @return the code
      */
     public String getCode() {
@@ -69,7 +69,7 @@ public class ReleaseCode implements Comparable<ReleaseCode> {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see java.lang.Object#hashCode()
      */
     @Override
@@ -82,7 +82,7 @@ public class ReleaseCode implements Comparable<ReleaseCode> {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see java.lang.Object#equals(java.lang.Object)
      */
     @Override
@@ -109,7 +109,7 @@ public class ReleaseCode implements Comparable<ReleaseCode> {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see java.lang.Comparable#compareTo(java.lang.Object)
      */
     @Override
@@ -126,7 +126,7 @@ public class ReleaseCode implements Comparable<ReleaseCode> {
 
     /**
      * Extracts a {@link Double} representation of the code.
-     * 
+     *
      * @param rc
      *            a {@link ReleaseCode}
      * @return a {@link Double} representation of the code
@@ -144,7 +144,7 @@ public class ReleaseCode implements Comparable<ReleaseCode> {
     /**
      * Returns true if the current ReleaseCode is associated to a release under
      * development.
-     * 
+     *
      * @return true if the current ReleaseCode is associated to a release under
      *         development
      */
@@ -155,7 +155,7 @@ public class ReleaseCode implements Comparable<ReleaseCode> {
     /**
      * Returns true if the current release code is older that the given one,
      * false otherwise.
-     * 
+     *
      * @param code
      *            a {@link ReleaseCode} instance
      * @return true if the current release code is older than the given one,
@@ -174,7 +174,7 @@ public class ReleaseCode implements Comparable<ReleaseCode> {
     /**
      * Returns true if the current release code is newer than the given one,
      * false otherwise.
-     * 
+     *
      * @param code
      *            a {@link ReleaseCode} instance
      * @return true if the current release code is newer than the given one,

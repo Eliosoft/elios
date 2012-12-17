@@ -42,7 +42,7 @@ import artnet4j.packets.ArtNetPacket;
 
 /**
  * The Manager of the Artnet Server.
- * 
+ *
  * @author Jeremie GASTON-RAOUL
  */
 public class ArtNetServerManager {
@@ -107,7 +107,7 @@ public class ArtNetServerManager {
 
     /**
      * get the singleton instance of the ArtnetServerManager.
-     * 
+     *
      * @return the instance
      */
     public static ArtNetServerManager getInstance() {
@@ -134,7 +134,7 @@ public class ArtNetServerManager {
 
     /**
      * Starts the ArtNet Server.
-     * 
+     *
      * @throws ArtNetException
      *             if a server is already running
      * @throws SocketException
@@ -163,7 +163,7 @@ public class ArtNetServerManager {
 
     /**
      * Process the value of the command line.
-     * 
+     *
      * @param commandLine
      *            the command line to process
      * @throws BadSyntaxException
@@ -306,7 +306,7 @@ public class ArtNetServerManager {
 
     /**
      * set the broadcast address.
-     * 
+     *
      * @param broadcastAddress
      */
     public void setBroadcastAddress(final String broadcastAddress) {
@@ -318,7 +318,7 @@ public class ArtNetServerManager {
 
     /**
      * get the server output dmx array for a given subnet and universe.
-     * 
+     *
      * @param subnet
      *            the subnet to select
      * @param universe
@@ -331,7 +331,7 @@ public class ArtNetServerManager {
 
     /**
      * get the server current output dmx array.
-     * 
+     *
      * @return the array
      */
     public byte[] getCurrentOutputDmxArray() {
@@ -340,7 +340,7 @@ public class ArtNetServerManager {
 
     /**
      * set the server output dmx array for a given subnet and universe.
-     * 
+     *
      * @param subnet
      *            the subnet to select
      * @param universe
@@ -356,7 +356,7 @@ public class ArtNetServerManager {
 
     /**
      * set the server current output dmx array.
-     * 
+     *
      * @param dmxArray
      *            the value of the dmx array
      */
@@ -366,7 +366,7 @@ public class ArtNetServerManager {
 
     /**
      * get the server input dmx array for a given subnet and universe.
-     * 
+     *
      * @param subnet
      *            the subnet to select
      * @param universe
@@ -380,7 +380,7 @@ public class ArtNetServerManager {
     /**
      * get the server input dmx array with current server subnet and universe
      * settings.
-     * 
+     *
      * @return the array
      */
     public byte[] getCurrentInputDmxArray() {
@@ -389,7 +389,7 @@ public class ArtNetServerManager {
 
     /**
      * set the in port of the server.
-     * 
+     *
      * @param inPort
      *            the value of the port
      */
@@ -399,7 +399,7 @@ public class ArtNetServerManager {
 
     /**
      * set the out port of the server.
-     * 
+     *
      * @param outPort
      *            the value of the port
      */
@@ -409,7 +409,7 @@ public class ArtNetServerManager {
 
     /**
      * set the dmx subnet.
-     * 
+     *
      * @param subnet
      *            the value of the subnet
      */
@@ -420,7 +420,7 @@ public class ArtNetServerManager {
 
     /**
      * set the dmx universe.
-     * 
+     *
      * @param universe
      *            the value of the universe
      */
@@ -431,7 +431,7 @@ public class ArtNetServerManager {
 
     /**
      * Enable or disable the additive mode.
-     * 
+     *
      * @param additiveModeEnabled
      *            true to enable the additive mode, false to disable
      */
@@ -442,7 +442,7 @@ public class ArtNetServerManager {
 
     /**
      * Returns the in port.
-     * 
+     *
      * @return the in port
      */
     public int getInPort() {
@@ -451,7 +451,7 @@ public class ArtNetServerManager {
 
     /**
      * Returns the out port.
-     * 
+     *
      * @return the out port
      */
     public int getOutPort() {
@@ -460,7 +460,7 @@ public class ArtNetServerManager {
 
     /**
      * Returns the dmx subnet.
-     * 
+     *
      * @return the dmx subnet
      */
     public int getSubnet() {
@@ -469,7 +469,7 @@ public class ArtNetServerManager {
 
     /**
      * Returns the dmx universe.
-     * 
+     *
      * @return the dmx universe
      */
     public int getUniverse() {
@@ -478,7 +478,7 @@ public class ArtNetServerManager {
 
     /**
      * Returns the status of the additive mode.
-     * 
+     *
      * @return the status of additive mode
      */
     public boolean isAdditiveModeEnabled() {
@@ -487,7 +487,7 @@ public class ArtNetServerManager {
 
     /**
      * Adds an element to the list of listener of the artnet server manager.
-     * 
+     *
      * @param listener
      *            the listener to add
      */
@@ -498,7 +498,7 @@ public class ArtNetServerManager {
 
     /**
      * Removes an element to the list of listener of the artnet server manager.
-     * 
+     *
      * @param listener
      *            the listener to remove
      */

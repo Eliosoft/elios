@@ -32,19 +32,19 @@ import net.eliosoft.elios.server.ReleaseInformationRepository;
 /**
  * A convenient builder that creates a {@link JDialog} which display the data of
  * a {@link ReleaseInformation}.
- * 
+ *
  * <code>new ReleaseInformationDialogBuilder(frame, repo).forReleaseCode(
 				new ReleaseCode("0.2-dev")).build()</code>
- * 
+ *
  * @author E362200
  */
 public class ReleaseInformationDialogBuilder {
 
     /**
      * A simple interface to apply the GOF {@link Builder} pattern.
-     * 
+     *
      * @author E362200
-     * 
+     *
      * @param <T>
      *            the object built by the implementation
      */
@@ -52,7 +52,7 @@ public class ReleaseInformationDialogBuilder {
 
         /**
          * Build an instance of T.
-         * 
+         *
          * @return an instance of T
          */
         T build();
@@ -74,7 +74,7 @@ public class ReleaseInformationDialogBuilder {
      * Creates a {@link ReleaseInformationDialogBuilder}. The parent
      * {@link Frame} will be used as a parent of the created {@link JDialog},
      * the {@link ReleaseInformationRepository} as a source of data.
-     * 
+     *
      * @param parent
      *            the parent of the {@link JDialog} that will be created
      * @param repository
@@ -99,7 +99,7 @@ public class ReleaseInformationDialogBuilder {
     /**
      * Build the {@link JDialog} of the release identified by the
      * {@link ReleaseCode}.
-     * 
+     *
      * @param code
      *            the {@link ReleaseCode} of the release to display
      * @return the built dialog
@@ -230,7 +230,7 @@ public class ReleaseInformationDialogBuilder {
     /**
      * Defines the release code that identified the {@link ReleaseInformation}
      * to display.
-     * 
+     *
      * @param code
      *            the string representation of the release code that identified
      *            the {@link ReleaseInformation} to display
@@ -244,7 +244,7 @@ public class ReleaseInformationDialogBuilder {
     /**
      * Defines the release code that identified the {@link ReleaseInformation}
      * to display.
-     * 
+     *
      * @param code
      *            the {@link ReleaseCode} that identified the
      *            {@link ReleaseInformation} to display

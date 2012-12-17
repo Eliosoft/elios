@@ -33,7 +33,7 @@ import net.eliosoft.elios.gui.models.RemoteModel;
 /**
  * The view of the Logs Line. This view displays the last line of logs in a text
  * field.
- * 
+ *
  * @author Jeremie GASTON-RAOUL
  */
 public class LogsLineView implements ViewInterface {
@@ -46,7 +46,7 @@ public class LogsLineView implements ViewInterface {
 
     /**
      * The constructor of the class.
-     * 
+     *
      * @param remoteModel
      *            the model associated with this view
      */
@@ -82,7 +82,7 @@ public class LogsLineView implements ViewInterface {
 
     /**
      * Returns the log field.
-     * 
+     *
      * @return the log field of the view
      */
     @Override

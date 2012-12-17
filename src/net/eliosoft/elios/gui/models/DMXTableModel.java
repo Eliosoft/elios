@@ -7,7 +7,7 @@ import net.eliosoft.elios.server.ArtNetServerManager;
 
 /**
  * This is the model of the DMX input table.
- * 
+ *
  * @author Jeremie GASTON-RAOUL
  */
 public class DMXTableModel extends DefaultTableModel {
@@ -32,7 +32,7 @@ public class DMXTableModel extends DefaultTableModel {
 
     /**
      * Default constructor of the class.
-     * 
+     *
      * @param serverManager
      *            the server manager used by the model
      */
@@ -85,7 +85,7 @@ public class DMXTableModel extends DefaultTableModel {
 
     /**
      * get the table row headers.
-     * 
+     *
      * @return an integer array representing the row headers
      */
     public Integer[] getRowHeaders() {
@@ -101,7 +101,7 @@ public class DMXTableModel extends DefaultTableModel {
 
     /**
      * Gets the status of input enabling.
-     * 
+     *
      * @return true if input is enabled, false if output is enabled
      */
     public boolean isInputEnabled() {
@@ -110,7 +110,7 @@ public class DMXTableModel extends DefaultTableModel {
 
     /**
      * Set the status of input enabling.
-     * 
+     *
      * @param inputEnabled
      *            the status of input enabling
      */

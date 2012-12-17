@@ -10,7 +10,7 @@ import com.sun.net.httpserver.HttpHandler;
 
 /**
  * @author jeremie
- * 
+ *
  */
 public class ResourceHttpHandler implements HttpHandler {
 

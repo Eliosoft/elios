@@ -26,13 +26,13 @@ import net.eliosoft.elios.server.events.UniverseValueChangedEvent;
 /**
  * This interface describes the methods that must be implemented by classes
  * which want to be a listener of the ArtNet server manager.
- * 
+ *
  * @author Jeremie GASTON-RAOUL
  */
 public interface ArtNetServerManagerListener {
     /**
      * This method is called when the value of the subnet has changed.
-     * 
+     *
      * @param event
      *            the event corresponding to the change of the subnet
      */
@@ -40,7 +40,7 @@ public interface ArtNetServerManagerListener {
 
     /**
      * This method is called when the value of the universe has changed.
-     * 
+     *
      * @param event
      *            the event corresponding to the change of the universe
      */
@@ -48,7 +48,7 @@ public interface ArtNetServerManagerListener {
 
     /**
      * This method is called when the value of the additive mode has changed.
-     * 
+     *
      * @param event
      *            the event corresponding to the change of the additive mode
      */

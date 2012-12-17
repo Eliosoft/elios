@@ -29,13 +29,13 @@ import net.eliosoft.elios.server.events.AdditiveModeValueChangedEvent;
 /**
  * This interface describes the methods that must be implemented by classes
  * which want to be a listener of the remote model.
- * 
+ *
  * @author Jeremie GASTON-RAOUL
  */
 public interface RemoteModelListener {
     /**
      * This method is called when the value of the command line has changed.
-     * 
+     *
      * @param event
      *            the event corresponding to the change of the command line
      */
@@ -43,7 +43,7 @@ public interface RemoteModelListener {
 
     /**
      * This method is called when the ArtNet Server is started.
-     * 
+     *
      * @param event
      *            the event corresponding to the start of the server
      */
@@ -51,7 +51,7 @@ public interface RemoteModelListener {
 
     /**
      * This method is called when the ArtNet Server is stopped.
-     * 
+     *
      * @param event
      *            the event corresponding to the stop of the server
      */
@@ -59,7 +59,7 @@ public interface RemoteModelListener {
 
     /**
      * This method is called when the Http Server is started.
-     * 
+     *
      * @param event
      *            the event corresponding to the start of the server
      */
@@ -67,7 +67,7 @@ public interface RemoteModelListener {
 
     /**
      * This method is called when the Http Server is stopped.
-     * 
+     *
      * @param event
      *            the event corresponding to the stop of the server
      */
@@ -75,7 +75,7 @@ public interface RemoteModelListener {
 
     /**
      * This method is called when the value of the additive mode has changed.
-     * 
+     *
      * @param event
      *            the event corresponding to the change of the additive mode
      */

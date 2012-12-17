@@ -27,7 +27,7 @@ import net.eliosoft.elios.gui.views.LogsView;
 
 /**
  * The controller of the log view.
- * 
+ *
  * @author Jeremie GASTON-RAOUL
  */
 public class LogsController {
@@ -37,7 +37,7 @@ public class LogsController {
 
     /**
      * The constructor of the LogsController class.
-     * 
+     *
      * @param remoteModel
      *            the model associated with this Controller
      * @param logsView

@@ -29,7 +29,7 @@ import net.eliosoft.elios.gui.models.RemoteModel;
 /**
  * The view of DMX table. This class display DMX values in input or output of
  * the server
- * 
+ *
  * @author Jeremie GASTON-RAOUL
  */
 public class DMXView implements ViewInterface {
@@ -45,7 +45,7 @@ public class DMXView implements ViewInterface {
 
     /**
      * The constructor of the DMX View.
-     * 
+     *
      * @param remoteModel
      *            the RemoteModel used by the view
      * @param tableModel
@@ -163,7 +163,7 @@ public class DMXView implements ViewInterface {
 
     /**
      * Add an action listener to in and out radio buttons.
-     * 
+     *
      * @param actionListener
      *            the listener to add
      */
@@ -174,7 +174,7 @@ public class DMXView implements ViewInterface {
 
     /**
      * Remove an action listener from in and out radion buttons.
-     * 
+     *
      * @param actionListener
      *            the listener to remove
      */
@@ -194,7 +194,7 @@ public class DMXView implements ViewInterface {
 
     /**
      * Returns the DMX panel of the view.
-     * 
+     *
      * @return the DMX panel
      */
     @Override

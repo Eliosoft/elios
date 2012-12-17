@@ -21,9 +21,9 @@ package net.eliosoft.elios.server;
 
 /**
  * An object representing a DMX universe state.
- * 
+ *
  * @author Jeremie GASTON-RAOUL
- * 
+ *
  */
 public class Cue {
     private String name;
@@ -39,7 +39,7 @@ public class Cue {
 
     /**
      * The constructor method for the cue object.
-     * 
+     *
      * @param name
      *            the name of the cue
      * @param dmxArray
@@ -53,7 +53,7 @@ public class Cue {
 
     /**
      * Returns the name.
-     * 
+     *
      * @return the name
      */
     public String getName() {
@@ -62,7 +62,7 @@ public class Cue {
 
     /**
      * Sets the name.
-     * 
+     *
      * @param name
      *            the name to set
      */
@@ -72,7 +72,7 @@ public class Cue {
 
     /**
      * Return the DMX Array.
-     * 
+     *
      * @return the dmxArray
      */
     public byte[] getDmxArray() {
@@ -81,7 +81,7 @@ public class Cue {
 
     /**
      * Sets the DMX Array.
-     * 
+     *
      * @param dmxArray
      *            the dmxArray to set
      */

@@ -43,7 +43,7 @@ import net.eliosoft.elios.main.Elios;
 
 /**
  * The view of the logs. This class print logs in a list.
- * 
+ *
  * @author Jeremie GASTON-RAOUL
  */
 public class LogsView implements ViewInterface {
@@ -59,7 +59,7 @@ public class LogsView implements ViewInterface {
 
     /**
      * The constructor of the Logs View.
-     * 
+     *
      * @param remoteModel
      *            the RemoteModel used by the view
      */
@@ -122,7 +122,7 @@ public class LogsView implements ViewInterface {
 
     /**
      * Returns the logs panel of the view.
-     * 
+     *
      * @return the logs panel
      */
     @Override
@@ -132,7 +132,7 @@ public class LogsView implements ViewInterface {
 
     /**
      * Adds an action listener to the clear logs button.
-     * 
+     *
      * @param listener
      *            the listener to add
      */
@@ -142,7 +142,7 @@ public class LogsView implements ViewInterface {
 
     /**
      * Removes an action listener to the clear logs button.
-     * 
+     *
      * @param listener
      *            the listener to remove
      */

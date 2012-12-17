@@ -29,7 +29,7 @@ import net.eliosoft.elios.server.listeners.CuesManagerListener;
 
 /**
  * A {@code ListModel} that wrap a CuesList.
- * 
+ *
  * @author Jeremie GASTON-RAOUL
  */
 public class CuesListModel extends AbstractListModel {
@@ -72,7 +72,7 @@ public class CuesListModel extends AbstractListModel {
 
     /**
      * add a cue to the cuesList.
-     * 
+     *
      * @param cue
      *            the cue to add
      */
@@ -84,7 +84,7 @@ public class CuesListModel extends AbstractListModel {
 
     /**
      * remove a cue from the cuesList.
-     * 
+     *
      * @param cue
      *            the cue to remove
      */
@@ -96,7 +96,7 @@ public class CuesListModel extends AbstractListModel {
 
     /**
      * Returns a Cue name according to the state of the model.
-     * 
+     *
      * @return a string that could be used as a cue name.
      */
     public String getNextDefaultCueName() {

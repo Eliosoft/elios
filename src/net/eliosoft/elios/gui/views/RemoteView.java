@@ -44,7 +44,7 @@ import net.eliosoft.elios.server.events.AdditiveModeValueChangedEvent;
 
 /**
  * The view of the remote.
- * 
+ *
  * @author Jeremie GASTON-RAOUL
  */
 public class RemoteView implements ViewInterface {
@@ -65,7 +65,7 @@ public class RemoteView implements ViewInterface {
 
     /**
      * The default constructor of the remote view.
-     * 
+     *
      * @param remoteModel
      *            the model associated to the view
      */
@@ -148,7 +148,7 @@ public class RemoteView implements ViewInterface {
 
     /**
      * Gets the remote panel.
-     * 
+     *
      * @return the panel
      */
 
@@ -159,7 +159,7 @@ public class RemoteView implements ViewInterface {
 
     /**
      * Sets text of the command line field.
-     * 
+     *
      * @param value
      *            the text to set
      */
@@ -169,7 +169,7 @@ public class RemoteView implements ViewInterface {
 
     /**
      * Adds an element to the list of listeners of the remote panel.
-     * 
+     *
      * @param listener
      *            the listener to add
      */
@@ -179,7 +179,7 @@ public class RemoteView implements ViewInterface {
 
     /**
      * Removes an element from the list of listeners of the remote panel.
-     * 
+     *
      * @param listener
      *            the listener to remove
      */
@@ -189,7 +189,7 @@ public class RemoteView implements ViewInterface {
 
     /**
      * Adds an element to the list of listeners of the value buttons.
-     * 
+     *
      * @param listener
      *            the listener to add
      */
@@ -201,7 +201,7 @@ public class RemoteView implements ViewInterface {
 
     /**
      * Removes an element from the list of listeners of the value buttons.
-     * 
+     *
      * @param listener
      *            the listener to remove
      */
@@ -213,7 +213,7 @@ public class RemoteView implements ViewInterface {
 
     /**
      * Adds an element to the list of listeners of the del button.
-     * 
+     *
      * @param actionListener
      *            the listener to add
      */
@@ -223,7 +223,7 @@ public class RemoteView implements ViewInterface {
 
     /**
      * Removes an element from the list of listeners of the del button.
-     * 
+     *
      * @param actionListener
      *            the listener to remove
      */
@@ -233,7 +233,7 @@ public class RemoteView implements ViewInterface {
 
     /**
      * Adds an element to the list of listeners of the enter button.
-     * 
+     *
      * @param actionListener
      *            the listener to add
      */
@@ -243,7 +243,7 @@ public class RemoteView implements ViewInterface {
 
     /**
      * Removes an element from the list of listeners of the enter button.
-     * 
+     *
      * @param actionListener
      *            the listener to remove
      */
@@ -253,7 +253,7 @@ public class RemoteView implements ViewInterface {
 
     /**
      * Adds an element to the list of listeners of the reset button.
-     * 
+     *
      * @param actionListener
      *            the listener to add
      */
@@ -263,7 +263,7 @@ public class RemoteView implements ViewInterface {
 
     /**
      * Removes an element from the list of listeners of the reset button.
-     * 
+     *
      * @param actionListener
      *            the listener to remove
      */
@@ -273,7 +273,7 @@ public class RemoteView implements ViewInterface {
 
     /**
      * Gets the input map of the remote panel.
-     * 
+     *
      * @return the input map
      */
     public InputMap getRemotePanelInputMap() {
@@ -282,7 +282,7 @@ public class RemoteView implements ViewInterface {
 
     /**
      * Gets the action map of the remote panel.
-     * 
+     *
      * @return the action map
      */
     public ActionMap getRemotePanelActionMap() {
@@ -291,7 +291,7 @@ public class RemoteView implements ViewInterface {
 
     /**
      * Determines whether the enter button is enabled.
-     * 
+     *
      * @return true if it enabled or false it is disabled
      */
     public boolean isEnterButtonEnabled() {
@@ -300,7 +300,7 @@ public class RemoteView implements ViewInterface {
 
     /**
      * Determines whether the reset button is enabled.
-     * 
+     *
      * @return true if it enabled or false it is disabled
      */
     public boolean isResetButtonEnabled() {
@@ -309,7 +309,7 @@ public class RemoteView implements ViewInterface {
 
     /**
      * Determines whether the del button is enabled.
-     * 
+     *
      * @return true if it enabled or false it is disabled
      */
     public boolean isDelButtonEnabled() {
@@ -318,7 +318,7 @@ public class RemoteView implements ViewInterface {
 
     /**
      * Gets the list of values on the buttons.
-     * 
+     *
      * @return the values list
      */
     public List<Character> getValuesList() {

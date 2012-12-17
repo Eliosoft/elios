@@ -14,9 +14,9 @@ import com.sun.net.httpserver.HttpHandler;
 /**
  * This handler process data requests. These request send commandLine value by
  * POST method
- * 
+ *
  * @author Jeremie GASTON-RAOUL
- * 
+ *
  */
 public class DMXTableHttpHandler implements HttpHandler {
 

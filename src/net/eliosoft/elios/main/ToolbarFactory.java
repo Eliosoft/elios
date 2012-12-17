@@ -31,7 +31,7 @@ import net.eliosoft.elios.server.events.AdditiveModeValueChangedEvent;
 /**
  * Create a {@link JToolBar} to offer easy access to most common configuration
  * and action.
- * 
+ *
  * @author acollign
  * @since Jan 5, 2011
  */
@@ -44,7 +44,7 @@ public class ToolbarFactory {
     /**
      * Constructs a {@link ToolbarFactory} based on the given
      * {@link RemoteModel}.
-     * 
+     *
      * @param remoteModel
      *            a {@link RemoteModel} used to access to the Remote state.
      * @param state
@@ -59,9 +59,9 @@ public class ToolbarFactory {
     /**
      * Builds the {@link JToolBar} mapped to the given {@link JFrame}. However
      * the toolbar is not added in the frame.
-     * 
+     *
      * @param frame
-     * 
+     *
      * @return a {@link JToolBar} mapped to the given {@link JFrame}
      */
     public JToolBar create(final JFrame frame) {
@@ -91,7 +91,7 @@ public class ToolbarFactory {
 
     /**
      * Adds the subnet components to the toolbar.
-     * 
+     *
      * @param toolBar
      *            a {@link JToolBar}
      */
@@ -106,7 +106,7 @@ public class ToolbarFactory {
 
     /**
      * Adds a quit button to the toolbar.
-     * 
+     *
      * @param toolBar
      *            a {@link JToolBar}
      */
@@ -155,7 +155,7 @@ public class ToolbarFactory {
 
     /**
      * Adds the additive mode button to the toolbar.
-     * 
+     *
      * @param toolBar
      *            a {@link JToolBar}
      */
@@ -208,7 +208,7 @@ public class ToolbarFactory {
 
     /**
      * Add a button that open a dialog to save the current DMX array into a cue.
-     * 
+     *
      * @param frame
      *            the root frame (set as the parent of the dialog)
      * @param toolBar
@@ -247,7 +247,7 @@ public class ToolbarFactory {
 
     /**
      * Adds the universe components to the toolbar.
-     * 
+     *
      * @param toolBar
      *            a {@link JToolBar}
      */
@@ -265,7 +265,7 @@ public class ToolbarFactory {
     /**
      * Try to turn the full screen off. If something goes wrong, just try to set
      * the frame visible.
-     * 
+     *
      * @param frame
      *            the {@link JFrame} to display in full screen mode
      * @param device
@@ -305,7 +305,7 @@ public class ToolbarFactory {
     /**
      * Try to turn the full screen on. If something goes wrong, just try to set
      * the frame visible.
-     * 
+     *
      * @param frame
      *            the {@link JFrame} to display in full screen mode
      * @param device

@@ -75,7 +75,7 @@ import artnet4j.ArtNetException;
 /**
  * Main Class of Elios Software contains the main method used to launch the
  * application.
- * 
+ *
  * @author Jeremie GASTON-RAOUL
  */
 public final class Elios {
@@ -138,7 +138,7 @@ public final class Elios {
 
     /**
      * Launches Elios.
-     * 
+     *
      * @param args
      *            command-line argument. Currently unused !
      */
@@ -274,7 +274,7 @@ public final class Elios {
 
     /**
      * Check update of Elios.
-     * 
+     *
      * @param prefs
      *            the preferences
      * @param uModel
@@ -325,7 +325,7 @@ public final class Elios {
      * Returns the {@link Locale} according to the {@link Preferences} given in
      * argument or the result of <code>Locale.getDefault()</code> if no
      * configuration as been already saved.
-     * 
+     *
      * @param prefs
      *            {@link Preferences} node that contains the locale
      *            configuration
@@ -341,7 +341,7 @@ public final class Elios {
 
     /**
      * Persists the current {@link Locale} to the given {@link Preferences}.
-     * 
+     *
      * @param prefs
      *            {@link Preferences} where saved the current {@link Locale}
      * @param localeModel
@@ -359,7 +359,7 @@ public final class Elios {
      * given <code>Preferences</code>. If any configuration is found for a
      * specific parameter, the default value is used according to
      * <code>RemoteModel</code>.
-     * 
+     *
      * @param prefs
      *            <code>Preferences</code> used to retrieve the configuration
      * @return a configured <code>RemoteModel</code>
@@ -397,7 +397,7 @@ public final class Elios {
 
     /**
      * Persits a remote model to the given <code>Preferences</code>.
-     * 
+     *
      * @param model
      *            the <code>RemoteModel</code> to store
      * @param prefs
@@ -436,7 +436,7 @@ public final class Elios {
      * Adds a {@link ViewInterface} to a {@link JTabbedPane}. The localized
      * title of the {@link ViewInterface} is used to define the title of the
      * pane.
-     * 
+     *
      * @param pane
      *            the {@link JTabbedPane}
      * @param v

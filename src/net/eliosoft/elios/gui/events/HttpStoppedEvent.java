@@ -21,7 +21,7 @@ package net.eliosoft.elios.gui.events;
 
 /**
  * Event fired when Http Server is Stopped.
- * 
+ *
  * @author Jeremie GASTON-RAOUL
  */
 public class HttpStoppedEvent {

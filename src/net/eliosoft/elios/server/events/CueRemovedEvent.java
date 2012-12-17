@@ -21,7 +21,7 @@ package net.eliosoft.elios.server.events;
 
 /**
  * Event fired when a cue has been added.
- * 
+ *
  * @author Jeremie GASTON-RAOUL
  */
 public class CueRemovedEvent {
@@ -29,7 +29,7 @@ public class CueRemovedEvent {
 
     /**
      * Constructor method to instantiate a new event.
-     * 
+     *
      * @param cueName
      *            the name of the removed cue in the cuesList
      */
@@ -39,7 +39,7 @@ public class CueRemovedEvent {
 
     /**
      * Returns the name of the removed cue.
-     * 
+     *
      * @return the cue name
      */
     public String getCueName() {

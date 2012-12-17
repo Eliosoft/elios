@@ -21,7 +21,7 @@ package net.eliosoft.elios.gui.events;
 
 /**
  * Event fired when CommandLine value has changed.
- * 
+ *
  * @author Jeremie GASTON-RAOUL
  */
 public class CommandLineValueChangedEvent {
@@ -30,7 +30,7 @@ public class CommandLineValueChangedEvent {
 
     /**
      * Constructor method to instantiate a new event.
-     * 
+     *
      * @param command
      *            the new command line value
      */
@@ -40,7 +40,7 @@ public class CommandLineValueChangedEvent {
 
     /**
      * Returns the Command Line value of the event.
-     * 
+     *
      * @return the new CommandLine value
      */
     public String getCommand() {

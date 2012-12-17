@@ -42,7 +42,7 @@ import com.google.gson.reflect.TypeToken;
 
 /**
  * A manager for the cues.
- * 
+ *
  * @author Jeremie GASTON-RAOUL
  */
 public class CuesManager {
@@ -61,7 +61,7 @@ public class CuesManager {
 
     /**
      * get the singleton instance of the CuesManager.
-     * 
+     *
      * @return the instance
      */
     public static CuesManager getInstance() {
@@ -73,7 +73,7 @@ public class CuesManager {
 
     /**
      * add a cue in the manager.
-     * 
+     *
      * @param cue
      *            the cue to add to the manager
      */
@@ -90,7 +90,7 @@ public class CuesManager {
 
     /**
      * remove the requested cue.
-     * 
+     *
      * @param name
      *            the name of the cue to remove
      */
@@ -102,7 +102,7 @@ public class CuesManager {
 
     /**
      * get the cue with the requested name.
-     * 
+     *
      * @param name
      * @return the requested cue if found or null if no cue is found
      */
@@ -113,7 +113,7 @@ public class CuesManager {
 
     /**
      * get all the cues of the manager.
-     * 
+     *
      * @return a list containing the cues
      */
     public List<Cue> getCues() {
@@ -130,7 +130,7 @@ public class CuesManager {
 
     /**
      * get an unused cue name.
-     * 
+     *
      * @return an unused cue name
      */
     public String getUnusedCueName() {
@@ -146,7 +146,7 @@ public class CuesManager {
 
     /**
      * Adds an element to the list of listener of the cues manager.
-     * 
+     *
      * @param listener
      *            the listener to add
      */
@@ -156,7 +156,7 @@ public class CuesManager {
 
     /**
      * Removes an element to the list of listener of the cues manager.
-     * 
+     *
      * @param listener
      *            the listener to remove
      */
@@ -181,7 +181,7 @@ public class CuesManager {
 
     /**
      * Persists the current cues to the given {@link OutputStream}.
-     * 
+     *
      * @param stream
      *            the stream used to store the cues
      * @throws IOException
@@ -194,7 +194,7 @@ public class CuesManager {
 
     /**
      * Loads cues from the given {@link InputStream}.
-     * 
+     *
      * @param stream
      *            {@link InputStream} from which the cues must be load
      * @see CuesManager#persist(OutputStream)

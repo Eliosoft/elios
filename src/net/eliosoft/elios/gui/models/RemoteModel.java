@@ -57,7 +57,7 @@ import artnet4j.ArtNetException;
 
 /**
  * This model describes almost all data of Elios.
- * 
+ *
  * @author Jeremie GASTON-RAOUL
  * @author Alexandre COLLIGNON
  */
@@ -93,7 +93,7 @@ public class RemoteModel {
 
     /**
      * Broadcast Address.
-     * 
+     *
      * @author Alexandre COLLIGNON
      */
     public enum BroadCastAddress {
@@ -117,7 +117,7 @@ public class RemoteModel {
 
         /**
          * Returns the String representation of the address.
-         * 
+         *
          * @return String representation of the address
          */
         public String getAddress() {
@@ -135,7 +135,7 @@ public class RemoteModel {
 
     /**
      * Default constructor of the remote model.
-     * 
+     *
      * @param serverManager
      *            the server manager used by the model
      * @param httpManager
@@ -242,7 +242,7 @@ public class RemoteModel {
 
     /**
      * Add a character to the command line.
-     * 
+     *
      * @param c
      *            the character added
      */
@@ -270,7 +270,7 @@ public class RemoteModel {
 
     /**
      * Returns the value of the command line.
-     * 
+     *
      * @return the value of the command line
      */
     public String getCommandLineValue() {
@@ -279,7 +279,7 @@ public class RemoteModel {
 
     /**
      * process the command line and send a Dmx command over the network.
-     * 
+     *
      * @throws BadSyntaxException
      *             if the command line to process and send has a bad syntax
      */
@@ -291,7 +291,7 @@ public class RemoteModel {
 
     /**
      * Starts the ArtNet Server.
-     * 
+     *
      * @throws ArtNetException
      *             if a server is already running
      * @throws SocketException
@@ -312,7 +312,7 @@ public class RemoteModel {
 
     /**
      * Starts the Http Server.
-     * 
+     *
      * @throws IOException
      *             if the server is unable to start
      */
@@ -375,7 +375,7 @@ public class RemoteModel {
 
     /**
      * Returns the model of the logs list.
-     * 
+     *
      * @return the Logs list model
      */
     public LogsListModel getLogsListModel() {
@@ -384,7 +384,7 @@ public class RemoteModel {
 
     /**
      * Gets the model of the in port.
-     * 
+     *
      * @return the in port spinner model
      */
     public SpinnerModel getInPortSpinnerModel() {
@@ -393,7 +393,7 @@ public class RemoteModel {
 
     /**
      * Gets the model of the out port.
-     * 
+     *
      * @return the out port spinner model
      */
     public SpinnerModel getOutPortSpinnerModel() {
@@ -402,7 +402,7 @@ public class RemoteModel {
 
     /**
      * Gets the model of the subnet.
-     * 
+     *
      * @return the subnet spinner model
      */
     public SpinnerModel getSubnetSpinnerModel() {
@@ -411,7 +411,7 @@ public class RemoteModel {
 
     /**
      * Gets the model of the universe.
-     * 
+     *
      * @return the universe spinner model
      */
     public SpinnerModel getUniverseSpinnerModel() {
@@ -420,7 +420,7 @@ public class RemoteModel {
 
     /**
      * Gets the model of the http port.
-     * 
+     *
      * @return the http port spinner model
      */
     public SpinnerModel getHttpPortSpinnerModel() {
@@ -429,7 +429,7 @@ public class RemoteModel {
 
     /**
      * Gets the model of the broadcast address.
-     * 
+     *
      * @return the broadcast address combo model
      */
     public ComboBoxModel getBroadcastAddressComboModel() {
@@ -438,7 +438,7 @@ public class RemoteModel {
 
     /**
      * Give the status of the http server enabling.
-     * 
+     *
      * @return true if http server is enabled, false if disabled
      */
     public boolean isHttpServerEnabled() {
@@ -447,7 +447,7 @@ public class RemoteModel {
 
     /**
      * Enable or disable the http server.
-     * 
+     *
      * @param httpServerEnabled
      *            true to enable the http server, false to disable
      */
@@ -457,7 +457,7 @@ public class RemoteModel {
 
     /**
      * Give the status of the additive mode enabling.
-     * 
+     *
      * @return true if additive mode is enabled, false if disabled
      */
     public boolean isAdditiveModeEnabled() {
@@ -466,7 +466,7 @@ public class RemoteModel {
 
     /**
      * Enable or disable the additive mode.
-     * 
+     *
      * @param additiveModeEnabled
      *            true to enable the additive mode, false to disable
      */
@@ -477,7 +477,7 @@ public class RemoteModel {
 
     /**
      * Adds an element to the list of listener of the remote model.
-     * 
+     *
      * @param listener
      *            the listener to add
      */
@@ -487,7 +487,7 @@ public class RemoteModel {
 
     /**
      * Removes an element to the list of listener of the remote model.
-     * 
+     *
      * @param listener
      *            the listener to remove
      */
@@ -498,7 +498,7 @@ public class RemoteModel {
 
     /**
      * Returns the input port.
-     * 
+     *
      * @return the input port
      */
     public int getInPort() {
@@ -507,7 +507,7 @@ public class RemoteModel {
 
     /**
      * Returns the output port.
-     * 
+     *
      * @return the output port
      */
     public int getOutPort() {
@@ -516,7 +516,7 @@ public class RemoteModel {
 
     /**
      * Returns the universe.
-     * 
+     *
      * @return the universe
      */
     public int getUniverse() {
@@ -525,7 +525,7 @@ public class RemoteModel {
 
     /**
      * Returns the subnet.
-     * 
+     *
      * @return the subnet
      */
     public int getSubnet() {
@@ -534,7 +534,7 @@ public class RemoteModel {
 
     /**
      * Returns the Http port.
-     * 
+     *
      * @return the Http port
      */
     public int getHttpPort() {
@@ -543,7 +543,7 @@ public class RemoteModel {
 
     /**
      * Returns the broadcast address.
-     * 
+     *
      * @return the broadcast address
      */
     public BroadCastAddress getBroadCastAddress() {
@@ -552,7 +552,7 @@ public class RemoteModel {
 
     /**
      * Returns the selected value of the model casted to int (no check).
-     * 
+     *
      * @param model
      *            the model
      * @return the selected value of the model
@@ -563,7 +563,7 @@ public class RemoteModel {
 
     /**
      * Sets the input port.
-     * 
+     *
      * @param inPort
      *            the input port
      */
@@ -573,7 +573,7 @@ public class RemoteModel {
 
     /**
      * Sets the output port.
-     * 
+     *
      * @param outPort
      *            the output port
      */
@@ -583,7 +583,7 @@ public class RemoteModel {
 
     /**
      * Sets the universe.
-     * 
+     *
      * @param universe
      *            the universe
      */
@@ -593,7 +593,7 @@ public class RemoteModel {
 
     /**
      * Sets the subnet.
-     * 
+     *
      * @param subnet
      *            the subnet
      */
@@ -603,7 +603,7 @@ public class RemoteModel {
 
     /**
      * Sets the Http port.
-     * 
+     *
      * @param httpPort
      *            the Http port
      */
@@ -613,7 +613,7 @@ public class RemoteModel {
 
     /**
      * set the value of the broadcast address.
-     * 
+     *
      * @param broadcastAddress
      *            the broadcast address
      */
@@ -633,7 +633,7 @@ public class RemoteModel {
     /**
      * Applies the configuration to the {@link ArtNetServerManager}. As a
      * consequence, the server is restarted.
-     * 
+     *
      * @throws ArtNetException
      *             exception thrown if server can't be started.
      */
@@ -659,7 +659,7 @@ public class RemoteModel {
 
     /**
      * Gets the model of the cues list.
-     * 
+     *
      * @return the cues list model
      */
     public CuesListModel getCuesListModel() {
@@ -668,7 +668,7 @@ public class RemoteModel {
 
     /**
      * Stores the current state of the dmx array in a cue.
-     * 
+     *
      * @param cueName
      *            the name of the cue to store
      */
@@ -679,7 +679,7 @@ public class RemoteModel {
 
     /**
      * Load the given cue.
-     * 
+     *
      * @param cue
      *            the cue to load
      */
@@ -691,7 +691,7 @@ public class RemoteModel {
 
     /**
      * Removes the given cue from the model.
-     * 
+     *
      * @param cue
      *            the cue to remove
      */
@@ -701,7 +701,7 @@ public class RemoteModel {
 
     /**
      * Persists the current cues to the given {@link OutputStream}.
-     * 
+     *
      * @param stream
      *            the stream used to store the cues
      * @throws IOException
@@ -714,7 +714,7 @@ public class RemoteModel {
 
     /**
      * Loads cues from the given {@link InputStream}.
-     * 
+     *
      * @param stream
      *            {@link InputStream} from which the cues must be load
      * @see CuesManager#persist(OutputStream)

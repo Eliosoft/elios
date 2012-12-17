@@ -28,7 +28,7 @@ import net.eliosoft.elios.main.LoggersManager;
 
 /**
  * This class provides i18n functionalities.
- * 
+ *
  * @author Alexandre COLLIGNON
  */
 public final class Messages {
@@ -52,7 +52,7 @@ public final class Messages {
     /**
      * Returns the localized text of the given key if the resource is found,
      * returns !key! (key is the argument) otherwise.
-     * 
+     *
      * @param key
      *            string that identified a localized text
      * @return the localized text or !key! is the resource is not found
@@ -68,7 +68,7 @@ public final class Messages {
     /**
      * Returns the localized text of the given key if the resource is found or
      * throws a MissingResourceException.
-     * 
+     *
      * @param key
      *            string that identified a localized text
      * @return the localized text
@@ -83,7 +83,7 @@ public final class Messages {
     /**
      * Returns a formatted localized string identified by the given key. The
      * string is populated according to {@link MessageFormat}.
-     * 
+     *
      * @param key
      *            string that identified a localized text
      * @param objects
@@ -102,7 +102,7 @@ public final class Messages {
 
     /**
      * Returns the given string between "!".
-     * 
+     *
      * @param key
      *            a string
      * @return the given string between "!"

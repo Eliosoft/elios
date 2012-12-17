@@ -29,7 +29,7 @@ import net.eliosoft.elios.server.Cue;
 
 /**
  * The controller of the cues view.
- * 
+ *
  * @author Jeremie GASTON-RAOUL
  */
 public class CuesController {
@@ -39,7 +39,7 @@ public class CuesController {
 
     /**
      * The constructor of the LogsController class.
-     * 
+     *
      * @param remoteModel
      *            the model associated with this Controller
      * @param cuesView
