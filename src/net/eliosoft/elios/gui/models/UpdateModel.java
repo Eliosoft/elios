@@ -77,9 +77,9 @@ public class UpdateModel {
      */
     public static final String UPDATE_LATEST_CHECK_PREFS_KEY = "update.latest.check";
 
-    private Preferences prefs;
+    private final Preferences prefs;
 
-    private ArrayList<UpdateListener> listeners;
+    private final ArrayList<UpdateListener> listeners;
 
     /**
      * Constructs an {@link UpdateModel} on top of the given {@link Preferences}
@@ -165,8 +165,9 @@ public class UpdateModel {
     }
 
     private void fireUpdateFrequencySaved(final Frequency newValue) {
-        for (UpdateListener l : listeners)
+        for (UpdateListener l : listeners) {
             l.updateFrequencySaved(newValue);
+        }
     }
 
     /**

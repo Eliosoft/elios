@@ -34,7 +34,7 @@ import net.eliosoft.elios.server.ReleaseInformationRepository;
  * a {@link ReleaseInformation}.
  *
  * <code>new ReleaseInformationDialogBuilder(frame, repo).forReleaseCode(
-				new ReleaseCode("0.2-dev")).build()</code>
+  new ReleaseCode("0.2-dev")).build()</code>
  *
  * @author E362200
  */

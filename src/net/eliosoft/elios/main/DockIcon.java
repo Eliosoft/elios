@@ -100,7 +100,7 @@ public class DockIcon {
             return;
         }
         try {
-            if (isMac == false) {
+            if (!isMac) {
                 return;
             }
 
@@ -192,7 +192,7 @@ public class DockIcon {
      */
     public static synchronized boolean set(Image icons) {
         init();
-        if (working == false) {
+        if (!working) {
             return false;
         }
 
