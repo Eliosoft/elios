@@ -1,0 +1,72 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>net.eliosoft</groupId>
+	<artifactId>elios</artifactId>
+	<name>Elios</name>
+	<version>0.3-dev</version>
+	<description>Entertainment LIghting Open source Software</description>
+	<packaging>jar</packaging>
+	<inceptionYear>2009</inceptionYear>
+	<organization>
+		<name>Eliosoft</name>
+		<url>http://www.eliosoft.net/</url>
+	</organization>
+	<issueManagement>
+		<url>https://github.com/Eliosoft/elios/issues</url>
+	</issueManagement>
+	<ciManagement>
+		<url>http://integration.eliosoft.net/</url>
+	</ciManagement>
+	<url>https://github.com/Eliosoft/elios</url>
+	<contributors>
+		<contributor>
+			<name>Alexandre COLLIGNON</name>
+			<email>alexandre@collign.net</email>
+		</contributor>
+		<contributor>
+			<name>Jérémie GASTON-RAOUL</name>
+			<email>jeremie.gastonraoul@free.fr</email>
+		</contributor>
+	</contributors>
+
+	<build>
+		<sourceDirectory>src</sourceDirectory>
+		<resources>
+			<resource>
+				<directory>resources</directory>
+			</resource>
+		</resources>
+		<plugins>
+			<plugin>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<configuration>
+					<archive>
+						<manifest>
+							<mainClass>net.eliosoft.elios.main.Elios</mainClass>
+						</manifest>
+					</archive>
+					<appendAssemblyId>false</appendAssemblyId>
+					<finalName>${project.build.finalName}-all</finalName>
+					<descriptorRefs>
+						<descriptorRef>jar-with-dependencies</descriptorRef>
+					</descriptorRefs>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+	<dependencies>
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<version>1.6</version>
+		</dependency>
+		<!-- mvn install:install-file -Dfile=lib/artnet4j.jar \ -DgroupId=net.eliosoft 
+			-DartifactId=artnet4j \ -Dversion=0001 -Dpackaging=jar -->
+		<dependency>
+			<groupId>net.eliosoft</groupId>
+			<artifactId>artnet4j</artifactId>
+			<version>0001</version>
+		</dependency>
+	</dependencies>
+</project>
