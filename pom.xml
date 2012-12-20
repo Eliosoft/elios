@@ -164,6 +164,40 @@
                             </execution>
                         </executions>
                     </plugin>
+                    <plugin>
+                        <groupId>com.akathist.maven.plugins.launch4j</groupId>
+                        <artifactId>launch4j-maven-plugin</artifactId>
+                        <version>1.5.2</version>
+                        <executions>
+                            <execution>
+                                <id>l4j-clui</id>
+                                <phase>package</phase>
+                                <goals><goal>launch4j</goal></goals>
+                                <configuration>
+                                    <dontWrapJar>false</dontWrapJar>
+                                    <headerType>gui</headerType>
+                                    <jar>${project.build.directory}/${project.build.finalName}-installer.jar</jar>
+                                    <outfile>${project.build.directory}/${project.build.finalName}-installer.exe</outfile>
+                                    <errTitle></errTitle>
+                                    <cmdLine></cmdLine>
+                                    <chdir></chdir>
+                                    <priority>normal</priority>
+                                    <downloadUrl>http://java.com/download</downloadUrl>
+                                    <supportUrl></supportUrl>
+                                    <customProcName>false</customProcName>
+                                    <stayAlive>false</stayAlive>
+                                    <manifest></manifest>
+                                    <icon></icon>
+                                    <jre>
+                                        <path></path>
+                                        <minVersion>1.6.0</minVersion>
+                                        <maxVersion></maxVersion>
+                                        <jdkPreference>preferJre</jdkPreference>
+                                    </jre>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
                 </plugins>
             </build>
         </profile>
