@@ -36,6 +36,20 @@
 			<resource>
 				<directory>resources</directory>
 			</resource>
+            <resource>
+                <directory>resources</directory>
+                <includes>
+                    <include>**/messages*.properties</include>
+                </includes>
+                <filtering>true</filtering>
+            </resource>
+            <resource>
+                <directory>${basedir}/installer</directory>
+                <includes>
+                    <include>install.xml</include>
+                </includes>
+                <filtering>true</filtering>
+            </resource>
 		</resources>
 		<plugins>
 			<plugin>
@@ -100,9 +114,11 @@
                                             <fileset dir="src"/>
                                         </copy>
                                         <copy todir="${staging.dir}">
-                                            <fileset file="installer/install.xml"/>
                                             <fileset file="LICENSE.txt"/>
                                             <fileset file="README.txt"/>
+                                        </copy>
+                                        <copy todir="${staging.dir}">
+                                            <fileset file="${project.build.directory}/classes/install.xml"/>
                                         </copy>
                                         <copy todir="${staging.dir}/resources">
                                             <fileset dir="${basedir}/resources"/>

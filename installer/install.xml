@@ -19,7 +19,7 @@
 <installation version="1.0">
     <info>
         <appname>Elios</appname>
-        <appversion>@ver@</appversion>
+        <appversion>${project.version}</appversion>
         <authors>
             <author name="Jeremie GASTON-RAOUL" email="jeremie.gastonraoul@free.fr"/>
             <author name="Alexandre COLLIGNON" email="alexandre@collign.net"/>
