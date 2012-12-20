@@ -100,7 +100,7 @@
                                             <fileset dir="src"/>
                                         </copy>
                                         <copy todir="${staging.dir}">
-                                            <fileset file="install.xml"/>
+                                            <fileset file="installer/install.xml"/>
                                             <fileset file="LICENSE.txt"/>
                                             <fileset file="README.txt"/>
                                         </copy>
