@@ -40,6 +40,15 @@
 		<plugins>
 			<plugin>
 				<artifactId>maven-assembly-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>all-in-one</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
 				<configuration>
 					<archive>
 						<manifest>
@@ -52,9 +61,113 @@
 						<descriptorRef>jar-with-dependencies</descriptorRef>
 					</descriptorRefs>
 				</configuration>
-			</plugin>
+            </plugin>
 		</plugins>
 	</build>
+    <properties>
+        <staging.dir>${project.build.directory}/staging</staging.dir>
+        <izpack-standalone.version>4.3.1</izpack-standalone.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    </properties>
+    <profiles>
+        <profile>
+            <id>distribution</id>
+            <build>
+                <plugins>
+                    <!-- iz pack requirements -->
+
+                    <!--  copy other checked resource into staging area, expected by install.xml -->
+                    <plugin>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <version>1.1</version>
+                        <executions>
+                            <execution>
+                                <id>create-staging-area</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                                <configuration>
+                                    <tasks>
+                                        <copy todir="${staging.dir}/installer">
+                                            <fileset dir="installer"/>
+                                        </copy>
+                                        <copy todir="${staging.dir}/dist/javadoc">
+                                            <fileset dir="${project.build.directory}/site/apidocs"/>
+                                        </copy>
+                                        <copy todir="${staging.dir}/src">
+                                            <fileset dir="src"/>
+                                        </copy>
+                                        <copy todir="${staging.dir}">
+                                            <fileset file="install.xml"/>
+                                            <fileset file="LICENSE.txt"/>
+                                            <fileset file="README.txt"/>
+                                        </copy>
+                                        <copy todir="${staging.dir}/resources">
+                                            <fileset dir="${basedir}/resources"/>
+                                        </copy>
+                                        <copy tofile="${staging.dir}/dist/elios-all.jar">
+                                            <fileset file="${project.build.directory}/${project.build.finalName}-all.jar"/>
+                                        </copy>
+                                        <copy todir="${staging.dir}/dist/doc">
+                                            <fileset dir="${basedir}/doc"/>
+                                        </copy>
+                                    </tasks>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <!--  prepare dependencies so that izpack jar tag to pickup at compile time -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-dependency-plugin</artifactId>
+                        <version>2.0</version>
+                        <executions>
+                            <execution>
+                                <id>standard-installer</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>copy-dependencies</goal>
+                                </goals>
+                                <configuration>
+                                    <stripVersion>true</stripVersion>
+                                    <excludeGroupIds>org.codehaus.izpack</excludeGroupIds>
+                                    <!-- dont want standalone compiler -->
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.codehaus.izpack</groupId>
+                        <artifactId>izpack-maven-plugin</artifactId>
+                        <version>1.0-alpha-5</version>
+                        <dependencies>
+                            <dependency>
+                                <groupId>org.codehaus.izpack</groupId>
+                                <artifactId>izpack-standalone-compiler</artifactId>
+                                <version>${izpack-standalone.version}</version>
+                            </dependency>
+                        </dependencies>
+                        <configuration>
+                            <izpackBasedir>${staging.dir}</izpackBasedir>
+                            <customPanelDirectory>${staging.dir}</customPanelDirectory>
+                            <installerFile>${project.build.directory}/${project.build.finalName}-installer.jar</installerFile>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>standard-installer</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>izpack</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
     <reporting>
         <plugins>
             <plugin>
