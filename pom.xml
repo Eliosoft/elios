@@ -31,13 +31,9 @@
 	</contributors>
 
 	<build>
-		<sourceDirectory>src</sourceDirectory>
 		<resources>
-			<resource>
-				<directory>resources</directory>
-			</resource>
             <resource>
-                <directory>resources</directory>
+                <directory>${basedir}/src/main/resources</directory>
                 <includes>
                     <include>**/messages*.properties</include>
                 </includes>
@@ -121,7 +117,7 @@
                                             <fileset file="${project.build.directory}/classes/install.xml"/>
                                         </copy>
                                         <copy todir="${staging.dir}/resources">
-                                            <fileset dir="${basedir}/resources"/>
+                                            <fileset dir="${basedir}/src/main/resources"/>
                                         </copy>
                                         <copy tofile="${staging.dir}/dist/elios-all.jar">
                                             <fileset file="${project.build.directory}/${project.build.finalName}-all.jar"/>
