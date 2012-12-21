@@ -1,8 +1,7 @@
-% Elios - User Guide (version @ver@)
-% Jeremie GASTON-RAOUL
-  Alexandre COLLIGNON
+Elios - User Guide (version @ver@)
+==================================
 
-![](resources/elios/elios.png)
+![Elios](assets/elios/elios.png)
 
 Abstract
 --------

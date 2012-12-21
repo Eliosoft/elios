@@ -11,7 +11,7 @@ In the Log line, you can read the last status log of the application.
 Toolbar
 -------
 
-![Toolbar](resources/elios/Elios-01-Toolbar.png "Toolbar")
+![Toolbar](assets/elios/Elios-01-Toolbar.png "Toolbar")
 
 The toolbar gives you an easy access to quite common functions :
 
@@ -33,7 +33,7 @@ Elios is active ;
 Remote
 ------
 
-![Remote tab](resources/elios/Elios-02-RemoteTab.png "Remote tab")
+![Remote tab](assets/elios/Elios-02-RemoteTab.png "Remote tab")
 
 To manage circuits levels, Elios uses a simple command line syntax.
 Each line is a follow of simple commands (circuits at level sets) 
@@ -82,7 +82,7 @@ The commands are sent on the Subnet and Universe selected in the toolbar.
 Cues
 ----
 
-![Cues tab](resources/elios/Elios-03-CuesTab.png "Cues tab")
+![Cues tab](assets/elios/Elios-03-CuesTab.png "Cues tab")
 
 The Cues panel allows you to save and load states of the DMX array.
 
@@ -98,7 +98,7 @@ and confirm your choice in the dialog that appears.
 DMX Table
 ---------
 
-![DMX Table tab](resources/elios/Elios-04-DMXTableTab.png "DMX Table tab")
+![DMX Table tab](assets/elios/Elios-04-DMXTableTab.png "DMX Table tab")
 
 DMX Table panel shows you the current state of input and output
 of the ArtNetServer on the subnet and universe selected in the toolbar.
@@ -111,7 +111,7 @@ Cues are saved when Elios is closed. You will find them back when you will reope
 Preferences
 -----------
 
-![Preferences tab](resources/elios/Elios-05-PrefsTab.png "Preferences tab")
+![Preferences tab](assets/elios/Elios-05-PrefsTab.png "Preferences tab")
 
 On the Prefs panel, you can set all application settings :
 
@@ -146,7 +146,7 @@ HTTP server are restarted) ;
 Logs
 ----
 
-![Logs tab](resources/elios/Elios-06-LogsTab.png "Logs tab")
+![Logs tab](assets/elios/Elios-06-LogsTab.png "Logs tab")
 
 On the logs panel you can see all the things that have been done in 
 Elios : start and stop of server, parse of command line, errors 
@@ -156,7 +156,7 @@ If you wand to clear the logs, just hit "Clear Logs" button.
 About
 -----
 
-![About tab](resources/elios/Elios-07-AboutTab.png "About tab")
+![About tab](assets/elios/Elios-07-AboutTab.png "About tab")
 
 That's just a simple panel displaying the names of people working on 
 Elios and version number...

@@ -24,27 +24,27 @@ Elios is available in English and French. You have to choose one of them. Note t
 the language you choose will be used for the installer only. You will have to set 
 the language on Elios too.
 
-![Language Selection](resources/install/Install-01-Language_Selection.png "Language Selection")
+![Language Selection](assets/install/Install-01-Language_Selection.png "Language Selection")
 
 ### Introduction
 
 Nothing special about this first step. If you read this user guide, you already know everything about
 Elios and its authors.
 
-![Introduction](resources/install/Install-02-Introduction.png "Introduction")
+![Introduction](assets/install/Install-02-Introduction.png "Introduction")
 
 ### Information
 
 Feel free to read this informational step too.
 
-![Information](resources/install/Install-03-Information.png "Information")
+![Information](assets/install/Install-03-Information.png "Information")
 
 ### Licence
 
 Elios is released under the GNU Public Licence version 3. You have to accept the license to
 install Elios. We advise you to read the license before installing Elios.
 
-![Licence](resources/install/Install-04-Licence.png "Licence")
+![Licence](assets/install/Install-04-Licence.png "Licence")
 
 ### Installation path
 
@@ -66,22 +66,22 @@ Probably the most tricky step. It is time to choose what you exactly looking for
 
 * *JavaDoc* is the source code documentation (for developers).
 
-![Pack Selection](resources/install/Install-06-Pack_Selection.png "Pack Selection")
+![Pack Selection](assets/install/Install-06-Pack_Selection.png "Pack Selection")
 
 ### Copy progress
 
 A few seconds later, you will see a filled progress bar.
 
-![Copy is finished](resources/install/Install-07-Copy_Finished.png "Copy is finished")
+![Copy is finished](assets/install/Install-07-Copy_Finished.png "Copy is finished")
 
 ### Setup shortcuts
 
 Before using Elios, you are invite to choose where you want that the installer copy shortcuts.
 
-![Setup shortcuts](resources/install/Install-08-Setup_Shortcuts.png "Setup shortcuts")
+![Setup shortcuts](assets/install/Install-08-Setup_Shortcuts.png "Setup shortcuts")
 
 ### Done
 
 You have successfully installed Elios. It is time to give a try.
 
-![Done](resources/install/Install-09-Done.png "Done")
+![Done](assets/install/Install-09-Done.png "Done")

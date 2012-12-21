@@ -13,10 +13,10 @@ connected to the same network and access to :
 When you change something in the Web Interface,
 it's reflected in the Desktop interface, and vice versa.
 
-![Web Toolbar](resources/web/Web-01-Toolbar.png "Web Toolbar")
+![Web Toolbar](assets/web/Web-01-Toolbar.png "Web Toolbar")
 
-![Web Remote tab](resources/web/Web-02-RemoteTab.png "Web Remote tab")
+![Web Remote tab](assets/web/Web-02-RemoteTab.png "Web Remote tab")
 
-![Web Cues tab](resources/web/Web-03-CuesTab.png "Web Cues tab")
+![Web Cues tab](assets/web/Web-03-CuesTab.png "Web Cues tab")
 
-![Web DMX Table tab](resources/web/Web-04-DMXTableTab.png "Web DMX Table tab")
+![Web DMX Table tab](assets/web/Web-04-DMXTableTab.png "Web DMX Table tab")
