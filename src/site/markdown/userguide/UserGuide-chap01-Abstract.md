@@ -1,10 +1,5 @@
-Elios - User Guide (version @ver@)
-==================================
-
-![Elios](assets/elios/elios.png)
-
 Abstract
---------
+========
 
 Elios is a free GUI which allows you to send DMX values to ArtNet nodes.
 Its goal is to help lighting technicians during installation and focus.
