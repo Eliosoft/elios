@@ -153,7 +153,7 @@
                                             <fileset file="${project.build.directory}/${project.build.finalName}-all.jar"/>
                                         </copy>
                                         <copy todir="${staging.dir}/dist/doc">
-                                            <fileset dir="${project.build.directory}/site/userguide/"/>
+                                            <fileset dir="${project.build.directory}/site/"/>
                                         </copy>
                                     </tasks>
                                 </configuration>
