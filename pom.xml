@@ -8,10 +8,19 @@
 	<description>Entertainment LIghting Open source Software</description>
 	<packaging>jar</packaging>
 	<inceptionYear>2009</inceptionYear>
-	<organization>
+    <licenses>
+        <license>
+            <name>GNU GENERAL PUBLIC LICENSE Version 3</name>
+            <url>https://www.gnu.org/licenses/gpl.txt</url>
+        </license>
+    </licenses>
+    <organization>
 		<name>Eliosoft</name>
 		<url>http://www.eliosoft.net/</url>
 	</organization>
+    <scm>
+        <connection>scm:git:https://github.com/Eliosoft/elios.git</connection>
+    </scm>
 	<issueManagement>
 		<url>https://github.com/Eliosoft/elios/issues</url>
 	</issueManagement>
@@ -29,7 +38,9 @@
 			<email>jeremie.gastonraoul@free.fr</email>
 		</contributor>
 	</contributors>
-
+    <distributionManagement>
+        <downloadUrl>https://github.com/Eliosoft/elios</downloadUrl>
+    </distributionManagement>
 	<build>
 		<resources>
             <resource>
