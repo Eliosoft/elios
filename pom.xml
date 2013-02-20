@@ -271,8 +271,6 @@
 			<artifactId>gson</artifactId>
 			<version>1.6</version>
 		</dependency>
-		<!-- mvn install:install-file -Dfile=lib/artnet4j.jar \ -DgroupId=net.eliosoft 
-			-DartifactId=artnet4j \ -Dversion=0001 -Dpackaging=jar -->
 		<dependency>
 			<groupId>net.eliosoft</groupId>
 			<artifactId>artnet4j</artifactId>
