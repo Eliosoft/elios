@@ -20,6 +20,7 @@
 	</organization>
     <scm>
         <connection>scm:git:https://github.com/Eliosoft/elios.git</connection>
+        <url>https://github.com/Eliosoft/elios</url>
     </scm>
 	<issueManagement>
 		<url>https://github.com/Eliosoft/elios/issues</url>
