@@ -29,16 +29,16 @@
 		<url>http://integration.eliosoft.net/</url>
 	</ciManagement>
 	<url>https://github.com/Eliosoft/elios</url>
-	<contributors>
-		<contributor>
-			<name>Alexandre COLLIGNON</name>
-			<email>alexandre@collign.net</email>
-		</contributor>
-		<contributor>
-			<name>Jérémie GASTON-RAOUL</name>
-			<email>jeremie.gastonraoul@free.fr</email>
-		</contributor>
-	</contributors>
+    <developers>
+        <developer>
+            <name>Alexandre COLLIGNON</name>
+            <email>alexandre@collign.net</email>
+        </developer>
+        <developer>
+            <name>Jérémie GASTON-RAOUL</name>
+            <email>jeremie.gastonraoul@free.fr</email>
+        </developer>
+    </developers>
     <distributionManagement>
         <downloadUrl>https://github.com/Eliosoft/elios</downloadUrl>
     </distributionManagement>
