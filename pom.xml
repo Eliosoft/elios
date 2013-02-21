@@ -68,6 +68,7 @@
 		<plugins>
 			<plugin>
 				<artifactId>maven-assembly-plugin</artifactId>
+                <version>2.1</version>
                 <executions>
                     <execution>
                         <id>all-in-one</id>
@@ -84,7 +85,8 @@
 						</manifest>
 					</archive>
 					<appendAssemblyId>false</appendAssemblyId>
-					<finalName>${project.build.finalName}-all</finalName>
+					<!--<finalName>${project.build.finalName}-all</finalName>-->
+                    <classifier>all</classifier>
 					<descriptorRefs>
 						<descriptorRef>jar-with-dependencies</descriptorRef>
 					</descriptorRefs>
