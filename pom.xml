@@ -208,6 +208,7 @@
                             <izpackBasedir>${staging.dir}</izpackBasedir>
                             <customPanelDirectory>${staging.dir}</customPanelDirectory>
                             <installerFile>${project.build.directory}/${project.build.finalName}-installer.jar</installerFile>
+                            <kind>installer</kind>
                         </configuration>
                         <executions>
                             <execution>
