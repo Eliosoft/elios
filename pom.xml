@@ -268,6 +268,45 @@
                 </plugins>
             </build>
         </profile>
+        <profile>
+            <id>distribution-osx</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>osxappbundle-maven-plugin</artifactId>
+                        <version>1.0-alpha-2</version>
+                        <configuration>
+                            <iconFile>${basedir}/src/main/resources/net/eliosoft/elios/gui/views/elios_e.icns</iconFile>
+                            <mainClass>net.eliosoft.elios.main.Elios</mainClass>
+                            <additionalResources>
+                                <fileSet>
+                                    <directory>${basedir}</directory>
+                                    <includes>
+                                        <include>LICENSE.txt</include>
+                                        <include>README.txt</include>
+                                    </includes>
+                                </fileSet>
+                                <fileSet>
+                                    <directory>${basedir}/target</directory>
+                                    <includes>
+                                        <include>site/**</include>
+                                    </includes>
+                                </fileSet>
+                            </additionalResources>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>bundle</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
     </profiles>
     <reporting>
         <plugins>
